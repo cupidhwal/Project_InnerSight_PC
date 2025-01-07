@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0550a87a71a4e4642a32546689554e57, type: 3}
+  m_Name: Box_Behaviour
+  m_EditorClassIdentifier: 
+  behaviours:
+  - rid: 4305722008634654896
+  - rid: 4305722008634654897
+  - rid: 4305722008634654898
+  - rid: 4305722008634654899
+  references:
+    version: 2
+    RefIds:
+    - rid: 4305722008634654896
+      type: {class: Fly, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 4305722008634654897
+      type: {class: Jump, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 4305722221355073664
+    - rid: 4305722008634654898
+      type: {class: Look, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 4305722124973375681
+    - rid: 4305722008634654899
+      type: {class: Move, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 4305722124973375682
+    - rid: 4305722124973375681
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 4305722124973375684
+        isActive: 1
+    - rid: 4305722124973375682
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 4305722124973375685
+        isActive: 1
+    - rid: 4305722124973375684
+      type: {class: Look_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 4305722124973375685
+      type: {class: Move_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 4305722221355073664
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 4305722221355073665
+        isActive: 0
+    - rid: 4305722221355073665
+      type: {class: Jump_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 

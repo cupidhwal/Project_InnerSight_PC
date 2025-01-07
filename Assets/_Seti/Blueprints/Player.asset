@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7c707b45c015ce4db6d2f1238ea37b3, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  actorName: Player
+  actorPrefab: {fileID: 5163021877297717058, guid: 1afde7331c6ac61478367d0600d02f36, type: 3}
+  controlType: 0
+  strategyBox: {fileID: 11400000, guid: 7dc1bb17aacb56c4e856240083fff143, type: 2}
+  behaviourBox: {fileID: 11400000, guid: aa181b0e9b02247418838ed47a38fdfb, type: 2}
+  behaviourStrategies:
+  - rid: 8920204955801616692
+  - rid: 8920204955801616698
+  references:
+    version: 2
+    RefIds:
+    - rid: 8920204955801616692
+      type: {class: BehaviourStrategyMapping, ns: Seti, asm: Assembly-CSharp}
+      data:
+        behaviour:
+          rid: 8920204955801616693
+        strategies:
+        - rid: 8920204955801616694
+    - rid: 8920204955801616693
+      type: {class: Look, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 8920204955801616695
+    - rid: 8920204955801616694
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 8920204955801616696
+        isActive: 1
+    - rid: 8920204955801616695
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 8920204955801616697
+        isActive: 1
+    - rid: 8920204955801616696
+      type: {class: Look_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 8920204955801616697
+      type: {class: Look_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 8920204955801616698
+      type: {class: BehaviourStrategyMapping, ns: Seti, asm: Assembly-CSharp}
+      data:
+        behaviour:
+          rid: 8920204955801616699
+        strategies:
+        - rid: 8920204955801616700
+    - rid: 8920204955801616699
+      type: {class: Move, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 8920204955801616701
+    - rid: 8920204955801616700
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 8920204955801616702
+        isActive: 1
+    - rid: 8920204955801616701
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 8920204955801616703
+        isActive: 1
+    - rid: 8920204955801616702
+      type: {class: Move_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 8920204955801616703
+      type: {class: Move_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 

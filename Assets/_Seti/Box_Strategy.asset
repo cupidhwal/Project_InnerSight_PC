@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 963fc57aa41b3564abd6067b2a3b9a3c, type: 3}
+  m_Name: Box_Strategy
+  m_EditorClassIdentifier: 
+  lookStrategies:
+  - rid: 4305722124973375647
+  moveStrategies:
+  - rid: 4305722124973375648
+  jumpStrategies:
+  - rid: 4305722124973375650
+  - rid: 4305722124973375651
+  references:
+    version: 2
+    RefIds:
+    - rid: 4305722124973375647
+      type: {class: Look_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 4305722124973375648
+      type: {class: Move_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 4305722124973375650
+      type: {class: Jump_Boots, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 4305722124973375651
+      type: {class: Jump_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
