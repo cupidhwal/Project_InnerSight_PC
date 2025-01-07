@@ -69,6 +69,15 @@ namespace Seti
                 Jump jump = jumpBehaviour as Jump;
                 control.Player.Jump.started += jump.OnJumpStarted;
             }
+
+            // Attack 행동 이벤트 바인딩
+            if (behaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+            {
+                Attack attack = attackBehaviour as Attack;
+                control.Player.Attack.started += attack.OnAttackStarted;
+                control.Player.Skill.started += attack.OnSkillStarted;
+                control.Player.Skill.canceled += attack.OnSkillCanceled;
+            }
         }
 
         private void UnbindInputEvents()
@@ -96,6 +105,15 @@ namespace Seti
             {
                 Jump jump = jumpBehaviour as Jump;
                 control.Player.Jump.started -= jump.OnJumpStarted;
+            }
+
+            // Attack 행동 이벤트 해제
+            if (behaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+            {
+                Attack attack = attackBehaviour as Attack;
+                control.Player.Attack.started -= attack.OnAttackStarted;
+                control.Player.Skill.started -= attack.OnSkillStarted;
+                control.Player.Skill.canceled -= attack.OnSkillCanceled;
             }
         }
         #endregion

@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 namespace Seti
 {
     /// <summary>
-    /// Move Function
+    /// Move Behaviour
     /// </summary>
     [System.Serializable]
     public class Move : IBehaviour, IHasStrategy
@@ -149,11 +149,11 @@ namespace Seti
         public void OnRunStarted(InputAction.CallbackContext _)
         {
             // 체공 중일 경우 착지까지 전략 변경 불가
-            //moveStrategies = MoveStrategies.Run;
+            moveStrategies = MoveStrategies.Run;
             State_Common state = actor.ActorState as State_Common;
             if (!state.IsGrounded) return;
 
-            //ChangeStrategy(typeof(Move_Run));
+            ChangeStrategy(typeof(Move_Run));
         }
 
         public void OnRunCanceled(InputAction.CallbackContext _)

@@ -6,7 +6,10 @@ namespace Seti
     /// <summary>
     /// Strategy Pattern - Root
     /// </summary>
-    public interface IStrategy { }
+    public interface IStrategy
+    {
+        Type GetStrategyType();
+    }
 
     [System.Serializable]
     public class Strategy

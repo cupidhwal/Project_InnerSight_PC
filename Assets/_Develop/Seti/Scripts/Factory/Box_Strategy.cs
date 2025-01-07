@@ -22,6 +22,10 @@ namespace Seti
         [SerializeReference]
         public List<IJumpStrategy> jumpStrategies;
 
+        [HideInInspector]
+        [SerializeReference]
+        public List<IAttackStrategy> attackStrategies;
+
         // 전략 범주 검색
         public List<T> GetStrategies<T>() where T : class, IStrategy
         {
@@ -82,6 +86,8 @@ namespace Seti
                 return moveStrategies as IEnumerable<IStrategy>;
             else if (typeof(T) == typeof(IJumpStrategy))
                 return jumpStrategies as IEnumerable<IStrategy>;
+            else if (typeof(T) == typeof(IAttackStrategy))
+                return attackStrategies as IEnumerable<IStrategy>;
 
             // 새로운 전략이 추가되면 같은 형식으로 추가
             //else if (typeof(T) == typeof(IAttackStrategy))

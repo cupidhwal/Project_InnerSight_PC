@@ -49,6 +49,7 @@ namespace Seti
             RefreshStrategyList(strategyBox.lookStrategies);
             RefreshStrategyList(strategyBox.moveStrategies);
             RefreshStrategyList(strategyBox.jumpStrategies);
+            RefreshStrategyList(strategyBox.attackStrategies);
 
             // 새로운 전략 리스트가 있다면 여기에 추가
             // RefreshStrategyList(strategyBox.attackStrategies);
@@ -72,8 +73,7 @@ namespace Seti
             {
                 if (!strategyList.Any(s => s != null && s.GetType() == strategyType))
                 {
-                    var newStrategy = Activator.CreateInstance(strategyType) as T;
-                    if (newStrategy != null)
+                    if (Activator.CreateInstance(strategyType) is T newStrategy)
                     {
                         strategyList.Add(newStrategy);
                         addedCount++;
@@ -101,6 +101,11 @@ namespace Seti
             // Jump Strategies
             EditorGUILayout.LabelField("Jump Strategies", EditorStyles.boldLabel);
             DrawStrategySubList(strategyBox.jumpStrategies);
+            EditUtility.DrawLine(Color.gray, 1);
+
+            // Attack Strategies
+            EditorGUILayout.LabelField("Attack Strategies", EditorStyles.boldLabel);
+            DrawStrategySubList(strategyBox.attackStrategies);
 
             // 추가 전략 리스트 예시
             // EditorGUILayout.LabelField("Attack Strategies", EditorStyles.boldLabel);

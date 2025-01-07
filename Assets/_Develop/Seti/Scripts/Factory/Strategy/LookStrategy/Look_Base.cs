@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Seti
@@ -30,6 +31,7 @@ namespace Seti
             rb = actor.GetComponent<Rigidbody>();
             headTransform = actor.transform.GetChild(1);
         }
+        public Type GetStrategyType() => typeof(ILookStrategy);
 
         public abstract void Look(Vector2 readValue);
         #endregion
