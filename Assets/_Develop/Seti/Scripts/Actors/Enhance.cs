@@ -2,7 +2,6 @@ using System;
 using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
-using JetBrains.Annotations;
 
 namespace Seti
 {

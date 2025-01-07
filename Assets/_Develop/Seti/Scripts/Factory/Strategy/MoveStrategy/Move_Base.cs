@@ -29,21 +29,31 @@ namespace Seti
 
         public Type GetStrategyType() => typeof(IMoveStrategy);
 
-        // World 기준 이동 로직
+        // QuaterView - World 기준 이동 로직
         public void Move(Vector2 moveInput)
         {
             if (rb == null) return;
 
             Vector2 dir = MoveDirection(moveInput);
             Vector3 moveDirection = new(dir.x, 0, dir.y);
+
             Vector3 move = speed * Time.fixedDeltaTime * moveDirection.normalized;
-            rb.MovePosition(actor.transform.position + move);
+            Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * move;
+            rb.MovePosition(actor.transform.position + QuaterView);
+
+            // 이동이 발생할 때만 회전
+            if (moveDirection != Vector3.zero)
+            {
+                // 진행 방향으로 회전
+                Quaternion targetRotation = Quaternion.LookRotation(QuaterView, Vector3.up);
+                rb.MoveRotation(Quaternion.Slerp(actor.transform.rotation, targetRotation, 10f * Time.fixedDeltaTime));
+            }
         }
 
         // Local 기준 이동 로직
         /*public void Move(Vector2 moveInput)
         {
-            if (rb == null) return;
+            if (rb == null) return; 
 
             Vector2 dir = MoveDirection(moveInput);
             Vector3 moveDirection = new(dir.x, 0, dir.y);

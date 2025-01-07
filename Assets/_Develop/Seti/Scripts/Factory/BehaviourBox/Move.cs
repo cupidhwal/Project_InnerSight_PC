@@ -15,12 +15,19 @@ namespace Seti
         private enum MoveStrategies
         {
             Normal,
-            //Run
+            Walk,
+            Run
         }
 
         // 필드
         #region Variables
-        private float speed_Walk = 4f;
+        // 인간형 - 달리기
+        private float speed_Move = 4f;
+        private const float speed_Move_Default = 4f;
+
+        // 몬스터
+        private const float speed_Walk = 2f;
+        private const float speed_Run = 3.5f;
 
         private Actor actor;
         [SerializeReference]
@@ -37,12 +44,7 @@ namespace Seti
         // 업그레이드
         public void Upgrade(float increment)
         {
-            float speed_Walk_Default = 4f;
-            speed_Walk += increment * speed_Walk_Default / 100;
-
-            /*float speed_Run_Default = 3.5f;
-            speed_Run += increment * speed_Run_Default / 100;*/
-
+            speed_Move += increment * speed_Move_Default / 100;
             Initialize(actor);
         }
 
@@ -56,12 +58,16 @@ namespace Seti
                 switch (moveStrategy)
                 {
                     case Move_Normal:
+                        moveStrategy.Initialize(actor, speed_Move);
+                        break;
+
+                    case Move_Walk:
                         moveStrategy.Initialize(actor, speed_Walk);
                         break;
 
-                    /*case Move_Run:
+                    case Move_Run:
                         moveStrategy.Initialize(actor, speed_Run);
-                        break;*/
+                        break;
                 }
             }
 
@@ -109,9 +115,13 @@ namespace Seti
                     ChangeStrategy(typeof(Move_Normal));
                     break;
 
-                /*case MoveStrategies.Run:
+                case MoveStrategies.Walk:
+                    ChangeStrategy(typeof(Move_Walk));
+                    break;
+
+                case MoveStrategies.Run:
                     ChangeStrategy(typeof(Move_Run));
-                    break;*/
+                    break;
             }
         }
         #endregion
