@@ -24,35 +24,38 @@ namespace Noah
         {
             if (Input.GetKeyDown("1"))
             {
-                if (setSkill.firstSkill != null && setSkill.firstSkill.isSkillOn)
-                {
-                    UseSkill(() => setSkill.firstSkill);
-                    StartCoroutine(setSkill.SkillCoolTime(setSkill.firstSkill));
-                }
 
+                if (Input.GetMouseButton(0))
+                {
+                    if (setSkill.skillSlots[0] != null && setSkill.skillSlots[0].isSkillOn)
+                    {
+                        UseSkill(() => setSkill.skillSlots[0]);
+                        StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[0], setSkill.skillUIList[0]));
+                    }
+                }
             }
             else if (Input.GetKeyDown("2"))
             {
-                if (setSkill.secondSkill != null && setSkill.secondSkill.isSkillOn)
+                if (setSkill.skillSlots[1] != null && setSkill.skillSlots[1].isSkillOn)
                 {
-                    UseSkill(() => setSkill.secondSkill);
-                    StartCoroutine(setSkill.SkillCoolTime(setSkill.secondSkill));
+                    UseSkill(() => setSkill.skillSlots[1]);
+                    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[1], setSkill.skillUIList[1]));
                 }
             }
             else if (Input.GetKeyDown("3"))
             {
-                if (setSkill.thirdSkill != null && setSkill.thirdSkill.isSkillOn)
+                if (setSkill.skillSlots[2] != null && setSkill.skillSlots[2].isSkillOn)
                 {
-                    UseSkill(() => setSkill.thirdSkill);
-                    StartCoroutine(setSkill.SkillCoolTime(setSkill.thirdSkill));
+                    UseSkill(() => setSkill.skillSlots[2]);
+                    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[2], setSkill.skillUIList[2]));
                 }
             }
             else if (Input.GetKeyDown("4"))
             {
-                if (setSkill.fourthSkill != null && setSkill.fourthSkill.isSkillOn)
+                if (setSkill.skillSlots[3] != null && setSkill.skillSlots[3].isSkillOn)
                 {
-                    UseSkill(() => setSkill.fourthSkill);
-                    StartCoroutine(setSkill.SkillCoolTime(setSkill.fourthSkill));
+                    UseSkill(() => setSkill.skillSlots[3]);
+                    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[3], setSkill.skillUIList[3]));
                 }
             }
 
@@ -85,7 +88,7 @@ namespace Noah
                     //animator.SetBool("isSkill", true);
                     GameObject skillef = Instantiate(skill.skillPrefab, skillPos, transform.rotation);
 
-                    skillef.transform.GetChild(0).GetComponent<SkillAttack>().damage = skill.damage;
+                    //skillef.transform.GetChild(0).GetComponent<SkillAttack>().damage = skill.damage;
 
                     StartCoroutine(skill.SkillCoolTime());
                     Destroy(skillef, skill.skillAtkTime);
