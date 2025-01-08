@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,8 @@ namespace Noah
 
         public List<SkillBase> skills = new List<SkillBase>();
         private List<SkillBase> randomSkills = new List<SkillBase>(); // 랜덤으로 선택된 스킬 목록
+        private List<Image> skillUIList = new List<Image>(); // UI 슬롯 리스트
+        private List<SkillBase> skillSlots = new List<SkillBase>();
 
         public SkillBase firstSkill;
         public SkillBase secondSkill;
@@ -59,6 +62,13 @@ namespace Noah
             skills.Add(fireBomb);
             skills.Add(fireNapalm);
             skills.Add(fireIncendiary);
+
+            // UI 슬롯을 초기화 (Unity 에디터에서 설정한 UI Image 배열)
+            skillUIList.Add(firstSkillUI);
+            skillUIList.Add(secondSkillUI);
+            skillUIList.Add(thridSkillUI); // 스킬 UI를 추가로 늘릴 수 있음
+            skillUIList.Add(fourthSkillUI); // 스킬 UI를 추가로 늘릴 수 있음
+
         }
 
         // 만약 x 키에 데이터가 있으면 c 키에 스킬 넣기
@@ -93,42 +103,90 @@ namespace Noah
         }
 
         // 선택된 스킬을 X와 C 키에 할당
+        //void AssignSkillToKey(int skillIndex)
+        //{
+        //    if (firstSkill == null)
+        //    {
+        //        firstSkill = randomSkills[skillIndex];
+        //        SetSkillUI(firstSkillUI, firstSkill);
+        //        ResetBtnData();
+
+        //        Debug.Log("Skill assigned to X key: " + firstSkill.GetType().Name);
+        //    }
+        //    else if (secondSkill == null && randomSkills[skillIndex] != firstSkill)
+        //    {
+        //        secondSkill = randomSkills[skillIndex];
+        //        SetSkillUI(secondSkillUI, secondSkill);
+        //        ResetBtnData();
+
+        //        Debug.Log("Skill assigned to C key: " + secondSkill.GetType().Name);
+        //    }
+        //    else if (firstSkill != null && randomSkills[skillIndex] == firstSkill)
+        //    {
+        //        Debug.Log($"{firstSkill} + {randomSkills[skillIndex]} 업그레이드");
+        //        firstSkill.damage += firstSkill.upgradeDamage;
+        //        ResetBtnData();
+        //    }
+        //    else if (firstSkill != null && randomSkills[skillIndex] == secondSkill)
+        //    {
+        //        Debug.Log($"{secondSkill} + {randomSkills[skillIndex]} 업그레이드");
+        //        secondSkill.damage += secondSkill.upgradeDamage;
+        //        ResetBtnData();
+        //    }
+        //    else if (firstSkill != null && secondSkill != null
+        //            && randomSkills[skillIndex] != firstSkill && randomSkills[skillIndex] != secondSkill)
+        //    {
+        //        selectSkillNum = skillIndex;
+        //        SetSelectUI();
+        //    }
+        //}
+
         void AssignSkillToKey(int skillIndex)
         {
-            if (firstSkill == null)
-            {
-                firstSkill = randomSkills[skillIndex];
-                SetSkillUI(firstSkillUI, firstSkill);
-                ResetBtnData();
+            int maxSkillSlots = skillUIList.Count; // UI 슬롯 개수에 따라 최대 슬롯 개수 결정
 
-                Debug.Log("Skill assigned to X key: " + firstSkill.GetType().Name);
-            }
-            else if (secondSkill == null && randomSkills[skillIndex] != firstSkill)
+            // 이미 슬롯에 스킬이 있는 경우 업그레이드 처리
+            for (int i = 0; i < skillSlots.Count; i++)
             {
-                secondSkill = randomSkills[skillIndex];
-                SetSkillUI(secondSkillUI, secondSkill);
-                ResetBtnData();
+                if (skillSlots[i] == randomSkills[skillIndex])
+                {
+                    Debug.Log($"{skillSlots[i]} + {randomSkills[skillIndex]} 업그레이드");
+                    skillSlots[i].damage += skillSlots[i].upgradeDamage;
+                    ResetBtnData();
+                    return;
+                }
+            }
 
-                Debug.Log("Skill assigned to C key: " + secondSkill.GetType().Name);
-            }
-            else if (firstSkill != null && randomSkills[skillIndex] == firstSkill)
+            // 빈 슬롯이 있는 경우 스킬 추가
+            if (skillSlots.Count < maxSkillSlots)
             {
-                Debug.Log($"{firstSkill} + {randomSkills[skillIndex]} 업그레이드");
-                firstSkill.damage += firstSkill.upgradeDamage;
+                skillSlots.Add(randomSkills[skillIndex]);
+                SetSkillUI(skillUIList[skillSlots.Count - 1], randomSkills[skillIndex]); // UI 갱신
                 ResetBtnData();
+                //Debug.Log($"Skill assigned to slot {skillSlots.Count}: {randomSkills[skillIndex].GetType().Name}");
             }
-            else if (firstSkill != null && randomSkills[skillIndex] == secondSkill)
+            else
             {
-                Debug.Log($"{secondSkill} + {randomSkills[skillIndex]} 업그레이드");
-                secondSkill.damage += secondSkill.upgradeDamage;
-                ResetBtnData();
-            }
-            else if (firstSkill != null && secondSkill != null
-                    && randomSkills[skillIndex] != firstSkill && randomSkills[skillIndex] != secondSkill)
-            {
+                // 슬롯이 가득 찬 경우, 선택 UI 표시
                 selectSkillNum = skillIndex;
                 SetSelectUI();
             }
+        }
+
+        void SkillCheck(SkillBase skill, Image skillUI ,int index)
+        {
+            if (skill == null)
+            {
+                skill = randomSkills[index];
+                SetSkillUI(skillUI, skill);
+                ResetBtnData();
+                Debug.Log("Skill assigned to key: " + skill.GetType().Name);
+            }
+        }
+
+        void UpgradeCheck()
+        { 
+            
         }
 
         void ResetBtnData()
