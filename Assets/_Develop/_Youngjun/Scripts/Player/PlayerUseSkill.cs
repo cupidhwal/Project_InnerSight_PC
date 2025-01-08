@@ -39,7 +39,23 @@ namespace Noah
                     StartCoroutine(setSkill.SkillCoolTime(setSkill.secondSkill));
                 }
             }
-            
+            else if (Input.GetKeyDown("3"))
+            {
+                if (setSkill.thirdSkill != null && setSkill.thirdSkill.isSkillOn)
+                {
+                    UseSkill(() => setSkill.thirdSkill);
+                    StartCoroutine(setSkill.SkillCoolTime(setSkill.thirdSkill));
+                }
+            }
+            else if (Input.GetKeyDown("4"))
+            {
+                if (setSkill.fourthSkill != null && setSkill.fourthSkill.isSkillOn)
+                {
+                    UseSkill(() => setSkill.fourthSkill);
+                    StartCoroutine(setSkill.SkillCoolTime(setSkill.fourthSkill));
+                }
+            }
+
 
         }
 
