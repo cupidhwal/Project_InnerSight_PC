@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace JungBin
@@ -6,7 +7,18 @@ namespace JungBin
     public class Player : MonoBehaviour
     {
         public static int Lives { get; private set; } = 1; // 기본 생명 수
-        public bool IsAlive => Lives > 0;           // 생존 여부
+
+        public static int Health { get; private set; } = 100; // 기본 생명 수
+
+        public void TakeDamage(int amount)
+        {
+            Health -= amount;
+            Debug.Log($"데미지 입음. 남아있는 HP : {Health}");
+            if( Health <= 0 )
+            {
+                Die();
+            }
+        }
 
         // 생명 추가 메서드
         public void AddLife(int amount)
