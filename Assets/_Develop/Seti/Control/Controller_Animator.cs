@@ -2,6 +2,66 @@ using UnityEngine;
 
 namespace Seti
 {
+
+
+    public class Controller_Animator : MonoBehaviour
+    {
+        // 필드
+        #region Variables
+        private StateMachine<Controller_Animator> aniMachine;
+
+        // 속성
+        public Animator Animator { get; private set; }
+        public StateMachine<Controller_Animator> AniMachine => aniMachine;
+        #endregion
+
+        // 라이프 사이클
+        #region Life Cycle
+        protected void Awake()
+        {
+            // 초기화
+            Animator = GetComponent<Animator>();
+            aniMachine = new StateMachine<Controller_Animator>(
+                this,
+                new Player_Idle()
+            );
+
+            // 상태 추가
+            aniMachine.AddState(new Player_Idle());
+            aniMachine.AddState(new Player_Move());
+            aniMachine.AddState(new Player_Dash());
+            aniMachine.AddState(new Player_Attack());
+        }
+
+        private void Update()
+        {
+            // FSM 업데이트
+            aniMachine.Update();
+        }
+
+        private void OnAnimatorIK(int layerIndex)
+        {
+            if (Animator)
+            {
+                // 현재 애니메이션 루트 포지션 가져오기
+                //Vector3 rootPosition = Animator.bodyPosition;
+
+                // 루트 포지션을 덮어씌워 이동을 고정
+                Animator.bodyPosition = transform.position;
+
+                // 루트 회전은 그대로 사용
+                Animator.bodyRotation = Animator.bodyRotation;
+            }
+        }
+        #endregion
+    }
+}
+
+#region Dummy
+/*using UnityEngine;
+
+namespace Seti
+{
     // 애니메이션 States 목록
     public enum AniStates
     {
@@ -35,31 +95,6 @@ namespace Seti
 
     public class Controller_Animator : MonoBehaviour
     {
-        // 필드
-        #region Variables
-        private StateMachine<Controller_Animator> aniMachine;
-        #endregion
-
-        // 라이프 사이클
-        #region Life Cycle
-        #endregion
-
-        // 메서드
-        #region Methods
-        #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
         // 필드
         #region Variables
         // 캐릭터 모델 동기화용 필드
@@ -122,9 +157,9 @@ namespace Seti
                     break;
 
                 case AniStates.IDLE_ROTATE:
-                    /*if (player.playerLook.XLookInput > 3) Animator.SetBool(AniString.IsRight, true);
+                    *//*if (player.playerLook.XLookInput > 3) Animator.SetBool(AniString.IsRight, true);
                     else if (player.playerLook.XLookInput < -3) Animator.SetBool(AniString.IsRight, false);
-                    else return;*/
+                    else return;*//*
                     if (!Animator.GetBool(AniString.IsRotate))
                         Animator.SetBool(AniString.IsRotate, true);
                     break;
@@ -197,8 +232,8 @@ namespace Seti
             if (Animator.GetBool(AniString.IsMove))
             {
                 ChangeState(AniStates.MOVE);
-                /*x = Mathf.Lerp(x, player.playerMove.MoveInput.x, 0.1f);
-                z = Mathf.Lerp(z, player.playerMove.MoveInput.y, 0.1f);*/
+                *//*x = Mathf.Lerp(x, player.playerMove.MoveInput.x, 0.1f);
+                z = Mathf.Lerp(z, player.playerMove.MoveInput.y, 0.1f);*//*
             }
 
             else
@@ -217,8 +252,8 @@ namespace Seti
 
             if (Animator.GetBool(AniString.IsBoard))
             {
-                /*x = Mathf.Lerp(x, board.BoardDrive.MoveInput.x, 0.1f);
-                z = Mathf.Lerp(z, board.BoardDrive.MoveInput.y, 0.1f);*/
+                *//*x = Mathf.Lerp(x, board.BoardDrive.MoveInput.x, 0.1f);
+                z = Mathf.Lerp(z, board.BoardDrive.MoveInput.y, 0.1f);*//*
             }
 
             lerpInput = new(x, z);
@@ -243,4 +278,5 @@ namespace Seti
         }
         #endregion
     }
-}
+}*/
+#endregion
