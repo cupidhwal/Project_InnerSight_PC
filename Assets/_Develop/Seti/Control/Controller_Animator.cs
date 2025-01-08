@@ -37,6 +37,31 @@ namespace Seti
     {
         // 필드
         #region Variables
+        private StateMachine<Controller_Animator> aniMachine;
+        #endregion
+
+        // 라이프 사이클
+        #region Life Cycle
+        #endregion
+
+        // 메서드
+        #region Methods
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // 필드
+        #region Variables
         // 캐릭터 모델 동기화용 필드
         private Quaternion syncRotation = Quaternion.identity;
         private Quaternion targetRotion = Quaternion.identity;
