@@ -127,36 +127,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Magic 1"",
+                    ""name"": ""Magic"",
                     ""type"": ""Button"",
                     ""id"": ""9717c53b-4340-40bc-8af9-dff90215efde"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Magic 2"",
-                    ""type"": ""Button"",
-                    ""id"": ""7c4e3ecd-a566-4505-addb-e73cea4a0d7d"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Magic 3"",
-                    ""type"": ""Button"",
-                    ""id"": ""49129e42-797a-49ba-8b0f-78937cc30e50"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Magic 4"",
-                    ""type"": ""Button"",
-                    ""id"": ""5b324931-16b4-4e64-9e64-e424be0e0051"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -578,40 +551,40 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Magic 1"",
+                    ""action"": ""Magic"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a62f652d-101e-4fd7-8d46-cba00afde2ad"",
+                    ""id"": ""db8ae433-bc4f-4fc1-9143-ef43f8f8f789"",
                     ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Magic 2"",
+                    ""action"": ""Magic"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""955d1ddd-1181-49bc-b92c-3e723568da72"",
+                    ""id"": ""4dba1a34-f3a5-4127-9943-2af56bab1f24"",
                     ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Magic 3"",
+                    ""action"": ""Magic"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""da6ea388-7da7-4bff-871d-70b70ea24ef5"",
+                    ""id"": ""df2a1e15-9c12-40a0-9c08-4c26c5e98fd6"",
                     ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Magic 4"",
+                    ""action"": ""Magic"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1210,10 +1183,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Skill = m_Player.FindAction("Skill", throwIfNotFound: true);
-        m_Player_Magic1 = m_Player.FindAction("Magic 1", throwIfNotFound: true);
-        m_Player_Magic2 = m_Player.FindAction("Magic 2", throwIfNotFound: true);
-        m_Player_Magic3 = m_Player.FindAction("Magic 3", throwIfNotFound: true);
-        m_Player_Magic4 = m_Player.FindAction("Magic 4", throwIfNotFound: true);
+        m_Player_Magic = m_Player.FindAction("Magic", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1304,10 +1274,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Skill;
-    private readonly InputAction m_Player_Magic1;
-    private readonly InputAction m_Player_Magic2;
-    private readonly InputAction m_Player_Magic3;
-    private readonly InputAction m_Player_Magic4;
+    private readonly InputAction m_Player_Magic;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1323,10 +1290,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Skill => m_Wrapper.m_Player_Skill;
-        public InputAction @Magic1 => m_Wrapper.m_Player_Magic1;
-        public InputAction @Magic2 => m_Wrapper.m_Player_Magic2;
-        public InputAction @Magic3 => m_Wrapper.m_Player_Magic3;
-        public InputAction @Magic4 => m_Wrapper.m_Player_Magic4;
+        public InputAction @Magic => m_Wrapper.m_Player_Magic;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1369,18 +1333,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Skill.started += instance.OnSkill;
             @Skill.performed += instance.OnSkill;
             @Skill.canceled += instance.OnSkill;
-            @Magic1.started += instance.OnMagic1;
-            @Magic1.performed += instance.OnMagic1;
-            @Magic1.canceled += instance.OnMagic1;
-            @Magic2.started += instance.OnMagic2;
-            @Magic2.performed += instance.OnMagic2;
-            @Magic2.canceled += instance.OnMagic2;
-            @Magic3.started += instance.OnMagic3;
-            @Magic3.performed += instance.OnMagic3;
-            @Magic3.canceled += instance.OnMagic3;
-            @Magic4.started += instance.OnMagic4;
-            @Magic4.performed += instance.OnMagic4;
-            @Magic4.canceled += instance.OnMagic4;
+            @Magic.started += instance.OnMagic;
+            @Magic.performed += instance.OnMagic;
+            @Magic.canceled += instance.OnMagic;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1418,18 +1373,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Skill.started -= instance.OnSkill;
             @Skill.performed -= instance.OnSkill;
             @Skill.canceled -= instance.OnSkill;
-            @Magic1.started -= instance.OnMagic1;
-            @Magic1.performed -= instance.OnMagic1;
-            @Magic1.canceled -= instance.OnMagic1;
-            @Magic2.started -= instance.OnMagic2;
-            @Magic2.performed -= instance.OnMagic2;
-            @Magic2.canceled -= instance.OnMagic2;
-            @Magic3.started -= instance.OnMagic3;
-            @Magic3.performed -= instance.OnMagic3;
-            @Magic3.canceled -= instance.OnMagic3;
-            @Magic4.started -= instance.OnMagic4;
-            @Magic4.performed -= instance.OnMagic4;
-            @Magic4.canceled -= instance.OnMagic4;
+            @Magic.started -= instance.OnMagic;
+            @Magic.performed -= instance.OnMagic;
+            @Magic.canceled -= instance.OnMagic;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1623,10 +1569,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnSkill(InputAction.CallbackContext context);
-        void OnMagic1(InputAction.CallbackContext context);
-        void OnMagic2(InputAction.CallbackContext context);
-        void OnMagic3(InputAction.CallbackContext context);
-        void OnMagic4(InputAction.CallbackContext context);
+        void OnMagic(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

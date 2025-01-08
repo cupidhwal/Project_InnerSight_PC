@@ -9,6 +9,7 @@ namespace Seti
         // 필드
         #region Variables
         public bool IsGrounded { get; set; }
+        public bool IsAttack { get; set; }
         #endregion
 
         // 이벤트 메서드

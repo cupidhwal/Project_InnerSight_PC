@@ -20,13 +20,9 @@ namespace Seti
 
         // 필드
         #region Variables
-        // 인간형 - 달리기
+        // 공격력
         private float power_Normal = 10f;
         private const float power_Normal_Default = 10f;
-
-        // 몬스터
-        private const float power_Magic = 50f;
-        private const float power_Weapon = 30f;
 
         // 전략 관리
         private Actor actor;
@@ -61,11 +57,11 @@ namespace Seti
                         break;
 
                     case Attack_Magic:
-                        moveStrategy.Initialize(actor, power_Magic);
+                        moveStrategy.Initialize(actor);
                         break;
 
                     case Attack_Weapon:
-                        moveStrategy.Initialize(actor, power_Weapon);
+                        moveStrategy.Initialize(actor);
                         break;
                 }
             }
@@ -137,25 +133,53 @@ namespace Seti
             currentStrategy?.Attack();
         }
 
-        public void OnSkillStarted(InputAction.CallbackContext context)
+        public void OnAttackCanceled(InputAction.CallbackContext _)
+        {
+            currentStrategy?.AttackExit();
+        }
+
+        public void OnSkillStarted(InputAction.CallbackContext _)
         {
             SwitchStrategy(AttackStrategies.Weapon);
             currentStrategy?.Attack();
         }
 
-        public void OnSkillCanceled(InputAction.CallbackContext context)
+        public void OnSkillCanceled(InputAction.CallbackContext _)
         {
+            currentStrategy?.AttackExit();
             SwitchStrategy(AttackStrategies.Normal);
         }
 
         public void OnMagicStarted(InputAction.CallbackContext context)
         {
             SwitchStrategy(AttackStrategies.Magic);
+
+            string path = context.control.path;
+            switch (path)
+            {
+                case "/Keyboard/1":
+                    Debug.Log("Magic 1");
+                    break;
+
+                case "/Keyboard/2":
+                    Debug.Log("Magic 2");
+                    break;
+
+                case "/Keyboard/3":
+                    Debug.Log("Magic 3");
+                    break;
+
+                case "/Keyboard/4":
+                    Debug.Log("Magic 4");
+                    break;
+            }
+
             currentStrategy?.Attack();
         }
         
-        public void OnMagicCanceled(InputAction.CallbackContext context)
+        public void OnMagicCanceled(InputAction.CallbackContext _)
         {
+            currentStrategy?.AttackExit();
             SwitchStrategy(AttackStrategies.Normal);
         }
         #endregion

@@ -8,6 +8,7 @@ namespace Seti
         #region Abstract
         public override void Attack()
         {
+            base.Attack();
             Debug.Log("무기 기술");
         }
         #endregion

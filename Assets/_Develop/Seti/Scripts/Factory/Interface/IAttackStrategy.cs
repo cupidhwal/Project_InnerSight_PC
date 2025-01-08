@@ -7,7 +7,8 @@ namespace Seti
     /// </summary>
     public interface IAttackStrategy : IStrategy
     {
-        void Initialize(Actor actor, float power);
+        void Initialize(Actor actor, float power = 10f);
         void Attack();
+        void AttackExit();
     }
 }

@@ -30,13 +30,17 @@ namespace Seti
         public Type GetStrategyType() => typeof(IMoveStrategy);
 
         // QuaterView - World 기준 이동 로직
-        public void Move(Vector2 moveInput)
+        public virtual void Move(Vector2 moveInput)
         {
             if (rb == null) return;
 
             Vector2 dir = MoveDirection(moveInput);
             Vector3 moveDirection = new(dir.x, 0, dir.y);
 
+            Move(moveDirection);
+        }
+        protected void Move(Vector3 moveDirection)
+        {
             Vector3 move = speed * Time.fixedDeltaTime * moveDirection.normalized;
             Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * move;
             rb.MovePosition(actor.transform.position + QuaterView);
@@ -100,7 +104,7 @@ namespace Seti
         // 메서드
         #region Methods
         // 공중 제어 금지 보정
-        private Vector2 MoveDirection(Vector2 moveInput)
+        protected Vector2 MoveDirection(Vector2 moveInput)
         {
             State_Common state = actor.ActorState as State_Common;
             if (state.IsGrounded)

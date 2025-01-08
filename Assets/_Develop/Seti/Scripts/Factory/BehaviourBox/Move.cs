@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,15 +16,22 @@ namespace Seti
         private enum MoveStrategies
         {
             Normal,
+            Dash,
             Walk,
             Run
         }
 
         // 필드
         #region Variables
-        // 인간형 - 달리기
+        // Player - 기본 이동
         private float speed_Move = 4f;
         private const float speed_Move_Default = 4f;
+
+        // Player - 대시
+        public float Speed_Dash => speed_Move * 10f;
+        private const float delay_Dash = 0.15f;
+        private const float coolDown_Dash = 4f;
+        private bool isDashed = false;
 
         // 몬스터
         private const float speed_Walk = 2f;
@@ -37,6 +45,7 @@ namespace Seti
 
         // 상태 관리
         private MoveStrategies moveStrategies;
+        private State_Common state;
         #endregion
 
         // 인터페이스
@@ -52,6 +61,7 @@ namespace Seti
         public void Initialize(Actor actor)
         {
             this.actor = actor;
+            state = actor.ActorState as State_Common;
             foreach (var mapping in strategies)
             {
                 IMoveStrategy moveStrategy = mapping.strategy as IMoveStrategy;
@@ -59,6 +69,10 @@ namespace Seti
                 {
                     case Move_Normal:
                         moveStrategy.Initialize(actor, speed_Move);
+                        break;
+
+                    case Move_Dash:
+                        moveStrategy.Initialize(actor, Speed_Dash);
                         break;
 
                     case Move_Walk:
@@ -83,7 +97,7 @@ namespace Seti
             }
             else
             {
-                //Debug.LogWarning("Move 전략이 없어 초기 전략을 설정하지 못했습니다.");
+                Debug.LogWarning("Move 전략이 없어 초기 전략을 설정하지 못했습니다.");
                 ChangeStrategy(null);
             }
         }
@@ -115,6 +129,10 @@ namespace Seti
                     ChangeStrategy(typeof(Move_Normal));
                     break;
 
+                case MoveStrategies.Dash:
+                    ChangeStrategy(typeof(Move_Dash));
+                    break;
+
                 case MoveStrategies.Walk:
                     ChangeStrategy(typeof(Move_Walk));
                     break;
@@ -130,6 +148,10 @@ namespace Seti
         #region Life Cycle
         public void FixedUpdate()
         {
+            // 공격 중일 땐 이동 불가
+            State_Common state = actor.ActorState as State_Common;
+            if (state.IsAttack) return;
+
             currentStrategy?.Move(moveInput);
         }
         #endregion
@@ -146,24 +168,30 @@ namespace Seti
             moveInput = Vector2.zero;
         }
 
+        public void OnDashStarted(InputAction.CallbackContext _)
+        {
+            // 체공 중일 경우 착지까지 전략 변경 불가
+            if (!state.IsGrounded || isDashed) return;
+
+            Execute_Dash();
+        }
+
         public void OnRunStarted(InputAction.CallbackContext _)
         {
             // 체공 중일 경우 착지까지 전략 변경 불가
-            moveStrategies = MoveStrategies.Run;
-            State_Common state = actor.ActorState as State_Common;
             if (!state.IsGrounded) return;
 
-            ChangeStrategy(typeof(Move_Run));
+            moveStrategies = MoveStrategies.Run;
+            SwitchStrategy();
         }
 
         public void OnRunCanceled(InputAction.CallbackContext _)
         {
             // 체공 중일 경우 착지까지 전략 변경 불가
-            moveStrategies = MoveStrategies.Normal;
-            State_Common state = actor.ActorState as State_Common;
             if (!state.IsGrounded) return;
 
-            ChangeStrategy(typeof(Move_Normal));
+            moveStrategies = MoveStrategies.Normal;
+            SwitchStrategy();
         }
         #endregion
 
@@ -173,6 +201,27 @@ namespace Seti
         {
             currentStrategy?.GetOverCurb(collision);
             SwitchStrategy();
+        }
+        #endregion
+
+        // 유틸리티
+        #region Utilities
+        private async void Execute_Dash()
+        {
+            isDashed = true;
+
+            moveStrategies = MoveStrategies.Dash;
+            SwitchStrategy();
+
+            await Task.Delay((int)(delay_Dash * 1000));
+            if (currentStrategy is Move_Dash dash)
+                dash.MoveExit();
+
+            moveStrategies = MoveStrategies.Normal;
+            SwitchStrategy();
+
+            await Task.Delay((int)((coolDown_Dash - delay_Dash) * 1000));
+            isDashed = false;
         }
         #endregion
     }

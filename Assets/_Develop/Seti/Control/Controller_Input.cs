@@ -59,6 +59,7 @@ namespace Seti
                 Move move = moveBehaviour as Move;
                 control.Player.Move.performed += move.OnMovePerformed;
                 control.Player.Move.canceled += move.OnMoveCanceled;
+                control.Player.Dash.started += move.OnDashStarted;
                 //control.Player.Run.started += move.OnRunStarted;
                 //control.Player.Run.canceled += move.OnRunCanceled;
             }
@@ -75,8 +76,17 @@ namespace Seti
             {
                 Attack attack = attackBehaviour as Attack;
                 control.Player.Attack.started += attack.OnAttackStarted;
+                control.Player.Attack.canceled += attack.OnAttackCanceled;
                 control.Player.Skill.started += attack.OnSkillStarted;
-                control.Player.Skill.canceled += attack.OnSkillCanceled;
+                control.Player.Skill.canceled += attack.OnSkillCanceled;                
+                control.Player.Magic.started += attack.OnMagicStarted;
+                control.Player.Magic.started += attack.OnMagicStarted;
+                control.Player.Magic.started += attack.OnMagicStarted;
+                control.Player.Magic.started += attack.OnMagicStarted;
+                control.Player.Magic.canceled += attack.OnMagicCanceled;
+                control.Player.Magic.canceled += attack.OnMagicCanceled;
+                control.Player.Magic.canceled += attack.OnMagicCanceled;
+                control.Player.Magic.canceled += attack.OnMagicCanceled;
             }
         }
 
@@ -96,6 +106,7 @@ namespace Seti
                 Move move = moveBehaviour as Move;
                 control.Player.Move.performed -= move.OnMovePerformed;
                 control.Player.Move.canceled -= move.OnMoveCanceled;
+                control.Player.Dash.started -= move.OnDashStarted;
                 //control.Player.Run.started -= move.OnRunStarted;
                 //control.Player.Run.canceled -= move.OnRunCanceled;
             }
@@ -112,8 +123,17 @@ namespace Seti
             {
                 Attack attack = attackBehaviour as Attack;
                 control.Player.Attack.started -= attack.OnAttackStarted;
+                control.Player.Attack.canceled -= attack.OnAttackCanceled;
                 control.Player.Skill.started -= attack.OnSkillStarted;
                 control.Player.Skill.canceled -= attack.OnSkillCanceled;
+                control.Player.Magic.started -= attack.OnMagicStarted;
+                control.Player.Magic.started -= attack.OnMagicStarted;
+                control.Player.Magic.started -= attack.OnMagicStarted;
+                control.Player.Magic.started -= attack.OnMagicStarted;
+                control.Player.Magic.canceled -= attack.OnMagicCanceled;
+                control.Player.Magic.canceled -= attack.OnMagicCanceled;
+                control.Player.Magic.canceled -= attack.OnMagicCanceled;
+                control.Player.Magic.canceled -= attack.OnMagicCanceled;
             }
         }
         #endregion
