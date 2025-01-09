@@ -6,10 +6,16 @@ namespace JungBin
 
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance; // 싱글톤 패턴
+        public static GameManager Instance { get; private set; } // 싱글톤 인스턴스
 
         [SerializeField] private RelicManager relicManager;
         [SerializeField] private Player player;
+        [SerializeField] private Transform player_Transform;
+        [SerializeField] private CapsuleCollider player_HitCapsuleCollider;
+
+        public Player Player => player; // 외부에서 접근 가능한 프로퍼티
+        public Transform PlayerTransform => player_Transform;
+        public CapsuleCollider Player_HitCapsuleCollider => player_HitCapsuleCollider;
 
         private void Awake()
         {
