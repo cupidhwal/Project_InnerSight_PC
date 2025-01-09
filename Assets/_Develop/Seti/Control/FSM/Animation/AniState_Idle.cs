@@ -10,28 +10,31 @@ namespace Seti
         public override void OnInitialized() { }
 
         // 상태 전환 시 State Enter에 1회 실행
-        public override void OnEnter()
-        {
-            context.transform.position = actorTransform.position;
-            context.transform.rotation = actorTransform.rotation;
-        }
+        public override void OnEnter() => base.OnEnter();
 
         // 상태 전환 시 State Exit에 1회 실행
-        public override void OnExit() { }
+        public override void OnExit() => base.OnExit();
 
         // 상태 전환 조건 메서드
-        public override Type CheckTransitions() => null; // 기본적으로 전환 조건 없음
+        public override Type CheckTransitions()
+        {
+            if (context.IsMove)
+                return typeof(AniState_Move);
+
+            else if (context.IsDash)
+                return typeof(AniState_Dash);
+            
+            else if (context.IsAttack)
+                return typeof(AniState_Attack);
+            
+            return null;
+        }
 
         // 상태 실행 중
-        public override void Update()
+        public override void Update(float deltaTime)
         {
 
         }
-        #endregion
-
-        // 생성자
-        #region Constructor
-        public AniState_Idle(Actor actor) => actorTransform = actor.transform;
         #endregion
     }
 }

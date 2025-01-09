@@ -1,8 +1,9 @@
 using System;
+using UnityEngine;
 
 namespace Seti
 {
-    public class FSM_Move : MonoState<Controller_FSM>
+    public class State_Idle : MonoState<Controller_FSM>
     {
         // 추상
         #region Abstract
@@ -16,10 +17,19 @@ namespace Seti
         public override void OnExit() { }
 
         // 상태 전환 조건 메서드
-        public override Type CheckTransitions() => null; // 기본적으로 전환 조건 없음
+        public override Type CheckTransitions()
+        {
+            if (context.Detected)
+                return typeof(State_Chase);
+
+            else if (context.StateMachine.ElapsedTime > 5)
+                return typeof(State_Patrol);
+
+            else return null;
+        }
 
         // 상태 실행 중
-        public override void Update()
+        public override void Update(float deltaTime)
         {
 
         }

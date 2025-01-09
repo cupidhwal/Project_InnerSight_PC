@@ -16,6 +16,7 @@ namespace Seti
             Normal,
             Magic,
             Weapon,
+            Tackle
         }
 
         // ÇÊµå
@@ -132,14 +133,14 @@ namespace Seti
                 SwitchStrategy(AttackStrategies.Normal);
             currentStrategy?.Attack();
 
-            actor.Controller_Animator.AniMachine.ChangeState<AniState_Attack>();
+            actor.Controller_Animator.IsAttack = true;
         }
 
         public void OnAttackCanceled(InputAction.CallbackContext _)
         {
             currentStrategy?.AttackExit();
 
-            actor.Controller_Animator.AniMachine.ChangeState<AniState_Idle>();
+            actor.Controller_Animator.IsAttack = false;
         }
 
         public void OnSkillStarted(InputAction.CallbackContext _)

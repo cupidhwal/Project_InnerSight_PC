@@ -16,5 +16,11 @@ namespace Seti
         // Component
         protected Transform actorTransform;
         #endregion
+
+        // 오버라이드
+        #region Override
+        public override void OnEnter() => context.Initialize();
+        public override void OnExit() => context.Initialize();
+        #endregion
     }
 }

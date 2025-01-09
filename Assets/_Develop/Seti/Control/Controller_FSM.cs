@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Seti
 {
@@ -6,7 +7,20 @@ namespace Seti
     {
         // 필드
         #region Variables
-        private StateMachine<Controller_FSM> stateMachine; // FSM 인스턴스
+        private StateMachine<Controller_FSM> stateMachine;  // FSM 인스턴스
+
+        [SerializeField]
+        private const float range_Detect = 15f;
+        [SerializeField]
+        private const float range_Attack = 1.5f;
+        private float distance;
+        #endregion
+
+        // 속성
+        #region Properties
+        public StateMachine<Controller_FSM> StateMachine => stateMachine;
+        public bool Detected => distance < range_Detect;
+        public bool CanAttack => distance > range_Attack;
         #endregion
 
         // 인터페이스
@@ -21,17 +35,23 @@ namespace Seti
             // FSM 초기화
             stateMachine = new StateMachine<Controller_FSM>(
                 this,
-                new FSM_Idle()
+                new State_Idle()
             );
 
             // 상태 추가
-            stateMachine.AddState(new FSM_Move());
+            stateMachine.AddState(new State_Chase());
+            stateMachine.AddState(new State_Patrol());
+            stateMachine.AddState(new State_Attack());
+
+            // 초기화
+            Player player = FindFirstObjectByType<Player>();
+            distance = Vector3.Distance(player.transform.position, actor.transform.position);
         }
 
         private void Update()
         {
             // FSM 업데이트
-            stateMachine.Update();
+            stateMachine.Update(Time.deltaTime);
         }
         #endregion
     }

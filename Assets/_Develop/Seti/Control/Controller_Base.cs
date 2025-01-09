@@ -14,7 +14,6 @@ namespace Seti
 
         // 인터페이스
         #region Interface
-        //public abstract IControl GetControlType();
         public void Initialize()
         {
             // Actor 참조
@@ -63,6 +62,7 @@ namespace Seti
         {
             // 행동 매핑 해제
             behaviourMap?.Clear();
+            behaviourMap = null;
         }
         #endregion
 
