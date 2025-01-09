@@ -7,28 +7,13 @@ namespace JungBin
     /// </summary>
     public class AttackBox : MonoBehaviour
     {
-        [SerializeField] private BoxCollider boxCollider;
-
-        [SerializeField] private Player player;
-
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
+        [SerializeField] private int attackDamage = 0;
         private void OnTriggerEnter(Collider other)
         {
-            if(other.GetComponent<BoxCollider>() == boxCollider)
+            if(other.GetComponent<CapsuleCollider>() == GameManager.Instance.Player_HitCapsuleCollider)
             {
                 Debug.Log("¸ÂÀ½");
-                player.TakeDamage(20);
+                GameManager.Instance.Player.TakeDamage(attackDamage);
             }
         }
     }

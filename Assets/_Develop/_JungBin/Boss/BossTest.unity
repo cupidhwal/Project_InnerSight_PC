@@ -412,8 +412,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 287124420}
-  - component: {fileID: 287124422}
   - component: {fileID: 287124421}
+  - component: {fileID: 287124423}
   m_Layer: 0
   m_Name: Hitbox
   m_TagString: Untagged
@@ -463,8 +463,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &287124422
-BoxCollider:
+--- !u!136 &287124423
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -481,9 +481,11 @@ BoxCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.16
+  m_Height: 1.64
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.82, z: 0}
 --- !u!1 &513127405
 GameObject:
   m_ObjectHideFlags: 0
@@ -1212,7 +1214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e7abc6b4077ba94981fc346d011f442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxCollider: {fileID: 287124422}
+  boxCollider: {fileID: 0}
   player: {fileID: 1920754659}
 --- !u!65 &1914374358
 BoxCollider:

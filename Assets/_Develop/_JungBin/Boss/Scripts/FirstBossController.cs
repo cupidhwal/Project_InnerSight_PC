@@ -10,8 +10,8 @@ namespace JungBin
     public class FirstBossController : MonoBehaviour
     {
         #region Variables
-        [SerializeField] private Transform player_Transform;    //플레이어의 위치
-        [SerializeField] private GameObject attackBox;      //보스의 공격 박스
+        [SerializeField] private GameObject rushAttackBox;      //보스의 공격 박스
+        [SerializeField] private BoxCollider throwAttackBox;      //보스의 공격 박스
         private Animator m_Animator;
 
 
@@ -20,6 +20,7 @@ namespace JungBin
         public static bool isAttack { get; set; } = false; // 공격중인지 여부
         public static bool isDashing { get; set; } = false; // 돌진중인지 여부
         private int lastAttack = -1; //직전 공격 패턴
+        private float jumpMoveSpeed = 10f;
         #endregion
 
         private void Start()
@@ -31,8 +32,7 @@ namespace JungBin
         void Update()
         {
             //플레이어와의 거리
-            Vector3 direction = player_Transform.position - transform.position;
-            direction.y = 0;
+            Vector3 direction = GameManager.Instance.PlayerTransform.position - transform.position;
             float distance = direction.magnitude;
 
             if (!isAttack)
@@ -46,6 +46,15 @@ namespace JungBin
             {
                 NextAttack();
             }
+
+            Vector3 dir = PlayerPosition();
+
+            if(m_Animator.GetBool("IsAttack01"))
+            {
+                JumpToPlayer(dir);
+
+            }
+
             AttackBoxActive();
 
         }
@@ -53,6 +62,8 @@ namespace JungBin
         //보스의 회전 관련 코드
         public void TurnBossToPlayer(Vector3 direction)
         {
+            transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+
             // 플레이어의 방향 계산
             Vector3 dir = direction.normalized;
 
@@ -70,7 +81,7 @@ namespace JungBin
             {
                 m_Animator.SetBool("IsFar", true);
             }
-            else if (distance < 5f)
+            else if (distance < 3f)
             {
                 m_Animator.SetBool("IsFar", false);
             }
@@ -114,15 +125,45 @@ namespace JungBin
             m_Animator.SetTrigger(triggerName);
         }
 
+        public Vector3 PlayerPosition()
+        {
+            Vector3 player_Position = GameManager.Instance.PlayerTransform.position - transform.position;
+
+            return player_Position;
+            
+        }
+
+        public void JumpToPlayer(Vector3 distance)
+        {
+            Vector3 dir = distance.normalized;
+            float player_Distance = distance.magnitude;
+
+            transform.position += dir * jumpMoveSpeed * Time.deltaTime;
+
+            if (player_Distance < 1f)
+            {
+                m_Animator.SetBool("IsAttack01", false);
+            }
+        }
+
         private void AttackBoxActive()
         {
             if (m_Animator.GetBool("IsAttack02") == true)
             {
-                attackBox.SetActive(true);
+                rushAttackBox.SetActive(true);
             }
             else
             {
-                attackBox.SetActive(false);
+                rushAttackBox.SetActive(false);
+            }
+
+            if (m_Animator.GetBool("IsAttack01") == true)
+            {
+                throwAttackBox.enabled = true;
+            }
+            else
+            {
+                throwAttackBox.enabled = false;
             }
         }
 
