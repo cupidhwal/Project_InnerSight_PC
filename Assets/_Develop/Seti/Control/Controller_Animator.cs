@@ -23,14 +23,13 @@ namespace Seti
             Animator = GetComponent<Animator>();
             aniMachine = new StateMachine<Controller_Animator>(
                 this,
-                new Player_Idle()
+                new AniState_Idle(this.GetComponentInParent<Actor>())
             );
 
             // 상태 추가
-            aniMachine.AddState(new Player_Idle());
-            aniMachine.AddState(new Player_Move());
-            aniMachine.AddState(new Player_Dash());
-            aniMachine.AddState(new Player_Attack());
+            aniMachine.AddState(new AniState_Move());
+            aniMachine.AddState(new AniState_Dash());
+            aniMachine.AddState(new AniState_Attack());
         }
 
         private void Update()

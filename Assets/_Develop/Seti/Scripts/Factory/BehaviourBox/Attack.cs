@@ -132,14 +132,14 @@ namespace Seti
                 SwitchStrategy(AttackStrategies.Normal);
             currentStrategy?.Attack();
 
-            actor.Controller_Animator.AniMachine.ChangeState<Player_Attack>();
+            actor.Controller_Animator.AniMachine.ChangeState<AniState_Attack>();
         }
 
         public void OnAttackCanceled(InputAction.CallbackContext _)
         {
             currentStrategy?.AttackExit();
 
-            actor.Controller_Animator.AniMachine.ChangeState<Player_Idle>();
+            actor.Controller_Animator.AniMachine.ChangeState<AniState_Idle>();
         }
 
         public void OnSkillStarted(InputAction.CallbackContext _)

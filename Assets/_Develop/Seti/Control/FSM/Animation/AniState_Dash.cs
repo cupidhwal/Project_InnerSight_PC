@@ -3,14 +3,8 @@ using UnityEngine;
 
 namespace Seti
 {
-    public class Player_Attack : Player_Base_AniState
+    public class AniState_Dash : AniState_Base
     {
-        // 필드
-        #region Variables
-        private int comboIndex;
-        private int comboCount = 2;
-        #endregion
-
         // 오버라이드
         #region Override
         // 초기화 메서드 - 생성 후 1회 실행
@@ -19,14 +13,15 @@ namespace Seti
         // 상태 전환 시 State Enter에 1회 실행
         public override void OnEnter()
         {
-            context.Animator.SetInteger(WhichAttack, AttackCombo());
-            context.Animator.SetBool(isAttack, true);
+            context.Animator.SetBool(isMove, true);
+            context.Animator.SetBool(isDash, true);
         }
 
         // 상태 전환 시 State Exit에 1회 실행
         public override void OnExit()
         {
-            context.Animator.SetBool(isAttack, false);
+            context.Animator.SetBool(isMove, false);
+            context.Animator.SetBool(isDash, false);
         }
 
         // 상태 전환 조건 메서드
@@ -41,7 +36,6 @@ namespace Seti
 
         // 메서드
         #region Methods
-        private int AttackCombo() => comboIndex++ % comboCount;
         #endregion
     }
 }

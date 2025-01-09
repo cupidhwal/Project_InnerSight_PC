@@ -1,9 +1,8 @@
 using System;
-using UnityEngine;
 
 namespace Seti
 {
-    public class Player_Idle : Player_Base_AniState
+    public class AniState_Idle : AniState_Base
     {
         // 오버라이드
         #region Override
@@ -11,7 +10,11 @@ namespace Seti
         public override void OnInitialized() { }
 
         // 상태 전환 시 State Enter에 1회 실행
-        public override void OnEnter() { }
+        public override void OnEnter()
+        {
+            context.transform.position = actorTransform.position;
+            context.transform.rotation = actorTransform.rotation;
+        }
 
         // 상태 전환 시 State Exit에 1회 실행
         public override void OnExit() { }
@@ -24,6 +27,11 @@ namespace Seti
         {
 
         }
+        #endregion
+
+        // 생성자
+        #region Constructor
+        public AniState_Idle(Actor actor) => actorTransform = actor.transform;
         #endregion
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Seti
 {
-    public class Player_Move : Player_Base_AniState
+    public class AniState_Move : AniState_Base
     {
         // 오버라이드
         #region Override

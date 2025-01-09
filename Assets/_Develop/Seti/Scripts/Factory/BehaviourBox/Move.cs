@@ -30,7 +30,7 @@ namespace Seti
         // Player - 대시
         public float Speed_Dash => speed_Move * 10f;
         private const float delay_Dash = 0.15f;
-        private const float coolDown_Dash = 4f;
+        private const float coolDown_Dash = 1f;
         private bool isDashed = false;
 
         // 몬스터
@@ -162,14 +162,14 @@ namespace Seti
         {
             moveInput = context.ReadValue<Vector2>();
 
-            actor.Controller_Animator.AniMachine.ChangeState<Player_Move>();
+            actor.Controller_Animator.AniMachine.ChangeState<AniState_Move>();
         }
 
         public void OnMoveCanceled(InputAction.CallbackContext _)
         {
             moveInput = Vector2.zero;
 
-            actor.Controller_Animator.AniMachine.ChangeState<Player_Idle>();
+            actor.Controller_Animator.AniMachine.ChangeState<AniState_Idle>();
         }
 
         public void OnDashStarted(InputAction.CallbackContext _)
@@ -214,7 +214,7 @@ namespace Seti
         {
             isDashed = true;
 
-            actor.Controller_Animator.AniMachine.ChangeState<Player_Dash>();
+            actor.Controller_Animator.AniMachine.ChangeState<AniState_Dash>();
             moveStrategies = MoveStrategies.Dash;
             SwitchStrategy();
 
@@ -222,7 +222,7 @@ namespace Seti
             if (currentStrategy is Move_Dash dash)
                 dash.MoveExit();
 
-            actor.Controller_Animator.AniMachine.ChangeState<Player_Idle>();
+            actor.Controller_Animator.AniMachine.ChangeState<AniState_Idle>();
             moveStrategies = MoveStrategies.Normal;
             SwitchStrategy();
 
