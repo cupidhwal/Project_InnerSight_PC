@@ -1,6 +1,8 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace JungBin
 {
@@ -21,11 +23,31 @@ namespace JungBin
         public static bool isDashing { get; set; } = false; // 돌진중인지 여부
         private int lastAttack = -1; //직전 공격 패턴
         private float jumpMoveSpeed = 10f;
+
+        //점프 공격 패턴
+        public GameObject rockPrefab;          // 돌 프리팹
+        public GameObject warningEffectPrefab; // 경고 표시 프리팹
+        public Transform spawnPointsParent;   // 고정된 스폰 포인트
+        private List<Transform> spawnPoints = new List<Transform>(); // 자식 스폰 포인트 리스트
+        public float spawnHeight = 10f;        // 돌 생성 높이
+        public int rocksPerBatch = 2;          // 한 번에 생성될 돌의 개수
+        public float spawnInterval = 0.4f;     // 생성 간격
+        public int totalBatches = 2;           // 총 배치 수
+        public float warningDuration = 0.6f;   // 경고 표시 지속 시간
         #endregion
 
         private void Start()
         {
             m_Animator = this.GetComponent<Animator>();
+
+            // 부모의 모든 자식을 가져와 스폰 포인트 리스트에 추가
+            foreach (Transform child in spawnPointsParent)
+            {
+                if (child != spawnPointsParent) // 부모 자신은 제외
+                {
+                    spawnPoints.Add(child);
+                }
+            }
         }
 
         // Update is called once per frame
@@ -146,6 +168,76 @@ namespace JungBin
             }
         }
 
+        public void OnLanding() 
+        {
+            Debug.Log("!!");
+            StartCoroutine(SpawnRocksWithInterval());
+        }
+
+        private IEnumerator SpawnRocksWithInterval()
+        {
+            int batchCount = 0;
+
+            while (batchCount < totalBatches)
+            {
+                // 경고 표시 후 돌 생성
+                yield return StartCoroutine(ShowWarningsAndSpawnRocks());
+                batchCount++;
+
+                // 간격 대기
+                yield return new WaitForSeconds(spawnInterval);
+            }
+        }
+
+        private IEnumerator ShowWarningsAndSpawnRocks()
+        {
+            int spawnedCount = 0;
+            
+
+            foreach (Transform spawnPoint in spawnPoints)
+            {
+                if (spawnedCount >= rocksPerBatch) break; // 한 번에 rocksPerBatch 개까지만 생성
+
+                // 경고 표시 생성
+                GameObject warning = Instantiate(
+                    warningEffectPrefab,
+                    new Vector3(spawnPoint.position.x, 0, spawnPoint.position.z), // 지면에 생성
+                    Quaternion.identity
+                );
+
+                // 일정 시간 후 경고 표시 제거
+                Destroy(warning, warningDuration);
+
+                spawnedCount++;
+            }
+
+            // 경고 지속 시간 대기
+            yield return new WaitForSeconds(warningDuration);
+
+            // 돌 생성
+            SpawnRocks();
+        }
+
+        private void SpawnRocks()
+        {
+            int spawnedCount = 0;
+
+            foreach (Transform spawnPoint in spawnPoints)
+            {
+                if (spawnedCount >= rocksPerBatch) break; // 한 번에 rocksPerBatch 개까지만 생성
+
+                // 돌 생성 위치 계산
+                Vector3 spawnPosition = new Vector3(spawnPoint.position.x, spawnHeight, spawnPoint.position.z);
+
+                // 돌 생성
+                GameObject rock = Instantiate(rockPrefab, spawnPosition, Quaternion.identity);
+
+                spawnedCount++;
+            }
+        }
+
+
+
         private void AttackBoxActive()
         {
             if (m_Animator.GetBool("IsAttack02") == true)
@@ -157,7 +249,7 @@ namespace JungBin
                 rushAttackBox.SetActive(false);
             }
 
-            if (m_Animator.GetBool("IsAttack01") == true)
+            if (m_Animator.GetBool("IsAttack03") == true)
             {
                 throwAttackBox.enabled = true;
             }
