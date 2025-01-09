@@ -46,7 +46,7 @@ namespace Noah
     }
 
     [Serializable]
-    public class FireWallSkill : Skill<FireWallSkill>
+    public class FireSkill : Skill<FireSkill>
     {
         public override void Activate()
         {
@@ -61,7 +61,7 @@ namespace Noah
     }
 
     [Serializable]
-    public class Meteoros : Skill<Meteoros>
+    public class Kunai : Skill<Kunai>
     {
         public override void Activate()
         {
@@ -73,7 +73,7 @@ namespace Noah
     }
 
     [Serializable]
-    public class FireHand : Skill<FireHand>
+    public class MeteorRain : Skill<MeteorRain>
     {
         public override void Activate()
         {
@@ -85,31 +85,7 @@ namespace Noah
     }
 
     [Serializable]
-    public class FireBomb : Skill<FireBomb>
-    {
-        public override void Activate()
-        {
-            isSkillOn = false;
-            Debug.Log(damage + " / " + cooldown);
-
-            ReturnToPool();
-        }
-    }
-
-    [Serializable]
-    public class FireNapalm : Skill<FireNapalm>
-    {
-        public override void Activate()
-        {
-            isSkillOn = false;
-            Debug.Log(damage + " / " + cooldown);
-
-            ReturnToPool();
-        }
-    }
-
-    [Serializable]
-    public class FireIncendiary : Skill<FireIncendiary>
+    public class LaserFire : Skill<LaserFire>
     {
         public override void Activate()
         {

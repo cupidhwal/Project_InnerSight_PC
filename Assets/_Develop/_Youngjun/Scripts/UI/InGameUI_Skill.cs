@@ -17,8 +17,8 @@ namespace Noah
 
         public List<SkillBase> skills = new List<SkillBase>();
         private List<SkillBase> randomSkills = new List<SkillBase>(); // 랜덤으로 선택된 스킬 목록
-        private List<Image> skillUIList = new List<Image>(); // UI 슬롯 리스트
-        private List<SkillBase> skillSlots = new List<SkillBase>();
+        public List<Image> skillUIList = new List<Image>(); // UI 슬롯 리스트
+        public List<SkillBase> skillSlots = new List<SkillBase>();
 
         public SkillBase firstSkill;
         public SkillBase secondSkill;
@@ -35,12 +35,10 @@ namespace Noah
         public Image firstSkillUI, secondSkillUI, thridSkillUI, fourthSkillUI;
 
         // 플레이어 스킬
-        public FireWallSkill fireWall;
-        public Meteoros meteo;
-        public FireHand fireHand;
-        public FireBomb fireBomb;
-        public FireNapalm fireNapalm;
-        public FireIncendiary fireIncendiary;
+        public FireSkill fireSkill;
+        public Kunai kunai;
+        public MeteorRain meteorRain;
+        public LaserFire laserFire;
 
         private void Awake()
         {
@@ -56,12 +54,10 @@ namespace Noah
         {
             skliiObject = transform.GetChild(0);
 
-            skills.Add(fireWall);
-            skills.Add(meteo);
-            skills.Add(fireHand);
-            skills.Add(fireBomb);
-            skills.Add(fireNapalm);
-            skills.Add(fireIncendiary);
+            skills.Add(fireSkill);
+            skills.Add(kunai);
+            skills.Add(meteorRain);
+            skills.Add(laserFire);
 
             // UI 슬롯을 초기화 (Unity 에디터에서 설정한 UI Image 배열)
             skillUIList.Add(firstSkillUI);
@@ -268,27 +264,16 @@ namespace Noah
         }
 
 
-        public IEnumerator SkillCoolTime(SkillBase skill)
+        public IEnumerator SkillCoolTime(SkillBase skill, Image skillUI)
         {
             float countdown = 0f;
             float coolText;
-            Image skillUI;
-
 
             if (skill.isSkillOn == false)
             {
                 //isCooldown = true;
 
                 //Debug.Log("스킬사용");
-
-                if (skill == firstSkill)
-                {
-                    skillUI = firstSkillUI;
-                }
-                else
-                {
-                    skillUI = secondSkillUI;
-                }
 
                 skillUI.transform.GetChild(0).GetComponent<Image>().fillAmount = 1;
 
