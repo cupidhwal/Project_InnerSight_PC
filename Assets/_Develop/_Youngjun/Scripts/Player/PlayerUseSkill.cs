@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 namespace Noah
@@ -7,32 +8,63 @@ namespace Noah
     {
         private bool isStartAttack = false;
         public InGameUI_Skill setSkill;
+        public GameObject skillRange;
+        public LayerMask groundLayerMask;
+        private Camera mainCamera;
+
+        private GameObject effectGo;
+
+        private bool isReadySkill = false;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-        
+            Init();
         }
 
         // Update is called once per frame
         void Update()
         {
-            ActiveSkill();
-        }
-
-        void ActiveSkill()
-        {
-            if (Input.GetKeyDown("1"))
+            if (isReadySkill)
             {
+                CheckSkillRange();
 
                 if (Input.GetMouseButton(0))
                 {
+                    isReadySkill = false;
+
+                    Destroy(effectGo);
+
                     if (setSkill.skillSlots[0] != null && setSkill.skillSlots[0].isSkillOn)
                     {
                         UseSkill(() => setSkill.skillSlots[0]);
                         StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[0], setSkill.skillUIList[0]));
                     }
                 }
+            }
+
+
+
+            ActiveSkill();
+        }
+
+        void Init()
+        {
+            mainCamera = Camera.main;
+        }
+
+        void UsePlayerSkill()
+        { 
+            
+        }
+
+        void ActiveSkill()
+        {
+            if (Input.GetKeyDown("1"))
+            {
+                isReadySkill = true;
+
+
             }
             else if (Input.GetKeyDown("2"))
             {
@@ -86,7 +118,7 @@ namespace Noah
 
                     skill.Activate();
                     //animator.SetBool("isSkill", true);
-                    GameObject skillef = Instantiate(skill.skillPrefab, skillPos, transform.rotation);
+                    GameObject skillef = Instantiate(skill.skillPrefab, RayToScreen(), Quaternion.identity);
 
                     //skillef.transform.GetChild(0).GetComponent<SkillAttack>().damage = skill.damage;
 
@@ -95,6 +127,34 @@ namespace Noah
                 }
 
             }
+        }
+
+        void CheckSkillRange()
+        {
+            Vector3 pos = RayToScreen() + new Vector3(0f, 0.1f, 0f);
+
+            if (skillRange != null && effectGo == null)
+            {
+                effectGo = Instantiate(skillRange, pos, skillRange.transform.rotation);
+            }
+
+            if (effectGo != null)
+            {
+                effectGo.transform.position = pos;
+            }
+        }
+
+        Vector3 RayToScreen()
+        {
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100f, groundLayerMask))
+            {
+                return hit.point;
+            }
+
+            return hit.point;
         }
     }
 }
