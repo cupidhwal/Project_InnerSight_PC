@@ -131,11 +131,15 @@ namespace Seti
             if (currentType != AttackStrategies.Normal)
                 SwitchStrategy(AttackStrategies.Normal);
             currentStrategy?.Attack();
+
+            actor.Controller_Animator.AniMachine.ChangeState<Player_Attack>();
         }
 
         public void OnAttackCanceled(InputAction.CallbackContext _)
         {
             currentStrategy?.AttackExit();
+
+            actor.Controller_Animator.AniMachine.ChangeState<Player_Idle>();
         }
 
         public void OnSkillStarted(InputAction.CallbackContext _)

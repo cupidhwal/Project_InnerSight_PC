@@ -21,15 +21,27 @@ namespace Seti
         [HideInInspector]
         protected List<Behaviour> behaviours = new();         // [직렬화 된 필드 - 읽기 전용 속성] 구조가 아니면 작동하지 않는다
 
+        // 일반
+        protected Controller_Animator animator;
+
         // 속성
         public Blueprint_Actor Origin => blueprint;
         public State_Actor ActorState => actorState;
         public List<Behaviour> Behaviours => behaviours;
+        public Controller_Animator Controller_Animator => animator;
         #endregion
 
         // 추상화
         #region Abstract
         protected abstract State_Actor CreateState();
+        #endregion
+
+        // 라이프 사이클
+        #region Life Cycle
+        protected virtual void Start()
+        {
+            animator = GetComponentInChildren<Controller_Animator>();
+        }
         #endregion
 
         // 메서드

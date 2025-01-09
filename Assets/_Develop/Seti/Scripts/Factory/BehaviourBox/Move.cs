@@ -161,11 +161,15 @@ namespace Seti
         public void OnMovePerformed(InputAction.CallbackContext context)
         {
             moveInput = context.ReadValue<Vector2>();
+
+            actor.Controller_Animator.AniMachine.ChangeState<Player_Move>();
         }
 
         public void OnMoveCanceled(InputAction.CallbackContext _)
         {
             moveInput = Vector2.zero;
+
+            actor.Controller_Animator.AniMachine.ChangeState<Player_Idle>();
         }
 
         public void OnDashStarted(InputAction.CallbackContext _)
@@ -210,6 +214,7 @@ namespace Seti
         {
             isDashed = true;
 
+            actor.Controller_Animator.AniMachine.ChangeState<Player_Dash>();
             moveStrategies = MoveStrategies.Dash;
             SwitchStrategy();
 
@@ -217,6 +222,7 @@ namespace Seti
             if (currentStrategy is Move_Dash dash)
                 dash.MoveExit();
 
+            actor.Controller_Animator.AniMachine.ChangeState<Player_Idle>();
             moveStrategies = MoveStrategies.Normal;
             SwitchStrategy();
 
