@@ -10,11 +10,11 @@ namespace JungBin
         [SerializeField] private int attackDamage = 0;
         private void OnTriggerEnter(Collider other)
         {
-            if(other.GetComponent<CapsuleCollider>() == GameManager.Instance.Player_HitCapsuleCollider)
-            {
-                Debug.Log("맞음");
-                GameManager.Instance.Player.TakeDamage(attackDamage);
-            }
+                if (other.GetComponent<CapsuleCollider>() == GameManager.Instance.Player_HitCapsuleCollider)
+                {
+                    Debug.Log("맞음");
+                    GameManager.Instance.Player.TakeDamage(attackDamage);
+                }
         }
     }
 }
