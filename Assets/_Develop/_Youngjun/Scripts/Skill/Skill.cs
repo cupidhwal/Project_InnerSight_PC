@@ -4,9 +4,17 @@ using System.Collections;
 
 namespace Noah
 {
+    public enum SkillRangeType
+    { 
+        Circle,
+        Cube
+    }
+
     // 공통 부모 클래스 정의 (비제네릭)
     public abstract class SkillBase
     {
+        public SkillRangeType rangeType;
+
         public GameObject skillPrefab;
         public float cooldown;
         public float damage;
@@ -17,7 +25,6 @@ namespace Noah
         public Sprite skillImage;
         public Sprite UISprite;
         public bool isSkillOn = true;
-        
 
         // 스킬 사용 시 실행되는 메서드
         public abstract void Activate();

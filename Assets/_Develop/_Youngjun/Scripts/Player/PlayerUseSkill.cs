@@ -8,13 +8,19 @@ namespace Noah
     {
         private bool isStartAttack = false;
         public InGameUI_Skill setSkill;
-        public GameObject skillRange;
+        private GameObject skillRange_Circle;
+        private GameObject skillRange_Cube;
         public LayerMask groundLayerMask;
         private Camera mainCamera;
 
         private GameObject effectGo;
+        private GameObject skillef;
 
         private bool isReadySkill = false;
+
+        private int index = 0;
+
+        public float rotationSpeed = 100f; // 회전 속도
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -25,25 +31,12 @@ namespace Noah
         // Update is called once per frame
         void Update()
         {
-            if (isReadySkill)
+            if (isReadySkill && setSkill.skillSlots[index] != null)
             {
-                CheckSkillRange();
+                RangeType(setSkill.skillSlots[index]);
 
-                if (Input.GetMouseButton(0))
-                {
-                    isReadySkill = false;
-
-                    Destroy(effectGo);
-
-                    if (setSkill.skillSlots[0] != null && setSkill.skillSlots[0].isSkillOn)
-                    {
-                        UseSkill(() => setSkill.skillSlots[0]);
-                        StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[0], setSkill.skillUIList[0]));
-                    }
-                }
+                UsePlayerSkill(index);
             }
-
-
 
             ActiveSkill();
         }
@@ -51,11 +44,25 @@ namespace Noah
         void Init()
         {
             mainCamera = Camera.main;
+            skillRange_Circle = transform.GetChild(0).gameObject;
+            skillRange_Cube = transform.GetChild(1).gameObject;
         }
 
-        void UsePlayerSkill()
-        { 
-            
+        void UsePlayerSkill(int _index)
+        {
+            if (Input.GetMouseButton(1))
+            {
+                isReadySkill = false;
+
+                effectGo.SetActive(false);
+                //Destroy(effectGo);
+
+                if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
+                {
+                    UseSkill(() => setSkill.skillSlots[_index]);
+                    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[_index], setSkill.skillUIList[_index]));
+                }
+            }
         }
 
         void ActiveSkill()
@@ -64,35 +71,34 @@ namespace Noah
             {
                 isReadySkill = true;
 
-
+                index = 0;
             }
             else if (Input.GetKeyDown("2"))
             {
-                if (setSkill.skillSlots[1] != null && setSkill.skillSlots[1].isSkillOn)
-                {
-                    UseSkill(() => setSkill.skillSlots[1]);
-                    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[1], setSkill.skillUIList[1]));
-                }
+                isReadySkill = true;
+
+                index = 1;
             }
             else if (Input.GetKeyDown("3"))
             {
-                if (setSkill.skillSlots[2] != null && setSkill.skillSlots[2].isSkillOn)
-                {
-                    UseSkill(() => setSkill.skillSlots[2]);
-                    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[2], setSkill.skillUIList[2]));
-                }
+                isReadySkill = true;
+
+                index = 2;
             }
             else if (Input.GetKeyDown("4"))
             {
-                if (setSkill.skillSlots[3] != null && setSkill.skillSlots[3].isSkillOn)
-                {
-                    UseSkill(() => setSkill.skillSlots[3]);
-                    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[3], setSkill.skillUIList[3]));
-                }
+                isReadySkill = true;
+
+                index = 3;
             }
-
-
+            else if (isReadySkill && Input.GetKeyDown("1") || Input.GetKeyDown("2") || 
+                Input.GetKeyDown("3") || Input.GetKeyDown("4"))
+            {
+                effectGo = null;
+            }
         }
+
+
 
         void UseSkill(Func<SkillBase> factoryMethod)
         {
@@ -102,24 +108,23 @@ namespace Noah
             {
                 if (skill.isSkillOn)
                 {
-                    //isSkillAtk = true;
                     isStartAttack = true;
-
-                    Vector2 skillPos = Vector2.zero;
-
-                    if (transform.rotation.y == 0f)
-                    {
-                        skillPos = new Vector2(transform.position.x + skill.skillPos.x, transform.position.y + skill.skillPos.y);
-                    }
-                    else
-                    {
-                        skillPos = new Vector2(transform.position.x - skill.skillPos.x, transform.position.y + skill.skillPos.y);
-                    }
 
                     skill.Activate();
                     //animator.SetBool("isSkill", true);
-                    GameObject skillef = Instantiate(skill.skillPrefab, RayToScreen(), Quaternion.identity);
 
+                    Vector3 skillPos = Vector3.zero;
+
+                    if (skill.rangeType == SkillRangeType.Circle)
+                    {
+                        skillPos = new Vector3(RayToScreen().x, skill.skillPrefab.transform.position.y, RayToScreen().z);      
+                    }
+                    else if (skill.rangeType == SkillRangeType.Cube)
+                    {
+                        skillPos = new Vector3(transform.position.x + 1f, skill.skillPrefab.transform.position.y, transform.position.z);
+                    }
+
+                    skillef = Instantiate(skill.skillPrefab, skillPos, skill.skillPrefab.transform.rotation);
                     //skillef.transform.GetChild(0).GetComponent<SkillAttack>().damage = skill.damage;
 
                     StartCoroutine(skill.SkillCoolTime());
@@ -129,19 +134,46 @@ namespace Noah
             }
         }
 
-        void CheckSkillRange()
+        void CheckSkillRange(GameObject prefab, SkillBase skill)
         {
-            Vector3 pos = RayToScreen() + new Vector3(0f, 0.1f, 0f);
+            Vector3 pos = Vector3.zero;
 
-            if (skillRange != null && effectGo == null)
+            if (skill != null && skill.rangeType == SkillRangeType.Circle)
             {
-                effectGo = Instantiate(skillRange, pos, skillRange.transform.rotation);
+                pos = RayToScreen() + new Vector3(0f, 0.1f, 0f);
+
+                if (prefab != null && effectGo == null)
+                {
+                    skillRange_Circle.SetActive(true);
+
+                    effectGo = skillRange_Circle;
+                }
+
+                if (effectGo != null)
+                {
+                    effectGo.transform.position = pos;
+                }
+            }
+            else if (skill != null && skill.rangeType == SkillRangeType.Cube)
+            {
+                if (prefab != null && effectGo == null)
+                {
+                    skillRange_Cube.SetActive(true);
+
+                    effectGo = skillRange_Cube;
+
+                    //effectGo = Instantiate(prefab, transform.position, UpdateSkillRangeRotation());
+                }
+
+                if (effectGo != null)
+                {
+                    effectGo.transform.position = transform.position;
+                    effectGo.transform.rotation = UpdateSkillRangeRotation();
+                }
             }
 
-            if (effectGo != null)
-            {
-                effectGo.transform.position = pos;
-            }
+
+
         }
 
         Vector3 RayToScreen()
@@ -155,6 +187,42 @@ namespace Noah
             }
 
             return hit.point;
+        }
+
+        Quaternion UpdateSkillRangeRotation()
+        {
+            // 마우스 위치 가져오기
+            Vector3 mousePosition = Input.mousePosition;
+            Quaternion targetRotation = Quaternion.identity;
+
+            // 마우스 위치를 월드 좌표로 변환
+            Ray ray = mainCamera.ScreenPointToRay(mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                // 방향 계산 (오브젝트 위치 -> 마우스 위치)
+                Vector3 direction = hit.point - transform.position;
+
+                // 방향에 따라 회전 적용
+                targetRotation = Quaternion.LookRotation(direction);
+
+                return targetRotation;
+            }
+
+            return targetRotation;
+        }
+
+        void RangeType(SkillBase skill)
+        {
+            switch (skill.rangeType)
+            {
+                case SkillRangeType.Circle:   
+                    CheckSkillRange(skillRange_Circle, skill);
+                    break;      
+                case SkillRangeType.Cube:
+                    CheckSkillRange(skillRange_Cube, skill);
+                    break;
+                
+            }
         }
     }
 }
