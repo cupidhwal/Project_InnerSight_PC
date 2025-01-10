@@ -13,51 +13,47 @@ namespace Seti
     [System.Serializable]
     public class Move : IBehaviour, IHasStrategy
     {
-        private enum MoveStrategies
+        private enum StrategyType
         {
             Normal,
             Dash,
             Walk,
-            Run
+            Run,
+            NULL
         }
 
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
-        // Player - ±âº» ÀÌµ¿
+        // Player
         private float speed_Move = 4f;
-        private const float speed_Move_Default = 4f;
-
-        // Player - ´ë½Ã
         public float Speed_Dash => speed_Move * 10f;
         private const float delay_Dash = 0.15f;
         private const float coolDown_Dash = 1f;
         private bool isDashed = false;
 
-        // ¸ó½ºÅÍ
-        private const float speed_Walk = 2f;
-        private const float speed_Run = 3.5f;
-
+        // ì „ëµ ê´€ë¦¬
         private Actor actor;
         [SerializeReference]
         private List<Strategy> strategies;
         private IMoveStrategy currentStrategy;
-        private Vector2 moveInput; // ÀÔ·Â °ª
 
-        // »óÅÂ °ü¸®
-        private MoveStrategies moveStrategies;
+        // ì œì–´ ê´€ë¦¬
+        private Vector2 moveInput;  // ì…ë ¥ ê°’
         private State_Common state;
+        private StrategyType currentType;
+        private State<Controller_FSM> currentState;
         #endregion
 
-        // ÀÎÅÍÆäÀÌ½º
+        // ì¸í„°í˜ì´ìŠ¤
         #region Interface
-        // ¾÷±×·¹ÀÌµå
+        // ì—…ê·¸ë ˆì´ë“œ
         public void Upgrade(float increment)
         {
-            speed_Move += increment * speed_Move_Default / 100;
+            speed_Move += increment * actor.Speed_Run / 100;
             Initialize(actor);
         }
 
-        // ÃÊ±âÈ­
+        // ì´ˆê¸°í™”
         public void Initialize(Actor actor)
         {
             this.actor = actor;
@@ -76,16 +72,16 @@ namespace Seti
                         break;
 
                     case Move_Walk:
-                        moveStrategy.Initialize(actor, speed_Walk);
+                        moveStrategy.Initialize(actor, actor.Speed_Walk);
                         break;
 
                     case Move_Run:
-                        moveStrategy.Initialize(actor, speed_Run);
+                        moveStrategy.Initialize(actor, actor.Speed_Run);
                         break;
                 }
             }
 
-            // ÃÊ±â Àü·« ¼³Á¤
+            // ì´ˆê¸° ì „ëµ ì„¤ì •
             var defaultStrategy = CollectionUtility.FirstOrNull(strategies, s => s.strategy is Move_Normal);
             if (defaultStrategy != null)
             {
@@ -97,7 +93,7 @@ namespace Seti
             }
             else
             {
-                Debug.LogWarning("Move Àü·«ÀÌ ¾ø¾î ÃÊ±â Àü·«À» ¼³Á¤ÇÏÁö ¸øÇß½À´Ï´Ù.");
+                Debug.LogWarning("Move ì „ëµì´ ì—†ì–´ ì´ˆê¸° ì „ëµì„ ì„¤ì •í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.");
                 ChangeStrategy(null);
             }
         }
@@ -105,13 +101,13 @@ namespace Seti
         public Type GetBehaviourType() => typeof(Move);
         public Type GetStrategyType() => typeof(IMoveStrategy);
 
-        // Çàµ¿ Àü·« ¼³Á¤
+        // í–‰ë™ ì „ëµ ì„¤ì •
         public void SetStrategies(IEnumerable<Strategy> strategies)
         {
-            this.strategies = strategies.ToList(); // Àü´Ş¹ŞÀº Àü·« ¸®½ºÆ® ÀúÀå
+            this.strategies = strategies.ToList(); // ì „ë‹¬ë°›ì€ ì „ëµ ë¦¬ìŠ¤íŠ¸ ì €ì¥
         }
 
-        // Çàµ¿ Àü·« º¯°æ
+        // í–‰ë™ ì „ëµ ë³€ê²½
         public void ChangeStrategy(Type strategyType)
         {
             var moveStrategy = CollectionUtility.FirstOrNull(strategies, s => s.strategy.GetType() == strategyType);
@@ -121,34 +117,64 @@ namespace Seti
             }
         }
 
-        private void SwitchStrategy()
+        private void SwitchStrategy(StrategyType type)
         {
-            switch (moveStrategies)
+            currentType = type;
+            switch (currentType)
             {
-                case MoveStrategies.Normal:
+                case StrategyType.Normal:
                     ChangeStrategy(typeof(Move_Normal));
                     break;
 
-                case MoveStrategies.Dash:
+                case StrategyType.Dash:
                     ChangeStrategy(typeof(Move_Dash));
                     break;
 
-                case MoveStrategies.Walk:
+                case StrategyType.Walk:
                     ChangeStrategy(typeof(Move_Walk));
                     break;
 
-                case MoveStrategies.Run:
+                case StrategyType.Run:
                     ChangeStrategy(typeof(Move_Run));
+                    break;
+
+                default:
+                    currentStrategy = null;
+                    break;
+            }
+        }
+        private void SwitchStrategy()
+        {
+            switch (currentType)
+            {
+                case StrategyType.Normal:
+                    ChangeStrategy(typeof(Move_Normal));
+                    break;
+
+                case StrategyType.Dash:
+                    ChangeStrategy(typeof(Move_Dash));
+                    break;
+
+                case StrategyType.Walk:
+                    ChangeStrategy(typeof(Move_Walk));
+                    break;
+
+                case StrategyType.Run:
+                    ChangeStrategy(typeof(Move_Run));
+                    break;
+
+                default:
+                    currentStrategy = null;
                     break;
             }
         }
         #endregion
 
-        // ¶óÀÌÇÁ »çÀÌÅ¬
+        // ë¼ì´í”„ ì‚¬ì´í´
         #region Life Cycle
         public void FixedUpdate()
         {
-            // °ø°İ ÁßÀÏ ¶© ÀÌµ¿ ºÒ°¡
+            // ê³µê²© ì¤‘ì¼ ë• ì´ë™ ë¶ˆê°€
             State_Common state = actor.ActorState as State_Common;
             if (state.IsAttack) return;
 
@@ -156,50 +182,41 @@ namespace Seti
         }
         #endregion
 
-        // ÀÌº¥Æ® ÇÚµé·¯
-        #region Event Handlers
-        public void OnMovePerformed(InputAction.CallbackContext context)
-        {
-            moveInput = context.ReadValue<Vector2>();
-
-            actor.Controller_Animator.IsMove = true;
-        }
-
-        public void OnMoveCanceled(InputAction.CallbackContext _)
-        {
-            moveInput = Vector2.zero;
-
-            actor.Controller_Animator.IsMove = false;
-        }
-
-        public void OnDashStarted(InputAction.CallbackContext _)
-        {
-            // Ã¼°ø ÁßÀÏ °æ¿ì ÂøÁö±îÁö Àü·« º¯°æ ºÒ°¡
-            if (!state.IsGrounded || isDashed) return;
-
-            Execute_Dash();
-        }
-
-        public void OnRunStarted(InputAction.CallbackContext _)
-        {
-            // Ã¼°ø ÁßÀÏ °æ¿ì ÂøÁö±îÁö Àü·« º¯°æ ºÒ°¡
-            if (!state.IsGrounded) return;
-
-            moveStrategies = MoveStrategies.Run;
-            SwitchStrategy();
-        }
-
-        public void OnRunCanceled(InputAction.CallbackContext _)
-        {
-            // Ã¼°ø ÁßÀÏ °æ¿ì ÂøÁö±îÁö Àü·« º¯°æ ºÒ°¡
-            if (!state.IsGrounded) return;
-
-            moveStrategies = MoveStrategies.Normal;
-            SwitchStrategy();
-        }
+        // ì»¨íŠ¸ë¡¤ëŸ¬
+        #region Controllers
+        #region Controller_Input
+        public void OnMovePerformed(InputAction.CallbackContext context) => OnMove(context.ReadValue<Vector2>(), true);
+        public void OnMoveCanceled(InputAction.CallbackContext _) => OnMove(Vector2.zero, false);
+        public void OnDashStarted(InputAction.CallbackContext _) => OnDash();
+        public void OnRunStarted(InputAction.CallbackContext _) => OnRun(StrategyType.Run);
+        public void OnRunCanceled(InputAction.CallbackContext _) => OnRun(StrategyType.Walk);
         #endregion
 
-        // ÀÌº¥Æ® ¸Ş¼­µå
+        #region Controller_FSM
+        public void FSM_MoveInput(Vector2 moveInput) => OnMove(moveInput, true);
+        public void FSM_MoveSwitch(State<Controller_FSM> state)
+        {
+            // FSM ìƒíƒœì— ë”°ë¼ ë™ì‘ ì œì–´
+            currentState = state;
+            switch (currentState)
+            {
+                case Enemy_State_Patrol:
+                    SwitchStrategy(StrategyType.Walk);
+                    break;
+
+                case Enemy_State_Chase:
+                    SwitchStrategy(StrategyType.Run);
+                    break;
+
+                default:
+                    SwitchStrategy(StrategyType.NULL);
+                    break;
+            }
+        }
+        #endregion
+        #endregion
+
+        // ì´ë²¤íŠ¸ ë©”ì„œë“œ
         #region Event Methods
         public void OnCollisionEnter(Collision collision)
         {
@@ -208,23 +225,48 @@ namespace Seti
         }
         #endregion
 
-        // À¯Æ¿¸®Æ¼
+        // ë©”ì„œë“œ
+        #region Methods
+        private void OnMove(Vector2 moveInput, bool isMove)
+        {
+            this.moveInput = moveInput;
+            actor.Controller_Animator.IsMove = isMove;
+        }
+
+        private void OnDash()
+        {
+            // ì²´ê³µ ì¤‘ì¼ ê²½ìš° ì°©ì§€ê¹Œì§€ ì „ëµ ë³€ê²½ ë¶ˆê°€
+            if (!state.IsGrounded || isDashed) return;
+
+            Execute_Dash();
+        }
+
+        private void OnRun(StrategyType type)
+        {
+            currentType = type;
+
+            // ì²´ê³µ ì¤‘ì¼ ê²½ìš° ì°©ì§€ê¹Œì§€ ì „ëµ ë³€ê²½ ë¶ˆê°€
+            if (!state.IsGrounded) return;
+
+            SwitchStrategy();
+        }
+        #endregion
+
+        // ìœ í‹¸ë¦¬í‹°
         #region Utilities
         private async void Execute_Dash()
         {
             isDashed = true;
 
             actor.Controller_Animator.IsDash = true;
-            moveStrategies = MoveStrategies.Dash;
-            SwitchStrategy();
+            SwitchStrategy(StrategyType.Dash);
 
             await Task.Delay((int)(delay_Dash * 1000));
             if (currentStrategy is Move_Dash dash)
                 dash.MoveExit();
 
             actor.Controller_Animator.IsDash = false;
-            moveStrategies = MoveStrategies.Normal;
-            SwitchStrategy();
+            SwitchStrategy(StrategyType.Normal);
 
             await Task.Delay((int)((coolDown_Dash - delay_Dash) * 1000));
             isDashed = false;

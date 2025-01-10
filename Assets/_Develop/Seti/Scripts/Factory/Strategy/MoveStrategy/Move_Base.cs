@@ -4,22 +4,22 @@ using UnityEngine;
 namespace Seti
 {
     /// <summary>
-    /// Move BehaviourÀÇ Strategy Base
+    /// Move Behaviourì˜ Strategy Base
     /// </summary>
     public abstract class Move_Base : IMoveStrategy
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
-        // ¼¼ÆÃ
+        // ì„¸íŒ…
         protected float speed;
         protected Actor actor;
         protected Rigidbody rb;
         protected Vector2 lastMoveDirection;
         #endregion
 
-        // ÀÎÅÍÆäÀÌ½º
+        // ì¸í„°í˜ì´ìŠ¤
         #region Interface
-        // ÃÊ±âÈ­
+        // ì´ˆê¸°í™”
         public void Initialize(Actor actor, float speed)
         {
             this.actor = actor;
@@ -29,7 +29,7 @@ namespace Seti
 
         public Type GetStrategyType() => typeof(IMoveStrategy);
 
-        // QuaterView - World ±âÁØ ÀÌµ¿ ·ÎÁ÷
+        // QuaterView - World ê¸°ì¤€ ì´ë™ ë¡œì§
         public virtual void Move(Vector2 moveInput)
         {
             if (rb == null) return;
@@ -37,24 +37,24 @@ namespace Seti
             Vector2 dir = MoveDirection(moveInput);
             Vector3 moveDirection = new(dir.x, 0, dir.y);
 
-            Move(moveDirection);
+            Move_QuaterView(moveDirection);
         }
-        protected void Move(Vector3 moveDirection)
+        protected void Move_QuaterView(Vector3 moveDirection)
         {
             Vector3 move = speed * Time.fixedDeltaTime * moveDirection.normalized;
             Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * move;
             rb.MovePosition(actor.transform.position + QuaterView);
 
-            // ÀÌµ¿ÀÌ ¹ß»ıÇÒ ¶§¸¸ È¸Àü
+            // ì´ë™ì´ ë°œìƒí•  ë•Œë§Œ íšŒì „
             if (moveDirection != Vector3.zero)
             {
-                // ÁøÇà ¹æÇâÀ¸·Î È¸Àü
+                // ì§„í–‰ ë°©í–¥ìœ¼ë¡œ íšŒì „
                 Quaternion targetRotation = Quaternion.LookRotation(QuaterView, Vector3.up);
                 rb.MoveRotation(Quaternion.Slerp(actor.transform.rotation, targetRotation, 10f * Time.fixedDeltaTime));
             }
         }
 
-        // Local ±âÁØ ÀÌµ¿ ·ÎÁ÷
+        // Local ê¸°ì¤€ ì´ë™ ë¡œì§
         /*public void Move(Vector2 moveInput)
         {
             if (rb == null) return; 
@@ -69,7 +69,7 @@ namespace Seti
             rb.MovePosition(actor.transform.position + move);
         }*/
 
-        // ¹æÁöÅÎ º¸Á¤
+        // ë°©ì§€í„± ë³´ì •
         public void GetOverCurb(Collision collision)
         {
             float height = 0;
@@ -101,9 +101,9 @@ namespace Seti
         }
         #endregion
 
-        // ¸Ş¼­µå
-        #region Methods
-        // °øÁß Á¦¾î ±İÁö º¸Á¤
+        // ìœ í‹¸ë¦¬í‹°
+        #region Utilities
+        // ê³µì¤‘ ì œì–´ ê¸ˆì§€ ë³´ì •
         protected Vector2 MoveDirection(Vector2 moveInput)
         {
             State_Common state = actor.ActorState as State_Common;

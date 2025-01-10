@@ -1,14 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Seti
 {
+    // ëª¨ë“  Actorê°€ RigidBodyë¥¼ ê°–ë„ë¡ ê°•ì œ
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(NavMeshAgent))]
+
     /// <summary>
-    /// ActorÀÇ ±âº» Á¤ÀÇ
+    /// Actorì˜ ê¸°ë³¸ ì •ì˜
     /// </summary>
     public abstract class Actor : MonoBehaviour
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
         protected IControl control;
         [SerializeField]
@@ -19,24 +24,33 @@ namespace Seti
         protected State_Actor actorState;
         [SerializeField]
         [HideInInspector]
-        protected List<Behaviour> behaviours = new();         // [Á÷·ÄÈ­ µÈ ÇÊµå - ÀĞ±â Àü¿ë ¼Ó¼º] ±¸Á¶°¡ ¾Æ´Ï¸é ÀÛµ¿ÇÏÁö ¾Ê´Â´Ù
+        protected List<Behaviour> behaviours = new();         // [ì§ë ¬í™” ëœ í•„ë“œ - ì½ê¸° ì „ìš© ì†ì„±] êµ¬ì¡°ê°€ ì•„ë‹ˆë©´ ì‘ë™í•˜ì§€ ì•ŠëŠ”ë‹¤
 
-        // ÀÏ¹İ
+        // ì¼ë°˜
         protected Controller_Animator animator;
+        [Header("Variables")]
+        [SerializeField]
+        protected float speed_Walk = 2f;
+        [SerializeField]
+        protected float speed_Run = 4f;
+        #endregion
 
-        // ¼Ó¼º
+        // ì†ì„±
+        #region Properties
         public Blueprint_Actor Origin => blueprint;
         public State_Actor ActorState => actorState;
         public List<Behaviour> Behaviours => behaviours;
         public Controller_Animator Controller_Animator => animator;
+        public float Speed_Walk => speed_Walk;
+        public float Speed_Run => speed_Run;
         #endregion
 
-        // Ãß»óÈ­
+        // ì¶”ìƒí™”
         #region Abstract
         protected abstract State_Actor CreateState();
         #endregion
 
-        // ¶óÀÌÇÁ »çÀÌÅ¬
+        // ë¼ì´í”„ ì‚¬ì´í´
         #region Life Cycle
         protected virtual void Start()
         {
@@ -44,7 +58,7 @@ namespace Seti
         }
         #endregion
 
-        // ¸Ş¼­µå
+        // ë©”ì„œë“œ
         #region Methods
         public void Initialize(Blueprint_Actor blueprint)
         {
@@ -91,7 +105,7 @@ namespace Seti
 
         private void SwitchControlType(IControl newControl)
         {
-            // ÇöÀç Actor¿¡ ºÎÂøµÈ ÄÁÆ®·Ñ·¯ Å½»ö
+            // í˜„ì¬ Actorì— ë¶€ì°©ëœ ì»¨íŠ¸ë¡¤ëŸ¬ íƒìƒ‰
             if (TryGetComponent<IController>(out var _))
             {
                 control?.OnExit(this);

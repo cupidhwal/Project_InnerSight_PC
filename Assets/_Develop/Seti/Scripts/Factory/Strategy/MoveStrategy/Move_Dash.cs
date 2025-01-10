@@ -19,7 +19,7 @@ namespace Seti
                                 new(dir.x, 0, dir.y);
                 isDash = true;
             }
-            Move(moveDirection);
+            Move_QuaterView(moveDirection);
         }
         public void MoveExit()
         {

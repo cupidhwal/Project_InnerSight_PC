@@ -41,7 +41,7 @@ namespace Seti
         // 상태 실행 중
         public override void Update(float deltaTime)
         {
-            
+            context.Initialize();
         }
         #endregion
 

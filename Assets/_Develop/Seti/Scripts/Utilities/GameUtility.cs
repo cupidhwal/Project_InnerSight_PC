@@ -24,5 +24,26 @@ namespace Seti
 
             return hitPosition;
         }
+
+        // B에 대한 A의 스크린 상 위치를 반환하는 유틸리티
+        public static Vector2 ScreenPositionFromA(Camera camera, Transform aTransform, Transform bTransform)
+        {
+            if (camera == null || aTransform == null || bTransform == null)
+            {
+                Debug.LogWarning("Camera or Transforms are null.");
+                return Vector2.zero;
+            }
+
+            // B의 월드 좌표를 스크린 좌표로 변환
+            Vector3 screenPosition = camera.WorldToScreenPoint(bTransform.position - aTransform.position);
+
+            // A의 스크린 좌표와 비교 (Z축 제외)
+            Vector2 screenPositionRelativeToA = new(
+                -screenPosition.x,
+                -screenPosition.y
+            );
+            Debug.Log(screenPositionRelativeToA);
+            return screenPositionRelativeToA;
+        }
     }
 }

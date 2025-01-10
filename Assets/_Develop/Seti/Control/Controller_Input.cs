@@ -19,11 +19,11 @@ namespace Seti
 
         // 라이프 사이클
         #region Life Cycle
-        private void Awake()
+        protected override void Awake()
         {
             // 초기화
+            base.Awake();
             control = new InputSystem_Actions();
-            Initialize();
         }
 
         private void OnEnable()

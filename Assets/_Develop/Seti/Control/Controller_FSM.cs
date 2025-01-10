@@ -1,57 +1,71 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Seti
 {
     public class Controller_FSM : Controller_Base, IController
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
-        private StateMachine<Controller_FSM> stateMachine;  // FSM ÀÎ½ºÅÏ½º
-
-        [SerializeField]
-        private const float range_Detect = 15f;
-        [SerializeField]
-        private const float range_Attack = 1.5f;
-        private float distance;
+        private StateMachine<Controller_FSM> stateMachine;  // FSM ì¸ìŠ¤í„´ìŠ¤
         #endregion
 
-        // ¼Ó¼º
+        // ì†ì„±
         #region Properties
         public StateMachine<Controller_FSM> StateMachine => stateMachine;
-        public bool Detected => distance < range_Detect;
-        public bool CanAttack => distance > range_Attack;
+        public Dictionary<Type, IBehaviour> BehaviourMap => behaviourMap;
         #endregion
 
-        // ÀÎÅÍÆäÀÌ½º
+        // ì¸í„°í˜ì´ìŠ¤
         #region Interface
         public Type GetControlType() => typeof(Control_FSM);
         #endregion
 
-        // ¶óÀÌÇÁ »çÀÌÅ¬
+        // ë¼ì´í”„ ì‚¬ì´í´
         #region Life Cycle
-        protected void Awake()
+        protected override void Awake()
         {
-            // FSM ÃÊ±âÈ­
+            base.Awake();
+
+            // FSM ì´ˆê¸°í™”
             stateMachine = new StateMachine<Controller_FSM>(
                 this,
-                new State_Idle()
+                new Enemy_State_Idle()
             );
 
-            // »óÅÂ Ãß°¡
-            stateMachine.AddState(new State_Chase());
-            stateMachine.AddState(new State_Patrol());
-            stateMachine.AddState(new State_Attack());
+            // ìƒíƒœ ì¶”ê°€
+            stateMachine.AddState(new Enemy_State_Chase());
+            stateMachine.AddState(new Enemy_State_Patrol());
+            stateMachine.AddState(new Enemy_State_Attack());
 
-            // ÃÊ±âÈ­
-            Player player = FindFirstObjectByType<Player>();
-            distance = Vector3.Distance(player.transform.position, actor.transform.position);
+            // í–‰ë™ ì´ë²¤íŠ¸ ë°”ì¸ë”©
+            BindFSMBehaviours();
         }
 
         private void Update()
         {
-            // FSM ¾÷µ¥ÀÌÆ®
+            // FSM ì—…ë°ì´íŠ¸
             stateMachine.Update(Time.deltaTime);
+        }
+        #endregion
+
+        // ë©”ì„œë“œ
+        #region Methods
+        private void BindFSMBehaviours()
+        {
+            // Move í–‰ë™ ì´ë²¤íŠ¸ ë°”ì¸ë”©
+            if (behaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
+                if (moveBehaviour is Move move)
+                    stateMachine.OnStateChanged += move.FSM_MoveSwitch;
+
+            // Attack í–‰ë™ ì´ë²¤íŠ¸ ë°”ì¸ë”©
+            if (behaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+                if (attackBehaviour is Attack attack)
+                    stateMachine.OnStateChanged += attack.FSM_AttackSwitch;
+
+            // ë‹¤ë¥¸ í–‰ë™ ì´ë²¤íŠ¸ ë°”ì¸ë”© ê°€ëŠ¥
+            // if (behaviourMap.TryGetValue(typeof(Jump), out var jumpBehaviour)) { ... }
         }
         #endregion
     }

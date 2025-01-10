@@ -19,10 +19,10 @@ namespace Seti
         [SerializeReference]
         public IBehaviour behaviour;
 
-        // »ı¼ºÀÚ
+        // ìƒì„±ì
         public Behaviour(IBehaviour behaviour)
         {
-            this.behaviour = behaviour?? throw new System.ArgumentNullException(nameof(behaviour), "IBehaviour´Â nullÀÏ ¼ö ¾ø½À´Ï´Ù.");
+            this.behaviour = behaviour?? throw new System.ArgumentNullException(nameof(behaviour), "IBehaviourëŠ” nullì¼ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
     }
 

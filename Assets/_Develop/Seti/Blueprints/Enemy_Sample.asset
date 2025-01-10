@@ -10,126 +10,126 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7c707b45c015ce4db6d2f1238ea37b3, type: 3}
-  m_Name: Player
+  m_Name: Enemy_Sample
   m_EditorClassIdentifier: 
-  actorName: Player
-  actorPrefab: {fileID: 5163021877297717058, guid: 1afde7331c6ac61478367d0600d02f36, type: 3}
-  controlType: 0
+  actorName: Enemy_Sample
+  actorPrefab: {fileID: 8309244615677021322, guid: 6586e34b75dca9e47a9cefc38ec93f41, type: 3}
+  controlType: 1
   strategyBox: {fileID: 11400000, guid: 7dc1bb17aacb56c4e856240083fff143, type: 2}
   behaviourBox: {fileID: 11400000, guid: aa181b0e9b02247418838ed47a38fdfb, type: 2}
   behaviourStrategies:
-  - rid: 8920205005117718708
-  - rid: 8920205005117718720
+  - rid: 8920205022712561777
+  - rid: 8920205022712561789
   references:
     version: 2
     RefIds:
-    - rid: 8920205005117718708
+    - rid: 8920205022712561777
       type: {class: BehaviourStrategyMapping, ns: Seti, asm: Assembly-CSharp}
       data:
         behaviour:
-          rid: 8920205005117718709
+          rid: 8920205022712561778
         strategies:
-        - rid: 8920205005117718710
-        - rid: 8920205005117718711
-        - rid: 8920205005117718712
-        - rid: 8920205005117718713
-    - rid: 8920205005117718709
+        - rid: 8920205022712561779
+        - rid: 8920205022712561780
+        - rid: 8920205022712561781
+        - rid: 8920205022712561782
+    - rid: 8920205022712561778
       type: {class: Move, ns: Seti, asm: Assembly-CSharp}
       data:
         strategies:
-        - rid: 8920205005117718714
-    - rid: 8920205005117718710
+        - rid: 8920205022712561783
+    - rid: 8920205022712561779
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 8920205005117718715
-        isActive: 1
-    - rid: 8920205005117718711
-      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategy:
-          rid: 8920205005117718716
-        isActive: 1
-    - rid: 8920205005117718712
-      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategy:
-          rid: 8920205005117718717
+          rid: 8920205022712561784
         isActive: 0
-    - rid: 8920205005117718713
+    - rid: 8920205022712561780
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 8920205005117718718
+          rid: 8920205022712561785
         isActive: 1
-    - rid: 8920205005117718714
+    - rid: 8920205022712561781
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 8920205005117718719
+          rid: 8920205022712561786
         isActive: 1
-    - rid: 8920205005117718715
+    - rid: 8920205022712561782
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 8920205022712561787
+        isActive: 0
+    - rid: 8920205022712561783
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 8920205022712561788
+        isActive: 1
+    - rid: 8920205022712561784
       type: {class: Move_Normal, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 8920205005117718716
+    - rid: 8920205022712561785
       type: {class: Move_Run, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 8920205005117718717
+    - rid: 8920205022712561786
       type: {class: Move_Walk, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 8920205005117718718
+    - rid: 8920205022712561787
       type: {class: Move_Dash, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 8920205005117718719
+    - rid: 8920205022712561788
       type: {class: Move_Normal, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 8920205005117718720
+    - rid: 8920205022712561789
       type: {class: BehaviourStrategyMapping, ns: Seti, asm: Assembly-CSharp}
       data:
         behaviour:
-          rid: 8920205005117718721
+          rid: 8920205022712561790
         strategies:
-        - rid: 8920205005117718722
-        - rid: 8920205005117718723
-        - rid: 8920205005117718724
-        - rid: 8920205005117718725
-    - rid: 8920205005117718721
+        - rid: 8920205022712561791
+        - rid: 8920205022712561792
+        - rid: 8920205022712561793
+        - rid: 8920205022712561794
+    - rid: 8920205022712561790
       type: {class: Attack, ns: Seti, asm: Assembly-CSharp}
       data:
         strategies: []
-    - rid: 8920205005117718722
+    - rid: 8920205022712561791
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 8920205005117718726
-        isActive: 1
-    - rid: 8920205005117718723
-      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategy:
-          rid: 8920205005117718727
-        isActive: 1
-    - rid: 8920205005117718724
-      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategy:
-          rid: 8920205005117718728
-        isActive: 1
-    - rid: 8920205005117718725
-      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategy:
-          rid: 8920205005117718729
+          rid: 8920205022712561795
         isActive: 0
-    - rid: 8920205005117718726
+    - rid: 8920205022712561792
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 8920205022712561796
+        isActive: 0
+    - rid: 8920205022712561793
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 8920205022712561797
+        isActive: 0
+    - rid: 8920205022712561794
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 8920205022712561798
+        isActive: 1
+    - rid: 8920205022712561795
       type: {class: Attack_Magic, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 8920205005117718727
+    - rid: 8920205022712561796
       type: {class: Attack_Normal, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 8920205005117718728
+    - rid: 8920205022712561797
       type: {class: Attack_Weapon, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 8920205005117718729
+    - rid: 8920205022712561798
       type: {class: Attack_Tackle, ns: Seti, asm: Assembly-CSharp}
       data: 

@@ -11,40 +11,41 @@ namespace Seti
     /// </summary>
     public class Attack : IBehaviour, IHasStrategy
     {
-        private enum AttackStrategies
+        private enum StrategyType
         {
             Normal,
             Magic,
             Weapon,
-            Tackle
+            NULL
         }
 
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
-        // °ø°İ·Â
+        // ê³µê²©ë ¥
         private float power_Normal = 10f;
         private const float power_Normal_Default = 10f;
 
-        // Àü·« °ü¸®
+        // ì „ëµ ê´€ë¦¬
         private Actor actor;
         [SerializeReference]
         private List<Strategy> strategies;
         private IAttackStrategy currentStrategy;
 
-        // »óÅÂ °ü¸®
-        private AttackStrategies currentType;
+        // ì œì–´ ê´€ë¦¬
+        private StrategyType currentType;
+        private State<Controller_FSM> currentState;
         #endregion
 
-        // ÀÎÅÍÆäÀÌ½º
+        // ì¸í„°í˜ì´ìŠ¤
         #region Interface
-        // ¾÷±×·¹ÀÌµå
+        // ì—…ê·¸ë ˆì´ë“œ
         public void Upgrade(float increment)
         {
             power_Normal += increment * power_Normal_Default / 100;
             Initialize(actor);
         }
 
-        // ÃÊ±âÈ­
+        // ì´ˆê¸°í™”
         public void Initialize(Actor actor)
         {
             this.actor = actor;
@@ -67,7 +68,7 @@ namespace Seti
                 }
             }
 
-            // ÃÊ±â Àü·« ¼³Á¤
+            // ì´ˆê¸° ì „ëµ ì„¤ì •
             var defaultStrategy = CollectionUtility.FirstOrNull(strategies, s => s.strategy is Attack_Normal);
             if (defaultStrategy != null)
             {
@@ -79,7 +80,7 @@ namespace Seti
             }
             else
             {
-                //Debug.LogWarning("Move Àü·«ÀÌ ¾ø¾î ÃÊ±â Àü·«À» ¼³Á¤ÇÏÁö ¸øÇß½À´Ï´Ù.");
+                //Debug.LogWarning("Move ì „ëµì´ ì—†ì–´ ì´ˆê¸° ì „ëµì„ ì„¤ì •í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.");
                 ChangeStrategy(null);
             }
         }
@@ -87,13 +88,13 @@ namespace Seti
         public Type GetBehaviourType() => typeof(Attack);
         public Type GetStrategyType() => typeof(IAttackStrategy);
 
-        // Çàµ¿ Àü·« ¼³Á¤
+        // í–‰ë™ ì „ëµ ì„¤ì •
         public void SetStrategies(IEnumerable<Strategy> strategies)
         {
-            this.strategies = strategies.ToList(); // Àü´Ş¹ŞÀº Àü·« ¸®½ºÆ® ÀúÀå
+            this.strategies = strategies.ToList(); // ì „ë‹¬ë°›ì€ ì „ëµ ë¦¬ìŠ¤íŠ¸ ì €ì¥
         }
 
-        // Çàµ¿ Àü·« º¯°æ
+        // í–‰ë™ ì „ëµ ë³€ê²½
         public void ChangeStrategy(Type strategyType)
         {
             var attackStrategy = CollectionUtility.FirstOrNull(strategies, s => s.strategy.GetType() == strategyType);
@@ -103,61 +104,50 @@ namespace Seti
             }
         }
 
-        private void SwitchStrategy(AttackStrategies attackStrategies)
+        private void SwitchStrategy(StrategyType attackStrategies)
         {
             switch (attackStrategies)
             {
-                case AttackStrategies.Normal:
-                    currentType = AttackStrategies.Normal;
+                case StrategyType.Normal:
+                    currentType = StrategyType.Normal;
                     ChangeStrategy(typeof(Attack_Normal));
                     break;
 
-                case AttackStrategies.Magic:
-                    currentType = AttackStrategies.Magic;
+                case StrategyType.Magic:
+                    currentType = StrategyType.Magic;
                     ChangeStrategy(typeof(Attack_Magic));
                     break;
 
-                case AttackStrategies.Weapon:
-                    currentType = AttackStrategies.Weapon;
+                case StrategyType.Weapon:
+                    currentType = StrategyType.Weapon;
                     ChangeStrategy(typeof(Attack_Weapon));
                     break;
             }
         }
         #endregion
 
-        // ÀÌº¥Æ® ÇÚµé·¯
+        // ì´ë²¤íŠ¸ í•¸ë“¤ëŸ¬
         #region Event Handlers
-        public void OnAttackStarted(InputAction.CallbackContext _)
-        {
-            if (currentType != AttackStrategies.Normal)
-                SwitchStrategy(AttackStrategies.Normal);
-            currentStrategy?.Attack();
+        #region Controller_Input
+        public void OnAttackStarted(InputAction.CallbackContext _) => OnAttack(true);
 
-            actor.Controller_Animator.IsAttack = true;
-        }
-
-        public void OnAttackCanceled(InputAction.CallbackContext _)
-        {
-            currentStrategy?.AttackExit();
-
-            actor.Controller_Animator.IsAttack = false;
-        }
+        public void OnAttackCanceled(InputAction.CallbackContext _) => OnAttack(false);
 
         public void OnSkillStarted(InputAction.CallbackContext _)
         {
-            SwitchStrategy(AttackStrategies.Weapon);
+            SwitchStrategy(StrategyType.Weapon);
             currentStrategy?.Attack();
         }
 
         public void OnSkillCanceled(InputAction.CallbackContext _)
         {
             currentStrategy?.AttackExit();
-            SwitchStrategy(AttackStrategies.Normal);
+            SwitchStrategy(StrategyType.Normal);
         }
 
         public void OnMagicStarted(InputAction.CallbackContext context)
         {
-            SwitchStrategy(AttackStrategies.Magic);
+            SwitchStrategy(StrategyType.Magic);
 
             string path = context.control.path;
             switch (path)
@@ -185,7 +175,42 @@ namespace Seti
         public void OnMagicCanceled(InputAction.CallbackContext _)
         {
             currentStrategy?.AttackExit();
-            SwitchStrategy(AttackStrategies.Normal);
+            SwitchStrategy(StrategyType.Normal);
+        }
+        #endregion
+
+        #region Controller_FSM
+        public void FSM_AttackInput() => OnAttack();
+        public void FSM_AttackSwitch(State<Controller_FSM> state)
+        {
+            // FSM ìƒíƒœì— ë”°ë¼ ë™ì‘ ì œì–´
+            currentState = state;
+            switch (currentState)
+            {
+                case Enemy_State_Attack:
+                    SwitchStrategy(StrategyType.Normal);
+                    break;
+
+                default:
+                    SwitchStrategy(StrategyType.NULL);
+                    break;
+            }
+        }
+        #endregion
+        #endregion
+
+        // ë©”ì„œë“œ
+        #region Methods
+        private void OnAttack(bool isAttack = true)
+        {
+            if (isAttack)
+            {
+                if (currentType != StrategyType.Normal)
+                    SwitchStrategy(StrategyType.Normal);
+                currentStrategy?.Attack();
+            }
+            else currentStrategy?.AttackExit();
+            actor.Controller_Animator.IsAttack = isAttack;
         }
         #endregion
     }

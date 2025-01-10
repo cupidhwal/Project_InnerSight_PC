@@ -5,18 +5,18 @@ using UnityEngine;
 namespace Seti
 {
     /// <summary>
-    /// <T> State Á¤ÀÇ
+    /// <T> State ì •ì˜
     /// </summary>
     [System.Serializable]
     public abstract class State<T>
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region
-        protected StateMachine<T> stateMachine; // ÇöÀç State°¡ µî·Ï µÇ¾îÀÖ´Â Machine
-        protected T context;                    // stateMachineÀ» °¡Áö°í ÀÖ´Â ÁÖÃ¼
+        protected StateMachine<T> stateMachine; // í˜„ì¬ Stateê°€ ë“±ë¡ ë˜ì–´ìˆëŠ” Machine
+        protected T context;                    // stateMachineì„ ê°€ì§€ê³  ìˆëŠ” ì£¼ì²´
         #endregion
 
-        // ¸Ş¼­µå
+        // ë©”ì„œë“œ
         #region Methods
         public void SetMachineAndContext(StateMachine<T> stateMachine, T context)
         {
@@ -25,51 +25,64 @@ namespace Seti
             OnInitialized();
         }
 
-        // ÃÊ±âÈ­ ¸Ş¼­µå - »ı¼º ÈÄ 1È¸ ½ÇÇà
+        // ì´ˆê¸°í™” ë©”ì„œë“œ - ìƒì„± í›„ 1íšŒ ì‹¤í–‰
         public virtual void OnInitialized() { }
 
-        // »óÅÂ ÀüÈ¯ ½Ã State Enter¿¡ 1È¸ ½ÇÇà
+        // ìƒíƒœ ì „í™˜ ì‹œ State Enterì— 1íšŒ ì‹¤í–‰
         public virtual void OnEnter() { }
 
-        // »óÅÂ ÀüÈ¯ ½Ã State Exit¿¡ 1È¸ ½ÇÇà
+        // ìƒíƒœ ì „í™˜ ì‹œ State Exitì— 1íšŒ ì‹¤í–‰
         public virtual void OnExit() { }
 
-        // »óÅÂ ÀüÈ¯ Á¶°Ç ¸Ş¼­µå
-        public virtual Type CheckTransitions() => null; // ±âº»ÀûÀ¸·Î ÀüÈ¯ Á¶°Ç ¾øÀ½
+        // ìƒíƒœ ì „í™˜ ì¡°ê±´ ë©”ì„œë“œ
+        public virtual Type CheckTransitions() => null; // ê¸°ë³¸ì ìœ¼ë¡œ ì „í™˜ ì¡°ê±´ ì—†ìŒ
 
-        // »óÅÂ ½ÇÇà Áß
+        // ìƒíƒœ ì‹¤í–‰ ì¤‘
         public abstract void Update(float deltaTime);
         #endregion
     }
 
     public abstract class MonoState<T> : State<T> where T : MonoBehaviour
     {
-        // MonoBehaviour¿Í ¿¬µ¿µÈ State
+        // MonoBehaviourì™€ ì—°ë™ëœ State
         protected GameObject GameObject => (context as MonoBehaviour)?.gameObject;
         protected Transform Transform => (context as MonoBehaviour)?.transform;
     }
 
     /// <summary>
-    /// State¸¦ °ü¸®ÇÏ´Â Å¬·¡½º
+    /// Stateë¥¼ ê´€ë¦¬í•˜ëŠ” í´ë˜ìŠ¤
     /// </summary>
     public class StateMachine<T>
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
-        private float elapsedTimeInState = 0.0f;            // ÇöÀç »óÅÂ Áö¼Ó ½Ã°£
-        private T context;                                  // StateMachineÀ» °¡Áö°í ÀÖ´Â ÁÖÃ¼
-        private Dictionary<Type, State<T>> states = new();  // µî·ÏµÈ »óÅÂ¿Í »óÅÂÀÇ Å¸ÀÔÀ» ÀúÀå
+        private float elapsedTimeInState = 0.0f;            // í˜„ì¬ ìƒíƒœ ì§€ì† ì‹œê°„
+        private T context;                                  // StateMachineì„ ê°€ì§€ê³  ìˆëŠ” ì£¼ì²´
+        private Dictionary<Type, State<T>> states = new();  // ë“±ë¡ëœ ìƒíƒœì™€ ìƒíƒœì˜ íƒ€ì…ì„ ì €ì¥
+        private State<T> currentState;
         public event Action<State<T>> OnStateChanged;
         #endregion
 
-        // ¼Ó¼º
+        // ì†ì„±
         #region Properties
-        public float ElapsedTime => elapsedTimeInState; // ÇöÀç »óÅÂ¿¡¼­ °æ°úÇÑ ½Ã°£
-        public State<T> CurrentState { get; private set; }
+        public float ElapsedTime => elapsedTimeInState; // í˜„ì¬ ìƒíƒœì—ì„œ ê²½ê³¼í•œ ì‹œê°„
+        public State<T> CurrentState
+        {
+            get => currentState;
+            private set
+            {
+                if (currentState != value)
+                {
+                    currentState = value;
+                    OnStateChanged?.Invoke(currentState);
+                }
+                if (value == currentState) return;
+            }
+        }
         public State<T> PreviousState { get; private set; }
         #endregion
 
-        // »ı¼ºÀÚ
+        // ìƒì„±ì
         #region Constructor
         public StateMachine(T context, State<T> initialState)
         {
@@ -80,28 +93,28 @@ namespace Seti
         }
         #endregion
 
-        // ¸Ş¼­µå
+        // ë©”ì„œë“œ
         #region Methods
-        // State µî·Ï
+        // State ë“±ë¡
         public void AddState(State<T> state)
         {
             state.SetMachineAndContext(this, context);
             states[state.GetType()] = state;
         }
 
-        // StateMachine¿¡¼­ StateÀÇ ¾÷µ¥ÀÌÆ® ½ÇÇà
+        // StateMachineì—ì„œ Stateì˜ ì—…ë°ì´íŠ¸ ì‹¤í–‰
         public void Update(float deltaTime)
         {
-            elapsedTimeInState += deltaTime; // »óÅÂ °æ°ú ½Ã°£ ´©Àû
+            elapsedTimeInState += deltaTime; // ìƒíƒœ ê²½ê³¼ ì‹œê°„ ëˆ„ì 
             CurrentState?.Update(deltaTime);
 
-            // ÇöÀç »óÅÂÀÇ ÀüÈ¯ Á¶°Ç °Ë»ç
+            // í˜„ì¬ ìƒíƒœì˜ ì „í™˜ ì¡°ê±´ ê²€ì‚¬
             var nextStateType = CurrentState?.CheckTransitions();
             if (nextStateType != null && states.ContainsKey(nextStateType))
                 ChangeState(nextStateType);
         }
 
-        // CurrentState Ã¼ÀÎÁö
+        // CurrentState ì²´ì¸ì§€
         private void ChangeState(Type nextStateType)
         {
             CurrentState?.OnExit();
@@ -109,24 +122,24 @@ namespace Seti
 
             CurrentState = states[nextStateType];
             CurrentState.OnEnter();
-            elapsedTimeInState = 0.0f;  // »óÅÂ º¯°æ ½Ã °æ°ú ½Ã°£ ÃÊ±âÈ­
+            elapsedTimeInState = 0.0f;  // ìƒíƒœ ë³€ê²½ ì‹œ ê²½ê³¼ ì‹œê°„ ì´ˆê¸°í™”
             OnStateChanged?.Invoke(CurrentState);
         }
         public R ChangeState<R>() where R : State<T>
         {
-            // Çö »óÅÂ¿Í »õ·Î¿î »óÅÂ ºñ±³
+            // í˜„ ìƒíƒœì™€ ìƒˆë¡œìš´ ìƒíƒœ ë¹„êµ
             var newType = typeof(R);
             if (CurrentState.GetType() == newType)
                 return CurrentState as R;
 
-            // »óÅÂ º¯°æ ÀÌÀü
+            // ìƒíƒœ ë³€ê²½ ì´ì „
             CurrentState?.OnExit();
             PreviousState = CurrentState;
 
-            // »óÅÂ º¯°æ
+            // ìƒíƒœ ë³€ê²½
             CurrentState = states[newType];
             CurrentState.OnEnter();
-            elapsedTimeInState = 0.0f;  // »õ »óÅÂ·Î º¯°æ ½Ã °æ°ú ½Ã°£ ÃÊ±âÈ­
+            elapsedTimeInState = 0.0f;  // ìƒˆ ìƒíƒœë¡œ ë³€ê²½ ì‹œ ê²½ê³¼ ì‹œê°„ ì´ˆê¸°í™”
             OnStateChanged?.Invoke(CurrentState);
             return CurrentState as R;
         }
@@ -135,7 +148,7 @@ namespace Seti
 }
 
 /*
-¿ÜºÎ ±¸µ¶ ¿¹½Ã
+ì™¸ë¶€ êµ¬ë… ì˜ˆì‹œ
 public class FSMObserver : MonoBehaviour
 {
     private StateMachine<Actor> stateMachine;
@@ -143,7 +156,7 @@ public class FSMObserver : MonoBehaviour
     private void Start()
     {
         stateMachine = new StateMachine<Actor>(this, new IdleState());
-        stateMachine.OnStateChanged += HandleStateChanged; // ÀÌº¥Æ® ±¸µ¶
+        stateMachine.OnStateChanged += HandleStateChanged; // ì´ë²¤íŠ¸ êµ¬ë…
     }
 
     private void HandleStateChanged(State<Actor> newState)
@@ -152,124 +165,3 @@ public class FSMObserver : MonoBehaviour
     }
 }
  */
-
-#region Dummy
-/*
-±âº» Å¬·¡½º - Á¦³×¸¯
-using System.Collections.Generic;
-
-namespace Seti
-{
-    /// <summary>
-    /// <T> State Á¤ÀÇ
-    /// </summary>
-    [System.Serializable]
-    public abstract class State<T>
-    {
-        // ÇÊµå
-        #region
-        protected StateMachine<T> stateMachine; // ÇöÀç State°¡ µî·Ï µÇ¾îÀÖ´Â Machine
-        protected T context;                    // stateMachineÀ» °¡Áö°í ÀÖ´Â ÁÖÃ¼
-        #endregion
-
-        // »ı¼ºÀÚ
-        #region Constructor
-        public State() { }
-        #endregion
-
-        // ¸Ş¼­µå
-        #region Methods
-        public void SetMachineAndContext(StateMachine<T> stateMachine, T context)
-        {
-            this.stateMachine = stateMachine;
-            this.context = context;
-            OnInitialized();
-        }
-
-        // ÃÊ±âÈ­ ¸Ş¼­µå - »ı¼º ÈÄ 1È¸ ½ÇÇà
-        public virtual void OnInitialized() { }
-
-        // »óÅÂ ÀüÈ¯ ½Ã State Enter¿¡ 1È¸ ½ÇÇà
-        public virtual void OnEnter() { }
-
-        // »óÅÂ ÀüÈ¯ ½Ã State Exit¿¡ 1È¸ ½ÇÇà
-        public virtual void OnExit() { }
-
-        // »óÅÂ ½ÇÇà Áß
-        public abstract void Update(float deltaTime);
-        #endregion
-    }
-
-    /// <summary>
-    /// State¸¦ °ü¸®ÇÏ´Â Å¬·¡½º
-    /// </summary>
-    public class StateMachine<T>
-    {
-        // ÇÊµå
-        #region Variables
-        private float elapsedTimeInState = 0.0f;// ÇöÀç »óÅÂ Áö¼Ó ½Ã°£
-        private T context;                      // StateMachineÀ» °¡Áö°í ÀÖ´Â ÁÖÃ¼
-
-        // µî·ÏµÈ »óÅÂ¿Í »óÅÂÀÇ Å¸ÀÔÀ» ÀúÀå
-        private Dictionary<System.Type, State<T>> states = new();
-        #endregion
-
-        // ¼Ó¼º
-        #region Properties
-        public float ElapsedTimeInState => elapsedTimeInState;
-        public State<T> CurrentState { get; private set; }
-        public State<T> PreviousState { get; private set; }
-        #endregion
-
-        // »ı¼ºÀÚ
-        #region Constructor
-        public StateMachine(T context, State<T> initialState)
-        {
-            this.context = context;
-            AddState(initialState);
-            CurrentState = initialState;
-            CurrentState.OnEnter();
-        }
-        #endregion
-
-        // ¸Ş¼­µå
-        #region Methods
-        // State µî·Ï
-        public void AddState(State<T> state)
-        {
-            state.SetMachineAndContext(this, context);
-            states[state.GetType()] = state;
-        }
-
-        // StateMachine¿¡¼­ StateÀÇ ¾÷µ¥ÀÌÆ® ½ÇÇà
-        public void Update(float deltaTime)
-        {
-            elapsedTimeInState += deltaTime;
-            CurrentState.Update(deltaTime);
-        }
-
-        // CurrentState Ã¼ÀÎÁö
-        public R ChangeState<R>() where R : State<T>
-        {
-            // Çö »óÅÂ¿Í »õ·Î¿î »óÅÂ ºñ±³
-            var newType = typeof(R);
-            if (CurrentState.GetType() == newType)
-            {
-                return CurrentState as R;
-            }
-
-            // »óÅÂ º¯°æ ÀÌÀü
-            CurrentState?.OnExit();
-            PreviousState = CurrentState;
-
-            // »óÅÂ º¯°æ
-            CurrentState = states[newType];
-            CurrentState.OnEnter();
-            elapsedTimeInState = 0.0f;
-            return CurrentState as R;
-        }
-        #endregion
-    }
-}
- */
-#endregion

@@ -6,31 +6,31 @@ namespace Seti
 {
     public abstract class Controller_Base : MonoBehaviour
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
-        protected Actor actor;
-        protected Dictionary<Type, IBehaviour> behaviourMap;    // Çàµ¿ ¸ÅÇÎ (Å¸ÀÔ¿¡ µû¸¥ Çàµ¿ ÀÎ½ºÅÏ½º)
+        public Actor Actor { get; protected set; }
+        protected Dictionary<Type, IBehaviour> behaviourMap;    // í–‰ë™ ë§¤í•‘ (íƒ€ì…ì— ë”°ë¥¸ í–‰ë™ ì¸ìŠ¤í„´ìŠ¤)
         #endregion
 
-        // ÀÎÅÍÆäÀÌ½º
+        // ì¸í„°í˜ì´ìŠ¤
         #region Interface
         public void Initialize()
         {
-            // Actor ÂüÁ¶
-            actor = GetComponent<Actor>();
+            // Actor ì°¸ì¡°
+            Actor = GetComponent<Actor>();
 
-            // ActorÀÇ behaviours ¸®½ºÆ®¿¡¼­ µ¿ÀûÀ¸·Î ¸ÅÇÎ
-            SetActorBehaviours(actor);
+            // Actorì˜ behaviours ë¦¬ìŠ¤íŠ¸ì—ì„œ ë™ì ìœ¼ë¡œ ë§¤í•‘
+            SetActorBehaviours(Actor);
         }
         public void SetActorBehaviours(Actor actor)
         {
-            behaviourMap = new Dictionary<Type, IBehaviour>();
+            behaviourMap = new();
 
             foreach (var behaviour in actor.Behaviours)
             {
                 if (behaviour.behaviour == null) continue;
 
-                // ¸í½ÃÀûÀ¸·Î Initialize È£Ãâ
+                // ëª…ì‹œì ìœ¼ë¡œ Initialize í˜¸ì¶œ
                 behaviour.behaviour.Initialize(actor);
 
                 var behaviourType = behaviour.behaviour.GetType();
@@ -42,8 +42,13 @@ namespace Seti
         }
         #endregion
 
-        // ¶óÀÌÇÁ »çÀÌÅ¬
+        // ë¼ì´í”„ ì‚¬ì´í´
         #region Life Cycle
+        protected virtual void Awake()
+        {
+            Initialize();
+        }
+
         protected virtual void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -51,7 +56,7 @@ namespace Seti
 
         protected virtual void FixedUpdate()
         {
-            // Move Çàµ¿ÀÌ ÀÖÀ¸¸é FixedUpdate È£Ãâ
+            // Move í–‰ë™ì´ ìˆìœ¼ë©´ FixedUpdate í˜¸ì¶œ
             if (behaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
             {
                 (moveBehaviour as Move)?.FixedUpdate();
@@ -60,17 +65,17 @@ namespace Seti
 
         protected virtual void OnDestroy()
         {
-            // Çàµ¿ ¸ÅÇÎ ÇØÁ¦
+            // í–‰ë™ ë§¤í•‘ í•´ì œ
             behaviourMap?.Clear();
             behaviourMap = null;
         }
         #endregion
 
-        // ÀÌº¥Æ® ¸Ş¼­µå
+        // ì´ë²¤íŠ¸ ë©”ì„œë“œ
         #region Event Methods
         protected virtual void OnCollisionEnter(Collision collision)
         {
-            // Move Çàµ¿ÀÇ OnCollisionEnter È£Ãâ
+            // Move í–‰ë™ì˜ OnCollisionEnter í˜¸ì¶œ
             if (behaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
             {
                 (moveBehaviour as Move)?.OnCollisionEnter(collision);
