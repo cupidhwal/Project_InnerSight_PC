@@ -185,7 +185,7 @@ namespace Seti
         // 컨트롤러
         #region Controllers
         #region Controller_Input
-        public void OnMovePerformed(InputAction.CallbackContext context) => OnMove(context.ReadValue<Vector2>(), true);
+        public void OnMovePerformed(InputAction.CallbackContext context) => OnMove(context.ReadValue<Vector2>());
         public void OnMoveCanceled(InputAction.CallbackContext _) => OnMove(Vector2.zero, false);
         public void OnDashStarted(InputAction.CallbackContext _) => OnDash();
         public void OnRunStarted(InputAction.CallbackContext _) => OnRun(StrategyType.Run);
@@ -227,7 +227,7 @@ namespace Seti
 
         // 메서드
         #region Methods
-        private void OnMove(Vector2 moveInput, bool isMove)
+        private void OnMove(Vector2 moveInput, bool isMove = true)
         {
             this.moveInput = moveInput;
             actor.Controller_Animator.IsMove = isMove;

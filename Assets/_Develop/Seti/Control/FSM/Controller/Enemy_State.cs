@@ -9,9 +9,8 @@ namespace Seti
         #region Variables
         protected Enemy enemy;
 
-        protected float elapsedTime;    // 시간 경과
-        protected float elapsedMin = 5f;
-        protected float elapsedMax = 8f;
+        protected float elapsedTime = 1f;   // 시간 경과
+        protected float elapsedCriteria = 10f;
         protected float steeringInterval;
 
         // Patrol, Chase
@@ -24,11 +23,10 @@ namespace Seti
         public override void OnInitialized()
         {
             enemy = context.Actor as Enemy;
-            elapsedTime = 0f;
         }
 
         // 상태 전환 시 State Enter에 1회 실행
-        public override void OnEnter() => elapsedTime = UnityEngine.Random.Range(elapsedMin, elapsedMax);
+        public override void OnEnter() => elapsedTime = UnityEngine.Random.Range(elapsedCriteria * 0.7f, elapsedCriteria * 1.3f);
 
         // 상태 전환 시 State Exit에 1회 실행
         public override void OnExit() { }

@@ -10,24 +10,29 @@ namespace Seti
         public override void OnInitialized()
         {
             base.OnInitialized();
-            elapsedMin = 3f;
-            elapsedMax = 7f;
+            elapsedCriteria = 5f;
         }
 
         // 상태 전환 시 State Enter에 1회 실행
-        public override void OnEnter() { }
+        public override void OnEnter() => base.OnEnter();
 
         // 상태 전환 시 State Exit에 1회 실행
-        public override void OnExit() { }
+        public override void OnExit() => base.OnExit();
 
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
             if (enemy.Detected)
+            {
+                enemy.SwitchState(Enemy.State.Chase);
                 return typeof(Enemy_State_Chase);
+            }
 
             else if (context.StateMachine.ElapsedTime > elapsedTime)
+            {
+                enemy.SwitchState(Enemy.State.Patrol);
                 return typeof(Enemy_State_Patrol);
+            }
 
             else return null;
         }

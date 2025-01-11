@@ -32,7 +32,7 @@ namespace Seti
         [SerializeField]
         protected float speed_Walk = 2f;
         [SerializeField]
-        protected float speed_Run = 4f;
+        protected float speed_Run = 3f;
         #endregion
 
         // 속성

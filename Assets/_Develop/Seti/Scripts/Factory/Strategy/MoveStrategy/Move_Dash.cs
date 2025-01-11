@@ -8,10 +8,10 @@ namespace Seti
         private Vector2 dir = Vector2.zero;
         private Vector3 moveDirection = Vector3.zero;
 
-        public override void Move(Vector2 moveInput)
+        protected override void QuaterView_Move(Vector2 moveInput)
         {
             if (rb == null) return;
-            if (!isDash)
+            if (!isDash)    // 대시 중이 아닐 때에만 방향 갱신
             {
                 dir = MoveDirection(moveInput);
                 moveDirection = (moveInput == Vector2.zero) ?
@@ -19,7 +19,7 @@ namespace Seti
                                 new(dir.x, 0, dir.y);
                 isDash = true;
             }
-            Move_QuaterView(moveDirection);
+            QuaterView_Move(moveDirection);
         }
         public void MoveExit()
         {

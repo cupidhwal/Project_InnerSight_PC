@@ -32,14 +32,30 @@ namespace Seti
         // QuaterView - World 기준 이동 로직
         public virtual void Move(Vector2 moveInput)
         {
+            if (actor is Player player)
+                switch (player.View)
+                {
+                    case Player.ViewType.Follow_Person:
+                        Follow_Person_Move(moveInput);
+                        break;
+
+                    case Player.ViewType.QuaterView:
+                        QuaterView_Move(moveInput);
+                        break;
+                }
+            else QuaterView_Move(moveInput);
+        }
+
+        protected virtual void QuaterView_Move(Vector2 moveInput)
+        {
             if (rb == null) return;
 
             Vector2 dir = MoveDirection(moveInput);
             Vector3 moveDirection = new(dir.x, 0, dir.y);
 
-            Move_QuaterView(moveDirection);
+            QuaterView_Move(moveDirection);
         }
-        protected void Move_QuaterView(Vector3 moveDirection)
+        protected void QuaterView_Move(Vector3 moveDirection)
         {
             Vector3 move = speed * Time.fixedDeltaTime * moveDirection.normalized;
             Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * move;
@@ -55,9 +71,9 @@ namespace Seti
         }
 
         // Local 기준 이동 로직
-        /*public void Move(Vector2 moveInput)
+        public void Follow_Person_Move(Vector2 moveInput)
         {
-            if (rb == null) return; 
+            if (rb == null) return;
 
             Vector2 dir = MoveDirection(moveInput);
             Vector3 moveDirection = new(dir.x, 0, dir.y);
@@ -67,7 +83,7 @@ namespace Seti
 
             Vector3 move = speed * Time.fixedDeltaTime * (forward + right).normalized;
             rb.MovePosition(actor.transform.position + move);
-        }*/
+        }
 
         // 방지턱 보정
         public void GetOverCurb(Collision collision)

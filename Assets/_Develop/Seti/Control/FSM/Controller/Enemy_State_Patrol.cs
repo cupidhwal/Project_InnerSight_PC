@@ -11,25 +11,29 @@ namespace Seti
         public override void OnInitialized()
         {
             base.OnInitialized();
-            elapsedMin = 5f;
-            elapsedMax = 15f;
-            steeringInterval = 0f;
+            elapsedCriteria = 10f;
         }
 
         // 상태 전환 시 State Enter에 1회 실행
-        public override void OnEnter() { }
+        public override void OnEnter() => base.OnEnter();
 
         // 상태 전환 시 State Exit에 1회 실행
-        public override void OnExit() { }
+        public override void OnExit() => base.OnExit();
 
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
             if (enemy.Detected)
+            {
+                enemy.SwitchState(Enemy.State.Chase);
                 return typeof(Enemy_State_Chase);
+            }
 
             else if (!enemy.Detected && context.StateMachine.ElapsedTime > elapsedTime)
+            {
+                enemy.SwitchState(Enemy.State.Idle);
                 return typeof(Enemy_State_Idle);
+            }
 
             else return null;
         }
@@ -59,7 +63,7 @@ namespace Seti
                 moveInput = GenRandomVec2();
 
                 // 다음 카운트다운 시간 초기화
-                steeringInterval = UnityEngine.Random.Range(0f, 2f);
+                steeringInterval = UnityEngine.Random.Range(enemy.PatrolInterval / 3, enemy.PatrolInterval);
             }
         }
         private Vector2 GenRandomVec2()

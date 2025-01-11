@@ -6,10 +6,12 @@ namespace Seti
     {
         public override void Look(Vector2 readValue)
         {
-            // °¢ ÃàÀÇ Delta °ª
+            if (actor is Player player && player.View != Player.ViewType.Follow_Person) return;
+
+            // ê° ì¶•ì˜ Delta ê°’
             headXRotation -= readValue.y * mouseSensitivity;
 
-            // °¢ ÃàÀÇ ÇÑ°è È¸Àü°¢
+            // ê° ì¶•ì˜ í•œê³„ íšŒì „ê°
             headXRotation = Mathf.Clamp(headXRotation, -50f, 50f);
             headYRotation = Mathf.Clamp(headYRotation, -80f, 80f);
 

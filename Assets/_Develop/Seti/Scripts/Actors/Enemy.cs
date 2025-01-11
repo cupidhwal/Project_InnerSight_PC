@@ -19,16 +19,19 @@ namespace Seti
 
         [Header("Criteria : AI Behaviour")]
         [SerializeField]
-        protected float range_Detect = 5f;
+        protected float range_Detect = 7.5f;
         [SerializeField]
-        protected float range_Attack = 1f;
+        protected float range_Attack = 2f;
+        [SerializeField]
         protected float distance;
+        [SerializeField]
+        protected State currentState;
 
         [Header("Criteria : AI Interval")]
         [SerializeField]
-        protected float patrolInterval;
+        protected float patrolInterval = 3f;
         [SerializeField]
-        protected float attackInterval;
+        protected float attackInterval = 3f;
         #endregion
 
         // 속성
@@ -59,6 +62,11 @@ namespace Seti
         {
             distance = Vector3.Distance(player.transform.position, transform.position);
         }
+        #endregion
+
+        // 메서드
+        #region Methods
+        public void SwitchState(State state) => currentState = state;
         #endregion
     }
 }

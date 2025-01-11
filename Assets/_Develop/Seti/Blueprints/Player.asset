@@ -20,9 +20,40 @@ MonoBehaviour:
   behaviourStrategies:
   - rid: 8920205005117718708
   - rid: 8920205005117718720
+  - rid: 6561987910655017042
   references:
     version: 2
     RefIds:
+    - rid: 6561987910655017042
+      type: {class: BehaviourStrategyMapping, ns: Seti, asm: Assembly-CSharp}
+      data:
+        behaviour:
+          rid: 6561987910655017043
+        strategies:
+        - rid: 6561987910655017044
+    - rid: 6561987910655017043
+      type: {class: Look, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 6561987910655017045
+    - rid: 6561987910655017044
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 6561987910655017046
+        isActive: 1
+    - rid: 6561987910655017045
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 6561987910655017047
+        isActive: 1
+    - rid: 6561987910655017046
+      type: {class: Look_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 6561987910655017047
+      type: {class: Look_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
     - rid: 8920205005117718708
       type: {class: BehaviourStrategyMapping, ns: Seti, asm: Assembly-CSharp}
       data:

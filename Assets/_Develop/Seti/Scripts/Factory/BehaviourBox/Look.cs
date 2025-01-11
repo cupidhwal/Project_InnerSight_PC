@@ -12,7 +12,7 @@ namespace Seti
     [System.Serializable]
     public class Look : IBehaviour, IHasStrategy
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
         [SerializeReference]
         private List<Strategy> strategies;
@@ -20,15 +20,15 @@ namespace Seti
         private Vector2 lookInput;
         #endregion
 
-        // ÀÎÅÍÆäÀÌ½º
+        // ì¸í„°í˜ì´ìŠ¤
         #region Interface
-        // ¾÷±×·¹ÀÌµå
+        // ì—…ê·¸ë ˆì´ë“œ
         public void Upgrade(float increment)
         {
 
         }
 
-        // ÃÊ±âÈ­
+        // ì´ˆê¸°í™”
         public void Initialize(Actor actor)
         {
             foreach (var mapping in strategies)
@@ -46,7 +46,7 @@ namespace Seti
                 }
             }
 
-            // ÃÊ±â Àü·« ¼³Á¤
+            // ì´ˆê¸° ì „ëµ ì„¤ì •
             var defaultStrategy = CollectionUtility.FirstOrNull(strategies, s => s.strategy is Look_Normal);
             if (defaultStrategy != null)
             {
@@ -58,7 +58,7 @@ namespace Seti
             }
             else
             {
-                //Debug.LogWarning("Look Àü·«ÀÌ ¾ø¾î ÃÊ±â Àü·«À» ¼³Á¤ÇÏÁö ¸øÇß½À´Ï´Ù.");
+                //Debug.LogWarning("Look ì „ëµì´ ì—†ì–´ ì´ˆê¸° ì „ëµì„ ì„¤ì •í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.");
                 ChangeStrategy(null);
             }
         }
@@ -66,13 +66,13 @@ namespace Seti
         public Type GetBehaviourType() => typeof(Look);
         public Type GetStrategyType() => typeof(ILookStrategy);
 
-        // Çàµ¿ Àü·« ¼³Á¤
+        // í–‰ë™ ì „ëµ ì„¤ì •
         public void SetStrategies(IEnumerable<Strategy> strategies)
         {
-            this.strategies = strategies.ToList(); // Àü´Ş¹ŞÀº Àü·« ¸®½ºÆ® ÀúÀå
+            this.strategies = strategies.ToList(); // ì „ë‹¬ë°›ì€ ì „ëµ ë¦¬ìŠ¤íŠ¸ ì €ì¥
         }
 
-        // Çàµ¿ Àü·« º¯°æ
+        // í–‰ë™ ì „ëµ ë³€ê²½
         public void ChangeStrategy(Type strategyType)
         {
             var lookStrategy = CollectionUtility.FirstOrNull(strategies, s => s.strategy.GetType() == strategyType);
@@ -83,7 +83,7 @@ namespace Seti
         }
         #endregion
 
-        // ¶óÀÌÇÁ »çÀÌÅ¬
+        // ë¼ì´í”„ ì‚¬ì´í´
         #region Life Cycle
         public void FixedUpdate()
         {
@@ -96,7 +96,7 @@ namespace Seti
         }
         #endregion
 
-        // ÀÌº¥Æ® ÇÚµé·¯
+        // ì´ë²¤íŠ¸ í•¸ë“¤ëŸ¬
         #region Event Handlers
         public void OnLookPerformed(InputAction.CallbackContext context)
         {
@@ -126,7 +126,7 @@ namespace Seti
 #region Dummy
 /*public void SetStrategy(Blueprint_Actor blueprint)
         {
-            // Àü·« ¸®½ºÆ® °¡Á®¿À±â
+            // ì „ëµ ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
             if (strategies != null)
                 strategies.Clear();
             else strategies = new();
@@ -135,7 +135,7 @@ namespace Seti
                                                                                .strategies;
             if (strategies == null)
             {
-                Debug.Log("ÀÌ Actor´Â Look Çàµ¿ÀÌ ¾ø½À´Ï´Ù.");
+                Debug.Log("ì´ ActorëŠ” Look í–‰ë™ì´ ì—†ìŠµë‹ˆë‹¤.");
                 return;
             }
             else

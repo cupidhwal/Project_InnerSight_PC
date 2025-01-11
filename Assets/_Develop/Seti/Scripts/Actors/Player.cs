@@ -4,7 +4,22 @@ namespace Seti
 {
     public class Player : Actor
     {
-        // ¿À¹ö¶óÀÌµå
+        // View type
+        public enum ViewType
+        {
+            QuaterView,
+            Follow_Person,
+        }
+
+        // í•„ë“œ
+        #region Variables
+        [Header("View Type")]
+        [SerializeField]
+        private ViewType viewType;
+        public ViewType View => viewType;
+        #endregion
+
+        // ì˜¤ë²„ë¼ì´ë“œ
         #region Override
         protected override State_Actor CreateState() => gameObject.AddComponent<State_Player>();
         #endregion

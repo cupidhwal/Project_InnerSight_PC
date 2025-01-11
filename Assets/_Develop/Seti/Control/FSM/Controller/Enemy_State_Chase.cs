@@ -11,19 +11,25 @@ namespace Seti
         public override void OnInitialized() => base.OnInitialized();
 
         // 상태 전환 시 State Enter에 1회 실행
-        public override void OnEnter() { }
+        public override void OnEnter() => base.OnEnter();
 
         // 상태 전환 시 State Exit에 1회 실행
-        public override void OnExit() { }
+        public override void OnExit() => base.OnExit();
 
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
             if (!enemy.Detected)
+            {
+                enemy.SwitchState(Enemy.State.Idle);
                 return typeof(Enemy_State_Idle);
+            }
 
             else if (enemy.CanAttack)
+            {
+                enemy.SwitchState(Enemy.State.Attack);
                 return typeof(Enemy_State_Attack);
+            }
 
             else return null;
         }
