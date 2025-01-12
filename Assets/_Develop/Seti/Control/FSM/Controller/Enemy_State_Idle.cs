@@ -14,7 +14,11 @@ namespace Seti
         }
 
         // 상태 전환 시 State Enter에 1회 실행
-        public override void OnEnter() => base.OnEnter();
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            enemy.SwitchState(Enemy.State.Idle);
+        }
 
         // 상태 전환 시 State Exit에 1회 실행
         public override void OnExit() => base.OnExit();
@@ -23,16 +27,10 @@ namespace Seti
         public override Type CheckTransitions()
         {
             if (enemy.Detected)
-            {
-                enemy.SwitchState(Enemy.State.Chase);
                 return typeof(Enemy_State_Chase);
-            }
 
             else if (context.StateMachine.ElapsedTime > elapsedTime)
-            {
-                enemy.SwitchState(Enemy.State.Patrol);
                 return typeof(Enemy_State_Patrol);
-            }
 
             else return null;
         }

@@ -4,9 +4,9 @@ namespace Seti
 {
     public class Player_Alter : Actor
     {
-        // �߻�ȭ
+        // 추상화
         #region Abstract
-        protected override State_Actor CreateState() => gameObject.AddComponent<State_Player>();
+        protected override Condition_Actor CreateState() => gameObject.AddComponent<Condition_Player>();
         #endregion
     }
 }

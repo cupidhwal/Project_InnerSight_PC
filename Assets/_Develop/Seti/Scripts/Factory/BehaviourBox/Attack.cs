@@ -16,6 +16,7 @@ namespace Seti
             Normal,
             Magic,
             Weapon,
+            Tackle,
             NULL
         }
 
@@ -63,6 +64,10 @@ namespace Seti
                         break;
 
                     case Attack_Weapon:
+                        moveStrategy.Initialize(actor);
+                        break;
+
+                    case Attack_Tackle:
                         moveStrategy.Initialize(actor);
                         break;
                 }
@@ -122,6 +127,11 @@ namespace Seti
                     currentType = StrategyType.Weapon;
                     ChangeStrategy(typeof(Attack_Weapon));
                     break;
+
+                case StrategyType.Tackle:
+                    currentType = StrategyType.Tackle;
+                    ChangeStrategy(typeof(Attack_Tackle));
+                    break;
             }
         }
         #endregion
@@ -180,15 +190,18 @@ namespace Seti
         #endregion
 
         #region Controller_FSM
-        public void FSM_AttackInput() => OnAttack();
+        public void FSM_AttackInput(bool isAttack) => OnAttack(isAttack);
         public void FSM_AttackSwitch(State<Controller_FSM> state)
         {
             // FSM 상태에 따라 동작 제어
+            Condition_Enemy condition = actor.ActorState as Condition_Enemy;
             currentState = state;
             switch (currentState)
             {
                 case Enemy_State_Attack:
-                    SwitchStrategy(StrategyType.Normal);
+                    if (condition.CurrentWeapon == Condition_Common.Weapon.NULL)
+                        SwitchStrategy(StrategyType.Tackle);
+                    else SwitchStrategy(StrategyType.Normal);
                     break;
 
                 default:
@@ -205,11 +218,15 @@ namespace Seti
         {
             if (isAttack)
             {
-                if (currentType != StrategyType.Normal)
-                    SwitchStrategy(StrategyType.Normal);
+                if (currentType != StrategyType.Normal || currentType != StrategyType.Tackle)
+                {
+
+                }
+
                 currentStrategy?.Attack();
             }
             else currentStrategy?.AttackExit();
+            if (actor is Player)
             actor.Controller_Animator.IsAttack = isAttack;
         }
         #endregion

@@ -21,7 +21,7 @@ namespace Seti
 
         // 오버라이드
         #region Override
-        protected override State_Actor CreateState() => gameObject.AddComponent<State_Player>();
+        protected override Condition_Actor CreateState() => gameObject.AddComponent<Condition_Player>();
         #endregion
     }
 }

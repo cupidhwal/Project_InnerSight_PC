@@ -8,8 +8,7 @@ namespace Seti
         // 필드
         #region Variables
         protected Enemy enemy;
-
-        protected float elapsedTime = 1f;   // 시간 경과
+        protected float elapsedTime = 1f;   // 상태 전이 시간 경과
         protected float elapsedCriteria = 10f;
         protected float steeringInterval;
 

@@ -122,7 +122,7 @@ namespace Seti
         // 공중 제어 금지 보정
         protected Vector2 MoveDirection(Vector2 moveInput)
         {
-            State_Common state = actor.ActorState as State_Common;
+            Condition_Common state = actor.ActorState as Condition_Common;
             if (state.IsGrounded)
                 lastMoveDirection = moveInput;
             return lastMoveDirection;

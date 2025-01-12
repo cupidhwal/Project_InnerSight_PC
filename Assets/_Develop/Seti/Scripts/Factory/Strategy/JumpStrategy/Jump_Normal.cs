@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Seti
 {
     /// <summary>
-    /// Jump Behaviour¿« Strategy - Normal
+    /// Jump BehaviourÏùò Strategy - Normal
     /// </summary>
     public class Jump_Normal : Jump_Base
     {
@@ -11,7 +11,7 @@ namespace Seti
         {
             if (!actor.ActorState) return;
 
-            State_Common state = actor.ActorState as State_Common;
+            Condition_Common state = actor.ActorState as Condition_Common;
             if (state.IsGrounded)
                 rb.AddForce(rb.transform.up * jumpForce, ForceMode.Impulse);
         }

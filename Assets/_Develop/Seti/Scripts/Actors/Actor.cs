@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 namespace Seti
 {
-    // 모든 Actor가 RigidBody를 갖도록 강제
+    // 모든 Actor가 반드시 가져야 할 Component
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(NavMeshAgent))]
 
@@ -21,7 +21,7 @@ namespace Seti
         protected Blueprint_Actor blueprint;
         [SerializeField]
         [HideInInspector]
-        protected State_Actor actorState;
+        protected Condition_Actor actorState;
         [SerializeField]
         [HideInInspector]
         protected List<Behaviour> behaviours = new();         // [직렬화 된 필드 - 읽기 전용 속성] 구조가 아니면 작동하지 않는다
@@ -38,7 +38,7 @@ namespace Seti
         // 속성
         #region Properties
         public Blueprint_Actor Origin => blueprint;
-        public State_Actor ActorState => actorState;
+        public Condition_Actor ActorState => actorState;
         public List<Behaviour> Behaviours => behaviours;
         public Controller_Animator Controller_Animator => animator;
         public float Speed_Walk => speed_Walk;
@@ -47,7 +47,7 @@ namespace Seti
 
         // 추상화
         #region Abstract
-        protected abstract State_Actor CreateState();
+        protected abstract Condition_Actor CreateState();
         #endregion
 
         // 라이프 사이클

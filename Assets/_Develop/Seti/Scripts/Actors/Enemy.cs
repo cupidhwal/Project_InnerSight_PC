@@ -21,7 +21,7 @@ namespace Seti
         [SerializeField]
         protected float range_Detect = 7.5f;
         [SerializeField]
-        protected float range_Attack = 2f;
+        protected float range_Attack = 1f;
         [SerializeField]
         protected float distance;
         [SerializeField]
@@ -38,14 +38,15 @@ namespace Seti
         #region Properties
         public Player Player => player;
         public bool Detected => distance <= range_Detect;
-        public bool CanAttack => distance <= range_Attack;
+        public bool GoAttack => distance <= range_Attack;
+        public bool CanAttack => distance <= range_Attack * 2f;
         public float PatrolInterval => patrolInterval;
         public float AttackInterval => attackInterval;
         #endregion
 
         // 오버라이드
         #region Override
-        protected override State_Actor CreateState() => gameObject.AddComponent<State_Enemy>();
+        protected override Condition_Actor CreateState() => gameObject.AddComponent<Condition_Enemy>();
         #endregion
 
         // 라이프 사이클

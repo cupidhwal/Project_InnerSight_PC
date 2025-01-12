@@ -2,19 +2,41 @@ using UnityEngine;
 
 namespace Seti
 {
-    public abstract class State_Actor : MonoBehaviour { }
+    public abstract class Condition_Actor : MonoBehaviour { }
 
-    public class State_Common : State_Actor
+    public abstract class Condition_Common : Condition_Actor
     {
-        // �ʵ�
+        public enum Weapon
+        {
+            Sword,
+            Fist,
+            Bow,
+            NULL
+        }
+
+        // 필드
         #region Variables
+        // 상태
         public bool IsGrounded { get; set; }
         public bool IsAttack { get; set; }
+
+        // 무기
+        protected Weapon primaryWeapon;
+        [SerializeField]
+        protected Weapon currentWeapon;
         #endregion
 
-        // �̺�Ʈ �޼���
+        // 속성
+        #region Properties
+        public Weapon CurrentWeapon => currentWeapon;
+        #endregion
+
+        // 추상화
+        protected abstract void Initialize();
+
+        // 이벤트 메서드
         #region Event Methods
-        // Collision �ø���
+        // Collision 시리즈
         #region OnCollision
         private void OnCollisionChange(Collision collision, bool groundedState)
         {

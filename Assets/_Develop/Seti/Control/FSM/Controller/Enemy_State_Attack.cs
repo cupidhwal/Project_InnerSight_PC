@@ -10,25 +10,32 @@ namespace Seti
         public override void OnInitialized() => base.OnInitialized();
 
         // 상태 전환 시 State Enter에 1회 실행
-        public override void OnEnter() => base.OnEnter();
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            enemy.SwitchState(Enemy.State.Attack);
+            steeringInterval = enemy.AttackInterval;
+        }
 
         // 상태 전환 시 State Exit에 1회 실행
-        public override void OnExit() => base.OnExit();
+        public override void OnExit()
+        {
+            base.OnExit();
+
+            // Attack 행동 종료
+            if (context.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+                if (attackBehaviour is Attack attack)
+                    attack?.FSM_AttackInput(false);
+        }
 
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
             if (!enemy.Detected)
-            {
-                enemy.SwitchState(Enemy.State.Idle);
                 return typeof(Enemy_State_Idle);
-            }
 
             else if (!enemy.CanAttack)
-            {
-                enemy.SwitchState(Enemy.State.Chase);
                 return typeof(Enemy_State_Chase);
-            }
 
             else return null;
         }
@@ -40,25 +47,27 @@ namespace Seti
             if (context.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
                 if (attackBehaviour is Attack attack)
                 {
-                    
+                    if (Input_Attack(deltaTime))
+                        attack?.FSM_AttackInput(true);
                 }
         }
         #endregion
 
         // 메서드
         #region Methods
-        private void Input_Attack(float deltaTime)
+        private bool Input_Attack(float deltaTime)
         {
             // 카운트다운 진행
             steeringInterval -= deltaTime;
             if (steeringInterval <= 0)
             {
-                // 카운트다운 완료 시 행동
-                
+                // 공격 주기가 변경된 경우 갱신
+                steeringInterval = enemy.AttackInterval;
 
-                // 다음 카운트다운 시간 초기화
-                steeringInterval = UnityEngine.Random.Range(0f, 2f);
+                // 카운트다운 완료 시 행동
+                return true;
             }
+            return false;
         }
         #endregion
     }

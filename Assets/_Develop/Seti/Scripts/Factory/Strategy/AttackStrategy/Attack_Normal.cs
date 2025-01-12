@@ -4,36 +4,29 @@ namespace Seti
 {
     public class Attack_Normal : Attack_Base
     {
-        // √ﬂªÛ»≠
+        // Ï∂îÏÉÅÌôî
         #region Abstract
         public override void Attack()
         {
             base.Attack();
-            if (actor is Player)
-                Attack_Player();
-            else Attack_Enemy();
+            Attack_WithWeapon();
         }
         #endregion
 
-        // ∏ﬁº≠µÂ
+        // Î©îÏÑúÎìú
         #region Methods
-        private void Attack_Enemy()
+        private void Attack_WithWeapon()
         {
-            Debug.Log("¿œπ› ∏ÛΩ∫≈Õ ∆Ú≈∏");
-        }
-
-        private void Attack_Player()
-        {
-            State_Player state_Player = actor.ActorState as State_Player;
-            switch (state_Player.CurrentWeapon)
+            Condition_Common condition = actor.ActorState as Condition_Common;
+            switch (condition.CurrentWeapon)
             {
-                case State_Player.Weapon.Sword:
+                case Condition_Common.Weapon.Sword:
                     Attack_Sword();
                     break;
-                case State_Player.Weapon.Fist:
+                case Condition_Common.Weapon.Fist:
                     Attack_Fist();
                     break;
-                case State_Player.Weapon.Bow:
+                case Condition_Common.Weapon.Bow:
                     Attack_Bow();
                     break;
             }
@@ -41,17 +34,17 @@ namespace Seti
 
         private void Attack_Sword()
         {
-            Debug.Log("∆Ú≈∏: Sword");
+            Debug.Log("ÌèâÌÉÄ: Sword");
         }
 
         private void Attack_Fist()
         {
-            Debug.Log("∆Ú≈∏: Fist");
+            Debug.Log("ÌèâÌÉÄ: Fist");
         }
 
         private void Attack_Bow()
         {
-            Debug.Log("∆Ú≈∏: Bow");
+            Debug.Log("ÌèâÌÉÄ: Bow");
         }
         #endregion
     }
