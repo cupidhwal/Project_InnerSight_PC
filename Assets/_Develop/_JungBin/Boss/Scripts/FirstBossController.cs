@@ -55,7 +55,7 @@ namespace JungBin
         void Update()
         {
             //플레이어와의 거리
-            Vector3 direction = GameManager.Instance.PlayerTransform.position - transform.position;
+            Vector3 direction = GameManager.Instance.Player.transform.position - transform.position;
             float distance = direction.magnitude;
 
             if (!isAttack)
@@ -64,19 +64,6 @@ namespace JungBin
             }
 
             CloseDistanceToPlayer(distance);
-
-            if (m_Animator.GetBool("Idle") == true && m_Animator.GetBool("IsFar") == false)
-            {
-                NextAttack();
-            }
-
-            Vector3 dir = PlayerPosition();
-
-            if(m_Animator.GetBool("IsAttack01"))
-            {
-                JumpToPlayer(dir);
-
-            }
 
             AttackBoxActive();
 
@@ -100,11 +87,11 @@ namespace JungBin
         //일정 거리 이상 멀어졌을때 보스가 간격을 좁히는 코드
         private void CloseDistanceToPlayer(float distance)
         {
-            if (distance > 15f)
+            if (distance > 8f)
             {
                 m_Animator.SetBool("IsFar", true);
             }
-            else if (distance < 3f)
+            else if (distance <= 4f)
             {
                 m_Animator.SetBool("IsFar", false);
             }
@@ -116,7 +103,7 @@ namespace JungBin
             if (m_Animator == null)
                 return;
 
-            int attackIndex;
+            int attackIndex;    
 
             //첫번째 공격인지 확인
             if (lastAttack == -1)
@@ -150,31 +137,20 @@ namespace JungBin
 
         public Vector3 PlayerPosition()
         {
-            Vector3 player_Position = GameManager.Instance.PlayerTransform.position - transform.position;
+            Vector3 player_Position = new Vector3(GameManager.Instance.Player.transform.position.x - transform.position.x, 0f, GameManager.Instance.Player.transform.position.z - transform.position.z);
 
             return player_Position;
             
         }
 
-        public void JumpToPlayer(Vector3 distance)
-        {
-            Vector3 dir = distance.normalized;
-            float player_Distance = distance.magnitude;
-
-            transform.position += dir * jumpMoveSpeed * Time.deltaTime;
-
-            if (player_Distance < 1f)
-            {
-                m_Animator.SetBool("IsAttack01", false);
-            }
-        }
-
+        //점프공격시의 이벤트 함수
         public void OnLanding() 
         {
             Debug.Log("!!");
             StartCoroutine(SpawnRocksWithInterval());
         }
 
+        //낙석 패턴
         private IEnumerator SpawnRocksWithInterval()
         {
             int batchCount = 0;
@@ -190,6 +166,7 @@ namespace JungBin
             }
         }
 
+        //낙석패턴시 경고 파티클 생성
         private IEnumerator ShowWarningsAndSpawnRocks()
         {
             int spawnedCount = 0;
@@ -219,6 +196,7 @@ namespace JungBin
             SpawnRocks();
         }
 
+        //낙석패턴 돌 프리팹 생성
         private void SpawnRocks()
         {
             int spawnedCount = 0;
@@ -238,7 +216,7 @@ namespace JungBin
         }
 
 
-
+        //돌진 및 던지기 공격
         private void AttackBoxActive()
         {
             if (m_Animator.GetBool("IsAttack02") == true)
