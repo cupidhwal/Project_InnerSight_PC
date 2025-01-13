@@ -12,13 +12,14 @@ namespace JungBin
 
         private void Start()
         {
-            goalPosition = GameManager.Instance.PlayerTransform;
+            goalPosition = GameManager.Instance.Player.transform;
             dir = (goalPosition.position - transform.position).normalized;
         }
 
         private void Update()
         {
             transform.position += dir * axeSpeed * Time.deltaTime;
+            dir.y = 0f;
         }
 
 
@@ -26,7 +27,7 @@ namespace JungBin
         {
             if (other.GetComponent<CapsuleCollider>() == GameManager.Instance.Player_HitCapsuleCollider)
             {
-                Debug.Log("∏¬¿Ω");
+                Debug.Log("ÎßûÏùå");
                 GameManager.Instance.Player.TakeDamage(attackDamage);
                 Destroy(gameObject);
             }

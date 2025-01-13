@@ -10,14 +10,12 @@ namespace JungBin
 
         [SerializeField] private RelicManager relicManager;
         [SerializeField] private Player player;
-        [SerializeField] private Transform player_Transform;
         [SerializeField] private CapsuleCollider player_HitCapsuleCollider;
-        [SerializeField] private BossStat bossStat;
+        [SerializeField] private GameObject firstBoss;
 
         public Player Player => player; // 외부에서 접근 가능한 프로퍼티
-        public Transform PlayerTransform => player_Transform;
         public CapsuleCollider Player_HitCapsuleCollider => player_HitCapsuleCollider;
-        public BossStat BossStat => bossStat;
+        public GameObject FirstBoss => firstBoss;
 
         private void Awake()
         {

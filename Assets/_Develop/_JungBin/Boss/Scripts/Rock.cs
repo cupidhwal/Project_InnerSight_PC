@@ -6,24 +6,28 @@ namespace JungBin
 
     public class Rock : MonoBehaviour
     {
-        public float destroyDelay = 0f; // Ãæµ¹ ÈÄ Á¦°Å±îÁö µô·¹ÀÌ
+        public float destroyDelay = 0f; // ì¶©ëŒ í›„ ì œê±°ê¹Œì§€ ë”œë ˆì´
         [SerializeField] private int attackDamage = 0;
 
         private void OnTriggerEnter(Collider other)
         {
-            // Ãæµ¹ Ã³¸®
+            // ì¶©ëŒ ì²˜ë¦¬
             if (other.GetComponent<CapsuleCollider>() == GameManager.Instance.Player_HitCapsuleCollider)
             {
                 GameManager.Instance.Player.TakeDamage(attackDamage);
             }
+            else if(other.CompareTag("Ground"))
+            {
+                Invoke(nameof(DestroyRock), destroyDelay);
+            }
 
-            // ÆÄ±« È¿°ú ½ÇÇà ÈÄ Á¦°Å
+            // íŒŒê´´ íš¨ê³¼ ì‹¤í–‰ í›„ ì œê±°
             Invoke(nameof(DestroyRock), destroyDelay);
         }
 
         private void DestroyRock()
         {
-            // ÆÄÆ¼Å¬ È¿°ú Ãß°¡ °¡´É
+            // íŒŒí‹°í´ íš¨ê³¼ ì¶”ê°€ ê°€ëŠ¥
             Destroy(gameObject);
         }
     }
