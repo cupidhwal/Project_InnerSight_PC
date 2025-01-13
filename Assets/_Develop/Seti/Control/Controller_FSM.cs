@@ -44,8 +44,10 @@ namespace Seti
             BindFSMBehaviours();
         }
 
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
+
             // FSM 업데이트
             stateMachine.Update(Time.deltaTime);
         }

@@ -41,8 +41,8 @@ namespace Seti
                 {
                     if (token.IsCancellationRequested) return;
 
-                    rb.MovePosition(actor.transform.position - 0.5f * Time.fixedDeltaTime * actor.transform.forward);
-                    slamBack += Time.fixedDeltaTime;
+                    actor.transform.Translate(- 0.5f * Time.deltaTime * actor.transform.forward);
+                    slamBack += Time.deltaTime;
                     await Task.Delay(20, token); // 토큰 전달
                 }
 
@@ -51,8 +51,8 @@ namespace Seti
                 {
                     if (token.IsCancellationRequested) return;
 
-                    rb.MovePosition(actor.transform.position + 10 * Time.fixedDeltaTime * actor.transform.forward);
-                    slamFront += Time.fixedDeltaTime;
+                    actor.transform.Translate(10 * Time.deltaTime * actor.transform.forward);
+                    slamFront += Time.deltaTime;
                     await Task.Delay(20, token); // 토큰 전달
                 }
             }

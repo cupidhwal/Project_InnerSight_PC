@@ -13,10 +13,31 @@ namespace Seti
 
         // 필드
         #region Variables
+        [Header("Variables")]
+        [SerializeField]
+        protected float moveSpeed = 4f;
+        [SerializeField]
+        protected float dashSpeed = 30f;
+        [SerializeField]
+        protected float dashDelay = 0.1f;
+        [SerializeField]
+        protected float dashDuration = 0.15f;
+        [SerializeField]
+        protected float dashCooldown = 1f;
+
         [Header("View Type")]
         [SerializeField]
         private ViewType viewType;
         public ViewType View => viewType;
+        #endregion
+
+        // 속성
+        #region Properties
+        public float Speed_Move => moveSpeed;
+        public float Dash_Speed => dashSpeed;
+        public float Dash_Delay => dashDelay;
+        public float Dash_Cooldown => dashCooldown;
+        public float Dash_Duration => dashDuration;
         #endregion
 
         // 오버라이드

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 namespace Seti
 {
     // 모든 Actor가 반드시 가져야 할 Component
-    [RequireComponent(typeof(Rigidbody))]
+    //[RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(NavMeshAgent))]
 
     /// <summary>
@@ -28,11 +28,6 @@ namespace Seti
 
         // 일반
         protected Controller_Animator animator;
-        [Header("Variables")]
-        [SerializeField]
-        protected float speed_Walk = 2f;
-        [SerializeField]
-        protected float speed_Run = 3f;
         #endregion
 
         // 속성
@@ -41,8 +36,6 @@ namespace Seti
         public Condition_Actor ActorState => actorState;
         public List<Behaviour> Behaviours => behaviours;
         public Controller_Animator Controller_Animator => animator;
-        public float Speed_Walk => speed_Walk;
-        public float Speed_Run => speed_Run;
         #endregion
 
         // 추상화

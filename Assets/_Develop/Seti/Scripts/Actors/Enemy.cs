@@ -18,6 +18,12 @@ namespace Seti
         protected Player player;
         //public State state;
 
+        [Header("Variables")]
+        [SerializeField]
+        protected float speed_Walk = 2f;
+        [SerializeField]
+        protected float speed_Run = 3f;
+
         [Header("Criteria : AI Behaviour")]
         [SerializeField]
         protected State currentState;
@@ -48,7 +54,9 @@ namespace Seti
         public bool CanAttack => distancePlayer <= range_Attack * 2f;
         public bool GoBackHome => distancePlace >= range_BackOff;
         public bool TooFarFromHome => distancePlace >= range_BackOff * 2f;
-        public bool ImHome => distancePlace <= 0.1f;
+        public bool ImHome => distancePlace <= 0.2f;
+        public float Speed_Walk => speed_Walk;
+        public float Speed_Run => speed_Run;
         public float PatrolInterval => patrolInterval;
         public float AttackInterval => attackInterval;
         #endregion

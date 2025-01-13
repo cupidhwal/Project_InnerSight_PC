@@ -26,13 +26,12 @@ namespace Seti
         #region Variables
         // Player
         private float speed_Move = 4f;
-        public float Speed_Dash => speed_Move * 10f;
-        private const float delay_Dash = 0.15f;
-        private const float coolDown_Dash = 1f;
         private bool isDashed = false;
 
         // 전략 관리
         private Actor actor;
+        private Player player;
+        private Enemy enemy;
         [SerializeReference]
         private List<Strategy> strategies;
         private IMoveStrategy currentStrategy;
@@ -49,7 +48,8 @@ namespace Seti
         // 업그레이드
         public void Upgrade(float increment)
         {
-            speed_Move += increment * actor.Speed_Run / 100;
+            if (actor is Player player)
+            speed_Move += increment * player.Speed_Move / 100;
             Initialize(actor);
         }
 
@@ -57,6 +57,10 @@ namespace Seti
         public void Initialize(Actor actor)
         {
             this.actor = actor;
+            if (actor is Player)
+                player = actor as Player;
+            if (actor is Enemy)
+                enemy = actor as Enemy;
             state = actor.ActorState;
             foreach (var mapping in strategies)
             {
@@ -68,15 +72,15 @@ namespace Seti
                         break;
 
                     case Move_Dash:
-                        moveStrategy.Initialize(actor, Speed_Dash);
+                        moveStrategy.Initialize(actor, player.Dash_Speed);
                         break;
 
                     case Move_Walk:
-                        moveStrategy.Initialize(actor, actor.Speed_Walk);
+                        moveStrategy.Initialize(actor, enemy.Speed_Walk);
                         break;
 
                     case Move_Run:
-                        moveStrategy.Initialize(actor, actor.Speed_Run);
+                        moveStrategy.Initialize(actor, enemy.Speed_Run);
                         break;
                 }
             }
@@ -239,7 +243,7 @@ namespace Seti
         private void OnDash()
         {
             // 체공 중일 경우 착지까지 전략 변경 불가
-            if (!state.IsGrounded || isDashed) return;
+            //if (!state.IsGrounded || isDashed) return;
 
             Execute_Dash();
         }
@@ -249,7 +253,7 @@ namespace Seti
             currentType = type;
 
             // 체공 중일 경우 착지까지 전략 변경 불가
-            if (!state.IsGrounded) return;
+            //if (!state.IsGrounded) return;
 
             SwitchStrategy();
         }
@@ -264,14 +268,14 @@ namespace Seti
             actor.Controller_Animator.IsDash = true;
             SwitchStrategy(StrategyType.Dash);
 
-            await Task.Delay((int)(delay_Dash * 1000));
+            await Task.Delay((int)(player.Dash_Duration * 1000));
             if (currentStrategy is Move_Dash dash)
                 dash.MoveExit();
 
             actor.Controller_Animator.IsDash = false;
             SwitchStrategy(StrategyType.Normal);
 
-            await Task.Delay((int)((coolDown_Dash - delay_Dash) * 1000));
+            await Task.Delay((int)((player.Dash_Cooldown - player.Dash_Duration) * 1000));
             isDashed = false;
         }
         #endregion

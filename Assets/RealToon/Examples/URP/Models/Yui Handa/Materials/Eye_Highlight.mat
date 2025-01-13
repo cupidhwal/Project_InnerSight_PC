@@ -9,8 +9,6 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Eye_Highlight
   m_Shader: {fileID: 4800000, guid: 6459b2db96a08ca41b0f9b39dc7ad59e, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - N_F_EAL_ON
   - N_F_ESSAO_ON
@@ -64,9 +62,8 @@ Material:
   - TransparentBackface
   - RayTracingPrepass
   - MOTIONVECTORS
-  - SHADOWCASTER
   - SRPDEFAULTUNLIT
-  m_LockedProperties: 
+  - SHADOWCASTER
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -243,7 +240,6 @@ Material:
     - _BleModSour: 5
     - _BlendMode: 0
     - _BumpScale: 1
-    - _ClipAdju: 0
     - _CoatMask: 0
     - _Compa: 4
     - _ComputeMeshIndex: 0
@@ -325,11 +321,9 @@ Material:
     - _MVWriMas: 40
     - _MaiColPo: 0.65
     - _MaterialID: 1
-    - _MaxFadDistance: 2
     - _Metallic: 0
     - _MetallicRemapMax: 1
     - _MetallicRemapMin: 0
-    - _MinFadDistance: 0
     - _MixMainTexToOutline: 0
     - _Mode: 0
     - _N_F_AL: 1
@@ -354,30 +348,23 @@ Material:
     - _N_F_HPSS: 0
     - _N_F_MC: 0
     - _N_F_MSSOLTFO: 0
-    - _N_F_NFD: 0
     - _N_F_NLASOBF: 0
     - _N_F_NM: 0
     - _N_F_O: 0
     - _N_F_OFLMB: 0
     - _N_F_O_NM: 0
-    - _N_F_PA: 0
     - _N_F_PAL: 1
     - _N_F_PT: 0
     - _N_F_R: 0
     - _N_F_RDC: 1
     - _N_F_RL: 0
-    - _N_F_SCO: 0
     - _N_F_SCT: 0
-    - _N_F_SE: 0
     - _N_F_SL: 0
     - _N_F_SON: 0
     - _N_F_SS: 1
     - _N_F_ST: 0
     - _N_F_STIAL: 0
     - _N_F_STIS: 0
-    - _N_F_STSDFM: 0
-    - _N_F_TP: 0
-    - _NoiseSize: 100
     - _NoisyOutlineIntensity: 1
     - _NormalMapIntensity: 1
     - _NormalMapSpace: 0
@@ -395,9 +382,6 @@ Material:
     - _OutlineWidthAffectedByViewDistance: 0
     - _OutlineZPostionInCamera: 0
     - _OverallShadowColorPower: 1
-    - _PADist: 0
-    - _PASize: 0.5
-    - _PASmooTrans: 1
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15
     - _PPDMinSamples: 5
@@ -407,7 +391,6 @@ Material:
     - _PTexturePower: 1
     - _Parallax: 0.02
     - _PointSpotlightIntensity: 0
-    - _PresAdju: 1
     - _RELG: 1
     - _RTGIShaFallo: 0
     - _RayTracing: 0
@@ -481,7 +464,6 @@ Material:
     - _TexWorldScaleEmissive: 1
     - _TexturePatternStyle: 0
     - _Thickness: 1
-    - _TrailSize: 1.5
     - _TransAffSha: 1
     - _TransmissionEnable: 1
     - _TransparentBackfaceEnable: 0
@@ -492,8 +474,6 @@ Material:
     - _TransparentThreshold: 0
     - _TransparentWritingMotionVec: 0
     - _TransparentZWrite: 0
-    - _TriPlaBlend: 4
-    - _TriPlaTile: 1
     - _UVBase: 0
     - _UVDetail: 0
     - _UVEmissive: 0
@@ -527,14 +507,10 @@ Material:
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _MainColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ObjPosi: {r: 0, g: 0, b: 0, a: 0}
-    - _ObjectForward: {r: 0, g: 0, b: 0, a: 0}
-    - _ObjectRight: {r: 0, g: 0, b: 0, a: 0}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineOffset: {r: 0, g: 0, b: 0, a: 1}
     - _OverallShadowColor: {r: 1, g: 1, b: 1, a: 1}
     - _PTCol: {r: 0, g: 0, b: 0, a: 1}
-    - _PrevPosition: {r: 0, g: 0, b: 0, a: 0}
     - _RimLightColor: {r: 1, g: 1, b: 1, a: 1}
     - _SSAOColor: {r: 0, g: 0, b: 0, a: 0}
     - _SelfLitColor: {r: 1, g: 1, b: 1, a: 1}
@@ -548,7 +524,6 @@ Material:
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
     - _XYZPosition: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!114 &9145064201596165927
 MonoBehaviour:
   m_ObjectHideFlags: 11

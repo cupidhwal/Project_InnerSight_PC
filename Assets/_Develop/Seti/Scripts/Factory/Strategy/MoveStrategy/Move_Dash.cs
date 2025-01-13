@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Seti
@@ -8,7 +9,7 @@ namespace Seti
         private Vector2 dir = Vector2.zero;
         private Vector3 moveDirection = Vector3.zero;
 
-        protected override void QuaterView_Move(Vector2 moveInput)
+        protected override async void QuaterView_Move(Vector2 moveInput)
         {
             if (rb == null) return;
             if (!isDash)    // 대시 중이 아닐 때에만 방향 갱신
@@ -19,6 +20,9 @@ namespace Seti
                                 new(dir.x, 0, dir.y);
                 isDash = true;
             }
+            if (actor is Player player)
+                await Task.Delay((int)(player.Dash_Delay * 1000));
+
             QuaterView_Move(moveDirection);
         }
         public void MoveExit()

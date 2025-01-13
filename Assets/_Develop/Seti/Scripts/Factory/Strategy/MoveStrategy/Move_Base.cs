@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Seti
@@ -57,16 +58,16 @@ namespace Seti
         }
         protected void QuaterView_Move(Vector3 moveDirection)
         {
-            Vector3 move = speed * Time.fixedDeltaTime * moveDirection.normalized;
+            Vector3 move = speed * Time.deltaTime * moveDirection.normalized;
             Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * move;
-            rb.MovePosition(actor.transform.position + QuaterView);
+            actor.transform.Translate(QuaterView, Space.World);
 
             // 이동이 발생할 때만 회전
             if (moveDirection != Vector3.zero)
             {
                 // 진행 방향으로 회전
                 Quaternion targetRotation = Quaternion.LookRotation(QuaterView, Vector3.up);
-                rb.MoveRotation(Quaternion.Slerp(actor.transform.rotation, targetRotation, 10f * Time.fixedDeltaTime));
+                actor.transform.rotation = (Quaternion.Slerp(actor.transform.rotation, targetRotation, 10f * Time.deltaTime));
             }
         }
 
@@ -123,7 +124,7 @@ namespace Seti
         protected Vector2 MoveDirection(Vector2 moveInput)
         {
             Condition_Actor state = actor.ActorState;
-            if (state.IsGrounded)
+            //if (state.IsGrounded)
                 lastMoveDirection = moveInput;
             return lastMoveDirection;
         }

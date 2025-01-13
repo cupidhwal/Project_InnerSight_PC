@@ -4,7 +4,7 @@ namespace Seti
 {
     public abstract class AniState_Base : MonoState<Controller_Animator>
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
         // Animator parameter
         protected int WhichAttack = Animator.StringToHash("WhichAttack");
@@ -13,11 +13,13 @@ namespace Seti
         protected int isMove = Animator.StringToHash("IsMove");
         protected int isDash = Animator.StringToHash("IsDash");
 
+
+
         // Component
         protected Transform actorTransform;
         #endregion
 
-        // ¿À¹ö¶óÀÌµå
+        // ì˜¤ë²„ë¼ì´ë“œ
         #region Override
         public override void OnEnter() => context.Initialize();
         public override void OnExit() => context.Initialize();

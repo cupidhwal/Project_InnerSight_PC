@@ -54,7 +54,7 @@ namespace Seti
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        protected virtual void FixedUpdate()
+        protected virtual void Update()
         {
             // Move 행동이 있으면 FixedUpdate 호출
             if (behaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
