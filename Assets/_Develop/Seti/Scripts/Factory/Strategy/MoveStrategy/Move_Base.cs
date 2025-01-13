@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Seti
@@ -114,7 +113,7 @@ namespace Seti
             }
 
             if (height > 0f && height < 0.5f)
-                rb.MovePosition(actor.transform.position + new Vector3(0, height, 0));
+                actor.transform.Translate(new Vector3(0, height, 0));
         }
         #endregion
 

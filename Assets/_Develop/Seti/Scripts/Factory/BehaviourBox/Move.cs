@@ -176,7 +176,7 @@ namespace Seti
 
         // 라이프 사이클
         #region Life Cycle
-        public void FixedUpdate()
+        public void Update()
         {
             // 공격 중일 땐 이동 불가
             if (state.IsAttack) return;
@@ -244,7 +244,7 @@ namespace Seti
         {
             // 체공 중일 경우 착지까지 전략 변경 불가
             //if (!state.IsGrounded || isDashed) return;
-
+            if (isDashed) return;
             Execute_Dash();
         }
 

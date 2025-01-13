@@ -19,7 +19,9 @@ namespace Seti
         // 필드
         #region Variables
         // 상태
-        public bool IsGrounded { get; set; }
+        [SerializeField]
+        private bool isGrounded;
+        public bool IsGrounded => isGrounded;
         public bool IsAttack { get; set; }
 
         // 무기
@@ -46,13 +48,13 @@ namespace Seti
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
-                IsGrounded = groundedState;
+                isGrounded = groundedState;
             }
         }
 
         private void OnCollisionEnter(Collision collision) => OnCollisionChange(collision, true);
         private void OnCollisionStay(Collision collision) => OnCollisionChange(collision, true);
-        private void OnCollisionExit(Collision collision) => OnCollisionChange(collision, false);
+        //private void OnCollisionExit(Collision collision) => OnCollisionChange(collision, false);
         #endregion
         #endregion
     }

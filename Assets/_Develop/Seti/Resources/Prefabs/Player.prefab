@@ -142,10 +142,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.16
-  m_Height: 1.64
+  m_Radius: 0.2
+  m_Height: 1.8
   m_Direction: 1
-  m_Center: {x: 0, y: 0.82, z: 0}
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!54 &4180857677736625128
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -170,9 +170,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
 --- !u!195 &3242399420064206510
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -210,8 +210,10 @@ MonoBehaviour:
   blueprint: {fileID: 0}
   actorState: {fileID: 0}
   behaviours: []
-  speed_Walk: 2
-  speed_Run: 4
+  moveSpeed: 4
+  dashSpeed: 30
+  dashDuration: 0.15
+  dashCooldown: 1
   viewType: 0
   references:
     version: 2

@@ -19,8 +19,6 @@ namespace Seti
         [SerializeField]
         protected float dashSpeed = 30f;
         [SerializeField]
-        protected float dashDelay = 0.1f;
-        [SerializeField]
         protected float dashDuration = 0.15f;
         [SerializeField]
         protected float dashCooldown = 1f;
@@ -35,7 +33,6 @@ namespace Seti
         #region Properties
         public float Speed_Move => moveSpeed;
         public float Dash_Speed => dashSpeed;
-        public float Dash_Delay => dashDelay;
         public float Dash_Cooldown => dashCooldown;
         public float Dash_Duration => dashDuration;
         #endregion

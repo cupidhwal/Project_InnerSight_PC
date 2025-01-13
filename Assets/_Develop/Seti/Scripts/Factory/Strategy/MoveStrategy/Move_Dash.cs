@@ -5,10 +5,17 @@ namespace Seti
 {
     public class Move_Dash : Move_Base
     {
+        // 필드
+        #region Variables
         private bool isDash = false;
         private Vector2 dir = Vector2.zero;
         private Vector3 moveDirection = Vector3.zero;
 
+        private const float dashDuration = 0.1f;
+        #endregion
+
+        // 오버라이드
+        #region Override
         protected override async void QuaterView_Move(Vector2 moveInput)
         {
             if (rb == null) return;
@@ -20,16 +27,35 @@ namespace Seti
                                 new(dir.x, 0, dir.y);
                 isDash = true;
             }
-            if (actor is Player player)
-                await Task.Delay((int)(player.Dash_Delay * 1000));
+            Vector3 move = speed * Time.deltaTime * moveDirection.normalized;
+            Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * move;
 
-            QuaterView_Move(moveDirection);
+            float elapsedTime = 0f;
+
+            // 초기 속도 설정
+            float initialSpeed = 0f;
+            while (elapsedTime < dashDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = elapsedTime / dashDuration;
+
+                // Ease In-Out 적용
+                float currentSpeed = Mathf.Lerp(initialSpeed, 30, Mathf.SmoothStep(0f, 1f, t));
+                actor.transform.Translate(currentSpeed * Time.deltaTime * QuaterView, Space.World);
+
+                await Task.Delay((int)(Time.deltaTime * 1000));
+            }
         }
+        #endregion
+
+        // 메서드
+        #region Methods
         public void MoveExit()
         {
             isDash = false;
             dir = Vector2.zero;
             moveDirection = Vector3.zero;
         }
+        #endregion
     }
 }
