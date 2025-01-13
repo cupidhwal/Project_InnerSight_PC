@@ -6,32 +6,34 @@ namespace JungBin
 
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance { get; private set; } // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º
+        public static GameManager Instance { get; private set; } // ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤
 
         [SerializeField] private RelicManager relicManager;
         [SerializeField] private Player player;
         [SerializeField] private Transform player_Transform;
         [SerializeField] private CapsuleCollider player_HitCapsuleCollider;
+        [SerializeField] private BossStat bossStat;
 
-        public Player Player => player; // ¿ÜºÎ¿¡¼­ Á¢±Ù °¡´ÉÇÑ ÇÁ·ÎÆÛÆ¼
+        public Player Player => player; // ì™¸ë¶€ì—ì„œ ì ‘ê·¼ ê°€ëŠ¥í•œ í”„ë¡œí¼í‹°
         public Transform PlayerTransform => player_Transform;
         public CapsuleCollider Player_HitCapsuleCollider => player_HitCapsuleCollider;
+        public BossStat BossStat => bossStat;
 
         private void Awake()
         {
-            // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º ¼³Á¤
+            // ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤ ì„¤ì •
             if (Instance == null) Instance = this;
             else Destroy(gameObject);
         }
 
-        // À¯¹°À» µî·ÏÇÏ°í È¿°ú¸¦ Àû¿ë
+        // ìœ ë¬¼ì„ ë“±ë¡í•˜ê³  íš¨ê³¼ë¥¼ ì ìš©
         public void RegisterRelic(IRelic relic)
         {
             if (relic != null)
             {
                 relicManager.AddRelic(relic, player);
                 
-                Debug.Log($"À¯¹° µî·Ï À¯¹°ÀÇ ÀÌ¸§ : {relic.RelicName}");
+                Debug.Log($"ìœ ë¬¼ ë“±ë¡ ìœ ë¬¼ì˜ ì´ë¦„ : {relic.RelicName}");
             }
         }
     }
