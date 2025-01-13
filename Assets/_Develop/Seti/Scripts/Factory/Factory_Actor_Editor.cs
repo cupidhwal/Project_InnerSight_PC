@@ -9,18 +9,18 @@ namespace Seti
     [CustomEditor(typeof(Factory_Actor))]
     public class Factory_Actor_Editor : Editor
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
         private Factory_Actor factory;
         public ReorderableList SpawnedActorsList => spawnedActorsList;
-        private ReorderableList spawnedActorsList;      // »ı¼ºµÈ ¾×ÅÍ ¸®½ºÆ®
-        private ReorderableList selectedBlueprintsList; // ¼±ÅÃµÈ Blueprint ¸®½ºÆ®
+        private ReorderableList spawnedActorsList;      // ìƒì„±ëœ ì•¡í„° ë¦¬ìŠ¤íŠ¸
+        private ReorderableList selectedBlueprintsList; // ì„ íƒëœ Blueprint ë¦¬ìŠ¤íŠ¸
 
-        private int selectedIndex = 0; // µå·Ó´Ù¿î¿¡¼­ ¼±ÅÃµÈ Blueprint ÀÎµ¦½º
-        private readonly List<Blueprint_Actor> selectedBlueprints = new(); // ¼±ÅÃµÈ Blueprint ÀúÀå
+        private int selectedIndex = 0; // ë“œë¡­ë‹¤ìš´ì—ì„œ ì„ íƒëœ Blueprint ì¸ë±ìŠ¤
+        private readonly List<Blueprint_Actor> selectedBlueprints = new(); // ì„ íƒëœ Blueprint ì €ì¥
         #endregion
 
-        // ¶óÀÌÇÁ »çÀÌÅ¬
+        // ë¼ì´í”„ ì‚¬ì´í´
         #region Life Cycle
         private void OnEnable()
         {
@@ -31,7 +31,7 @@ namespace Seti
         }
         #endregion
 
-        // ¸Ş¼­µå
+        // ë©”ì„œë“œ
         #region Methods
         public override void OnInspectorGUI()
         {
@@ -41,21 +41,21 @@ namespace Seti
 
             if (factory == null)
             {
-                EditorGUILayout.HelpBox("Factory_Actor ÀÎ½ºÅÏ½º°¡ ÃÊ±âÈ­µÇÁö ¾Ê¾Ò½À´Ï´Ù.", MessageType.Error);
+                EditorGUILayout.HelpBox("Factory_Actor ì¸ìŠ¤í„´ìŠ¤ê°€ ì´ˆê¸°í™”ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.", MessageType.Error);
                 return;
             }
 
             DrawBlueprintManagementUI();
             DrawActorManagementUI();
 
-            // Delete Å° ÀÌº¥Æ® °¨Áö
+            // Delete í‚¤ ì´ë²¤íŠ¸ ê°ì§€
             HandleDeleteKey();
 
             EditUtility.DrawLine(2);
         }
 
         /// <summary>
-        /// ReorderableListÀÇ Actor ¸®½ºÆ® °»½Å
+        /// ReorderableListì˜ Actor ë¦¬ìŠ¤íŠ¸ ê°±ì‹ 
         /// </summary>
         public void UpdateSpawnedActorsList()
         {
@@ -64,59 +64,59 @@ namespace Seti
         }
 
         /// <summary>
-        /// Blueprint °ü¸® UI
+        /// Blueprint ê´€ë¦¬ UI
         /// </summary>
         private void DrawBlueprintManagementUI()
         {
-            if (GUILayout.Button("Blueprints °»½Å"))
+            if (GUILayout.Button("Blueprints ê°±ì‹ "))
             {
                 RefreshBlueprints(factory);
-                Debug.Log($"Blueprint °»½Å: ÃÑ {factory.blueprints.Count}°³ÀÇ Blueprint¸¦ Ã£¾Ò½À´Ï´Ù.");
+                Debug.Log($"Blueprint ê°±ì‹ : ì´ {factory.blueprints.Count}ê°œì˜ Blueprintë¥¼ ì°¾ì•˜ìŠµë‹ˆë‹¤.");
             }
 
-            EditUtility.SubjectLine(Color.gray, 2, "Actor »ı¼º");
+            EditUtility.SubjectLine(Color.gray, 2, "Actor ìƒì„±");
 
             if (factory.blueprints != null && factory.blueprints.Count > 0)
             {
                 string[] blueprintNames = factory.blueprints.Select(bp => bp.ActorName).ToArray();
-                selectedIndex = EditorGUILayout.Popup("»ı¼ºÇÒ Actor ¼±ÅÃ", selectedIndex, blueprintNames);
+                selectedIndex = EditorGUILayout.Popup("ìƒì„±í•  Actor ì„ íƒ", selectedIndex, blueprintNames);
 
-                if (GUILayout.Button("¼±ÅÃÇÑ Actors¿¡ Ãß°¡"))
+                if (GUILayout.Button("ì„ íƒí•œ Actorsì— ì¶”ê°€"))
                 {
                     AddSelectedActorToList(factory, selectedIndex);
                 }
 
                 selectedBlueprintsList.DoLayoutList();
 
-                if (GUILayout.Button("Scene¿¡ ¼±ÅÃ Actor ¹èÄ¡"))
+                if (GUILayout.Button("Sceneì— ì„ íƒ Actor ë°°ì¹˜"))
                 {
                     PlaceSelectedActors();
                 }
 
                 EditUtility.DrawLine(Color.gray, 1);
 
-                if (GUILayout.Button("Scene¿¡ ¸ğµç Actor ¹èÄ¡"))
+                if (GUILayout.Button("Sceneì— ëª¨ë“  Actor ë°°ì¹˜"))
                 {
                     PlaceAllActors(factory);
                 }
             }
             else
             {
-                EditorGUILayout.HelpBox("Blueprints°¡ ºñ¾î ÀÖ½À´Ï´Ù. °»½Å ¹öÆ°À» ´­·¯ ¾÷µ¥ÀÌÆ®ÇÏ¼¼¿ä.", MessageType.Warning);
+                EditorGUILayout.HelpBox("Blueprintsê°€ ë¹„ì–´ ìˆìŠµë‹ˆë‹¤. ê°±ì‹  ë²„íŠ¼ì„ ëˆŒëŸ¬ ì—…ë°ì´íŠ¸í•˜ì„¸ìš”.", MessageType.Warning);
             }
         }
 
         /// <summary>
-        /// Actor °ü¸® UI
+        /// Actor ê´€ë¦¬ UI
         /// </summary>
         private void DrawActorManagementUI()
         {
-            EditUtility.SubjectLine(Color.gray, 2, "Actor °ü¸®");
+            EditUtility.SubjectLine(Color.gray, 2, "Actor ê´€ë¦¬");
 
             spawnedActorsList.DoLayoutList();
 
-            // ¼±ÅÃµÈ Actor ¼³°èµµ °»½Å
-            if (GUILayout.Button("¼±ÅÃ Actor °»½Å"))
+            // ì„ íƒëœ Actor ì„¤ê³„ë„ ê°±ì‹ 
+            if (GUILayout.Button("ì„ íƒ Actor ê°±ì‹ "))
             {
                 int selectedIndex = spawnedActorsList.index;
                 if (selectedIndex >= 0 && selectedIndex < factory.MadeObjects.Count)
@@ -126,33 +126,44 @@ namespace Seti
                 }
                 else
                 {
-                    Debug.LogWarning("À¯È¿ÇÏÁö ¾ÊÀº Actor°¡ ¼±ÅÃµÇ¾ú½À´Ï´Ù.");
+                    Debug.LogWarning("ìœ íš¨í•˜ì§€ ì•Šì€ Actorê°€ ì„ íƒë˜ì—ˆìŠµë‹ˆë‹¤.");
                 }
+            }
+
+            GUILayout.Space(2.5f);
+
+            // ëª¨ë“  Actor ì„¤ê³„ë„ ê°±ì‹ 
+            if (GUILayout.Button("ëª¨ë“  Actor ê°±ì‹ "))
+            {
+                factory.ApplyBlueprintToAllActors();
+                UpdateSpawnedActorsList();
+                Repaint();
             }
 
             EditUtility.DrawLine(Color.gray, 1);
 
-            // ¼±ÅÃµÈ Actor Á¦°Å
-            if (GUILayout.Button("¼±ÅÃ Actor Á¦°Å"))
+            // ì„ íƒëœ Actor ì œê±°
+            if (GUILayout.Button("ì„ íƒ Actor ì œê±°"))
             {
-                int selectedIndex = spawnedActorsList.index; // ¼±ÅÃµÈ ÀÎµ¦½º °¡Á®¿À±â
+                int selectedIndex = spawnedActorsList.index; // ì„ íƒëœ ì¸ë±ìŠ¤ ê°€ì ¸ì˜¤ê¸°
 
                 if (selectedIndex >= 0 && selectedIndex < factory.MadeObjects.Count)
                 {
                     GameObject selectedActor = factory.MadeObjects[selectedIndex];
-                    factory.DestroyActor(selectedActor); // ¼±ÅÃµÈ ¾×ÅÍ Á¦°Å
+                    factory.DestroyActor(selectedActor); // ì„ íƒëœ ì•¡í„° ì œê±°
                     UpdateSpawnedActorsList();
                     Repaint();
                 }
                 else
                 {
-                    Debug.LogWarning("¼±ÅÃµÈ Actor°¡ ¾ø½À´Ï´Ù!");
+                    Debug.LogWarning("ì„ íƒëœ Actorê°€ ì—†ìŠµë‹ˆë‹¤!");
                 }
             }
 
-            EditUtility.DrawLine(Color.gray, 1);
+            GUILayout.Space(2.5f);
 
-            if (GUILayout.Button("¸ğµç Actor Á¦°Å"))
+            // ëª¨ë“  Actor ì œê±°
+            if (GUILayout.Button("ëª¨ë“  Actor ì œê±°"))
             {
                 factory.DestroyAllActors();
                 UpdateSpawnedActorsList();
@@ -161,13 +172,13 @@ namespace Seti
         }
 
         /// <summary>
-        /// ¼±ÅÃµÈ Blueprint¸¦ °ü¸®ÇÏ´Â ReorderableList ÃÊ±âÈ­
+        /// ì„ íƒëœ Blueprintë¥¼ ê´€ë¦¬í•˜ëŠ” ReorderableList ì´ˆê¸°í™”
         /// </summary>
         private void InitializeBlueprintsList()
         {
             selectedBlueprintsList = new ReorderableList(selectedBlueprints, typeof(Blueprint_Actor), true, true, false, true)
             {
-                drawHeaderCallback = rect => EditorGUI.LabelField(rect, "¼±ÅÃÇÑ Actors"),
+                drawHeaderCallback = rect => EditorGUI.LabelField(rect, "ì„ íƒí•œ Actors"),
                 drawElementCallback = (rect, index, isActive, isFocused) =>
                 {
                     if (index < selectedBlueprints.Count)
@@ -185,13 +196,13 @@ namespace Seti
         }
 
         /// <summary>
-        /// »ı¼ºµÈ Actor¸¦ °ü¸®ÇÏ´Â ReorderableList ÃÊ±âÈ­
+        /// ìƒì„±ëœ Actorë¥¼ ê´€ë¦¬í•˜ëŠ” ReorderableList ì´ˆê¸°í™”
         /// </summary>
         private void InitializeSpawnedActorsList()
         {
             spawnedActorsList = new ReorderableList(factory.MadeObjects.ToList(), typeof(GameObject), false, true, false, true)
             {
-                drawHeaderCallback = rect => EditorGUI.LabelField(rect, "»ı¼ºµÈ Actors"),
+                drawHeaderCallback = rect => EditorGUI.LabelField(rect, "ìƒì„±ëœ Actors"),
                 drawElementCallback = (rect, index, isActive, isFocused) =>
                 {
                     var actors = factory.MadeObjects;
@@ -204,26 +215,26 @@ namespace Seti
                         EditorGUI.LabelField(rect, "<NULL>");
                     }
                 },
-                // ¸®½ºÆ® Ç×¸ñ °­Á¶ Ç¥½Ã (ÇÏÀÌ¾î¶óÅ°¸¸ °»½Å)
+                // ë¦¬ìŠ¤íŠ¸ í•­ëª© ê°•ì¡° í‘œì‹œ (í•˜ì´ì–´ë¼í‚¤ë§Œ ê°±ì‹ )
                 onSelectCallback = list =>
                 {
                     var actors = factory.MadeObjects;
                     if (list.index >= 0 && list.index < actors.Count && actors[list.index] != null)
                     {
-                        EditorGUIUtility.PingObject(actors[list.index]); // ÇÏÀÌ¾î¶óÅ° °­Á¶
+                        EditorGUIUtility.PingObject(actors[list.index]); // í•˜ì´ì–´ë¼í‚¤ ê°•ì¡°
                     }
                 }
             };
         }
 
         /// <summary>
-        /// ¼±ÅÃµÈ Blueprint¸¦ ¼±ÅÃÇÑ ¸ñ·Ï¿¡ Ãß°¡
+        /// ì„ íƒëœ Blueprintë¥¼ ì„ íƒí•œ ëª©ë¡ì— ì¶”ê°€
         /// </summary>
         private void AddSelectedActorToList(Factory_Actor factory, int index)
         {
             if (index < 0 || index >= factory.blueprints.Count)
             {
-                Debug.LogWarning("À¯È¿ÇÏÁö ¾ÊÀº Blueprint ¼±ÅÃÀÔ´Ï´Ù.");
+                Debug.LogWarning("ìœ íš¨í•˜ì§€ ì•Šì€ Blueprint ì„ íƒì…ë‹ˆë‹¤.");
                 return;
             }
 
@@ -231,7 +242,7 @@ namespace Seti
         }
 
         /// <summary>
-        /// ¼±ÅÃµÈ Actor ¸ñ·ÏÀ» ¾À¿¡ ¹èÄ¡
+        /// ì„ íƒëœ Actor ëª©ë¡ì„ ì”¬ì— ë°°ì¹˜
         /// </summary>
         private void PlaceSelectedActors()
         {
@@ -244,7 +255,7 @@ namespace Seti
         }
 
         /// <summary>
-        /// ¸ğµç Blueprint¸¦ ±â¹İÀ¸·Î Actor¸¦ ¾À¿¡ ¹èÄ¡
+        /// ëª¨ë“  Blueprintë¥¼ ê¸°ë°˜ìœ¼ë¡œ Actorë¥¼ ì”¬ì— ë°°ì¹˜
         /// </summary>
         private void PlaceAllActors(Factory_Actor factory)
         {
@@ -257,7 +268,7 @@ namespace Seti
         }
 
         /// <summary>
-        /// ÇÁ·ÎÁ§Æ® ³»ÀÇ ¸ğµç Blueprint¸¦ Factory_Actor¿¡ ¾÷µ¥ÀÌÆ®
+        /// í”„ë¡œì íŠ¸ ë‚´ì˜ ëª¨ë“  Blueprintë¥¼ Factory_Actorì— ì—…ë°ì´íŠ¸
         /// </summary>
         private void RefreshBlueprints(Factory_Actor factory)
         {
@@ -267,27 +278,27 @@ namespace Seti
                 .Where(blueprint => blueprint != null)
                 .ToList();
 
-            // ÇÃ·¹ÀÌ¾î¸¦ 0¹ø ÀÎµ¦½º·Î Á¤·Ä
+            // í”Œë ˆì´ì–´ë¥¼ 0ë²ˆ ì¸ë±ìŠ¤ë¡œ ì •ë ¬
             factory.blueprints = allBlueprints.OrderBy(bp => bp.ActorName == "Player" ? 0 : 1).ToList();
 
-            // º¯°æ »çÇ× °­Á¦ ÀúÀå
+            // ë³€ê²½ ì‚¬í•­ ê°•ì œ ì €ì¥
             EditorUtility.SetDirty(factory);
         }
 
         /// <summary>
-        /// ReorderableListÀÇ Actor Á¦°Å - Delete Å° ÀÔ·Â
+        /// ReorderableListì˜ Actor ì œê±° - Delete í‚¤ ì…ë ¥
         /// </summary>
         private void HandleDeleteKey()
         {
-            Event e = Event.current; // ÇöÀç ÀÌº¥Æ® °¡Á®¿À±â
+            Event e = Event.current; // í˜„ì¬ ì´ë²¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
             if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Delete)
             {
-                // ReorderableList¿¡¼­ ¼±ÅÃµÈ Ç×¸ñ ÀÎµ¦½º °¡Á®¿À±â
+                // ReorderableListì—ì„œ ì„ íƒëœ í•­ëª© ì¸ë±ìŠ¤ ê°€ì ¸ì˜¤ê¸°
                 int selectedIndex = spawnedActorsList.index;
 
                 if (selectedIndex >= 0 && selectedIndex < factory.MadeObjects.Count)
                 {
-                    // ¼±ÅÃµÈ Actor Á¦°Å
+                    // ì„ íƒëœ Actor ì œê±°
                     GameObject selectedActor = factory.MadeObjects[selectedIndex];
                     factory.DestroyActor(selectedActor);
                     UpdateSpawnedActorsList();
@@ -295,10 +306,10 @@ namespace Seti
                 }
                 else
                 {
-                    Debug.LogWarning("¼±ÅÃµÈ Actor°¡ ¾ø½À´Ï´Ù.");
+                    Debug.LogWarning("ì„ íƒëœ Actorê°€ ì—†ìŠµë‹ˆë‹¤.");
                 }
 
-                e.Use(); // ÀÌº¥Æ® ¼Òºñ (´Ù¸¥ °÷¿¡¼­ Ã³¸®µÇÁö ¾Êµµ·Ï)
+                e.Use(); // ì´ë²¤íŠ¸ ì†Œë¹„ (ë‹¤ë¥¸ ê³³ì—ì„œ ì²˜ë¦¬ë˜ì§€ ì•Šë„ë¡)
             }
         }
         #endregion

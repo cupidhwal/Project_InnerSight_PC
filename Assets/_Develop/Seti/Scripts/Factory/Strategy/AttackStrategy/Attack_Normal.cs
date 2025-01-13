@@ -17,16 +17,16 @@ namespace Seti
         #region Methods
         private void Attack_WithWeapon()
         {
-            Condition_Common condition = actor.ActorState as Condition_Common;
+            Condition_Actor condition = actor.ActorState as Condition_Actor;
             switch (condition.CurrentWeapon)
             {
-                case Condition_Common.Weapon.Sword:
+                case Condition_Actor.Weapon.Sword:
                     Attack_Sword();
                     break;
-                case Condition_Common.Weapon.Fist:
+                case Condition_Actor.Weapon.Fist:
                     Attack_Fist();
                     break;
-                case Condition_Common.Weapon.Bow:
+                case Condition_Actor.Weapon.Bow:
                     Attack_Bow();
                     break;
             }

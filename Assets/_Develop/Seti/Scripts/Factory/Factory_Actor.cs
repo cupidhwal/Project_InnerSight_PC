@@ -12,94 +12,94 @@ namespace Seti
     [CreateAssetMenu(fileName = "Factory_Actor", menuName = "Factory/Actor")]
     public class Factory_Actor : Factory<Factory_Actor>
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
-        [Tooltip("ActorÀÇ ¼³°èµµ¸¦ ÀúÀåÇÏ´Â ¸®½ºÆ®")]
+        [Tooltip("Actorì˜ ì„¤ê³„ë„ë¥¼ ì €ì¥í•˜ëŠ” ë¦¬ìŠ¤íŠ¸")]
         public List<Blueprint_Actor> blueprints = new();
         #endregion
 
-        // ÃÊ±âÈ­
+        // ì´ˆê¸°í™”
         public override void Initialize()
         {
             base.Initialize();
-            Debug.Log("Factory_Actor Ãß°¡ ÃÊ±âÈ­ ·ÎÁ÷ ½ÇÇà");
+            Debug.Log("Factory_Actor ì¶”ê°€ ì´ˆê¸°í™” ë¡œì§ ì‹¤í–‰");
         }
 
-        // ¸Ş¼­µå
+        // ë©”ì„œë“œ
         #region Methods
         /// <summary>
-        /// ActorPrefab°ú Blueprint¸¦ ±â¹İÀ¸·Î Actor GameObject¸¦ »ı¼ºÇÏ°í ÃÊ±âÈ­
+        /// ActorPrefabê³¼ Blueprintë¥¼ ê¸°ë°˜ìœ¼ë¡œ Actor GameObjectë¥¼ ìƒì„±í•˜ê³  ì´ˆê¸°í™”
         /// </summary>
-        /// <param name="blueprint">ActorÀÇ ±¸¼ºÀ» Á¤ÀÇÇÑ Blueprint</param>
-        /// <param name="parent">ºÎ¸ğ Transform (±âº»°ª: null)</param>
-        /// <returns>»ı¼ºµÈ Actor GameObject</returns>
+        /// <param name="blueprint">Actorì˜ êµ¬ì„±ì„ ì •ì˜í•œ Blueprint</param>
+        /// <param name="parent">ë¶€ëª¨ Transform (ê¸°ë³¸ê°’: null)</param>
+        /// <returns>ìƒì„±ëœ Actor GameObject</returns>
         public GameObject CreateActor(Blueprint_Actor blueprint, Transform parent = null)
         {
             if (blueprint == null || blueprint.actorPrefab == null)
             {
-                Debug.LogError("Blueprint ¶Ç´Â ActorPrefabÀÌ nullÀÔ´Ï´Ù!");
+                Debug.LogError("Blueprint ë˜ëŠ” ActorPrefabì´ nullì…ë‹ˆë‹¤!");
                 return null;
             }
 
-            // Prefab ÀÎ½ºÅÏ½ºÈ­
+            // Prefab ì¸ìŠ¤í„´ìŠ¤í™”
             GameObject actorObject;
             if (Application.isPlaying) actorObject = Instantiate(blueprint.actorPrefab, parent);
             else actorObject = PrefabUtility.InstantiatePrefab(blueprint.actorPrefab, parent) as GameObject;
 
             if (actorObject == null)
             {
-                Debug.LogError("ActorPrefabÀ» ÀÎ½ºÅÏ½ºÈ­ÇÏ´Â µ¥ ½ÇÆĞÇß½À´Ï´Ù!");
+                Debug.LogError("ActorPrefabì„ ì¸ìŠ¤í„´ìŠ¤í™”í•˜ëŠ” ë° ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤!");
                 return null;
 
             }
 
-            // Actor ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+            // Actor ì»´í¬ë„ŒíŠ¸ ê°€ì ¸ì˜¤ê¸°
             if (!actorObject.TryGetComponent<Actor>(out var actor))
             {
-                Debug.LogError($"ActorPrefab¿¡ Actor ÄÄÆ÷³ÍÆ®°¡ ¾ø½À´Ï´Ù! Prefab ÀÌ¸§: {blueprint.ActorName}");
-                DestroyImmediate(actorObject); // ºÒ¿ÏÀüÇÑ °´Ã¼ »èÁ¦
+                Debug.LogError($"ActorPrefabì— Actor ì»´í¬ë„ŒíŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤! Prefab ì´ë¦„: {blueprint.ActorName}");
+                DestroyImmediate(actorObject); // ë¶ˆì™„ì „í•œ ê°ì²´ ì‚­ì œ
                 return null;
             }
 
             UpdateBehaviours(blueprint, actor);
-            actorObject.name = blueprint.ActorName; // ÀÌ¸§ ¼³Á¤
+            actorObject.name = blueprint.ActorName; // ì´ë¦„ ì„¤ì •
 
-            // ¸®½ºÆ®¿¡ Ãß°¡ ¹× ÀúÀå
+            // ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€ ë° ì €ì¥
             AddToSpawnedActors(actorObject);
             return actorObject;
         }
 
         /// <summary>
-        /// °»½ÅµÈ ¼³°èµµÀÇ Çàµ¿-Àü·« ÁÖÀÔ
+        /// ê°±ì‹ ëœ ì„¤ê³„ë„ì˜ í–‰ë™-ì „ëµ ì£¼ì…
         /// </summary>
         public void UpdateBehaviours(Blueprint_Actor blueprint, Actor actor)
         {
-            // ±âÁ¸ Çàµ¿ ÃÊ±âÈ­
+            // ê¸°ì¡´ í–‰ë™ ì´ˆê¸°í™”
             actor.Behaviours.Clear();
 
-            // Çàµ¿-Àü·« »ı¼º ¹× ÁÖÀÔ
+            // í–‰ë™-ì „ëµ ìƒì„± ë° ì£¼ì…
             foreach (var beSt in blueprint.behaviourStrategies)
             {
-                var newBehaviour = CreateNewBehaviour(beSt); // ¿ÏÀüÈ÷ »õ·Î¿î Çàµ¿ »ı¼º
+                var newBehaviour = CreateNewBehaviour(beSt); // ì™„ì „íˆ ìƒˆë¡œìš´ í–‰ë™ ìƒì„±
                 actor.AddBehaviour(newBehaviour);
             }
 
-            // ¾×ÅÍ ÃÊ±âÈ­
+            // ì•¡í„° ì´ˆê¸°í™”
             actor.Initialize(blueprint);
             EditorUtility.SetDirty(actor);
         }
 
         /// <summary>
-        /// °»½ÅµÈ ¼³°èµµÀÇ Çàµ¿-Àü·« ¸ÅÇÎ
+        /// ê°±ì‹ ëœ ì„¤ê³„ë„ì˜ í–‰ë™-ì „ëµ ë§¤í•‘
         /// </summary>
         private IBehaviour CreateNewBehaviour(BehaviourStrategyMapping mapping)
         {
-            // »õ·Î¿î Çàµ¿ °´Ã¼ »ı¼º
+            // ìƒˆë¡œìš´ í–‰ë™ ê°ì²´ ìƒì„±
             var newBehaviour = Activator.CreateInstance(mapping.behaviour.GetType()) as IBehaviour;
 
             if (newBehaviour is IHasStrategy behaviourWithStrategy)
             {
-                // È°¼ºÈ­µÈ Àü·«¸¸ »õ·Î »ı¼º
+                // í™œì„±í™”ëœ ì „ëµë§Œ ìƒˆë¡œ ìƒì„±
                 var activeStrategies = mapping.strategies
                     .Where(s => s.isActive)
                     .Select(s => new Strategy
@@ -115,36 +115,47 @@ namespace Seti
         }
 
         /// <summary>
-        /// »ı¼ºµÈ ¾×ÅÍÀÇ ¼³°èµµ¸¦ °»½Å
+        /// ìƒì„±ëœ ì•¡í„°ì˜ ì„¤ê³„ë„ë¥¼ ê°±ì‹ 
         /// </summary>
         public void ApplyBlueprintToActor(int actorIndex)
         {
+            if (Application.isPlaying)
+            {
+                Debug.LogWarning("ëŸ°íƒ€ì„ ì¤‘ì—ëŠ” ì•¡í„°ì˜ ì„¤ê³„ë„ë¥¼ ê°±ì‹ í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
+                return;
+            }
+
             if (actorIndex < 0 || actorIndex >= madeObjects.Count)
             {
-                Debug.LogWarning("À¯È¿ÇÏÁö ¾ÊÀº Actor ÀÎµ¦½ºÀÔ´Ï´Ù.");
+                Debug.LogWarning("ìœ íš¨í•˜ì§€ ì•Šì€ Actor ì¸ë±ìŠ¤ì…ë‹ˆë‹¤.");
                 return;
             }
 
             var actorObject = madeObjects[actorIndex];
             if (actorObject == null || !actorObject.TryGetComponent<Actor>(out var actor))
             {
-                Debug.LogWarning("¼±ÅÃÇÑ ¿ÀºêÁ§Æ®¿¡ Actor ÄÄÆ÷³ÍÆ®°¡ ¾ø½À´Ï´Ù.");
+                Debug.LogWarning("ì„ íƒí•œ ì˜¤ë¸Œì íŠ¸ì— Actor ì»´í¬ë„ŒíŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤.");
                 return;
             }
 
-            if (Application.isPlaying)
-            {
-                Debug.LogWarning("·±Å¸ÀÓ Áß¿¡´Â ¼³°èµµ¸¦ °»½ÅÇÒ ¼ö ¾ø½À´Ï´Ù.");
-                return;
-            }
-
-            // BlueprintÀÇ µ¿ÀÛÀ» Actor¿Í µ¶¸³ÀûÀ¸·Î Àû¿ë
+            // Blueprintì˜ ë™ì‘ì„ Actorì™€ ë…ë¦½ì ìœ¼ë¡œ ì ìš©
             UpdateBehaviours(actor.Origin, actor);
-            Debug.Log($"'{actorObject.name}'ÀÇ ¼³°èµµ°¡ °»½ÅµÇ¾ú½À´Ï´Ù.");
+            Debug.Log($"'{actorObject.name}'ì˜ ì„¤ê³„ë„ê°€ ê°±ì‹ ë˜ì—ˆìŠµë‹ˆë‹¤.");
         }
 
         /// <summary>
-        /// »ı¼ºµÈ ¾×ÅÍ¸¦ »èÁ¦
+        /// íŒ©í† ë¦¬ì— ìƒì„±ëœ ëª¨ë“  Actorì˜ í–‰ë™ê³¼ ì „ëµì„ ê°±ì‹ 
+        /// </summary>
+        public void ApplyBlueprintToAllActors()
+        {
+            for (int i = 0; i < madeObjects.Count; i++)
+            {
+                ApplyBlueprintToActor(i);
+            }
+        }
+
+        /// <summary>
+        /// ìƒì„±ëœ ì•¡í„°ë¥¼ ì‚­ì œ
         /// </summary>
         public void DestroyActor(GameObject actor)
         {
@@ -155,12 +166,12 @@ namespace Seti
             }
             else
             {
-                Debug.LogWarning("»èÁ¦ÇÏ·Á´Â ¾×ÅÍ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+                Debug.LogWarning("ì‚­ì œí•˜ë ¤ëŠ” ì•¡í„°ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
             }
         }
 
         /// <summary>
-        /// ¸ğµç »ı¼ºµÈ ¾×ÅÍ¸¦ »èÁ¦
+        /// ëª¨ë“  ìƒì„±ëœ ì•¡í„°ë¥¼ ì‚­ì œ
         /// </summary>
         public void DestroyAllActors()
         {
@@ -176,7 +187,7 @@ namespace Seti
         }
 
         /// <summary>
-        /// »ı¼ºµÈ Actor¸¦ ¸®½ºÆ®¿¡ Ãß°¡ÇÏ°í ÀúÀå
+        /// ìƒì„±ëœ Actorë¥¼ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€í•˜ê³  ì €ì¥
         /// </summary>
         private void AddToSpawnedActors(GameObject actor)
         {
@@ -188,7 +199,7 @@ namespace Seti
         }
 
         /// <summary>
-        /// Factory »óÅÂ ÀúÀå
+        /// Factory ìƒíƒœ ì €ì¥
         /// </summary>
         private void SaveFactory()
         {

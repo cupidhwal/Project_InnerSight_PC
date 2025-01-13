@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Seti
 {
-    public class Condition_Player : Condition_Common
+    public class Condition_Player : Condition_Actor
     {
         // 라이프 사이클
         #region Life Cycle

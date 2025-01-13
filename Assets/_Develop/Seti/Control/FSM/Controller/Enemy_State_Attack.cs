@@ -14,7 +14,7 @@ namespace Seti
         {
             base.OnEnter();
             enemy.SwitchState(Enemy.State.Attack);
-            steeringInterval = enemy.AttackInterval;
+            steeringInterval = 0f;
         }
 
         // 상태 전환 시 State Exit에 1회 실행

@@ -11,7 +11,7 @@ namespace Seti
         {
             if (!actor.ActorState) return;
 
-            Condition_Common state = actor.ActorState as Condition_Common;
+            Condition_Actor state = actor.ActorState;
             if (state.IsGrounded)
                 rb.AddForce(rb.transform.up * jumpForce, ForceMode.Impulse);
         }

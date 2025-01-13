@@ -27,6 +27,9 @@ namespace Seti
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
+            if (enemy.GoBackHome)
+                return typeof(Enemy_State_BackOff);
+
             if (enemy.Detected)
                 return typeof(Enemy_State_Chase);
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Seti
 {
-    public class Enemy_State_Chase : Enemy_State
+    public class Enemy_State_BackOff : Enemy_State
     {
         // 추상
         #region Abstract
@@ -14,7 +14,7 @@ namespace Seti
         public override void OnEnter()
         {
             base.OnEnter();
-            enemy.SwitchState(Enemy.State.Chase);
+            enemy.SwitchState(Enemy.State.BackHome);
         }
 
         // 상태 전환 시 State Exit에 1회 실행
@@ -23,17 +23,8 @@ namespace Seti
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
-            if (enemy.TooFarFromHome)
-                return typeof(Enemy_State_BackOff);
-
-            if (!enemy.Detected && enemy.GoBackHome)
-                return typeof(Enemy_State_BackOff);
-
-            if (!enemy.Detected)
+            if (enemy.ImHome)
                 return typeof(Enemy_State_Idle);
-
-            else if (enemy.GoAttack)
-                return typeof(Enemy_State_Attack);
 
             else return null;
         }
@@ -45,7 +36,7 @@ namespace Seti
             if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
                 if (moveBehaviour is Move move)
                 {
-                    Input_Chase();
+                    Input_BackHome();
                     move.FSM_MoveInput(moveInput);
                 }
         }
@@ -53,11 +44,11 @@ namespace Seti
 
         // 메서드
         #region Methods
-        private void Input_Chase()
+        private void Input_BackHome()
         {
             Vector2 enemyPos = Camera.main.WorldToScreenPoint(enemy.transform.position);
-            Vector2 playerPos = Camera.main.WorldToScreenPoint(enemy.Player.transform.position);
-            moveInput = playerPos - enemyPos;
+            Vector2 homePos = Camera.main.WorldToScreenPoint(enemy.HomePosition);
+            moveInput = homePos - enemyPos;
         }
         #endregion
     }

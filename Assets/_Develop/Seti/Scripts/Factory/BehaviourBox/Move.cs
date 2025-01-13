@@ -39,7 +39,7 @@ namespace Seti
 
         // 제어 관리
         private Vector2 moveInput;  // 입력 값
-        private Condition_Common state;
+        private Condition_Actor state;
         private StrategyType currentType;
         private State<Controller_FSM> currentState;
         #endregion
@@ -57,7 +57,7 @@ namespace Seti
         public void Initialize(Actor actor)
         {
             this.actor = actor;
-            state = actor.ActorState as Condition_Common;
+            state = actor.ActorState;
             foreach (var mapping in strategies)
             {
                 IMoveStrategy moveStrategy = mapping.strategy as IMoveStrategy;
@@ -175,7 +175,6 @@ namespace Seti
         public void FixedUpdate()
         {
             // 공격 중일 땐 이동 불가
-            Condition_Common state = actor.ActorState as Condition_Common;
             if (state.IsAttack) return;
 
             currentStrategy?.Move(moveInput);
@@ -205,6 +204,10 @@ namespace Seti
                     break;
 
                 case Enemy_State_Chase:
+                    SwitchStrategy(StrategyType.Run);
+                    break;
+
+                case Enemy_State_BackOff:
                     SwitchStrategy(StrategyType.Run);
                     break;
 

@@ -199,7 +199,7 @@ namespace Seti
             switch (currentState)
             {
                 case Enemy_State_Attack:
-                    if (condition.CurrentWeapon == Condition_Common.Weapon.NULL)
+                    if (condition.CurrentWeapon == Condition_Actor.Weapon.NULL)
                         SwitchStrategy(StrategyType.Tackle);
                     else SwitchStrategy(StrategyType.Normal);
                     break;

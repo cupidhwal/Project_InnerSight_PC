@@ -2,13 +2,15 @@ using UnityEngine;
 
 namespace Seti
 {
-    public abstract class Condition_Actor : MonoBehaviour { }
-
-    public abstract class Condition_Common : Condition_Actor
+    /// <summary>
+    /// Actor 추상 클래스
+    /// </summary>
+    public abstract class Condition_Actor : MonoBehaviour
     {
         public enum Weapon
         {
             Sword,
+            Staff,
             Fist,
             Bow,
             NULL
@@ -32,7 +34,9 @@ namespace Seti
         #endregion
 
         // 추상화
+        #region Abstract
         protected abstract void Initialize();
+        #endregion
 
         // 이벤트 메서드
         #region Event Methods

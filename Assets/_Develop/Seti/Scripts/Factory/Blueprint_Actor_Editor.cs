@@ -8,14 +8,14 @@ namespace Seti
     [CustomEditor(typeof(Blueprint_Actor))]
     public class Blueprint_Actor_Editor : Editor
     {
-        // « µÂ
+        // ÌïÑÎìú
         #region Variables
         private Blueprint_Actor blueprint;
         private string[] behaviourTypeNames;
         private List<IBehaviour> availableBehaviours;
         #endregion
 
-        // ∏ﬁº≠µÂ
+        // Î©îÏÑúÎìú
         #region Methods
         public override void OnInspectorGUI()
         {
@@ -24,7 +24,7 @@ namespace Seti
             blueprint = target as Blueprint_Actor;
 
             GUILayout.Space(10);
-            EditorGUILayout.LabelField($"{blueprint.ActorName} º≥∞Ëµµ", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField($"{blueprint.ActorName} ÏÑ§Í≥ÑÎèÑ", EditorStyles.boldLabel);
             GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(2));
             GUILayout.Space(5);
 
@@ -32,16 +32,16 @@ namespace Seti
 
             if (blueprint.behaviourBox == null)
             {
-                EditorGUILayout.HelpBox("BehaviourBox∏¶ ¬¸¡∂«œººø‰!", MessageType.Warning);
+                EditorGUILayout.HelpBox("BehaviourBoxÎ•º Ï∞∏Ï°∞ÌïòÏÑ∏Ïöî!", MessageType.Warning);
                 return;
             }
 
-            EditorGUILayout.LabelField("√ﬂ∞°«“ ºˆ ¿÷¥¬ Behaviours", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Ï∂îÍ∞ÄÌï† Ïàò ÏûàÎäî Behaviours", EditorStyles.boldLabel);
 
-            // BehaviourBoxø°º≠ ±‚¥… ∏Ò∑œ ∞°¡Æø¿±‚
+            // BehaviourBoxÏóêÏÑú Í∏∞Îä• Î™©Î°ù Í∞ÄÏ†∏Ïò§Í∏∞
             UpdateAvailableBehaviours();
 
-            // µÂ∑”¥ŸøÓ ∏ﬁ¥∫∑Œ ±‚¥… º±≈√
+            // ÎìúÎ°≠Îã§Ïö¥ Î©îÎâ¥Î°ú Í∏∞Îä• ÏÑ†ÌÉù
             if (behaviourTypeNames != null && behaviourTypeNames.Length > 0)
             {
                 int selectedIndex = EditorGUILayout.Popup(-1, behaviourTypeNames, GUILayout.Width(300));
@@ -51,7 +51,7 @@ namespace Seti
                 }
             }
 
-            // «ˆ¿Á Blueprint¿« ±‚¥… ∏ÆΩ∫∆Æ «•Ω√
+            // ÌòÑÏû¨ BlueprintÏùò Í∏∞Îä• Î¶¨Ïä§Ìä∏ ÌëúÏãú
             DrawBehavioursList();
         }
 
@@ -111,13 +111,18 @@ namespace Seti
             }
             else
             {
-                Debug.LogWarning($"{behaviour.GetType().Name}¿∫ ¿ÃπÃ √ﬂ∞°µ«æ˙Ω¿¥œ¥Ÿ!");
+                Debug.LogWarning($"{behaviour.GetType().Name}ÏùÄ Ïù¥ÎØ∏ Ï∂îÍ∞ÄÎêòÏóàÏäµÎãàÎã§!");
             }
         }
 
         private void DrawBehavioursList()
         {
-            EditUtility.SubjectLine(Color.gray, 2, "¿Ã Actor¿« Behaviours");
+            EditUtility.SubjectLine(Color.gray, 2, "Ïù¥ ActorÏùò Behaviours");
+
+            // ÌñâÎèô Ï†ïÎ†¨: Ïù¥Î¶Ñ Í∏∞Ï§Ä
+            /*var sortedBehaviours = blueprint.behaviourStrategies
+                .OrderBy(mapping => mapping.behaviour.GetType().Name)
+                .ToList();*/
 
             foreach (var mapping in blueprint.behaviourStrategies)
             {
@@ -126,11 +131,11 @@ namespace Seti
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField(behaviour.GetType().Name, EditorStyles.boldLabel, GUILayout.Width(200));
 
-                if (GUILayout.Button("¡¶∞≈", GUILayout.Width(100), GUILayout.Height(20)))
+                if (GUILayout.Button("Ï†úÍ±∞", GUILayout.Width(100), GUILayout.Height(20)))
                 {
                     blueprint.behaviourStrategies.Remove(mapping);
                     EditorUtility.SetDirty(blueprint);
-                    break; // ∏ÆΩ∫∆Æ ∫Ø∞Ê¿∏∑Œ ¿Œ«ÿ foreach ¡æ∑·
+                    break; // Î¶¨Ïä§Ìä∏ Î≥ÄÍ≤ΩÏúºÎ°ú Ïù∏Ìï¥ foreach Ï¢ÖÎ£å
                 }
                 EditorGUILayout.EndHorizontal();
 
@@ -166,7 +171,7 @@ namespace Seti
                 EditorGUILayout.LabelField(strategyData.strategy.GetType().Name, GUILayout.Width(193));
                 EditorGUILayout.EndHorizontal();
 
-                if (GUILayout.Button(strategyData.isActive ? "¡¶∞≈" : "√ﬂ∞°", GUILayout.Width(100), GUILayout.Height(26)))
+                if (GUILayout.Button(strategyData.isActive ? "Ï†úÍ±∞" : "Ï∂îÍ∞Ä", GUILayout.Width(100), GUILayout.Height(26)))
                 {
                     blueprint.UpdateStrategy(mapping.behaviour, strategyData.strategy, !strategyData.isActive);
                 }
