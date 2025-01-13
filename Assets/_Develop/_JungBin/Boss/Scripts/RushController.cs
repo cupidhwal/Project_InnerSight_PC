@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Jungbin
+namespace JungBin
 {
 
     public class RushController : MonoBehaviour

@@ -7,43 +7,44 @@ using System.Collections.Generic;
 namespace JungBin
 {
     /// <summary>
-    /// º¸½ºÀÇ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» Á¦¿ÜÇÑ ±â´É ±¸Çö
+    /// ë³´ìŠ¤ì˜ ì• ë‹ˆë©”ì´ì…˜ê³¼ ê´€ë ¨ìˆëŠ” ì½”ë“œ
     /// </summary>
     public class FirstBossController : MonoBehaviour
     {
         #region Variables
-        [SerializeField] private GameObject rushAttackBox;      //º¸½ºÀÇ °ø°İ ¹Ú½º
-        [SerializeField] private BoxCollider throwAttackBox;      //º¸½ºÀÇ °ø°İ ¹Ú½º
+        [SerializeField] private GameObject rushAttackBox;      //ë³´ìŠ¤ì˜ ê³µê²© ë°•ìŠ¤
+        [SerializeField] private BoxCollider throwAttackBox;      //ë³´ìŠ¤ì˜ ê³µê²© ë°•ìŠ¤
         private Animator m_Animator;
 
 
-        [SerializeField] private float turnSpeed = 1200;    //º¸½ºÀÇ È¸Àü ¼Óµµ
+        [SerializeField] private float turnSpeed = 1200;    //ë³´ìŠ¤ì˜ íšŒì „ ì†ë„
 
-        public static bool isAttack { get; set; } = false; // °ø°İÁßÀÎÁö ¿©ºÎ
-        public static bool isDashing { get; set; } = false; // µ¹ÁøÁßÀÎÁö ¿©ºÎ
-        private int lastAttack = -1; //Á÷Àü °ø°İ ÆĞÅÏ
+        public static bool isAttack { get; set; } = false; // ê³µê²©ì¤‘ì¸ì§€ ì—¬ë¶€
+        public static bool isDashing { get; set; } = false; // ëŒì§„ì¤‘ì¸ì§€ ì—¬ë¶€
+        private int lastAttack = -1; //ì§ì „ ê³µê²© íŒ¨í„´
         private float jumpMoveSpeed = 10f;
 
-        //Á¡ÇÁ °ø°İ ÆĞÅÏ
-        public GameObject rockPrefab;          // µ¹ ÇÁ¸®ÆÕ
-        public GameObject warningEffectPrefab; // °æ°í Ç¥½Ã ÇÁ¸®ÆÕ
-        public Transform spawnPointsParent;   // °íÁ¤µÈ ½ºÆù Æ÷ÀÎÆ®
-        private List<Transform> spawnPoints = new List<Transform>(); // ÀÚ½Ä ½ºÆù Æ÷ÀÎÆ® ¸®½ºÆ®
-        public float spawnHeight = 10f;        // µ¹ »ı¼º ³ôÀÌ
-        public int rocksPerBatch = 2;          // ÇÑ ¹ø¿¡ »ı¼ºµÉ µ¹ÀÇ °³¼ö
-        public float spawnInterval = 0.4f;     // »ı¼º °£°İ
-        public int totalBatches = 2;           // ÃÑ ¹èÄ¡ ¼ö
-        public float warningDuration = 0.6f;   // °æ°í Ç¥½Ã Áö¼Ó ½Ã°£
+        //ì í”„ ê³µê²© íŒ¨í„´
+        public GameObject rockPrefab;          // ëŒ í”„ë¦¬íŒ¹
+        public GameObject warningEffectPrefab; // ê²½ê³  í‘œì‹œ í”„ë¦¬íŒ¹
+        public Transform spawnPointsParent;   // ê³ ì •ëœ ìŠ¤í° í¬ì¸íŠ¸
+        private List<Transform> spawnPoints = new List<Transform>(); // ìì‹ ìŠ¤í° í¬ì¸íŠ¸ ë¦¬ìŠ¤íŠ¸
+        private BossStat bossStat;
+        public float spawnHeight = 10f;        // ëŒ ìƒì„± ë†’ì´
+        public int rocksPerBatch = 2;          // í•œ ë²ˆì— ìƒì„±ë  ëŒì˜ ê°œìˆ˜
+        public float spawnInterval = 0.4f;     // ìƒì„± ê°„ê²©
+        public int totalBatches = 2;           // ì´ ë°°ì¹˜ ìˆ˜
+        public float warningDuration = 0.6f;   // ê²½ê³  í‘œì‹œ ì§€ì† ì‹œê°„
         #endregion
 
         private void Start()
         {
             m_Animator = this.GetComponent<Animator>();
 
-            // ºÎ¸ğÀÇ ¸ğµç ÀÚ½ÄÀ» °¡Á®¿Í ½ºÆù Æ÷ÀÎÆ® ¸®½ºÆ®¿¡ Ãß°¡
+            // ë¶€ëª¨ì˜ ëª¨ë“  ìì‹ì„ ê°€ì ¸ì™€ ìŠ¤í° í¬ì¸íŠ¸ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
             foreach (Transform child in spawnPointsParent)
             {
-                if (child != spawnPointsParent) // ºÎ¸ğ ÀÚ½ÅÀº Á¦¿Ü
+                if (child != spawnPointsParent) // ë¶€ëª¨ ìì‹ ì€ ì œì™¸
                 {
                     spawnPoints.Add(child);
                 }
@@ -53,7 +54,7 @@ namespace JungBin
         // Update is called once per frame
         void Update()
         {
-            //ÇÃ·¹ÀÌ¾î¿ÍÀÇ °Å¸®
+            //í”Œë ˆì´ì–´ì™€ì˜ ê±°ë¦¬
             Vector3 direction = GameManager.Instance.PlayerTransform.position - transform.position;
             float distance = direction.magnitude;
 
@@ -81,22 +82,22 @@ namespace JungBin
 
         }
 
-        //º¸½ºÀÇ È¸Àü °ü·Ã ÄÚµå
+        //ë³´ìŠ¤ì˜ íšŒì „ ê´€ë ¨ ì½”ë“œ
         public void TurnBossToPlayer(Vector3 direction)
         {
             transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
 
-            // ÇÃ·¹ÀÌ¾îÀÇ ¹æÇâ °è»ê
+            // í”Œë ˆì´ì–´ì˜ ë°©í–¥ ê³„ì‚°
             Vector3 dir = direction.normalized;
 
-            // ÇöÀç ¹æÇâ°ú ¸ñÇ¥ ¹æÇâÀ» È¸Àü °ªÀ¸·Î º¯È¯
+            // í˜„ì¬ ë°©í–¥ê³¼ ëª©í‘œ ë°©í–¥ì„ íšŒì „ ê°’ìœ¼ë¡œ ë³€í™˜
             Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-            // ÇöÀç È¸ÀüÀ» ¸ñÇ¥ È¸ÀüÀ¸·Î º¸°£
+            // í˜„ì¬ íšŒì „ì„ ëª©í‘œ íšŒì „ìœ¼ë¡œ ë³´ê°„
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
         }
 
-        //ÀÏÁ¤ °Å¸® ÀÌ»ó ¸Ö¾îÁ³À»¶§ º¸½º°¡ °£°İÀ» Á¼È÷´Â ÄÚµå
+        //ì¼ì • ê±°ë¦¬ ì´ìƒ ë©€ì–´ì¡Œì„ë•Œ ë³´ìŠ¤ê°€ ê°„ê²©ì„ ì¢íˆëŠ” ì½”ë“œ
         private void CloseDistanceToPlayer(float distance)
         {
             if (distance > 15f)
@@ -109,7 +110,7 @@ namespace JungBin
             }
         }
 
-        //´ÙÀ½ °ø°İ Á¤ÇÏ´Â ÄÚµå
+        //ë‹¤ìŒ ê³µê²© ì •í•˜ëŠ” ì½”ë“œ
         public void NextAttack()
         {
             if (m_Animator == null)
@@ -117,10 +118,10 @@ namespace JungBin
 
             int attackIndex;
 
-            //Ã¹¹øÂ° °ø°İÀÎÁö È®ÀÎ
+            //ì²«ë²ˆì§¸ ê³µê²©ì¸ì§€ í™•ì¸
             if (lastAttack == -1)
             {
-                //Ã¹ °ø°İÀÏ°æ¿ì 3°³ÀÇ °ø°İÁß ÇÏ³ª ·£´ı
+                //ì²« ê³µê²©ì¼ê²½ìš° 3ê°œì˜ ê³µê²©ì¤‘ í•˜ë‚˜ ëœë¤
                 attackIndex = Random.Range(1, 4);
             }
             else
@@ -131,16 +132,16 @@ namespace JungBin
                 } while (lastAttack == attackIndex);
             }
 
-            //¼±ÅÃµÈ °ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+            //ì„ íƒëœ ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
             TriggerAttackAnimation(attackIndex);
 
-            //Áßº¹ °ø°İ ¹æÁö
+            //ì¤‘ë³µ ê³µê²© ë°©ì§€
             lastAttack = attackIndex;
 
             m_Animator.SetBool("Idle", false);
         }
 
-        // °ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç È£Ãâ
+        // ê³µê²© ì• ë‹ˆë©”ì´ì…˜ í˜¸ì¶œ
         private void TriggerAttackAnimation(int attackIndex)
         {
             string triggerName = $"Attack0{attackIndex}";
@@ -180,11 +181,11 @@ namespace JungBin
 
             while (batchCount < totalBatches)
             {
-                // °æ°í Ç¥½Ã ÈÄ µ¹ »ı¼º
+                // ê²½ê³  í‘œì‹œ í›„ ëŒ ìƒì„±
                 yield return StartCoroutine(ShowWarningsAndSpawnRocks());
                 batchCount++;
 
-                // °£°İ ´ë±â
+                // ê°„ê²© ëŒ€ê¸°
                 yield return new WaitForSeconds(spawnInterval);
             }
         }
@@ -196,25 +197,25 @@ namespace JungBin
 
             foreach (Transform spawnPoint in spawnPoints)
             {
-                if (spawnedCount >= rocksPerBatch) break; // ÇÑ ¹ø¿¡ rocksPerBatch °³±îÁö¸¸ »ı¼º
+                if (spawnedCount >= rocksPerBatch) break; // í•œ ë²ˆì— rocksPerBatch ê°œê¹Œì§€ë§Œ ìƒì„±
 
-                // °æ°í Ç¥½Ã »ı¼º
+                // ê²½ê³  í‘œì‹œ ìƒì„±
                 GameObject warning = Instantiate(
                     warningEffectPrefab,
-                    new Vector3(spawnPoint.position.x, 0, spawnPoint.position.z), // Áö¸é¿¡ »ı¼º
+                    new Vector3(spawnPoint.position.x, 0, spawnPoint.position.z), // ì§€ë©´ì— ìƒì„±
                     Quaternion.identity
                 );
 
-                // ÀÏÁ¤ ½Ã°£ ÈÄ °æ°í Ç¥½Ã Á¦°Å
+                // ì¼ì • ì‹œê°„ í›„ ê²½ê³  í‘œì‹œ ì œê±°
                 Destroy(warning, warningDuration);
 
                 spawnedCount++;
             }
 
-            // °æ°í Áö¼Ó ½Ã°£ ´ë±â
+            // ê²½ê³  ì§€ì† ì‹œê°„ ëŒ€ê¸°
             yield return new WaitForSeconds(warningDuration);
 
-            // µ¹ »ı¼º
+            // ëŒ ìƒì„±
             SpawnRocks();
         }
 
@@ -224,12 +225,12 @@ namespace JungBin
 
             foreach (Transform spawnPoint in spawnPoints)
             {
-                if (spawnedCount >= rocksPerBatch) break; // ÇÑ ¹ø¿¡ rocksPerBatch °³±îÁö¸¸ »ı¼º
+                if (spawnedCount >= rocksPerBatch) break; // í•œ ë²ˆì— rocksPerBatch ê°œê¹Œì§€ë§Œ ìƒì„±
 
-                // µ¹ »ı¼º À§Ä¡ °è»ê
+                // ëŒ ìƒì„± ìœ„ì¹˜ ê³„ì‚°
                 Vector3 spawnPosition = new Vector3(spawnPoint.position.x, spawnHeight, spawnPoint.position.z);
 
-                // µ¹ »ı¼º
+                // ëŒ ìƒì„±
                 GameObject rock = Instantiate(rockPrefab, spawnPosition, Quaternion.identity);
 
                 spawnedCount++;
