@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 
@@ -16,11 +17,12 @@ namespace Noah
         private GameObject effectGo;
         private GameObject skillef;
 
-        private bool isReadySkill = false;
+        public bool isReadySkill = false;
+        public bool isChange = false;
 
         private int index = 0;
 
-        public float rotationSpeed = 100f; // È¸Àü ¼Óµµ
+        public float rotationSpeed = 100f; // íšŒì „ ì†ë„
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -31,14 +33,28 @@ namespace Noah
         // Update is called once per frame
         void Update()
         {
+            // ìŠ¤í‚¬ì´ ì—†ì„ ë•Œ
+            if (setSkill.skillSlots.Count == 0)
+                return;
+
+            // ì‚¬ìš©í•  ìŠ¤í‚¬ Index í™•ì¸
+            ActiveSkill();
+
+            // ì—†ëŠ” ìŠ¤í‚¬ ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ
+            if (setSkill.skillSlots.Count < (index + 1))
+            {
+                isReadySkill = false;
+                return;
+            }
+
+
+            // ìŠ¤í‚¬ ì‚¬ìš© ë° ë²”ìœ„ ì§€ì •
             if (isReadySkill && setSkill.skillSlots[index] != null)
             {
                 RangeType(setSkill.skillSlots[index]);
 
                 UsePlayerSkill(index);
             }
-
-            ActiveSkill();
         }
 
         void Init()
@@ -53,8 +69,10 @@ namespace Noah
             if (Input.GetMouseButton(1))
             {
                 isReadySkill = false;
+                isChange = false;
 
                 effectGo.SetActive(false);
+                effectGo = null;
                 //Destroy(effectGo);
 
                 if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
@@ -69,36 +87,101 @@ namespace Noah
         {
             if (Input.GetKeyDown("1"))
             {
-                isReadySkill = true;
+                if (!isReadySkill)
+                {
+                    SetSkill(0);
+                }
+                else 
+                {
+                    ChangeSkill(0);
+                }
 
-                index = 0;
             }
             else if (Input.GetKeyDown("2"))
             {
-                isReadySkill = true;
-
-                index = 1;
+                if (!isReadySkill)
+                {
+                    SetSkill(1);
+                }
+                else
+                {
+                    ChangeSkill(1);
+                }
             }
             else if (Input.GetKeyDown("3"))
             {
-                isReadySkill = true;
-
-                index = 2;
+                if (!isReadySkill)
+                {
+                    SetSkill(2);
+                }
+                else
+                {
+                    ChangeSkill(2);
+                }
             }
             else if (Input.GetKeyDown("4"))
             {
-                isReadySkill = true;
-
-                index = 3;
-            }
-            else if (isReadySkill && Input.GetKeyDown("1") || Input.GetKeyDown("2") || 
-                Input.GetKeyDown("3") || Input.GetKeyDown("4"))
-            {
-                effectGo = null;
+                if (!isReadySkill)
+                {
+                    SetSkill(3);
+                }
+                else
+                {
+                    ChangeSkill(3);
+                }
             }
         }
 
+        void SetSkill(int _index)
+        {
+            isReadySkill = true;
 
+            index = _index;
+        }
+
+        void ChangeSkill(int _index)
+        {
+            isChange = true;
+
+            if (setSkill.skillSlots.Count >= (index + 1))
+            {
+                if (isChange && !Input.GetKeyDown($"{index + 1}"))
+                {
+                    index = _index;
+
+                    effectGo.SetActive(false);
+                    effectGo = null;
+                }
+                else if (effectGo != null && Input.GetKeyDown($"{index + 1}"))
+                {
+                    isReadySkill = false;
+                    isChange = false;
+                    effectGo.SetActive(false);
+                    effectGo = null;
+
+                    Debug.Log("22");
+
+                    return;
+                }
+            }
+            else
+            {
+                isChange = false;
+                isReadySkill = false;
+                effectGo.SetActive(false);
+
+                Debug.Log("33");
+                return;
+            }
+        }
+
+        //void UpdateChangeSkill()
+        //{
+        //    RangeType(setSkill.skillSlots[index]);
+
+        //    UsePlayerSkill(index);
+
+        //}
 
         void UseSkill(Func<SkillBase> factoryMethod)
         {
@@ -191,18 +274,18 @@ namespace Noah
 
         Quaternion UpdateSkillRangeRotation()
         {
-            // ¸¶¿ì½º À§Ä¡ °¡Á®¿À±â
+            // ë§ˆìš°ìŠ¤ ìœ„ì¹˜ ê°€ì ¸ì˜¤ê¸°
             Vector3 mousePosition = Input.mousePosition;
             Quaternion targetRotation = Quaternion.identity;
 
-            // ¸¶¿ì½º À§Ä¡¸¦ ¿ùµå ÁÂÇ¥·Î º¯È¯
+            // ë§ˆìš°ìŠ¤ ìœ„ì¹˜ë¥¼ ì›”ë“œ ì¢Œí‘œë¡œ ë³€í™˜
             Ray ray = mainCamera.ScreenPointToRay(mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                // ¹æÇâ °è»ê (¿ÀºêÁ§Æ® À§Ä¡ -> ¸¶¿ì½º À§Ä¡)
+                // ë°©í–¥ ê³„ì‚° (ì˜¤ë¸Œì íŠ¸ ìœ„ì¹˜ -> ë§ˆìš°ìŠ¤ ìœ„ì¹˜)
                 Vector3 direction = hit.point - transform.position;
 
-                // ¹æÇâ¿¡ µû¶ó È¸Àü Àû¿ë
+                // ë°©í–¥ì— ë”°ë¼ íšŒì „ ì ìš©
                 targetRotation = Quaternion.LookRotation(direction);
 
                 return targetRotation;
