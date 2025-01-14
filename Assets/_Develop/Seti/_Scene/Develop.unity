@@ -179,7 +179,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.501, z: 0}
-  m_LocalScale: {x: 1000, y: 1, z: 1000}
+  m_LocalScale: {x: 50, y: 1, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 675334587}
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_UseGeometry: 0
+  m_UseGeometry: 1
   m_DefaultArea: 0
   m_GenerateLinks: 0
   m_IgnoreNavMeshAgent: 1
@@ -350,9 +350,9 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.016666668
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 7cbd21dca531252409e51e924a920111, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: d048392eb4ace364997d97c4ae327a9c, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &1027430772
 GameObject:
@@ -1133,7 +1133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b88fe0134d4ebe4d8e4a53995a461fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGrounded: 0
   currentWeapon: 0
 --- !u!114 &1917154920
 MonoBehaviour:
@@ -1147,6 +1146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ffc482ad06ab154fa87a3cfe0343d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rightHandTarget: {fileID: 0}
 --- !u!4 &1917154926 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7178555707682393818, guid: 1afde7331c6ac61478367d0600d02f36, type: 3}
@@ -1348,7 +1348,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aea16b6fa0aba0348865fcab078ab2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGrounded: 0
   currentWeapon: 0
 --- !u!114 &1995168280
 MonoBehaviour:
@@ -1362,6 +1361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ffc482ad06ab154fa87a3cfe0343d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rightHandTarget: {fileID: 0}
 --- !u!1 &2007132115
 GameObject:
   m_ObjectHideFlags: 1
