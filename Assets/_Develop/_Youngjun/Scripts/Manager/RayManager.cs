@@ -4,7 +4,7 @@ namespace Noah
 {
     public class RayManager : Singleton<RayManager>
     {
-        public Transform player;
+        private Transform player;
         public LayerMask groundLayerMask;
         private Camera mainCamera;
 

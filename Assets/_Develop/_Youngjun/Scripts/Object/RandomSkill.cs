@@ -7,40 +7,40 @@ namespace Noah
 {
     public class RandomSkill : MonoBehaviour
     {
-        private Transform effect_obj;
+       //private Transform effect_obj;
 
         private Vector3 startPos;
 
-        private float amplitude = 0.2f;  // ¿ÀºêÁ§Æ®°¡ ÀÌµ¿ÇÒ ÃÖ´ë °Å¸®
-        private float frequency = 2f;    // Áøµ¿ÀÇ ¼Óµµ
+        private float amplitude = 0.2f;  // ì˜¤ë¸Œì íŠ¸ê°€ ì´ë™í•  ìµœëŒ€ ê±°ë¦¬
+        private float frequency = 2f;    // ì§„ë™ì˜ ì†ë„
 
         private void Start()
         {
             startPos = transform.position;
 
-            if (transform.GetChild(0) != null)
-            {
-                effect_obj = transform.GetChild(0);
-            }
+            //if (transform.GetChild(0) != null)
+            //{
+            //    effect_obj = transform.GetChild(0);
+            //}
         }
 
         private void Update()
         {
-            MoveObject();
+            //MoveObject();
         }
 
         void MoveObject()
         {
-            // ½Ã°£¿¡ µû¶ó y À§Ä¡¸¦ sin ÇÔ¼ö·Î º¯°æ
+            // ì‹œê°„ì— ë”°ë¼ y ìœ„ì¹˜ë¥¼ sin í•¨ìˆ˜ë¡œ ë³€ê²½
             float newY = startPos.y + Mathf.Sin(Time.time * frequency) * amplitude;
 
-            // »õ·Î¿î À§Ä¡·Î ÀÌµ¿
+            // ìƒˆë¡œìš´ ìœ„ì¹˜ë¡œ ì´ë™
             transform.position = new Vector3(startPos.x, newY, startPos.z);
         }
 
         void DestroyObject()
         {
-            effect_obj.gameObject.GetComponent<ParticleSystem>().Stop();
+            //effect_obj.gameObject.GetComponent<ParticleSystem>().Stop();
             //transform.gameObject.GetComponent<SpriteRenderer>().material.DOFade(0, 1f).OnComplete(() =>
             Destroy(gameObject);
         }

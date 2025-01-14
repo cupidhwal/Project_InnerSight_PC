@@ -6,14 +6,14 @@ namespace Noah
     {
         public int chargeGold = 10;
         private Transform effect_obj;
-        public Transform player;        // ÇÃ·¹ÀÌ¾î Transform
+        public Transform player;        // í”Œë ˆì´ì–´ Transform
         private Vector3 startPos;
 
-        public float attractionRange = 5f;  // ÇÃ·¹ÀÌ¾î¿ÍÀÇ °¨Áö °Å¸®
-        public float attractionSpeed = 2f; // ÇÃ·¹ÀÌ¾î·Î ÀÌµ¿ÇÏ´Â ¼Óµµ
+        public float attractionRange = 5f;  // í”Œë ˆì´ì–´ì™€ì˜ ê°ì§€ ê±°ë¦¬
+        public float attractionSpeed = 2f; // í”Œë ˆì´ì–´ë¡œ ì´ë™í•˜ëŠ” ì†ë„
 
-        private float amplitude = 0.2f;  // ¿ÀºêÁ§Æ®°¡ ÀÌµ¿ÇÒ ÃÖ´ë °Å¸®
-        private float frequency = 2f;    // Áøµ¿ÀÇ ¼Óµµ
+        private float amplitude = 0.2f;  // ì˜¤ë¸Œì íŠ¸ê°€ ì´ë™í•  ìµœëŒ€ ê±°ë¦¬
+        private float frequency = 2f;    // ì§„ë™ì˜ ì†ë„
 
         private bool isTracking = false;
 
@@ -21,6 +21,8 @@ namespace Noah
         void Start()
         {
             startPos = transform.position;
+            player = FindAnyObjectByType<RayManager>().transform;
+
         }
 
         // Update is called once per frame
@@ -36,10 +38,10 @@ namespace Noah
 
         void MoveObject()
         {
-            // ½Ã°£¿¡ µû¶ó y À§Ä¡¸¦ sin ÇÔ¼ö·Î º¯°æ
+            // ì‹œê°„ì— ë”°ë¼ y ìœ„ì¹˜ë¥¼ sin í•¨ìˆ˜ë¡œ ë³€ê²½
             float newY = startPos.y + Mathf.Sin(Time.time * frequency) * amplitude;
 
-            // »õ·Î¿î À§Ä¡·Î ÀÌµ¿
+            // ìƒˆë¡œìš´ ìœ„ì¹˜ë¡œ ì´ë™
             transform.position = new Vector3(startPos.x, newY, startPos.z);
         }
 
@@ -47,22 +49,22 @@ namespace Noah
         {
             isTracking = true;
 
-            // ÇÃ·¹ÀÌ¾î¿Í ¿ÀºêÁ§Æ® »çÀÌÀÇ °Å¸® °è»ê
+            // í”Œë ˆì´ì–´ì™€ ì˜¤ë¸Œì íŠ¸ ì‚¬ì´ì˜ ê±°ë¦¬ ê³„ì‚°
             float distance = Vector3.Distance(transform.position, player.position);
 
-            // °Å¸®°¡ attractionRange ÀÌ³»¶ó¸é ÇÃ·¹ÀÌ¾î ¹æÇâÀ¸·Î ÀÌµ¿
+            // ê±°ë¦¬ê°€ attractionRange ì´ë‚´ë¼ë©´ í”Œë ˆì´ì–´ ë°©í–¥ìœ¼ë¡œ ì´ë™
             if (distance <= attractionRange)
             {
-                // ÇÃ·¹ÀÌ¾î ¹æÇâ °è»ê
+                // í”Œë ˆì´ì–´ ë°©í–¥ ê³„ì‚°
                 Vector3 direction = (player.position - transform.position).normalized;
 
-                // ÇÃ·¹ÀÌ¾î ¹æÇâÀ¸·Î ÀÌµ¿
+                // í”Œë ˆì´ì–´ ë°©í–¥ìœ¼ë¡œ ì´ë™
                 transform.position += new Vector3(direction.x, 0f, direction.z) * attractionSpeed * Time.deltaTime;
             }
 
         }
 
-        // µğ¹ö±×¿ë: ¹üÀ§¸¦ ½Ã°¢ÀûÀ¸·Î È®ÀÎ (Scene View¿¡¼­)
+        // ë””ë²„ê·¸ìš©: ë²”ìœ„ë¥¼ ì‹œê°ì ìœ¼ë¡œ í™•ì¸ (Scene Viewì—ì„œ)
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.yellow;
