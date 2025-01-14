@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Noah
@@ -12,7 +13,6 @@ namespace Noah
         private GameObject skillRange_Circle;
         private GameObject skillRange_Cube;
 
-
         private GameObject effectGo;
         private GameObject skillef;
 
@@ -22,6 +22,8 @@ namespace Noah
         private int index = 0;
 
         public float rotationSpeed = 100f; // 회전 속도
+
+        public float y_SkillRot = 100f;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -69,8 +71,7 @@ namespace Noah
                 isReadySkill = false;
                 isChange = false;
 
-                effectGo.SetActive(false);
-                effectGo = null;
+
                 //Destroy(effectGo);
 
                 if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
@@ -201,7 +202,21 @@ namespace Noah
                     }
                     else if (skill.rangeType == SkillRangeType.Cube)
                     {
-                        skillPos = new Vector3(transform.position.x + skill.skillPos.x, skill.skillPrefab.transform.position.y, transform.position.z + skill.skillPos.x);
+                        float yRot;
+
+                        yRot = transform.position.z + skill.skillPos.z;
+
+                        //if (effectGo.transform.rotation.y >= y_SkillRot)
+                        //{
+                        //    yRot = transform.position.z - skill.skillPos.z;
+                        //    Debug.Log("각도 100이상 : " + effectGo.transform.rotation.y);
+                        //}
+                        //else
+                        //{
+                        //    yRot = transform.position.z + skill.skillPos.z;
+                        //    Debug.Log("각도 100이하 : " + effectGo.transform.rotation.y);
+                        //}
+                        skillPos = new Vector3(transform.position.x + skill.skillPos.x, skill.skillPrefab.transform.position.y, yRot);
 
                         skillef = Instantiate(skill.skillPrefab, skillPos, yOnlyRotation);
                     }
@@ -210,6 +225,8 @@ namespace Noah
 
                     StartCoroutine(skill.SkillCoolTime());
                     Destroy(skillef, skill.skillAtkTime);
+                    effectGo.SetActive(false);
+                    effectGo = null;
                 }
 
             }
