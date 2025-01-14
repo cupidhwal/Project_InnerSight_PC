@@ -19,7 +19,7 @@ namespace Seti
         // 필드
         #region Variables
         // 상태
-        [SerializeField]
+        //[SerializeField]
         private bool isGrounded;
         public bool IsGrounded => isGrounded;
         public bool IsAttack { get; set; }
