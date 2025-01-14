@@ -24,7 +24,7 @@ namespace Noah
         public SkillBase fourthSkill;
 
         public Button btn1, btn2, btn3;
-        public Button selectBtn1, selectBtn2;
+        public Button selectBtn1, selectBtn2, selectBtn3, selectBtn4;
 
         private List<int> randonNum = new List<int>();
 
@@ -52,6 +52,7 @@ namespace Noah
         {
             skliiObject = transform.GetChild(0);
 
+            // 스킬 종류 추가
             skills.Add(fireSkill);
             skills.Add(kunai);
             skills.Add(meteorRain);
@@ -218,11 +219,15 @@ namespace Noah
         void SetSelectUI()
         {
             selectUI.SetActive(true);
-            selectBtn1.transform.GetChild(1).GetComponent<Image>().sprite = firstSkill.skillImage;
-            selectBtn2.transform.GetChild(1).GetComponent<Image>().sprite = secondSkill.skillImage;
+            selectBtn1.transform.GetChild(1).GetComponent<Image>().sprite = skillSlots[0].skillImage;
+            selectBtn2.transform.GetChild(1).GetComponent<Image>().sprite = skillSlots[1].skillImage;
+            selectBtn3.transform.GetChild(1).GetComponent<Image>().sprite = skillSlots[2].skillImage;
+            selectBtn4.transform.GetChild(1).GetComponent<Image>().sprite = skillSlots[3].skillImage;
 
             selectBtn1.onClick.AddListener(() => ChangeSkill(ref firstSkill));
             selectBtn2.onClick.AddListener(() => ChangeSkill(ref secondSkill));
+            selectBtn3.onClick.AddListener(() => ChangeSkill(ref firstSkill));
+            selectBtn4.onClick.AddListener(() => ChangeSkill(ref secondSkill));
         }
 
         void ChangeSkill(ref SkillBase skill)

@@ -11,14 +11,13 @@ namespace Noah
         public InGameUI_Skill setSkill;
         private GameObject skillRange_Circle;
         private GameObject skillRange_Cube;
-        public LayerMask groundLayerMask;
-        private Camera mainCamera;
+
 
         private GameObject effectGo;
         private GameObject skillef;
 
-        public bool isReadySkill = false;
-        public bool isChange = false;
+        private bool isReadySkill = false;
+        private bool isChange = false;
 
         private int index = 0;
 
@@ -59,7 +58,6 @@ namespace Noah
 
         void Init()
         {
-            mainCamera = Camera.main;
             skillRange_Circle = transform.GetChild(0).gameObject;
             skillRange_Cube = transform.GetChild(1).gameObject;
         }
@@ -175,14 +173,6 @@ namespace Noah
             }
         }
 
-        //void UpdateChangeSkill()
-        //{
-        //    RangeType(setSkill.skillSlots[index]);
-
-        //    UsePlayerSkill(index);
-
-        //}
-
         void UseSkill(Func<SkillBase> factoryMethod)
         {
             SkillBase skill = factoryMethod();
@@ -198,16 +188,24 @@ namespace Noah
 
                     Vector3 skillPos = Vector3.zero;
 
+                    // Y축 회전만 적용
+                    Quaternion fullRotation = RayManager.Instance.UpdateSkillRangeRotation();
+                    Vector3 eulerRotation = fullRotation.eulerAngles; // 모든 축의 회전 값 가져오기
+                    Quaternion yOnlyRotation = Quaternion.Euler(0f, eulerRotation.y, 0f); // Y축 회전만 적용
+
                     if (skill.rangeType == SkillRangeType.Circle)
                     {
-                        skillPos = new Vector3(RayToScreen().x, skill.skillPrefab.transform.position.y, RayToScreen().z);      
+                        skillPos = new Vector3(RayManager.Instance.RayToScreen().x, skill.skillPrefab.transform.position.y, RayManager.Instance.RayToScreen().z);
+
+                        skillef = Instantiate(skill.skillPrefab, skillPos, skill.skillPrefab.transform.rotation);
                     }
                     else if (skill.rangeType == SkillRangeType.Cube)
                     {
-                        skillPos = new Vector3(transform.position.x + 1f, skill.skillPrefab.transform.position.y, transform.position.z);
+                        skillPos = new Vector3(transform.position.x + skill.skillPos.x, skill.skillPrefab.transform.position.y, transform.position.z + skill.skillPos.x);
+
+                        skillef = Instantiate(skill.skillPrefab, skillPos, yOnlyRotation);
                     }
 
-                    skillef = Instantiate(skill.skillPrefab, skillPos, skill.skillPrefab.transform.rotation);
                     //skillef.transform.GetChild(0).GetComponent<SkillAttack>().damage = skill.damage;
 
                     StartCoroutine(skill.SkillCoolTime());
@@ -223,7 +221,7 @@ namespace Noah
 
             if (skill != null && skill.rangeType == SkillRangeType.Circle)
             {
-                pos = RayToScreen() + new Vector3(0f, 0.1f, 0f);
+                pos = RayManager.Instance.RayToScreen() + new Vector3(0f, 0.1f, 0f);
 
                 if (prefab != null && effectGo == null)
                 {
@@ -244,14 +242,18 @@ namespace Noah
                     skillRange_Cube.SetActive(true);
 
                     effectGo = skillRange_Cube;
-
-                    //effectGo = Instantiate(prefab, transform.position, UpdateSkillRangeRotation());
                 }
 
                 if (effectGo != null)
                 {
                     effectGo.transform.position = transform.position;
-                    effectGo.transform.rotation = UpdateSkillRangeRotation();
+
+                    // Y축 회전만 적용
+                    Quaternion fullRotation = RayManager.Instance.UpdateSkillRangeRotation();
+                    Vector3 eulerRotation = fullRotation.eulerAngles; // 모든 축의 회전 값 가져오기
+                    Quaternion yOnlyRotation = Quaternion.Euler(0f, eulerRotation.y, 0f); // Y축 회전만 적용
+
+                    effectGo.transform.rotation = yOnlyRotation;
                 }
             }
 
@@ -259,40 +261,7 @@ namespace Noah
 
         }
 
-        Vector3 RayToScreen()
-        {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100f, groundLayerMask))
-            {
-                return hit.point;
-            }
-
-            return hit.point;
-        }
-
-        Quaternion UpdateSkillRangeRotation()
-        {
-            // 마우스 위치 가져오기
-            Vector3 mousePosition = Input.mousePosition;
-            Quaternion targetRotation = Quaternion.identity;
-
-            // 마우스 위치를 월드 좌표로 변환
-            Ray ray = mainCamera.ScreenPointToRay(mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                // 방향 계산 (오브젝트 위치 -> 마우스 위치)
-                Vector3 direction = hit.point - transform.position;
-
-                // 방향에 따라 회전 적용
-                targetRotation = Quaternion.LookRotation(direction);
-
-                return targetRotation;
-            }
-
-            return targetRotation;
-        }
+      
 
         void RangeType(SkillBase skill)
         {
