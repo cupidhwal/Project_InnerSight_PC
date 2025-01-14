@@ -4,10 +4,25 @@ namespace Seti
 {
     public class Enemy_State_Attack : Enemy_State
     {
+        // 필드
+        #region Variables
+        private Attack attack;
+        private Look look;
+        #endregion
+
         // 추상
         #region Abstract
         // 초기화 메서드 - 생성 후 1회 실행
-        public override void OnInitialized() => base.OnInitialized();
+        public override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            if (context.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+                attack = attackBehaviour as Attack;
+
+            if (context.BehaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
+                look = lookBehaviour as Look;
+        }
 
         // 상태 전환 시 State Enter에 1회 실행
         public override void OnEnter()
@@ -23,9 +38,7 @@ namespace Seti
             base.OnExit();
 
             // Attack 행동 종료
-            if (context.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
-                if (attackBehaviour is Attack attack)
-                    attack?.FSM_AttackInput(false);
+            attack?.FSM_AttackInput(false);
         }
 
         // 상태 전환 조건 메서드
@@ -44,12 +57,11 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             // Attack 행동 AI Input
-            if (context.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
-                if (attackBehaviour is Attack attack)
-                {
-                    if (Input_Attack(deltaTime))
-                        attack?.FSM_AttackInput(true);
-                }
+            if (Input_Attack(deltaTime))
+                attack?.FSM_AttackInput(true);
+
+            if (!enemy.ExcuteAttack)
+                look?.FSM_LookInput();
         }
         #endregion
 

@@ -5,25 +5,25 @@ namespace Seti
 {
     public abstract class Look_Base : ILookStrategy
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
-        // Á¶Á¤°ª
-        protected float mouseSensitivity;     // ¸¶¿ì½º °¨µµ
+        // ì¡°ì •ê°’
+        protected float mouseSensitivity;     // ë§ˆìš°ìŠ¤ ê°ë„
 
-        // ¼¼ÆÃ
+        // ì„¸íŒ…
         protected Actor actor;
-        protected Rigidbody rb;               // ÇÃ·¹ÀÌ¾î Rigidbody
-        protected Transform headTransform;    // ÇÃ·¹ÀÌ¾îÀÇ ¸Ó¸® ºÎºÐ Transform
+        protected Rigidbody rb;               // í”Œë ˆì´ì–´ Rigidbody
+        protected Transform headTransform;    // í”Œë ˆì´ì–´ì˜ ë¨¸ë¦¬ ë¶€ë¶„ Transform
 
-        // ÀÏ¹Ý ÇÊµå
-        protected float headXRotation;        // head XÃà È¸Àü°ª
-        protected float headYRotation;        // head YÃà È¸Àü°ª
-        protected float bodyYRotation;        // body YÃà È¸Àü°ª
+        // ì¼ë°˜ í•„ë“œ
+        protected float headXRotation;        // head Xì¶• íšŒì „ê°’
+        protected float headYRotation;        // head Yì¶• íšŒì „ê°’
+        protected float bodyYRotation;        // body Yì¶• íšŒì „ê°’
         #endregion
 
-        // ¸Þ¼­µå
+        // ë©”ì„œë“œ
         #region Methods
-        public void Initialize(Actor actor, float mouseSensitivity)
+        public void Initialize(Actor actor, float mouseSensitivity = 0f)
         {
             this.actor = actor;
             this.mouseSensitivity = mouseSensitivity;
@@ -33,7 +33,7 @@ namespace Seti
         }
         public Type GetStrategyType() => typeof(ILookStrategy);
 
-        public abstract void Look(Vector2 readValue);
+        public abstract void Look(Vector2 readValue = default);
         #endregion
     }
 }

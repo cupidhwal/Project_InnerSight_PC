@@ -19,11 +19,17 @@ namespace Seti
         protected override async void QuaterView_Move(Vector2 moveInput)
         {
             if (rb == null) return;
+            if (actor is not Player player)
+            {
+                Debug.Log("Move_Dash는 Player만 사용할 수 있습니다.");
+                return;
+            }
+
             if (!isDash)    // 대시 중이 아닐 때에만 방향 갱신
             {
                 dir = MoveDirection(moveInput);
                 moveDirection = (moveInput == Vector2.zero) ?
-                                Quaternion.Euler(0f, -45f, 0f) * actor.transform.forward :
+                                Quaternion.Euler(0f, -45f, 0f) * player.transform.forward :
                                 new(dir.x, 0, dir.y);
                 isDash = true;
             }
@@ -33,15 +39,15 @@ namespace Seti
             float elapsedTime = 0f;
 
             // 초기 속도 설정
-            float initialSpeed = 0f;
+            float currentSpeed = 0f;
             while (elapsedTime < dashDuration)
             {
                 elapsedTime += Time.deltaTime;
                 float t = elapsedTime / dashDuration;
 
                 // Ease In-Out 적용
-                float currentSpeed = Mathf.Lerp(initialSpeed, 30, Mathf.SmoothStep(0f, 1f, t));
-                actor.transform.Translate(currentSpeed * Time.deltaTime * QuaterView, Space.World);
+                currentSpeed = Mathf.Lerp(currentSpeed, player.Dash_Speed, Mathf.SmoothStep(0f, 1f, t * t));
+                player.transform.Translate(currentSpeed * Time.deltaTime * QuaterView, Space.World);
 
                 await Task.Delay((int)(Time.deltaTime * 1000));
             }

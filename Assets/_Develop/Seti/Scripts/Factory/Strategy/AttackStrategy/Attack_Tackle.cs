@@ -9,12 +9,7 @@ namespace Seti
     {
         // 필드
         #region Variables
-        CancellationTokenSource cts;    // 비동기 메서드 강제 종료용 토큰
-        #endregion
-
-        // 속성
-        #region Properties
-        public bool CanHit { get; private set; } = false;
+        CancellationTokenSource atkToken;   // 비동기 메서드 - Tackle 강제 종료용 토큰
         #endregion
 
         // 오버라이드
@@ -25,64 +20,67 @@ namespace Seti
 
             Debug.Log("몬스터 돌진 공격");
 
-            cts = new CancellationTokenSource(1000);    // 1초 후 자동 취소
-            Tackle(cts.Token);
+            atkToken = new CancellationTokenSource(1000);   // 1초 후 자동 취소
+            Tackle(atkToken.Token);
         }
 
         public override void AttackExit()
         {
             base.AttackExit();
-            cts?.Cancel();
+            atkToken?.Cancel();
         }
         #endregion
 
         // 메서드
         private async void Tackle(CancellationToken token)
         {
-            //if (rb == null) return;
             if (actor is not Enemy enemy)
             {
                 Debug.Log($"Attack_Tackle은 Enemy만 사용할 수 있습니다.");
                 return;
             }
 
-            // 공격 방향
-            Vector3 atkDir = enemy.Player.transform.position - actor.transform.position;
-            actor.transform.LookAt(enemy.Player.transform.position);
-
             try
             {
+                enemy.ExcuteAttack = true;
+                // 축적
                 float slamBack = 0f;
-                while (slamBack < 0.45f)
+                float speed_slamBack = 0f;
+                while (slamBack < 0.2f)
                 {
                     if (token.IsCancellationRequested) return;
-
-                    actor.transform.Translate(-2 * Time.deltaTime * atkDir, Space.World);
+                    speed_slamBack = Mathf.Lerp(speed_slamBack, 5, 10 * Time.deltaTime);
+                    enemy.transform.Translate(-speed_slamBack * Time.deltaTime * enemy.transform.forward, Space.World);
                     slamBack += Time.deltaTime;
                     await Task.Delay((int)(Time.deltaTime * 1000), token);
                 }
 
-                CanHit = true;
+                // 돌진
+                // 공격 방향
+                Vector3 atkDir = enemy.Player.transform.position - enemy.transform.position;
                 float slamFront = 0f;
                 while (slamFront < 0.05f)
                 {
                     if (token.IsCancellationRequested) return;
 
-                    actor.transform.Translate(30 * Time.deltaTime * atkDir, Space.World);
+                    enemy.transform.Translate(20 * Time.deltaTime * atkDir, Space.World);
                     slamFront += Time.deltaTime;
                     await Task.Delay((int)(Time.deltaTime * 1000), token);  // 토큰 전달
                 }
-                CanHit = false;
 
+                // 반동
                 float slamRebound = 0f;
-                while (slamRebound < 0.05f)
+                while (slamRebound < 0.1f)
                 {
                     if (token.IsCancellationRequested) return;
 
-                    actor.transform.Translate(-5 * Time.deltaTime * atkDir, Space.World);
+                    enemy.transform.Translate(-5 * Time.deltaTime * atkDir, Space.World);
                     slamRebound += Time.deltaTime;
                     await Task.Delay((int)(Time.deltaTime * 1000), token);  // 토큰 전달
                 }
+
+                await Task.Delay(500);
+                enemy.ExcuteAttack = false;
             }
             catch (OperationCanceledException)
             {

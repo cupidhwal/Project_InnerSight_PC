@@ -62,6 +62,11 @@ namespace Seti
                 if (moveBehaviour is Move move)
                     stateMachine.OnStateChanged += move.FSM_MoveSwitch;
 
+            // Move 행동 이벤트 바인딩
+            if (behaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
+                if (lookBehaviour is Look look)
+                    stateMachine.OnStateChanged += look.FSM_LookSwitch;
+
             // Attack 행동 이벤트 바인딩
             if (behaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
                 if (attackBehaviour is Attack attack)

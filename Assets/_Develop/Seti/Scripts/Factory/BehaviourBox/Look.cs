@@ -12,12 +12,26 @@ namespace Seti
     [System.Serializable]
     public class Look : IBehaviour, IHasStrategy
     {
+        private enum StrategyType
+        {
+            Normal,
+            Watch,
+            NULL
+        }
+
         // 필드
         #region Variables
+        // 전략 관리
+        private Actor actor;
         [SerializeReference]
         private List<Strategy> strategies;
         private ILookStrategy currentStrategy;
         private Vector2 lookInput;
+
+        // 제어 관리
+        private Condition_Actor state;
+        private StrategyType currentType;
+        private State<Controller_FSM> currentState;
         #endregion
 
         // 인터페이스
@@ -31,18 +45,19 @@ namespace Seti
         // 초기화
         public void Initialize(Actor actor)
         {
+            this.actor = actor;
             foreach (var mapping in strategies)
             {
-                ILookStrategy moveStrategy = mapping.strategy as ILookStrategy;
-                switch (moveStrategy)
+                ILookStrategy lookStrategy = mapping.strategy as ILookStrategy;
+                switch (lookStrategy)
                 {
                     case Look_Normal:
-                        moveStrategy.Initialize(actor, 0.1f);
+                        lookStrategy.Initialize(actor, 0.1f);
                         break;
 
-                    /*case Look_KeepGoing:
-                        moveStrategy.Initialize(actor, 0.1f);
-                        break;*/
+                    case Look_Watch:
+                        lookStrategy.Initialize(actor);
+                        break;
                 }
             }
 
@@ -81,23 +96,30 @@ namespace Seti
                 currentStrategy = lookStrategy.strategy as ILookStrategy;
             }
         }
-        #endregion
 
-        // 라이프 사이클
-        #region Life Cycle
-        public void FixedUpdate()
+        private void SwitchStrategy(StrategyType type)
         {
+            currentType = type;
+            switch (currentType)
+            {
+                case StrategyType.Normal:
+                    ChangeStrategy(typeof(Look_Normal));
+                    break;
 
-        }
+                case StrategyType.Watch:
+                    ChangeStrategy(typeof(Look_Watch));
+                    break;
 
-        public void LateUpdate()
-        {
-
+                default:
+                    currentStrategy = null;
+                    break;
+            }
         }
         #endregion
 
         // 이벤트 핸들러
         #region Event Handlers
+        #region Controller_Input
         public void OnLookPerformed(InputAction.CallbackContext context)
         {
             lookInput = context.ReadValue<Vector2>();
@@ -118,6 +140,34 @@ namespace Seti
         public void OnKeepGoingCanceled(InputAction.CallbackContext _)
         {
             ChangeStrategy(typeof(Look_Normal));
+        }
+        #endregion
+
+        #region Controller_FSM
+        public void FSM_LookInput() => OnLook();
+        public void FSM_LookSwitch(State<Controller_FSM> state)
+        {
+            // FSM 상태에 따라 동작 제어
+            currentState = state;
+            switch (currentState)
+            {
+                case Enemy_State_Attack:
+                    SwitchStrategy(StrategyType.Watch);
+                    break;
+
+                default:
+                    SwitchStrategy(StrategyType.NULL);
+                    break;
+            }
+        }
+        #endregion
+        #endregion
+
+        // 메서드
+        #region Methods
+        private void OnLook()
+        {
+            currentStrategy?.Look();
         }
         #endregion
     }

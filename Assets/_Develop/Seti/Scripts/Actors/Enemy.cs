@@ -49,6 +49,7 @@ namespace Seti
         #region Properties
         public Player Player => player;
         public Vector3 HomePosition { get; private set; }
+        public bool ExcuteAttack { get; set; }
         public bool Detected => distancePlayer <= range_Detect;
         public bool GoAttack => distancePlayer <= range_Attack;
         public bool CanAttack => distancePlayer <= range_Attack * 3f;

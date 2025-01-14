@@ -2,11 +2,14 @@ using UnityEngine;
 
 namespace Seti
 {
+    /// <summary>
+    /// 마우스를 통한 기본 시야 제어
+    /// </summary>
     public class Look_Normal : Look_Base
     {
         public override void Look(Vector2 readValue)
         {
-            if (actor is Player player && player.View != Player.ViewType.Follow_Person) return;
+            if (actor is not Player player || player.View != Player.ViewType.Follow_Person) return;
 
             // 각 축의 Delta 값
             headXRotation -= readValue.y * mouseSensitivity;

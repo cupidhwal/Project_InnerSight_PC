@@ -17,9 +17,9 @@ namespace Seti
         [SerializeField]
         protected float moveSpeed = 4f;
         [SerializeField]
-        protected float dashSpeed = 30f;
+        protected float dashSpeed = 20f;
         [SerializeField]
-        protected float dashDuration = 0.15f;
+        protected float dashDuration = 0.10f;
         [SerializeField]
         protected float dashCooldown = 1f;
 
