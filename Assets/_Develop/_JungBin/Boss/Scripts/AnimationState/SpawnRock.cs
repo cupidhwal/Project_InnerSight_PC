@@ -20,8 +20,8 @@ namespace JungBin
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            FirstBossController firstBossController = animator.gameObject.GetComponent<FirstBossController>();
-            firstBossController.OnLanding();
+            FirstBossManager firstBossManager = animator.gameObject.GetComponent<FirstBossManager>();
+            firstBossManager.OnLanding();
         }
 
         // OnStateMove is called right after Animator.OnAnimatorMove()

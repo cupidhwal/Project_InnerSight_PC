@@ -12,14 +12,14 @@ namespace JungBin
 
     public class BossStateController : StateMachineBehaviour
     {
-        [Header("∆ƒ∂ÛπÃ≈Õ º≥¡§"), SerializeField]
+        [Header("ÌååÎùºÎØ∏ÌÑ∞ ÏÑ§Ï†ï"), SerializeField]
         public string enterParameter;
         public string exitParameter;
 
         public bool enterParameterBool;
         public bool exitParameterBool;
 
-        [Header("FirstBossController ¿Œ∆Æ≈œΩ∫ º≥¡§"), SerializeField]
+        [Header("FirstBossController Ïù∏Ìä∏ÌÑ¥Ïä§ ÏÑ§Ï†ï"), SerializeField]
         public BossState enterState;
         public BossState exitState;
 
@@ -36,7 +36,8 @@ namespace JungBin
 
             if (enterState == BossState.Attack)
             {
-                FirstBossController.isAttack = enterBool;
+                FirstBossManager.isAttack = enterBool;
+
             }
         }
 
@@ -56,7 +57,7 @@ namespace JungBin
 
             if (exitState == BossState.Attack)
             {
-                FirstBossController.isAttack = exitBool;
+                FirstBossManager.isAttack = exitBool;
             }
         }
 
