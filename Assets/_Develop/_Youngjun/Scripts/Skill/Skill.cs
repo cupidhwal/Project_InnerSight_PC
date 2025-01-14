@@ -10,7 +10,7 @@ namespace Noah
         Cube
     }
 
-    // °øÅë ºÎ¸ğ Å¬·¡½º Á¤ÀÇ (ºñÁ¦³×¸¯)
+    // ê³µí†µ ë¶€ëª¨ í´ë˜ìŠ¤ ì •ì˜ (ë¹„ì œë„¤ë¦­)
     public abstract class SkillBase
     {
         public SkillRangeType rangeType;
@@ -21,12 +21,12 @@ namespace Noah
         public float upgradeDamage;
         public float attackRadius;
         public float skillAtkTime = 1.5f;
-        public Vector2 skillPos;
+        public Vector3 skillPos;
         public Sprite skillImage;
         public Sprite UISprite;
         public bool isSkillOn = true;
 
-        // ½ºÅ³ »ç¿ë ½Ã ½ÇÇàµÇ´Â ¸Ş¼­µå
+        // ìŠ¤í‚¬ ì‚¬ìš© ì‹œ ì‹¤í–‰ë˜ëŠ” ë©”ì„œë“œ
         public abstract void Activate();
 
         public virtual IEnumerator SkillCoolTime()
@@ -42,10 +42,10 @@ namespace Noah
 
     public abstract class Skill<T> : SkillBase where T : Skill<T>
     {
-        // ½ºÅ³ »ç¿ë ½Ã ½ÇÇàµÇ´Â ¸Ş¼­µå
+        // ìŠ¤í‚¬ ì‚¬ìš© ì‹œ ì‹¤í–‰ë˜ëŠ” ë©”ì„œë“œ
         public override abstract void Activate(/*T skillData*/);
 
-        // ½ºÅ³ »ç¿ë ÈÄ Ç®·Î ¹İÈ¯
+        // ìŠ¤í‚¬ ì‚¬ìš© í›„ í’€ë¡œ ë°˜í™˜
         public void ReturnToPool()
         {
             SkillPool<T>.ReturnObject((T)this);
