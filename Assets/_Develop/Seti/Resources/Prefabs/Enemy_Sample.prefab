@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2896505233847558159}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head_Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 917505351106839347}
   - component: {fileID: 4964129615376513531}
   - component: {fileID: 6231692021058931911}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3880870465714580309}
   - component: {fileID: 6057309913282334934}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,10 +182,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6818347768236701283}
   - component: {fileID: 5497824624605533587}
-  - component: {fileID: 568727030893276254}
+  - component: {fileID: 5202101694273562859}
   - component: {fileID: 268511591646616248}
   - component: {fileID: 7531578248423457190}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy_Sample
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +232,7 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
---- !u!54 &568727030893276254
+--- !u!54 &5202101694273562859
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,7 +242,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 30
   m_Drag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -257,7 +257,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!195 &268511591646616248
 NavMeshAgent:

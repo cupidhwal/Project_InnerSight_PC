@@ -33,6 +33,7 @@ namespace Seti
         private IAttackStrategy currentStrategy;
 
         // 제어 관리
+        private Condition_Actor state;
         private StrategyType currentType;
         private State<Controller_FSM> currentState;
         #endregion
@@ -50,6 +51,7 @@ namespace Seti
         public void Initialize(Actor actor)
         {
             this.actor = actor;
+            state = actor.ActorState;
             foreach (var mapping in strategies)
             {
                 IAttackStrategy moveStrategy = mapping.strategy as IAttackStrategy;
@@ -92,6 +94,9 @@ namespace Seti
 
         public Type GetBehaviourType() => typeof(Attack);
         public Type GetStrategyType() => typeof(IAttackStrategy);
+
+        // 보유 전략 확인
+        public bool HasStrategy<T>() where T : class, IStrategy => strategies.Any(strategy => strategy is T);
 
         // 행동 전략 설정
         public void SetStrategies(IEnumerable<Strategy> strategies)
@@ -146,12 +151,12 @@ namespace Seti
         public void OnSkillStarted(InputAction.CallbackContext _)
         {
             SwitchStrategy(StrategyType.Weapon);
-            currentStrategy?.Attack();
+            OnAttack(true);
         }
 
         public void OnSkillCanceled(InputAction.CallbackContext _)
         {
-            currentStrategy?.AttackExit();
+            OnAttack(false);
             SwitchStrategy(StrategyType.Normal);
         }
 
@@ -179,12 +184,12 @@ namespace Seti
                     break;
             }
 
-            currentStrategy?.Attack();
+            OnAttack(true);
         }
         
         public void OnMagicCanceled(InputAction.CallbackContext _)
         {
-            currentStrategy?.AttackExit();
+            OnAttack(false);
             SwitchStrategy(StrategyType.Normal);
         }
         #endregion
@@ -216,13 +221,10 @@ namespace Seti
         #region Methods
         private void OnAttack(bool isAttack = true)
         {
+            state.IsAttack = isAttack;
             if (isAttack)
             {
-                if (currentType != StrategyType.Normal || currentType != StrategyType.Tackle)
-                {
-
-                }
-
+                state.AttactPoint = GameUtility.RayToWorldPosition();
                 currentStrategy?.Attack();
             }
             else currentStrategy?.AttackExit();

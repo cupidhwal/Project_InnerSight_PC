@@ -19,10 +19,12 @@ namespace Seti
         // 필드
         #region Variables
         // 상태
-        //[SerializeField]
         private bool isGrounded;
         public bool IsGrounded => isGrounded;
         public bool IsAttack { get; set; }
+
+        // Attack 지점
+        public Vector3 AttactPoint { get; set; }
 
         // 무기
         protected Weapon primaryWeapon;
@@ -34,6 +36,11 @@ namespace Seti
         #region Properties
         public Weapon CurrentWeapon => currentWeapon;
         #endregion
+
+        private void Start()
+        {
+            isGrounded = true;
+        }
 
         // 추상화
         #region Abstract

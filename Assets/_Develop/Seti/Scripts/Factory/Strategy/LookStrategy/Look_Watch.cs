@@ -13,6 +13,12 @@ namespace Seti
         {
             if (actor is Enemy enemy)
                 enemy.transform.LookAt(enemy.Player.transform.position);
+
+            if (actor is Player player)
+            {
+                Vector3 atkPosition = player.ActorState.AttactPoint;
+                player.transform.LookAt(atkPosition);
+            }
         }
         #endregion
     }

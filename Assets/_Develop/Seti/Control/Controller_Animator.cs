@@ -4,13 +4,15 @@ namespace Seti
 {
     public class Controller_Animator : MonoBehaviour
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
         private StateMachine<Controller_Animator> aniMachine;
         private Transform actorTransform;
+        [SerializeField]
+        private Transform rightHandTarget; // ê²€ì˜ ì†ì¡ì´ ìœ„ì¹˜
         #endregion
 
-        // ¼Ó¼º
+        // ì†ì„±
         #region Properties
         public Animator Animator { get; private set; }
 
@@ -20,11 +22,11 @@ namespace Seti
         public bool IsAttack { get; set; } = false;
         #endregion
 
-        // ¶óÀÌÇÁ »çÀÌÅ¬
+        // ë¼ì´í”„ ì‚¬ì´í´
         #region Life Cycle
         protected void Awake()
         {
-            // ÃÊ±âÈ­
+            // ì´ˆê¸°í™”
             actorTransform = GetComponentInParent<Actor>().transform;
 
             Animator = GetComponent<Animator>();
@@ -33,7 +35,7 @@ namespace Seti
                 new AniState_Idle()
             );
 
-            // »óÅÂ Ãß°¡
+            // ìƒíƒœ ì¶”ê°€
             aniMachine.AddState(new AniState_Move());
             aniMachine.AddState(new AniState_Dash());
             aniMachine.AddState(new AniState_Attack());
@@ -41,17 +43,31 @@ namespace Seti
 
         private void Update()
         {
-            // FSM ¾÷µ¥ÀÌÆ®
+            // FSM ì—…ë°ì´íŠ¸
             aniMachine.Update(Time.deltaTime);
         }
         #endregion
 
-        // ¸Ş¼­µå
+        // ë©”ì„œë“œ
         #region Methods
         public void Initialize()
         {
             transform.position = actorTransform.position;
             transform.rotation = actorTransform.rotation;
+        }
+        #endregion
+
+        // ì´ë²¤íŠ¸ ë©”ì„œë“œ
+        #region Event Methods
+        private void OnAnimatorIK(int layerIndex)
+        {
+            if (rightHandTarget != null)
+            {
+                Animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
+                Animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
+                Animator.SetIKPosition(AvatarIKGoal.RightHand, rightHandTarget.position);
+                Animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandTarget.rotation);
+            }
         }
         #endregion
     }
@@ -62,7 +78,7 @@ namespace Seti
 
 namespace Seti
 {
-    // ¾Ö´Ï¸ŞÀÌ¼Ç States ¸ñ·Ï
+    // ì• ë‹ˆë©”ì´ì…˜ States ëª©ë¡
     public enum AniStates
     {
         IDLE,
@@ -95,9 +111,9 @@ namespace Seti
 
     public class Controller_Animator : MonoBehaviour
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
-        // Ä³¸¯ÅÍ ¸ğµ¨ µ¿±âÈ­¿ë ÇÊµå
+        // ìºë¦­í„° ëª¨ë¸ ë™ê¸°í™”ìš© í•„ë“œ
         private Quaternion syncRotation = Quaternion.identity;
         private Quaternion targetRotion = Quaternion.identity;
 
@@ -105,23 +121,23 @@ namespace Seti
         float z;
         private Vector2 lerpInput;
 
-        // »óÅÂ º¯¼ö
+        // ìƒíƒœ ë³€ìˆ˜
         private AniStates state;
 
-        // ÄÄÆ÷³ÍÆ®
+        // ì»´í¬ë„ŒíŠ¸
         private Transform lookRoot;
 
-        // Å¬·¡½º
+        // í´ë˜ìŠ¤
         private Actor actor;
         //private RidingBoard board;
         #endregion
 
-        // ¼Ó¼º
+        // ì†ì„±
         #region Properties
         public Animator Animator { get; private set; }
         #endregion
 
-        // ¶óÀÌÇÁ »çÀÌÅ¬
+        // ë¼ì´í”„ ì‚¬ì´í´
         #region Life Cycle
         private void Start()
         {
@@ -138,7 +154,7 @@ namespace Seti
         }
         #endregion
 
-        // ¸Ş¼­µå
+        // ë©”ì„œë“œ
         #region Methods
         public void ChangeState(AniStates newState)
         {
@@ -192,7 +208,7 @@ namespace Seti
             }
         }
 
-        // Ä³¸¯ÅÍ ¸ğµ¨ÀÇ Root Transform µ¿±âÈ­ ¸Ş¼­µå
+        // ìºë¦­í„° ëª¨ë¸ì˜ Root Transform ë™ê¸°í™” ë©”ì„œë“œ
         public void AniSync()
         {
             if (Animator.GetBool(AniString.IsBoard))
@@ -213,7 +229,7 @@ namespace Seti
             }
         }
 
-        // ¾Ö´Ï¸ŞÀÌ¼Ç¿ë Áö¸é ÆÇÁ¤ ¸Ş¼­µå
+        // ì• ë‹ˆë©”ì´ì…˜ìš© ì§€ë©´ íŒì • ë©”ì„œë“œ
         public void AniGround(Collision collision)
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
@@ -226,7 +242,7 @@ namespace Seti
             }
         }
 
-        // MOVE StateÀÇ ºí·»µå Æ®¸®¸¦ ¿Ã¹Ù¸£°Ô »ç¿ëÇÏ±â À§ÇÑ ¸Ş¼­µå
+        // MOVE Stateì˜ ë¸”ë Œë“œ íŠ¸ë¦¬ë¥¼ ì˜¬ë°”ë¥´ê²Œ ì‚¬ìš©í•˜ê¸° ìœ„í•œ ë©”ì„œë“œ
         private void AniMove()
         {
             if (Animator.GetBool(AniString.IsMove))
@@ -260,19 +276,19 @@ namespace Seti
         }
         #endregion
 
-        // ÀÌº¥Æ® ¸Ş¼­µå
+        // ì´ë²¤íŠ¸ ë©”ì„œë“œ
         #region Event Methods
         private void OnAnimatorIK(int layerIndex)
         {
             if (Animator)
             {
-                // ÇìµåÀÇ IK °¡ÁßÄ¡ ¼³Á¤
-                Animator.SetLookAtWeight(1.0f);  // 0~1 »çÀÌ °ª, 1ÀÏ¼ö·Ï ¿ÏÀüÇÏ°Ô ¹Ù¶óº½
+                // í—¤ë“œì˜ IK ê°€ì¤‘ì¹˜ ì„¤ì •
+                Animator.SetLookAtWeight(1.0f);  // 0~1 ì‚¬ì´ ê°’, 1ì¼ìˆ˜ë¡ ì™„ì „í•˜ê²Œ ë°”ë¼ë´„
 
-                // Ä«¸Ş¶ó°¡ µû¶ó°¥ Çìµå À§Ä¡ÀÇ ¿ùµå ÁÂÇ¥¸¦ »ç¿ëÇÏ¿© ¹Ù¶óº¸´Â À§Ä¡¸¦ ¼³Á¤
-                Vector3 lookAtPosition = lookRoot.position + lookRoot.forward * 10f;  // Ä«¸Ş¶ó°¡ ¹Ù¶óº¸´Â ¹æÇâÀ» ±âÁØÀ¸·Î 10 À¯´Ö ¾ÕÀÇ ÁöÁ¡À» ÁöÁ¤
+                // ì¹´ë©”ë¼ê°€ ë”°ë¼ê°ˆ í—¤ë“œ ìœ„ì¹˜ì˜ ì›”ë“œ ì¢Œí‘œë¥¼ ì‚¬ìš©í•˜ì—¬ ë°”ë¼ë³´ëŠ” ìœ„ì¹˜ë¥¼ ì„¤ì •
+                Vector3 lookAtPosition = lookRoot.position + lookRoot.forward * 10f;  // ì¹´ë©”ë¼ê°€ ë°”ë¼ë³´ëŠ” ë°©í–¥ì„ ê¸°ì¤€ìœ¼ë¡œ 10 ìœ ë‹› ì•ì˜ ì§€ì ì„ ì§€ì •
 
-                // Çìµå°¡ ¹Ù¶óº¼ À§Ä¡ ¼³Á¤
+                // í—¤ë“œê°€ ë°”ë¼ë³¼ ìœ„ì¹˜ ì„¤ì •
                 Animator.SetLookAtPosition(lookAtPosition);
             }
         }

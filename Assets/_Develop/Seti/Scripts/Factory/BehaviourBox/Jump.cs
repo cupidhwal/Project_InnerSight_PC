@@ -11,22 +11,22 @@ namespace Seti
     /// </summary>
     public class Jump : IBehaviour, IHasStrategy
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
         [SerializeReference]
         private List<Strategy> strategies;
         private IJumpStrategy currentStrategy;
         #endregion
 
-        // ÀÎÅÍÆäÀÌ½º
+        // ì¸í„°í˜ì´ìŠ¤
         #region Interface
-        // ¾÷±×·¹ÀÌµå
+        // ì—…ê·¸ë ˆì´ë“œ
         public void Upgrade(float increment)
         {
 
         }
 
-        // ÃÊ±âÈ­
+        // ì´ˆê¸°í™”
         public void Initialize(Actor actor)
         {
             foreach (var mapping in strategies)
@@ -44,7 +44,7 @@ namespace Seti
                 }
             }
 
-            // ÃÊ±â Àü·« ¼³Á¤
+            // ì´ˆê¸° ì „ëµ ì„¤ì •
             var defaultStrategy = CollectionUtility.FirstOrNull(strategies, s => s.strategy is Jump_Normal);
             if (defaultStrategy != null)
             {
@@ -56,7 +56,7 @@ namespace Seti
             }
             else
             {
-                //Debug.LogWarning("Jump Àü·«ÀÌ ¾ø¾î ÃÊ±â Àü·«À» ¼³Á¤ÇÏÁö ¸øÇß½À´Ï´Ù.");
+                //Debug.LogWarning("Jump ì „ëµì´ ì—†ì–´ ì´ˆê¸° ì „ëµì„ ì„¤ì •í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.");
                 ChangeStrategy(null);
             }
         }
@@ -64,13 +64,16 @@ namespace Seti
         public Type GetBehaviourType() => typeof(Jump);
         public Type GetStrategyType() => typeof(IJumpStrategy);
 
-        // Çàµ¿ Àü·« ¼³Á¤
+        // ë³´ìœ  ì „ëµ í™•ì¸
+        public bool HasStrategy<T>() where T : class, IStrategy => strategies.Any(strategy => strategy is T);
+
+        // í–‰ë™ ì „ëµ ì„¤ì •
         public void SetStrategies(IEnumerable<Strategy> strategies)
         {
-            this.strategies = strategies.ToList(); // Àü´Ş¹ŞÀº Àü·« ¸®½ºÆ® ÀúÀå
+            this.strategies = strategies.ToList(); // ì „ë‹¬ë°›ì€ ì „ëµ ë¦¬ìŠ¤íŠ¸ ì €ì¥
         }
 
-        // Çàµ¿ Àü·« º¯°æ
+        // í–‰ë™ ì „ëµ ë³€ê²½
         public void ChangeStrategy(Type strategyType)
         {
             var moveStrategy = CollectionUtility.FirstOrNull(strategies, s => s.strategy.GetType() == strategyType);
@@ -81,7 +84,7 @@ namespace Seti
         }
         #endregion
 
-        // ÀÌº¥Æ® ÇÚµé·¯
+        // ì´ë²¤íŠ¸ í•¸ë“¤ëŸ¬
         #region Event Handlers
         public void OnJumpStarted(InputAction.CallbackContext _)
         {

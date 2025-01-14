@@ -105,6 +105,9 @@ namespace Seti
         public Type GetBehaviourType() => typeof(Move);
         public Type GetStrategyType() => typeof(IMoveStrategy);
 
+        // 보유 전략 확인
+        public bool HasStrategy<T>() where T : class, IStrategy => strategies.Any(strategy => strategy is T);
+
         // 행동 전략 설정
         public void SetStrategies(IEnumerable<Strategy> strategies)
         {

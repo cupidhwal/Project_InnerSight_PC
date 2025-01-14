@@ -46,6 +46,7 @@ namespace Seti
         public void Initialize(Actor actor)
         {
             this.actor = actor;
+            state = actor.ActorState;
             foreach (var mapping in strategies)
             {
                 ILookStrategy lookStrategy = mapping.strategy as ILookStrategy;
@@ -81,6 +82,9 @@ namespace Seti
         public Type GetBehaviourType() => typeof(Look);
         public Type GetStrategyType() => typeof(ILookStrategy);
 
+        // 보유 전략 확인
+        public bool HasStrategy<T>() where T : class, IStrategy => strategies.Any(strategy => strategy is T);
+
         // 행동 전략 설정
         public void SetStrategies(IEnumerable<Strategy> strategies)
         {
@@ -114,6 +118,16 @@ namespace Seti
                     currentStrategy = null;
                     break;
             }
+        }
+        #endregion
+
+        // 라이프 사이클
+        #region Life Cycle
+        public void Update()
+        {
+            // 공격 중일 때만 작동
+            if (state.IsAttack)
+                OnLook();
         }
         #endregion
 

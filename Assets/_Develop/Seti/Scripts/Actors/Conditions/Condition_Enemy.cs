@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Seti
 {
     public class Condition_Enemy : Condition_Actor

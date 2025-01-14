@@ -42,7 +42,7 @@ namespace Seti
 
             try
             {
-                enemy.ExcuteAttack = true;
+                enemy.ActorState.IsAttack = true;
                 // 축적
                 float slamBack = 0f;
                 float speed_slamBack = 0f;
@@ -80,7 +80,7 @@ namespace Seti
                 }
 
                 await Task.Delay(500);
-                enemy.ExcuteAttack = false;
+                enemy.ActorState.IsAttack = false;
             }
             catch (OperationCanceledException)
             {

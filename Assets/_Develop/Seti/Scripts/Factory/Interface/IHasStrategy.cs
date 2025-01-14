@@ -4,12 +4,13 @@ using System.Collections.Generic;
 namespace Seti
 {
     /// <summary>
-    /// Strategy¸¦ °®´Â BehaviourÀÇ ÆÇº°
+    /// Strategyë¥¼ ê°–ëŠ” Behaviourì˜ íŒë³„
     /// </summary>
     public interface IHasStrategy
     {
         public void SetStrategies(IEnumerable<Strategy> strategies);
         public void ChangeStrategy(Type strategyType);
         public Type GetStrategyType();
+        public bool HasStrategy<T>() where T : class, IStrategy;
     }
 }

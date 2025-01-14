@@ -60,7 +60,7 @@ namespace Seti
             if (Input_Attack(deltaTime))
                 attack?.FSM_AttackInput(true);
 
-            if (!enemy.ExcuteAttack)
+            if (!enemy.ActorState.IsAttack)
                 look?.FSM_LookInput();
         }
         #endregion

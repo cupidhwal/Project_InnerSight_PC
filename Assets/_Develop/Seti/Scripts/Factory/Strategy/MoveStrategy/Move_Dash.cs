@@ -18,7 +18,7 @@ namespace Seti
         #region Override
         protected override async void QuaterView_Move(Vector2 moveInput)
         {
-            if (rb == null) return;
+            //if (rb == null) return;
             if (actor is not Player player)
             {
                 Debug.Log("Move_Dash는 Player만 사용할 수 있습니다.");

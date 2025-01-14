@@ -4,12 +4,11 @@ namespace Seti
 {
     public class Attack_Magic : Attack_Base
     {
-        // Ãß»óÈ­
+        // ì¶”ìƒí™”
         #region Abstract
         public override void Attack()
         {
             base.Attack();
-            Debug.Log("¸¶¹ı");
         }
         #endregion
     }

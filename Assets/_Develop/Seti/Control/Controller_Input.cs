@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Seti
 {
@@ -7,53 +8,67 @@ namespace Seti
     /// </summary>
     public class Controller_Input : Controller_Base, IController
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
         private InputSystem_Actions control;
         #endregion
 
-        // ÀÎÅÍÆäÀÌ½º
+        // ì¸í„°í˜ì´ìŠ¤
         #region Interface
         public Type GetControlType() => typeof(Control_Input);
         #endregion
 
-        // ¶óÀÌÇÁ »çÀÌÅ¬
+        // ë¼ì´í”„ ì‚¬ì´í´
         #region Life Cycle
+        protected override void Update()
+        {
+            base.Update();
+
+            if (behaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
+            {
+                Look look = lookBehaviour as Look;
+                look?.Update();
+            }
+        }
+
         protected override void Awake()
         {
-            // ÃÊ±âÈ­
+            // ì´ˆê¸°í™”
             base.Awake();
             control = new InputSystem_Actions();
         }
 
         private void OnEnable()
         {
-            // ÀÔ·Â ÀÌº¥Æ® ¿¬°á
+            // ì…ë ¥ ì´ë²¤íŠ¸ ì—°ê²°
             BindInputEvents();
             control.Enable();
         }
 
         private void OnDisable()
         {
-            // ÀÔ·Â ÀÌº¥Æ® ÇØÁ¦
+            // ì…ë ¥ ì´ë²¤íŠ¸ í•´ì œ
             UnbindInputEvents();
             control.Disable();
         }
         #endregion
 
-        // ¸Ş¼­µå
+        // ë©”ì„œë“œ
         #region Methods
         private void BindInputEvents()
         {
-            // Look Çàµ¿ ÀÌº¥Æ® ¹ÙÀÎµù
+            // Look í–‰ë™ ì´ë²¤íŠ¸ ë°”ì¸ë”©
             if (behaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
             {
-                Look look = lookBehaviour as Look;
-                control.Player.Look.performed += look.OnLookPerformed;
-                control.Player.Look.canceled += look.OnLookCanceled;
+                // Look_Normal ì „ëµì„ í¬í•¨í•˜ê³  ìˆëŠ”ì§€ í™•ì¸
+                if (lookBehaviour is Look look && look.HasStrategy<Look_Normal>())
+                {
+                    control.Player.Look.performed += look.OnLookPerformed;
+                    control.Player.Look.canceled += look.OnLookCanceled;
+                }
             }
 
-            // Move Çàµ¿ ÀÌº¥Æ® ¹ÙÀÎµù
+            // Move í–‰ë™ ì´ë²¤íŠ¸ ë°”ì¸ë”©
             if (behaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
             {
                 Move move = moveBehaviour as Move;
@@ -64,14 +79,14 @@ namespace Seti
                 //control.Player.Run.canceled += move.OnRunCanceled;
             }
 
-            // Jump Çàµ¿ ÀÌº¥Æ® ¹ÙÀÎµù
+            // Jump í–‰ë™ ì´ë²¤íŠ¸ ë°”ì¸ë”©
             if (behaviourMap.TryGetValue(typeof(Jump), out var jumpBehaviour))
             {
                 Jump jump = jumpBehaviour as Jump;
                 control.Player.Jump.started += jump.OnJumpStarted;
             }
 
-            // Attack Çàµ¿ ÀÌº¥Æ® ¹ÙÀÎµù
+            // Attack í–‰ë™ ì´ë²¤íŠ¸ ë°”ì¸ë”©
             if (behaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
             {
                 Attack attack = attackBehaviour as Attack;
@@ -80,19 +95,13 @@ namespace Seti
                 control.Player.Skill.started += attack.OnSkillStarted;
                 control.Player.Skill.canceled += attack.OnSkillCanceled;                
                 control.Player.Magic.started += attack.OnMagicStarted;
-                control.Player.Magic.started += attack.OnMagicStarted;
-                control.Player.Magic.started += attack.OnMagicStarted;
-                control.Player.Magic.started += attack.OnMagicStarted;
-                control.Player.Magic.canceled += attack.OnMagicCanceled;
-                control.Player.Magic.canceled += attack.OnMagicCanceled;
-                control.Player.Magic.canceled += attack.OnMagicCanceled;
                 control.Player.Magic.canceled += attack.OnMagicCanceled;
             }
         }
 
         private void UnbindInputEvents()
         {
-            // Look Çàµ¿ ÀÌº¥Æ® ÇØÁ¦
+            // Look í–‰ë™ ì´ë²¤íŠ¸ í•´ì œ
             if (behaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
             {
                 Look look = lookBehaviour as Look;
@@ -100,7 +109,7 @@ namespace Seti
                 control.Player.Look.canceled -= look.OnLookCanceled;
             }
 
-            // Move Çàµ¿ ÀÌº¥Æ® ÇØÁ¦
+            // Move í–‰ë™ ì´ë²¤íŠ¸ í•´ì œ
             if (behaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
             {
                 Move move = moveBehaviour as Move;
@@ -111,14 +120,14 @@ namespace Seti
                 //control.Player.Run.canceled -= move.OnRunCanceled;
             }
 
-            // Jump Çàµ¿ ÀÌº¥Æ® ÇØÁ¦
+            // Jump í–‰ë™ ì´ë²¤íŠ¸ í•´ì œ
             if (behaviourMap.TryGetValue(typeof(Jump), out var jumpBehaviour))
             {
                 Jump jump = jumpBehaviour as Jump;
                 control.Player.Jump.started -= jump.OnJumpStarted;
             }
 
-            // Attack Çàµ¿ ÀÌº¥Æ® ÇØÁ¦
+            // Attack í–‰ë™ ì´ë²¤íŠ¸ í•´ì œ
             if (behaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
             {
                 Attack attack = attackBehaviour as Attack;
@@ -127,12 +136,6 @@ namespace Seti
                 control.Player.Skill.started -= attack.OnSkillStarted;
                 control.Player.Skill.canceled -= attack.OnSkillCanceled;
                 control.Player.Magic.started -= attack.OnMagicStarted;
-                control.Player.Magic.started -= attack.OnMagicStarted;
-                control.Player.Magic.started -= attack.OnMagicStarted;
-                control.Player.Magic.started -= attack.OnMagicStarted;
-                control.Player.Magic.canceled -= attack.OnMagicCanceled;
-                control.Player.Magic.canceled -= attack.OnMagicCanceled;
-                control.Player.Magic.canceled -= attack.OnMagicCanceled;
                 control.Player.Magic.canceled -= attack.OnMagicCanceled;
             }
         }

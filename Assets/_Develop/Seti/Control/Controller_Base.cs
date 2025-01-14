@@ -51,7 +51,7 @@ namespace Seti
 
         protected virtual void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.lockState = CursorLockMode.Locked;
         }
 
         protected virtual void Update()
