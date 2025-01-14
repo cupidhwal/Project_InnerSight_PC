@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +14,8 @@ namespace Noah
         [SerializeField] private GameObject selectUI;
 
         public List<SkillBase> skills = new List<SkillBase>();
-        private List<SkillBase> randomSkills = new List<SkillBase>(); // ·£´ıÀ¸·Î ¼±ÅÃµÈ ½ºÅ³ ¸ñ·Ï
-        public List<Image> skillUIList = new List<Image>(); // UI ½½·Ô ¸®½ºÆ®
+        private List<SkillBase> randomSkills = new List<SkillBase>(); // ëœë¤ìœ¼ë¡œ ì„ íƒëœ ìŠ¤í‚¬ ëª©ë¡
+        public List<Image> skillUIList = new List<Image>(); // UI ìŠ¬ë¡¯ ë¦¬ìŠ¤íŠ¸
         public List<SkillBase> skillSlots = new List<SkillBase>();
 
         public SkillBase firstSkill;
@@ -34,7 +32,7 @@ namespace Noah
 
         public Image firstSkillUI, secondSkillUI, thridSkillUI, fourthSkillUI;
 
-        // ÇÃ·¹ÀÌ¾î ½ºÅ³
+        // í”Œë ˆì´ì–´ ìŠ¤í‚¬
         public FireSkill fireSkill;
         public Kunai kunai;
         public MeteorRain meteorRain;
@@ -59,28 +57,28 @@ namespace Noah
             skills.Add(meteorRain);
             skills.Add(laserFire);
 
-            // UI ½½·ÔÀ» ÃÊ±âÈ­ (Unity ¿¡µğÅÍ¿¡¼­ ¼³Á¤ÇÑ UI Image ¹è¿­)
+            // UI ìŠ¬ë¡¯ì„ ì´ˆê¸°í™” (Unity ì—ë””í„°ì—ì„œ ì„¤ì •í•œ UI Image ë°°ì—´)
             skillUIList.Add(firstSkillUI);
             skillUIList.Add(secondSkillUI);
-            skillUIList.Add(thridSkillUI); // ½ºÅ³ UI¸¦ Ãß°¡·Î ´Ã¸± ¼ö ÀÖÀ½
-            skillUIList.Add(fourthSkillUI); // ½ºÅ³ UI¸¦ Ãß°¡·Î ´Ã¸± ¼ö ÀÖÀ½
+            skillUIList.Add(thridSkillUI); // ìŠ¤í‚¬ UIë¥¼ ì¶”ê°€ë¡œ ëŠ˜ë¦´ ìˆ˜ ìˆìŒ
+            skillUIList.Add(fourthSkillUI); // ìŠ¤í‚¬ UIë¥¼ ì¶”ê°€ë¡œ ëŠ˜ë¦´ ìˆ˜ ìˆìŒ
 
         }
 
-        // ¸¸¾à x Å°¿¡ µ¥ÀÌÅÍ°¡ ÀÖÀ¸¸é c Å°¿¡ ½ºÅ³ ³Ö±â
-        // µ¿ÀÏÇÑ ½ºÅ³ ¼±ÅÃ ½Ã µ¥¹ÌÁö Áõ°¡ => ¼±ÅÃ È®ÀÎ ¿©ºÎ UI
-        // ÀÌ¹Ì xÅ°¿Íc¿¡ ½ºÅ³ÀÌ ÀÖÀ» ¶§ ½ºÅ³ ¼±ÅÃ ½Ã µÑ°ú ´Ù¸¥ ½ºÅ³ ¼±ÅÃ ½Ã ½ºÅ³ º¯°æ => ¼±ÅÃ È®ÀÎ ¿©ºÎ UI
-        // ±âÁ¸ ½ºÅ³ µ¥ÀÌÅÍ´Â ³²±â°í º¯°æ
-        // µ¥ÀÌÅÍ¸¦ PlayerAttack ½ºÅ©¸³Æ®¿¡ Àû¿ë
+        // ë§Œì•½ x í‚¤ì— ë°ì´í„°ê°€ ìˆìœ¼ë©´ c í‚¤ì— ìŠ¤í‚¬ ë„£ê¸°
+        // ë™ì¼í•œ ìŠ¤í‚¬ ì„ íƒ ì‹œ ë°ë¯¸ì§€ ì¦ê°€ => ì„ íƒ í™•ì¸ ì—¬ë¶€ UI
+        // ì´ë¯¸ xí‚¤ì™€cì— ìŠ¤í‚¬ì´ ìˆì„ ë•Œ ìŠ¤í‚¬ ì„ íƒ ì‹œ ë‘˜ê³¼ ë‹¤ë¥¸ ìŠ¤í‚¬ ì„ íƒ ì‹œ ìŠ¤í‚¬ ë³€ê²½ => ì„ íƒ í™•ì¸ ì—¬ë¶€ UI
+        // ê¸°ì¡´ ìŠ¤í‚¬ ë°ì´í„°ëŠ” ë‚¨ê¸°ê³  ë³€ê²½
+        // ë°ì´í„°ë¥¼ PlayerAttack ìŠ¤í¬ë¦½íŠ¸ì— ì ìš©
 
         public void GetRandomSkill()
         {
-            // ·£´ı ¼ıÀÚ index 3°³¸¦ »ÌÀ½
-            // ¸®½ºÆ®¿¡ ÀÖ´Â ÀÎµ¦½º ¹øÈ£ 3°³¸¦ °¢ ¹öÆ°À¸·Î ³Ñ±â±â
+            // ëœë¤ ìˆ«ì index 3ê°œë¥¼ ë½‘ìŒ
+            // ë¦¬ìŠ¤íŠ¸ì— ìˆëŠ” ì¸ë±ìŠ¤ ë²ˆí˜¸ 3ê°œë¥¼ ê° ë²„íŠ¼ìœ¼ë¡œ ë„˜ê¸°ê¸°
 
             while (randomSkills.Count < 3)
             {
-                int randomIndex = UnityEngine.Random.Range(0, skills.Count);
+                int randomIndex = Random.Range(0, skills.Count);
 
                 if (!randomSkills.Contains(skills[randomIndex]))
                 {
@@ -88,17 +86,17 @@ namespace Noah
                 }
             }
 
-            btn1.onClick.AddListener(() => AssignSkillToKey(0)); // Ã¹ ¹øÂ° ·£´ı ½ºÅ³À» ¹öÆ°1¿¡ ÇÒ´ç
-            btn2.onClick.AddListener(() => AssignSkillToKey(1)); // µÎ ¹øÂ° ·£´ı ½ºÅ³À» ¹öÆ°2¿¡ ÇÒ´ç
-            btn3.onClick.AddListener(() => AssignSkillToKey(2)); // ¼¼ ¹øÂ° ·£´ı ½ºÅ³À» ¹öÆ°3¿¡ ÇÒ´ç
+            btn1.onClick.AddListener(() => AssignSkillToKey(0)); // ì²« ë²ˆì§¸ ëœë¤ ìŠ¤í‚¬ì„ ë²„íŠ¼1ì— í• ë‹¹
+            btn2.onClick.AddListener(() => AssignSkillToKey(1)); // ë‘ ë²ˆì§¸ ëœë¤ ìŠ¤í‚¬ì„ ë²„íŠ¼2ì— í• ë‹¹
+            btn3.onClick.AddListener(() => AssignSkillToKey(2)); // ì„¸ ë²ˆì§¸ ëœë¤ ìŠ¤í‚¬ì„ ë²„íŠ¼3ì— í• ë‹¹
 
-            // ·£´ı ½ºÅ³ ÀÌ¹ÌÁö ÇÒ´ç
+            // ëœë¤ ìŠ¤í‚¬ ì´ë¯¸ì§€ í• ë‹¹
             btn1.transform.GetChild(1).GetComponent<Image>().sprite = randomSkills[0].skillImage;
             btn2.transform.GetChild(1).GetComponent<Image>().sprite = randomSkills[1].skillImage;
             btn3.transform.GetChild(1).GetComponent<Image>().sprite = randomSkills[2].skillImage;
         }
 
-        // ¼±ÅÃµÈ ½ºÅ³À» X¿Í C Å°¿¡ ÇÒ´ç
+        // ì„ íƒëœ ìŠ¤í‚¬ì„ Xì™€ C í‚¤ì— í• ë‹¹
         //void AssignSkillToKey(int skillIndex)
         //{
         //    if (firstSkill == null)
@@ -119,13 +117,13 @@ namespace Noah
         //    }
         //    else if (firstSkill != null && randomSkills[skillIndex] == firstSkill)
         //    {
-        //        Debug.Log($"{firstSkill} + {randomSkills[skillIndex]} ¾÷±×·¹ÀÌµå");
+        //        Debug.Log($"{firstSkill} + {randomSkills[skillIndex]} ì—…ê·¸ë ˆì´ë“œ");
         //        firstSkill.damage += firstSkill.upgradeDamage;
         //        ResetBtnData();
         //    }
         //    else if (firstSkill != null && randomSkills[skillIndex] == secondSkill)
         //    {
-        //        Debug.Log($"{secondSkill} + {randomSkills[skillIndex]} ¾÷±×·¹ÀÌµå");
+        //        Debug.Log($"{secondSkill} + {randomSkills[skillIndex]} ì—…ê·¸ë ˆì´ë“œ");
         //        secondSkill.damage += secondSkill.upgradeDamage;
         //        ResetBtnData();
         //    }
@@ -139,31 +137,31 @@ namespace Noah
 
         void AssignSkillToKey(int skillIndex)
         {
-            int maxSkillSlots = skillUIList.Count; // UI ½½·Ô °³¼ö¿¡ µû¶ó ÃÖ´ë ½½·Ô °³¼ö °áÁ¤
+            int maxSkillSlots = skillUIList.Count; // UI ìŠ¬ë¡¯ ê°œìˆ˜ì— ë”°ë¼ ìµœëŒ€ ìŠ¬ë¡¯ ê°œìˆ˜ ê²°ì •
 
-            // ÀÌ¹Ì ½½·Ô¿¡ ½ºÅ³ÀÌ ÀÖ´Â °æ¿ì ¾÷±×·¹ÀÌµå Ã³¸®
+            // ì´ë¯¸ ìŠ¬ë¡¯ì— ìŠ¤í‚¬ì´ ìˆëŠ” ê²½ìš° ì—…ê·¸ë ˆì´ë“œ ì²˜ë¦¬
             for (int i = 0; i < skillSlots.Count; i++)
             {
                 if (skillSlots[i] == randomSkills[skillIndex])
                 {
-                    Debug.Log($"{skillSlots[i]} + {randomSkills[skillIndex]} ¾÷±×·¹ÀÌµå");
+                    Debug.Log($"{skillSlots[i]} + {randomSkills[skillIndex]} ì—…ê·¸ë ˆì´ë“œ");
                     skillSlots[i].damage += skillSlots[i].upgradeDamage;
                     ResetBtnData();
                     return;
                 }
             }
 
-            // ºó ½½·ÔÀÌ ÀÖ´Â °æ¿ì ½ºÅ³ Ãß°¡
+            // ë¹ˆ ìŠ¬ë¡¯ì´ ìˆëŠ” ê²½ìš° ìŠ¤í‚¬ ì¶”ê°€
             if (skillSlots.Count < maxSkillSlots)
             {
                 skillSlots.Add(randomSkills[skillIndex]);
-                SetSkillUI(skillUIList[skillSlots.Count - 1], randomSkills[skillIndex]); // UI °»½Å
+                SetSkillUI(skillUIList[skillSlots.Count - 1], randomSkills[skillIndex]); // UI ê°±ì‹ 
                 ResetBtnData();
                 //Debug.Log($"Skill assigned to slot {skillSlots.Count}: {randomSkills[skillIndex].GetType().Name}");
             }
             else
             {
-                // ½½·ÔÀÌ °¡µæ Âù °æ¿ì, ¼±ÅÃ UI Ç¥½Ã
+                // ìŠ¬ë¡¯ì´ ê°€ë“ ì°¬ ê²½ìš°, ì„ íƒ UI í‘œì‹œ
                 selectSkillNum = skillIndex;
                 SetSelectUI();
             }
@@ -273,7 +271,7 @@ namespace Noah
             {
                 //isCooldown = true;
 
-                //Debug.Log("½ºÅ³»ç¿ë");
+                //Debug.Log("ìŠ¤í‚¬ì‚¬ìš©");
 
                 skillUI.transform.GetChild(0).GetComponent<Image>().fillAmount = 1;
 

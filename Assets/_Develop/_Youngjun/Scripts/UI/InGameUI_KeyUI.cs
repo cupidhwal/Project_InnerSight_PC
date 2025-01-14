@@ -12,11 +12,6 @@ public class InGameUI_KeyUI : MonoBehaviour
     private Button defaultBtn;
     private int index;
 
-    private void Awake()
-    {
-
-    }
-
     // Start is called before the first frame update
     void Start()
     {

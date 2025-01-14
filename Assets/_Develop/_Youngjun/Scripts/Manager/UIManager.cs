@@ -16,7 +16,10 @@ namespace Noah
 
         public void UpdateGoldUI()
         {
-            goldText.text = PlayerInfoManager.Instance.Gold.ToString();
+            if(goldText != null)
+            {
+                goldText.text = PlayerInfoManager.Instance.Gold.ToString();
+            }         
         }
     }
 
