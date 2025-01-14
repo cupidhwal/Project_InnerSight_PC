@@ -14,6 +14,7 @@ namespace JungBin
         [Header("Attack Settings")]
         [SerializeField] private GameObject rushAttackBox;          //돌진시 켜지는 콜라이더 오브젝트
         [SerializeField] private BoxCollider throwAttackBox;        //던질때 켜지는 콜라이더
+        [SerializeField] private GameObject attackBox;            //기본 공격시 켜지는 콜라이더
 
         [Header("Jump Attack Settings")]
         [SerializeField] private GameObject rockPrefab;             //낙석시 스폰되는 오브젝트
@@ -33,7 +34,11 @@ namespace JungBin
         [SerializeField] private LayerMask groundLayer;             
         [SerializeField] private GameObject jumpAttackBox;          //하강시 켜지는 콜라이더 오브젝트
 
-        [Header("NavMesh Settings")]
+        [Header("Detection Settings")]
+        [SerializeField] private float detectionRange = 8f; //  최대 감지 거리
+        [SerializeField] private float detectionAngle = 30f; // 레이의 시야각(좁은 각도)
+        [SerializeField] private LayerMask playerLayer; // 플레이어 레이어
+        private bool isPlayerDetected = false;
 
         private List<Transform> spawnPoints = new List<Transform>();
         private int lastAttack = -1;
@@ -70,26 +75,41 @@ namespace JungBin
                 RotateTowardsPlayer(direction);
             }
 
+            if(DetectPlayer(direction) == false)
+            {
+                animator.SetBool("IsDetected", false);
+            }
+            else
+            {
+                animator.SetBool("IsDetected", true);
+            }
+
             ManageDistanceToPlayer(distance);
 
-            if(animator.GetBool("IsFar") == true)
+            if(animator.GetBool("IsRun") == true)
             {
-                animator.applyRootMotion = false; // Root Motion 비활성화
-
+                //animator.applyRootMotion = false; // Root Motion 비활성화
+                navMeshAgent.enabled = true;
                 if (navMeshAgent.enabled == true)
                 {
                     navMeshAgent.SetDestination(player.position);
                 }
             }
-            else
+            else if (animator.GetBool("IsRun") == false)
             {
-                animator.applyRootMotion = true; // Root Motion 활성화
+                navMeshAgent.enabled = false;
+               // animator.applyRootMotion = true; // Root Motion 활성화
             }
             ManageAttackBoxes();
 
             if (animator.GetBool("IsJump"))
             {
                 HandleJumpAttack();
+            }
+
+            if(animator.GetBool("IsAttack02") == true) //======================================================
+            {
+
             }
         }
 
@@ -104,7 +124,33 @@ namespace JungBin
 
         private void ManageDistanceToPlayer(float distance) // 거리가 멀어질경우 보스의 이동
         {
-            animator.SetBool("IsFar", distance > 8f);
+            animator.SetBool("IsFar", distance > detectionRange);
+        }
+
+        private bool DetectPlayer(Vector3 direction)    //시야에 플레이어가 없다면 이동
+        {
+            Vector3 directionToPlayer = direction.normalized;
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+            // 거리와 각도를 확인
+            if (distanceToPlayer <= detectionRange)
+            {
+                float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+                if (angleToPlayer <= detectionAngle / 2)
+                {
+                    // 레이캐스트로 충돌 객체 확인
+                    if (Physics.Raycast(transform.position, directionToPlayer, out RaycastHit hit, distanceToPlayer))
+                    {
+                        // 충돌한 객체가 플레이어인지 확인
+                        if (hit.transform.CompareTag("Player"))
+                        {
+                            return true; // 플레이어가 감지됨
+                        }
+                    }
+                }
+            }
+
+            return false; // 플레이어가 감지되지 않음
         }
         #endregion
 
@@ -132,17 +178,26 @@ namespace JungBin
             rushAttackBox.SetActive(animator.GetBool("IsAttack02"));
             throwAttackBox.enabled = animator.GetBool("IsAttack03");
         }
+
+        public void OnAttackBox()
+        {
+            attackBox.SetActive(!attackBox.activeSelf);
+        }
+        #endregion
+
+        #region 돌진 공격
+        private void RushAttack() //======================================================
+        {
+
+        }
+
+
         #endregion
 
         #region 점프 공격
         public void StartJumpAttack()   //애니메이션 이벤트 함수
         {
             animator.SetBool("IsJump", true);
-
-            if (navMeshAgent != null)
-            {
-                navMeshAgent.enabled = false; // 점프 시작 시 NavMeshAgent 비활성화
-            }
         }
 
         private void HandleJumpAttack() //점프시 상승 및 하강 담당
@@ -178,11 +233,6 @@ namespace JungBin
                         animator.SetBool("IsJump", false);
                         isMaxHeight = false;
                         jumpAttackBox.SetActive(false);
-
-                        if (navMeshAgent != null)
-                        {
-                            navMeshAgent.enabled = true; // 착지 후 NavMeshAgent 다시 활성화
-                        }
                     }
                 }
             }
@@ -190,12 +240,16 @@ namespace JungBin
 
         private void JumpTowardsPlayer() //유지중일때 플레이어의 위치로 이동
         {
+            // 플레이어의 XZ 방향으로 이동 (Y축 제외)
             Vector3 direction = (player.position - transform.position).normalized;
-            transform.position += direction * jumpSpeed * Time.deltaTime;
+            direction.y = 0; // Y축 이동 제거
+            transform.position += direction * jumpSpeed * 3f * Time.deltaTime;
 
-            if (Vector3.Distance(transform.position, player.position) < 0.2f)
+            // 플레이어 지점에 도달하면 유지 종료
+            if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
+                                 new Vector3(player.position.x, 0, player.position.z)) < 0.2f)
             {
-                animator.SetBool("IsAttack01", false);
+                animator.SetBool("IsAttack01", false); // 유지 종료, 하강으로 전환
             }
         }
 
