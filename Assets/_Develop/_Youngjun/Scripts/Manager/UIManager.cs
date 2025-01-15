@@ -6,12 +6,19 @@ namespace Noah
     public class UIManager : Singleton<UIManager>
     {
         public GameObject skillSelectUI;
+        public GameObject playerStateUI;
         public TMP_Text goldText;
 
+        InGameUI_PlayerState inGameUI_PlayerState;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             UpdateGoldUI();
+        }
+
+        void Init()
+        {
+            inGameUI_PlayerState = playerStateUI.transform.parent.GetComponent<InGameUI_PlayerState>();
         }
 
         public void UpdateGoldUI()
@@ -20,6 +27,19 @@ namespace Noah
             {
                 goldText.text = PlayerInfoManager.Instance.Gold.ToString();
             }         
+        }
+
+        public void ActivePlayerStateUI()
+        {
+            if (!playerStateUI.activeSelf)
+            {
+                playerStateUI.SetActive(true);
+                inGameUI_PlayerState.GetStateData();
+            }
+            else
+            {
+                playerStateUI.SetActive(false);
+            }
         }
     }
 
