@@ -32,6 +32,7 @@ namespace Seti
         #endregion
 
         // 메서드
+        #region Methods
         private async void Tackle(CancellationToken token)
         {
             if (actor is not Enemy enemy)
@@ -42,28 +43,29 @@ namespace Seti
 
             try
             {
-                enemy.ActorState.IsAttack = true;
+                // 공격 방향
+                Vector3 atkDir = enemy.Player.transform.position - enemy.transform.position;
+
                 // 축적
+                enemy.ActorState.IsAttack = true;
                 float slamBack = 0f;
                 float speed_slamBack = 0f;
                 while (slamBack < 0.2f)
                 {
                     if (token.IsCancellationRequested) return;
                     speed_slamBack = Mathf.Lerp(speed_slamBack, 5, 10 * Time.deltaTime);
-                    enemy.transform.Translate(-speed_slamBack * Time.deltaTime * enemy.transform.forward, Space.World);
+                    enemy.transform.Translate(-speed_slamBack * Time.deltaTime * atkDir, Space.World);
                     slamBack += Time.deltaTime;
                     await Task.Delay((int)(Time.deltaTime * 1000), token);
                 }
 
                 // 돌진
-                // 공격 방향
-                Vector3 atkDir = enemy.Player.transform.position - enemy.transform.position;
                 float slamFront = 0f;
                 while (slamFront < 0.05f)
                 {
                     if (token.IsCancellationRequested) return;
 
-                    enemy.transform.Translate(20 * Time.deltaTime * atkDir, Space.World);
+                    enemy.transform.Translate(30 * Time.deltaTime * atkDir, Space.World);
                     slamFront += Time.deltaTime;
                     await Task.Delay((int)(Time.deltaTime * 1000), token);  // 토큰 전달
                 }
@@ -87,5 +89,6 @@ namespace Seti
                 Debug.Log("몬스터 돌진 공격 취소");
             }
         }
+        #endregion
     }
 }
