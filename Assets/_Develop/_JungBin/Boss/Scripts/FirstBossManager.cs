@@ -10,6 +10,7 @@ namespace JungBin
         #region Variables
         [Header("General Settings")]
         [SerializeField] private float turnSpeed = 30;              //보스의 회전 속도
+        [SerializeField] private Transform detectedObj;            //돌진시 켜지는 레이의 시작점
 
         [Header("Attack Settings")]
         [SerializeField] private GameObject rushAttackBox;          //돌진시 켜지는 콜라이더 오브젝트
@@ -37,8 +38,8 @@ namespace JungBin
         [Header("Detection Settings")]
         [SerializeField] private float detectionRange = 8f; //  최대 감지 거리
         [SerializeField] private float detectionAngle = 30f; // 레이의 시야각(좁은 각도)
-        [SerializeField] private LayerMask playerLayer; // 플레이어 레이어
         private bool isPlayerDetected = false;
+        [SerializeField] private LayerMask playerLayer;
 
         private List<Transform> spawnPoints = new List<Transform>();
         private int lastAttack = -1;
@@ -69,13 +70,12 @@ namespace JungBin
         {
             Vector3 direction = player.position - transform.position;
             float distance = direction.magnitude;
-
             if (!isAttack)
             {
                 RotateTowardsPlayer(direction);
             }
 
-            if(DetectPlayer(direction) == false)
+            if(DetectPlayer() == false)
             {
                 animator.SetBool("IsDetected", false);
             }
@@ -109,7 +109,19 @@ namespace JungBin
 
             if(animator.GetBool("IsAttack02") == true) //======================================================
             {
-
+                if(DetectWall() == true)
+                {
+                    animator.speed = 0.2f;
+                    Debug.Log("================");
+                }
+                else
+                {
+                    animator.speed = 1f;
+                }
+            }
+            else
+            {
+                animator.speed = 1f;
             }
         }
 
@@ -127,10 +139,12 @@ namespace JungBin
             animator.SetBool("IsFar", distance > detectionRange);
         }
 
-        private bool DetectPlayer(Vector3 direction)    //시야에 플레이어가 없다면 이동
+        private bool DetectPlayer()    //시야에 플레이어가 없다면 이동
         {
+            //Vector3 direction = player.position - detectedObj.position;
+            Vector3 direction = new Vector3(player.position.x, detectedObj.position.y, player.position.z) - detectedObj.position;
             Vector3 directionToPlayer = direction.normalized;
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+            float distanceToPlayer = Vector3.Distance(detectedObj.position, player.position);
 
             // 거리와 각도를 확인
             if (distanceToPlayer <= detectionRange)
@@ -138,19 +152,34 @@ namespace JungBin
                 float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
                 if (angleToPlayer <= detectionAngle / 2)
                 {
+                    // 디버그용 레이 시각화
+                    //Debug.DrawLine(detectedObj.position, detectedObj.position + directionToPlayer * distanceToPlayer, Color.green);
+                    Debug.Log($"레이 오브젝트 : {detectedObj}");
                     // 레이캐스트로 충돌 객체 확인
-                    if (Physics.Raycast(transform.position, directionToPlayer, out RaycastHit hit, distanceToPlayer))
+                    if (Physics.Raycast(detectedObj.position, directionToPlayer, out RaycastHit hit, distanceToPlayer + 2, playerLayer))    
                     {
+                        
+                        Debug.Log($"Ray hit: {hit.transform.name}");
                         // 충돌한 객체가 플레이어인지 확인
                         if (hit.transform.CompareTag("Player"))
-                        {
+                        {                            
                             return true; // 플레이어가 감지됨
                         }
                     }
                 }
             }
-
+            // 감지 실패 시 디버그 레이            
+            //Debug.DrawLine(detectedObj.position, detectedObj.position + directionToPlayer, Color.red);
             return false; // 플레이어가 감지되지 않음
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Vector3 direction = new Vector3(player.position.x, detectedObj.position.y, player.position.z) - detectedObj.position;
+            Vector3 directionToPlayer = direction.normalized;
+            
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(detectedObj.position, directionToPlayer);
         }
         #endregion
 
@@ -191,6 +220,23 @@ namespace JungBin
 
         }
 
+        private bool DetectWall()    // 시야에 벽이 있으면 불값 리턴
+        {
+            Vector3 directionToWall = transform.forward; // 보스의 정면 방향
+            float detectionRange = 5f; // 감지 거리
+
+            // 레이캐스트로 충돌 객체 확인
+            if (Physics.Raycast(transform.position, directionToWall, out RaycastHit hit, detectionRange))
+            {
+                if (hit.transform.CompareTag("Wall"))
+                {
+                    return true; // 벽이 감지됨
+                }
+            }
+
+            return false; // 벽이 감지되지 않음
+        }
+
 
         #endregion
 
@@ -206,9 +252,6 @@ namespace JungBin
             {
                 // 상승
                 transform.position += Vector3.up * jumpSpeed * Time.deltaTime;
-
-                // Debug: 현재 높이 출력
-                Debug.Log($"Ascending: Current Height = {transform.position.y}, Target Height = {maxHeight}");
 
                 if (transform.position.y >= maxHeight)
                 {
@@ -230,6 +273,7 @@ namespace JungBin
 
                     if (IsGrounded())
                     {
+                        Debug.Log($"현재 높이 : {transform.position.y}");
                         animator.SetBool("IsJump", false);
                         isMaxHeight = false;
                         jumpAttackBox.SetActive(false);
@@ -243,11 +287,11 @@ namespace JungBin
             // 플레이어의 XZ 방향으로 이동 (Y축 제외)
             Vector3 direction = (player.position - transform.position).normalized;
             direction.y = 0; // Y축 이동 제거
-            transform.position += direction * jumpSpeed * 3f * Time.deltaTime;
+            transform.position += direction * jumpSpeed * 5f * Time.deltaTime;
 
             // 플레이어 지점에 도달하면 유지 종료
             if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
-                                 new Vector3(player.position.x, 0, player.position.z)) < 0.2f)
+                                 new Vector3(player.position.x, 0, player.position.z)) < 1f)
             {
                 animator.SetBool("IsAttack01", false); // 유지 종료, 하강으로 전환
             }
