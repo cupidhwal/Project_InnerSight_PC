@@ -10,34 +10,34 @@ namespace Seti
     /// Strategy Box Custom Editor
     /// </summary>
 
-    // ¼öµ¿ °Ë»ö ¹öÀü
+    // ìˆ˜ë™ ê²€ìƒ‰ ë²„ì „
     [CustomEditor(typeof(Box_Strategy))]
     public class Box_Strategy_Editor : Editor
     {
         private Box_Strategy strategyBox;
-        private readonly GUIStyle lineStyle = new();                    // ÄÃ·¯ ±¸ºĞ¼± Ãß°¡
+        private readonly GUIStyle lineStyle = new();                    // ì»¬ëŸ¬ êµ¬ë¶„ì„  ì¶”ê°€
 
         public override void OnInspectorGUI()
         {
-            // ±¸ºĞ¼± »ö»ó ¼³Á¤
+            // êµ¬ë¶„ì„  ìƒ‰ìƒ ì„¤ì •
             lineStyle.normal.background = ColorUtility.CreateColoredTexture(Color.gray);
 
             strategyBox = (Box_Strategy)target;
 
-            EditUtility.SubjectLine(2, "Àü·« ÄÁÅ×ÀÌ³Ê");
+            EditUtility.SubjectLine(2, "ì „ëµ ì»¨í…Œì´ë„ˆ");
 
-            // ±âº» Inspector ±×¸®±â
+            // ê¸°ë³¸ Inspector ê·¸ë¦¬ê¸°
             DrawDefaultInspector();
 
-            // ¿øÅÍÄ¡ °»½Å ¹öÆ°
-            if (GUILayout.Button("Strategy List °»½Å"))
+            // ì›í„°ì¹˜ ê°±ì‹  ë²„íŠ¼
+            if (GUILayout.Button("Strategy List ê°±ì‹ "))
             {
                 RefreshAllStrategies();
             }
 
             GUILayout.Space(10);
 
-            // Strategy ¸®½ºÆ® Ç¥½Ã
+            // Strategy ë¦¬ìŠ¤íŠ¸ í‘œì‹œ
             DrawStrategyList();
 
             EditUtility.DrawLine(2);
@@ -45,19 +45,19 @@ namespace Seti
 
         private void RefreshAllStrategies()
         {
-            // ¸ğµç Àü·« ¸®½ºÆ®¸¦ °»½Å
+            // ëª¨ë“  ì „ëµ ë¦¬ìŠ¤íŠ¸ë¥¼ ê°±ì‹ 
             RefreshStrategyList(strategyBox.lookStrategies);
             RefreshStrategyList(strategyBox.moveStrategies);
             RefreshStrategyList(strategyBox.jumpStrategies);
             RefreshStrategyList(strategyBox.attackStrategies);
+            RefreshStrategyList(strategyBox.defendStrategies);
 
-            // »õ·Î¿î Àü·« ¸®½ºÆ®°¡ ÀÖ´Ù¸é ¿©±â¿¡ Ãß°¡
+            // ìƒˆë¡œìš´ ì „ëµ ë¦¬ìŠ¤íŠ¸ê°€ ìˆë‹¤ë©´ ì—¬ê¸°ì— ì¶”ê°€
             // RefreshStrategyList(strategyBox.attackStrategies);
-            // RefreshStrategyList(strategyBox.defenseStrategies);
 
-            // º¯°æ »çÇ× ÀúÀå
+            // ë³€ê²½ ì‚¬í•­ ì €ì¥
             EditorUtility.SetDirty(strategyBox);
-            //Debug.Log("¸ğµç Àü·« ¸®½ºÆ®°¡ °»½ÅµÇ¾ú½À´Ï´Ù.");
+            //Debug.Log("ëª¨ë“  ì „ëµ ë¦¬ìŠ¤íŠ¸ê°€ ê°±ì‹ ë˜ì—ˆìŠµë‹ˆë‹¤.");
         }
 
         private void RefreshStrategyList<T>(List<T> strategyList) where T : class, IStrategy
@@ -81,7 +81,7 @@ namespace Seti
                 }
             }
 
-            Debug.Log($"{typeof(T).Name} Àü·« °»½Å: »õ {typeof(T).Name}°¡ {addedCount}°³ Ãß°¡µÇ¾ú½À´Ï´Ù.");
+            Debug.Log($"{typeof(T).Name} ì „ëµ ê°±ì‹ : ìƒˆ {typeof(T).Name}ê°€ {addedCount}ê°œ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤.");
         }
 
         private void DrawStrategyList()
@@ -106,21 +106,26 @@ namespace Seti
             // Attack Strategies
             EditorGUILayout.LabelField("Attack Strategies", EditorStyles.boldLabel);
             DrawStrategySubList(strategyBox.attackStrategies);
+            EditUtility.DrawLine(Color.gray, 1);
 
-            // Ãß°¡ Àü·« ¸®½ºÆ® ¿¹½Ã
+            // Defend Strategies
+            EditorGUILayout.LabelField("Defend Strategies", EditorStyles.boldLabel);
+            DrawStrategySubList(strategyBox.defendStrategies);
+
+            // ì¶”ê°€ ì „ëµ ë¦¬ìŠ¤íŠ¸ ì˜ˆì‹œ
             // EditorGUILayout.LabelField("Attack Strategies", EditorStyles.boldLabel);
             // DrawStrategySubList(strategyBox.attackStrategies);
         }
 
         private void DrawStrategySubList<T>(List<T> strategyList) where T : class, IStrategy
         {
-            // Null ¿ä¼Ò Á¦°Å
+            // Null ìš”ì†Œ ì œê±°
             strategyList.RemoveAll(item => item == null);
 
-            // "Normal" Àü·«ÀÌ Ç×»ó Ã¹ ¹øÂ°·Î ¿Àµµ·Ï Á¤·Ä
+            // "Normal" ì „ëµì´ í•­ìƒ ì²« ë²ˆì§¸ë¡œ ì˜¤ë„ë¡ ì •ë ¬
             strategyList = strategyList
-                .OrderBy(s => !s.GetType().Name.EndsWith("_Normal"))    // "_Normal"·Î ³¡³ª´Â Àü·«À» °¡Àå ¸ÕÀú ¹èÄ¡
-                .ThenBy(s => s.GetType().Name)  // ³ª¸ÓÁö´Â ¾ËÆÄºª ¼øÀ¸·Î Á¤·Ä
+                .OrderBy(s => !s.GetType().Name.EndsWith("_Normal"))    // "_Normal"ë¡œ ëë‚˜ëŠ” ì „ëµì„ ê°€ì¥ ë¨¼ì € ë°°ì¹˜
+                .ThenBy(s => s.GetType().Name)  // ë‚˜ë¨¸ì§€ëŠ” ì•ŒíŒŒë²³ ìˆœìœ¼ë¡œ ì •ë ¬
                 .ToList();
 
             for (int i = 0; i < strategyList.Count; i++)
@@ -135,7 +140,7 @@ namespace Seti
                     {
                         strategyList.RemoveAt(i);
                         EditorUtility.SetDirty(strategyBox);
-                        break; // ¸®½ºÆ®°¡ ¼öÁ¤µÇ¾úÀ¸¹Ç·Î ·çÇÁ Áß´Ü
+                        break; // ë¦¬ìŠ¤íŠ¸ê°€ ìˆ˜ì •ë˜ì—ˆìœ¼ë¯€ë¡œ ë£¨í”„ ì¤‘ë‹¨
                     }
                 }
                 else

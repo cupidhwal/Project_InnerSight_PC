@@ -1,17 +1,19 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Seti
 {
-    // 모든 Actor가 반드시 가져야 할 Component
-    //[RequireComponent(typeof(Rigidbody))]
+    // Actor가 가져야 할 Component
+    [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(Damagable))]
 
     /// <summary>
     /// Actor의 기본 정의
     /// </summary>
-    public abstract class Actor : MonoBehaviour
+    public abstract class Actor : MonoBehaviour, IActor
     {
         // 필드
         #region Variables
@@ -21,34 +23,57 @@ namespace Seti
         protected Blueprint_Actor blueprint;
         [SerializeField]
         [HideInInspector]
-        protected Condition_Actor actorState;
+        protected Condition_Actor actorCondition;
         [SerializeField]
         [HideInInspector]
         protected List<Behaviour> behaviours = new();         // [직렬화 된 필드 - 읽기 전용 속성] 구조가 아니면 작동하지 않는다
 
         // 일반
         protected Controller_Animator animator;
+
+        // 스탯
+        [Header("Current Status")]
+        [SerializeField]
+        protected float health = 100f;
+        [SerializeField]
+        protected float attack = 10f;
+        [SerializeField]
+        protected float defend = 1f;
         #endregion
 
         // 속성
         #region Properties
         public Blueprint_Actor Origin => blueprint;
-        public Condition_Actor ActorState => actorState;
+        public Condition_Actor ActorCondition => actorCondition;
         public List<Behaviour> Behaviours => behaviours;
         public Controller_Animator Controller_Animator => animator;
+
+        // Default 스탯
+        public float Health { get { return 100f; } }
+        public float Attack { get { return 10f; } }
+        public float Defend { get { return 1f; } }
         #endregion
 
         // 추상화
         #region Abstract
         protected abstract Condition_Actor CreateState();
+        public abstract bool IsRelevant(Actor actor);
         #endregion
 
         // 라이프 사이클
         #region Life Cycle
         protected virtual void Start()
         {
+            // 참조
             animator = GetComponentInChildren<Controller_Animator>();
         }
+        #endregion
+
+        // 스탯 적용
+        #region Methods_Stats
+        public void Update_Health(float heal) => health = heal;
+        public void Update_Attack(float atk) => attack = atk;
+        public void Update_Defend(float def) => defend = def;
         #endregion
 
         // 메서드
@@ -59,8 +84,8 @@ namespace Seti
             this.blueprint = blueprint;
 
             // Check Actor State
-            if (!actorState)
-                actorState = CreateState();
+            if (!actorCondition)
+                actorCondition = CreateState();
 
             // Check Animator Controller
             Animator animator = GetComponentInChildren<Animator>();
@@ -105,6 +130,19 @@ namespace Seti
             }
             control = newControl;
             control.OnEnter(this);
+        }
+
+        public void SetStats()
+        {
+
+        }
+
+        // 씬 내의 대적자 액터 가져오기
+        public List<Actor> GetRelevantActors(IActor filter)
+        {
+            return FindObjectsByType<Actor>(FindObjectsSortMode.None)
+                .Where(filter.IsRelevant)
+                .ToList();
         }
         #endregion
     }

@@ -4,12 +4,12 @@ using UnityEngine;
 namespace Seti
 {
     /// <summary>
-    /// Strategy »óÀÚ
+    /// Strategy ìƒì
     /// </summary>
     [CreateAssetMenu(fileName = "Box_Strategy", menuName = "Database/Box_Strategy")]
     public class Box_Strategy : ScriptableObject
     {
-        // Àü·« ¸®½ºÆ® (¸ğµç Àü·« ÀúÀå)
+        // ì „ëµ ë¦¬ìŠ¤íŠ¸ (ëª¨ë“  ì „ëµ ì €ì¥)
         [HideInInspector]
         [SerializeReference]
         public List<ILookStrategy> lookStrategies;
@@ -26,20 +26,24 @@ namespace Seti
         [SerializeReference]
         public List<IAttackStrategy> attackStrategies;
 
-        // Àü·« ¹üÁÖ °Ë»ö
+        [HideInInspector]
+        [SerializeReference]
+        public List<IDefendStrategy> defendStrategies;
+
+        // ì „ëµ ë²”ì£¼ ê²€ìƒ‰
         public List<T> GetStrategies<T>() where T : class, IStrategy
         {
             List<T> list = new();
 
-            // T Å¸ÀÔ¿¡ ¸Â´Â ¸®½ºÆ® ÂüÁ¶
+            // T íƒ€ì…ì— ë§ëŠ” ë¦¬ìŠ¤íŠ¸ ì°¸ì¡°
             var targetList = GetStrategyList<T>();
             if (targetList == null)
             {
-                Debug.LogWarning($"ÇØ´ç Àü·« ¸®½ºÆ®°¡ ¾ø½À´Ï´Ù: {typeof(T)}");
+                Debug.LogWarning($"í•´ë‹¹ ì „ëµ ë¦¬ìŠ¤íŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤: {typeof(T)}");
                 return list;
             }
 
-            // ¸®½ºÆ®¿¡¼­ Å¸ÀÔ °Ë»ç ÈÄ Ãß°¡
+            // ë¦¬ìŠ¤íŠ¸ì—ì„œ íƒ€ì… ê²€ì‚¬ í›„ ì¶”ê°€
             foreach (var strategy in targetList)
             {
                 if (strategy is T targetStrategy)
@@ -49,23 +53,23 @@ namespace Seti
             }
 
             if (list.Count == 0)
-                Debug.LogWarning($"ÇØ´ç Àü·«ÀÌ ¾ø½À´Ï´Ù: {typeof(T)}");
+                Debug.LogWarning($"í•´ë‹¹ ì „ëµì´ ì—†ìŠµë‹ˆë‹¤: {typeof(T)}");
 
             return list;
         }
 
-        // Æ¯Á¤ Å¸ÀÔÀÇ Àü·« °Ë»ö
+        // íŠ¹ì • íƒ€ì…ì˜ ì „ëµ ê²€ìƒ‰
         public T GetStrategy<T>() where T : class, IStrategy
         {
-            // T Å¸ÀÔ¿¡ ¸Â´Â ¸®½ºÆ® ÂüÁ¶
+            // T íƒ€ì…ì— ë§ëŠ” ë¦¬ìŠ¤íŠ¸ ì°¸ì¡°
             var targetList = GetStrategyList<T>();
             if (targetList == null)
             {
-                Debug.LogWarning($"ÇØ´ç Àü·« ¸®½ºÆ®°¡ ¾ø½À´Ï´Ù: {typeof(T)}");
+                Debug.LogWarning($"í•´ë‹¹ ì „ëµ ë¦¬ìŠ¤íŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤: {typeof(T)}");
                 return null;
             }
 
-            // Ã¹ ¹øÂ° ÀÏÄ¡ÇÏ´Â Àü·« ¹İÈ¯
+            // ì²« ë²ˆì§¸ ì¼ì¹˜í•˜ëŠ” ì „ëµ ë°˜í™˜
             foreach (var strategy in targetList)
             {
                 if (strategy is T targetStrategy)
@@ -74,26 +78,28 @@ namespace Seti
                 }
             }
 
-            Debug.LogWarning($"ÇØ´ç Àü·«ÀÌ ¾ø½À´Ï´Ù: {typeof(T)}");
+            Debug.LogWarning($"í•´ë‹¹ ì „ëµì´ ì—†ìŠµë‹ˆë‹¤: {typeof(T)}");
             return null;
         }
 
         public IEnumerable<IStrategy> GetStrategyList<T>() where T : class, IStrategy
         {
             if (typeof(T) == typeof(ILookStrategy))
-                return lookStrategies as IEnumerable<IStrategy>;
+                return lookStrategies;
             else if (typeof(T) == typeof(IMoveStrategy))
-                return moveStrategies as IEnumerable<IStrategy>;
+                return moveStrategies;
             else if (typeof(T) == typeof(IJumpStrategy))
-                return jumpStrategies as IEnumerable<IStrategy>;
+                return jumpStrategies;
             else if (typeof(T) == typeof(IAttackStrategy))
-                return attackStrategies as IEnumerable<IStrategy>;
+                return attackStrategies;
+            else if (typeof(T) == typeof(IDefendStrategy))
+                return defendStrategies;
 
-            // »õ·Î¿î Àü·«ÀÌ Ãß°¡µÇ¸é °°Àº Çü½ÄÀ¸·Î Ãß°¡
+            // ìƒˆë¡œìš´ ì „ëµì´ ì¶”ê°€ë˜ë©´ ê°™ì€ í˜•ì‹ìœ¼ë¡œ ì¶”ê°€
             //else if (typeof(T) == typeof(IAttackStrategy))
-            //    return attackStrategies as IEnumerable<IStrategy>;
+            //    return attackStrategies;
 
-            return null; // ÀÏÄ¡ÇÏ´Â ¸®½ºÆ®°¡ ¾øÀ» °æ¿ì
+            return null; // ì¼ì¹˜í•˜ëŠ” ë¦¬ìŠ¤íŠ¸ê°€ ì—†ì„ ê²½ìš°
         }
     }
 }

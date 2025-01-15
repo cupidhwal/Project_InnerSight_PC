@@ -16,10 +16,10 @@ namespace Seti
         protected override void Initialize()
         {
             // 저장된 현재 장비
-            primaryWeapon = Weapon.NULL;
+            primaryWeaponType = WeaponType.NULL;
 
             // 초기 장비 설정
-            currentWeapon = primaryWeapon;
+            currentWeaponType = primaryWeaponType;
         }
         #endregion
     }

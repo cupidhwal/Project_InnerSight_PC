@@ -22,6 +22,9 @@ namespace Seti
         #region Life Cycle
         protected override void Update()
         {
+            Condition_Player condition_Player = Actor.ActorCondition as Condition_Player;
+            if (!condition_Player.InAction) return;
+
             base.Update();
 
             if (behaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))

@@ -7,7 +7,7 @@ namespace Seti
     /// </summary>
     public abstract class Condition_Actor : MonoBehaviour
     {
-        public enum Weapon
+        public enum WeaponType
         {
             Sword,
             Staff,
@@ -18,8 +18,10 @@ namespace Seti
 
         // 필드
         #region Variables
+        public Actor Actor { get; protected set; }
+
         // 상태
-        private bool isGrounded;
+        protected bool isGrounded;
         public bool IsGrounded => isGrounded;
         public bool IsAttack { get; set; }
 
@@ -27,18 +29,19 @@ namespace Seti
         public Vector3 AttactPoint { get; set; }
 
         // 무기
-        protected Weapon primaryWeapon;
+        protected WeaponType primaryWeaponType;
         [SerializeField]
-        protected Weapon currentWeapon;
+        protected WeaponType currentWeaponType;
         #endregion
 
         // 속성
         #region Properties
-        public Weapon CurrentWeapon => currentWeapon;
+        public WeaponType CurrentWeaponType => currentWeaponType;
         #endregion
 
         private void Start()
         {
+            Actor = GetComponent<Actor>();
             isGrounded = true;
         }
 

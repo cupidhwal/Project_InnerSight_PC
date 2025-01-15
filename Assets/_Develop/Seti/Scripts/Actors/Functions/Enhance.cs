@@ -6,76 +6,78 @@ using UnityEngine;
 namespace Seti
 {
     /// <summary>
-    /// Player Àü¿ë, Çàµ¿À» °­È­ÇÏ´Â ±â´ÉÀ» °ü¸®ÇÏ´Â Å¬·¡½º
+    /// Player ì „ìš©, í–‰ë™ì„ ê°•í™”í•˜ëŠ” ê¸°ëŠ¥ì„ ê´€ë¦¬í•˜ëŠ” í´ë˜ìŠ¤
     /// </summary>
-    /// increment´Â ¹éºĞÀ²·Î ÀÔ·ÂÇÒ °Í
-    /// Player Àü¿ë Å¬·¡½ºÀÌ¹Ç·Î Player ÄÄÆ÷³ÍÆ®¸¦ °­Á¦ÇÑ´Ù
+    /// incrementëŠ” ë°±ë¶„ìœ¨ë¡œ ì…ë ¥í•  ê²ƒ
+    /// Player ì „ìš© í´ë˜ìŠ¤ì´ë¯€ë¡œ Player ì»´í¬ë„ŒíŠ¸ë¥¼ ê°•ì œí•œë‹¤
     [RequireComponent(typeof(Player))]
 
     [System.Serializable]
     public class Enhance : MonoBehaviour
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
         private Player player;
         private Dictionary<Type, IBehaviour> behaviourMap;
 
-// °æ°í ¹«½Ã
+// ê²½ê³  ë¬´ì‹œ
 #pragma warning disable 0414
         [Header("Behaviour : Increments (%)")]
         [SerializeField] private float increment_Move = 10f;
 #pragma warning restore 0414
         #endregion
 
-        // ¶óÀÌÇÁ »çÀÌÅ¬
+        // ë¼ì´í”„ ì‚¬ì´í´
         #region Life Cycle
         private void Start()
         {
-            // ÃÊ±âÈ­
+            // ì´ˆê¸°í™”
             player = GetComponent<Player>();
             InitializeBehaviourMap();
+
+            EnhanceBehaviour<Attack>();
         }
         #endregion
 
-        // ¸Ş¼­µå
+        // ë©”ì„œë“œ
         #region Methods
-        // Çàµ¿ °­È­
+        // í–‰ë™ ê°•í™”
         public void EnhanceBehaviour<T>(float increment) where T : class, IBehaviour
         {
             if (player == null) return;
 
-            // Çàµ¿ °Ë»ö ¹× °­È­
+            // í–‰ë™ ê²€ìƒ‰ ë° ê°•í™”
             if (behaviourMap.TryGetValue(typeof(T), out var behaviour))
                 (behaviour as T)?.Upgrade(increment);
         }
 
-        // Çàµ¿ °­È­ - ¿À¹ö·Îµå, Áß¾Ó ÁıÁß½Ä
+        // í–‰ë™ ê°•í™” - ì˜¤ë²„ë¡œë“œ, ì¤‘ì•™ ì§‘ì¤‘ì‹
         public void EnhanceBehaviour<T>() where T : class, IBehaviour
         {
             if (player == null) return;
 
-            // Çàµ¿ °Ë»ö
+            // í–‰ë™ ê²€ìƒ‰
             if (!behaviourMap.TryGetValue(typeof(T), out var behaviour))
                 return;
 
-            // increment_ ÇÊµå °Ë»ö
+            // increment_ í•„ë“œ ê²€ìƒ‰
             string incrementFieldName = $"increment_{typeof(T).Name}";
             FieldInfo incrementField = GetType().GetField(incrementFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
 
             if (incrementField == null || incrementField.FieldType != typeof(float))
             {
-                Debug.LogWarning($"'{incrementFieldName}'´Â À¯È¿ÇÏÁö ¾ÊÀº Increment ÇÊµåÀÔ´Ï´Ù.");
+                Debug.LogWarning($"'{incrementFieldName}'ëŠ” ìœ íš¨í•˜ì§€ ì•Šì€ Increment í•„ë“œì…ë‹ˆë‹¤.");
                 return;
             }
 
-            // Áõ°¡Æø °¡Á®¿À±â
+            // ì¦ê°€í­ ê°€ì ¸ì˜¤ê¸°
             float increment = (float)incrementField.GetValue(this);
 
-            // Çàµ¿ °­È­
+            // í–‰ë™ ê°•í™”
             (behaviour as T)?.Upgrade(increment);
         }
 
-        // Çàµ¿ ¸ÅÇÎ
+        // í–‰ë™ ë§¤í•‘
         private void InitializeBehaviourMap()
         {
             behaviourMap = new Dictionary<Type, IBehaviour>();

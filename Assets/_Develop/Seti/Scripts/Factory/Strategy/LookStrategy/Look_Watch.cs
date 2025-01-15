@@ -16,8 +16,9 @@ namespace Seti
 
             if (actor is Player player)
             {
-                Vector3 atkPosition = player.ActorState.AttactPoint;
-                player.transform.LookAt(atkPosition);
+                Vector3 temp = player.ActorCondition.AttactPoint;
+                Vector3 atkPoint = new(temp.x, 0, temp.z);
+                player.transform.LookAt(atkPoint);
             }
         }
         #endregion

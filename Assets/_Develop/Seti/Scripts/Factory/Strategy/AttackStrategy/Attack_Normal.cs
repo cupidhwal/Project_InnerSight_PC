@@ -17,16 +17,22 @@ namespace Seti
         #region Methods
         private void Attack_WithWeapon()
         {
-            Condition_Actor condition = actor.ActorState as Condition_Actor;
-            switch (condition.CurrentWeapon)
+            Condition_Player condition = actor.ActorCondition as Condition_Player;
+            switch (condition.CurrentWeaponType)
             {
-                case Condition_Actor.Weapon.Sword:
+                case Condition_Actor.WeaponType.Sword:
                     Attack_Sword();
                     break;
-                case Condition_Actor.Weapon.Fist:
+
+                case Condition_Actor.WeaponType.Staff:
+                    Attack_Staff();
+                    break;
+
+                case Condition_Actor.WeaponType.Fist:
                     Attack_Fist();
                     break;
-                case Condition_Actor.Weapon.Bow:
+
+                case Condition_Actor.WeaponType.Bow:
                     Attack_Bow();
                     break;
             }
@@ -35,6 +41,11 @@ namespace Seti
         private void Attack_Sword()
         {
             Debug.Log("평타: Sword");
+        }
+
+        private void Attack_Staff()
+        {
+            Debug.Log("평타: Staff");
         }
 
         private void Attack_Fist()

@@ -64,6 +64,7 @@ namespace Seti
         // 오버라이드
         #region Override
         protected override Condition_Actor CreateState() => gameObject.AddComponent<Condition_Enemy>();
+        public override bool IsRelevant(Actor actor) => actor is Player || actor is NPC;
         #endregion
 
         // 라이프 사이클

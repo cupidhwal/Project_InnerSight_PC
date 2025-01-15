@@ -2,6 +2,12 @@ using UnityEngine;
 
 namespace Seti
 {
+    // Player가 가져야 할 Component
+    [RequireComponent(typeof(Enhance))]
+
+    /// <summary>
+    /// Player
+    /// </summary>
     public class Player : Actor
     {
         // View type
@@ -40,6 +46,27 @@ namespace Seti
         // 오버라이드
         #region Override
         protected override Condition_Actor CreateState() => gameObject.AddComponent<Condition_Player>();
+        public override bool IsRelevant(Actor actor) => actor is not NPC && actor != this;
         #endregion
+
+        protected override void Start()
+        {
+            base.Start();
+
+            Upgrade(1);
+            Upgrade(2);
+            Upgrade(3);
+            Upgrade(4);
+            Upgrade(5);
+        }
+
+        private void Upgrade(int t)
+        {
+            Enhance enhance = GetComponent<Enhance>();
+
+            Invoke("enhance.EnhanceBehaviour<Health>", t);
+            Invoke("enhance.EnhanceBehaviour<Attack>", t);
+            Invoke("enhance.EnhanceBehaviour<Defend>", t);
+        }
     }
 }

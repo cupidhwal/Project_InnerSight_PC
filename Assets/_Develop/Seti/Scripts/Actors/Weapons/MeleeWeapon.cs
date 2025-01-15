@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Seti
 {
     /// <summary>
     /// 
     /// </summary>
-    public class MeleeWeapon : MonoBehaviour
+    public class MeleeWeapon : Weapon
     {
         /// <summary>
         /// 무기 공격 시 상대에게 입히는 피해의 구성
@@ -32,9 +31,10 @@ namespace Seti
         public TimeEffect[] effects;                                //
 
         public ParticleSystem hitParticlePrefab;                    //
-        public AttackPoint attackPoint;
+        //public AttackPoint attackPoint;
         public LayerMask targetLayers;
 
+        [SerializeField]
         protected GameObject m_Owner;
 
         protected Vector3[] m_PreviousPos = null;
@@ -61,12 +61,63 @@ namespace Seti
         }
         #endregion
 
+        // 오버라이드
+        #region Override
+        public override void AttackEnter() => BeginAttack(true);
+        public override void AttackExit() => EndAttack();
+        #endregion
+
         // 라이프 사이클
         #region Life Cycle
         private void Awake()
         {
             // 타격 이펙트 풀 생성
             GenEffectPool();
+        }
+
+        private void FixedUpdate()
+        {
+            if (m_InAttack)
+            {
+                // 어택 포인트별 히트 판정
+                for (int i = 0; i < attackPoints.Length; i++)
+                {
+                    AttackPoint atp = attackPoints[i];
+                    Vector3 worldPos = attackPoints[i].attackRoot.position +
+                        attackPoints[i].attackRoot.TransformVector(attackPoints[i].offset);
+
+                    Vector3 attackVector = worldPos - m_PreviousPos[i];
+                    if (attackVector.magnitude < 0.001f)
+                    {
+                        attackVector = Vector3.forward * 0.0001f;
+                    }
+
+                    Ray r = new(worldPos, attackVector.normalized);
+                    int contacts = Physics.SphereCastNonAlloc(r,
+                                                              atp.radius,
+                                                              s_RaycastHitCache,
+                                                              attackVector.magnitude,
+                                                              ~0,
+                                                              QueryTriggerInteraction.Ignore);
+                    for (int j = 0; j < contacts; j++)
+                    {
+                        //Debug.Log("FixedUpdate_Ray");
+                        Collider col = s_RaycastHitCache[i].collider;
+                        if (col != null)
+                        {
+                            //Debug.Log("FixedUpdate_CheckDamage");
+                            Debug.Log($"col: {col}");
+                            Debug.Log($"atp: {atp}");
+                            CheckDamage(col, atp);
+                        }
+                    }
+
+                    m_PreviousPos[i] = worldPos;
+#if UNITY_EDITOR
+                    attackPoints[i].previousPositions.Add(m_PreviousPos[i]);
+#endif
+                }
+            }
         }
         #endregion
 
@@ -107,65 +158,32 @@ namespace Seti
 #endif
         }
 
-        private void FixedUpdate()
-        {
-            if (m_InAttack)
-            {
-                // 어택 포인트별 히트 판정
-                for (int i = 0; i < attackPoints.Length; i++)
-                {
-                    AttackPoint atp = attackPoints[i];
-                    Vector3 worldPos = attackPoints[i].attackRoot.position +
-                        attackPoints[i].attackRoot.TransformVector(attackPoints[i].offset);
-
-                    Vector3 attackVector = worldPos - m_PreviousPos[i];
-                    if (attackVector.magnitude < 0.001f)
-                    {
-                        attackVector = Vector3.forward * 0.0001f;
-                    }
-
-                    Ray r = new(worldPos, attackVector.normalized);
-                    int contacts = Physics.SphereCastNonAlloc(r,
-                                                              atp.radius,
-                                                              s_RaycastHitCache,
-                                                              attackVector.magnitude,
-                                                              ~0,
-                                                              QueryTriggerInteraction.Ignore);
-                    for (int j = 0; j < contacts; j++)
-                    {
-                        Collider col = s_RaycastHitCache[i].collider;
-                        if (col != null)
-                        {
-                            CheckDamage(col, atp);
-                        }
-                    }
-
-                    m_PreviousPos[i] = worldPos;
-#if UNITY_EDITOR
-                    attackPoints[i].previousPositions.Add(m_PreviousPos[i]);
-#endif
-                }
-            }
-        }
-
         // 콜라이더 확인 후 데미지 주기
         private void CheckDamage(Collider other, AttackPoint atp)
         {
+            Debug.Log("CheckDamage");
+
             // 콜라이더 확인 후
             if (!other.TryGetComponent<Damagable>(out var d))
                 return;
 
+            Debug.Log($"other: {other}");
+            Debug.Log($"other.d: {d}");
+
             // 셀프 데미지 체크
-            if (d.gameObject == m_Owner)
-                return;
+            /*if (d.gameObject == m_Owner)
+                return;*/
 
             // 타겟 레이어 체크
             if ((targetLayers.value & (1 << other.gameObject.layer)) == 0)
                 return;
 
+            Debug.Log($"targetLayers: {targetLayers}");
+            Debug.Log($"targetLayers.value: {targetLayers.value}");
+
             // 데미지 데이터 가공 후 데미지 주기
             Damagable.DamageMessage data;
-            data.amount = damage;
+            data.amount = (int)(Damage * m_Owner.GetComponent<Actor>().Attack);
             data.damager = this;
             data.direction = m_Direction.normalized;
             data.damageSource = m_Owner.transform.position;

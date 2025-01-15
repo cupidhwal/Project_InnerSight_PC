@@ -9,19 +9,20 @@ namespace Seti
     {
         // 필드
         #region Variables
-        public int maxHitPoints;
-        public float invulnerablityTime;
+        [SerializeField]
+        private int maxHitPoints = 100;
+        [SerializeField]
+        private int currentHitPoints;
+        [SerializeField]
+        private float invulnerablityTime = 1f;
 
         [Range(0.0f, 360.0f)]
         public float hitAngle = 360f;
         [Range(0.0f, 360.0f)]
         public float hitForwardRotation = 360f;
-
-        public bool IsInvulnerable { get; set; }        // 무적 여부
-        public int CurrentHitPoints { get; private set; }       // 현재 체력
         public List<MonoBehaviour> OnDamageMessageReceivers;
 
-        protected float m_timeSinceLastHit = 0.0f;           // 무적 카운트다운
+        protected float m_timeSinceLastHit = 0.0f;              // 무적 카운트다운
 
         public UnityAction OnDeath;
         public UnityAction OnReceiveDamage;
@@ -33,6 +34,13 @@ namespace Seti
         protected Collider m_collider;
         #endregion
 
+        // 속성
+        #region Properties
+        public bool IsInvulnerable { get; set; }                // 무적 여부
+        public int CurrentHitPoints => currentHitPoints;
+        //public int CurrentHitPoints { get; private set; }       // 현재 체력
+        #endregion
+
         // 라이프 사이클
         #region Life Cycle
         private void Start()
@@ -42,6 +50,12 @@ namespace Seti
 
             // 초기화
             ResetDamage();
+
+            // 씬의 모든 Actor(자신 제외)오브젝트 가져오기
+            if (TryGetComponent<Actor>(out var actor))
+            {
+                OnDamageMessageReceivers.AddRange(actor.GetRelevantActors(actor));
+            }
         }
 
         private void Update()
@@ -81,7 +95,7 @@ namespace Seti
         // 데미지 데이터 초기화
         public void ResetDamage()
         {
-            CurrentHitPoints = maxHitPoints;
+            currentHitPoints = maxHitPoints;
             IsInvulnerable = false;
             m_timeSinceLastHit = 0.0f;
             OnResetDamage?.Invoke();
@@ -91,7 +105,7 @@ namespace Seti
         public void TakeDamage(DamageMessage data)
         {
             // 이미 죽으면 더 이상 데미지를 입지 않는다
-            if (CurrentHitPoints <= 0)
+            if (currentHitPoints <= 0)
                 return;
 
             // 무적 상태일 경우
@@ -113,9 +127,9 @@ namespace Seti
 
             // 예외 처리가 모두 끝나면 데미지 처리
             IsInvulnerable = true;
-            CurrentHitPoints -= data.amount;
+            currentHitPoints -= data.amount;
 
-            if (CurrentHitPoints <= 0)
+            if (currentHitPoints <= 0)
             {
                 if (OnDeath != null)
                 {
@@ -128,7 +142,7 @@ namespace Seti
             }
 
             // 데미지 메시지 보내기
-            var messageType = CurrentHitPoints <= 0 ?
+            var messageType = currentHitPoints <= 0 ?
                               GameMessageType.Dead :
                               GameMessageType.Damaged;
             for (int i = 0; i < OnDamageMessageReceivers.Count; i++)

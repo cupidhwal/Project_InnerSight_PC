@@ -185,6 +185,7 @@ GameObject:
   - component: {fileID: 5202101694273562859}
   - component: {fileID: 268511591646616248}
   - component: {fileID: 7531578248423457190}
+  - component: {fileID: 6532519519953168620}
   m_Layer: 6
   m_Name: Enemy_Sample
   m_TagString: Untagged
@@ -294,7 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint: {fileID: 0}
-  actorState: {fileID: 0}
+  actorCondition: {fileID: 0}
   behaviours: []
   speed_Walk: 2
   speed_Run: 3
@@ -309,3 +310,20 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &6532519519953168620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8309244615677021322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289bfb1f47fad5745a55b3ba7e9ccbc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHitPoints: 100
+  invulnerablityTime: 1
+  hitAngle: 360
+  hitForwardRotation: 360
+  OnDamageMessageReceivers: []

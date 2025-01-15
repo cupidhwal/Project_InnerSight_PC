@@ -20,5 +20,11 @@ namespace Seti
         [TextArea(15, 20)]
         public string description;
         #endregion
+
+        public Item CreateItem()
+        {
+            Item newItem = new(this);
+            return newItem;
+        }
     }
 }

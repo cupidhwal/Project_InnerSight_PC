@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Seti
@@ -5,8 +6,8 @@ namespace Seti
     /// <summary>
     /// 아이템의 스펙 정의
     /// </summary>
-    [System.Serializable]
-    public class ItemSpec
+    [Serializable]
+    public class ItemSpec : IModifier
     {
         // 필드
         #region Variables
@@ -33,11 +34,20 @@ namespace Seti
         }
         #endregion
 
+        // 인터페이스
+        #region Interface
+        // 매개변수로 입력받은 변수에 value 값을 누적한다
+        public void AddValue(ref int baseValue)
+        {
+            baseValue += value;
+        }
+        #endregion
+
         // 메서드
         #region Methods
         public void GenerateValue()
         {
-            value = Random.Range(min, max);
+            value = UnityEngine.Random.Range(min, max);
         }
         #endregion
     }

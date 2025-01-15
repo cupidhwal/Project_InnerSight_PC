@@ -23,8 +23,8 @@ namespace Seti
         // 필드
         #region Variables
         // 공격력
-        private float power_Normal = 10f;
-        private const float power_Normal_Default = 10f;
+        private float attack;
+        private const float attack_Default = 10f;
 
         // 전략 관리
         private Actor actor;
@@ -33,8 +33,8 @@ namespace Seti
         private IAttackStrategy currentStrategy;
 
         // 제어 관리
-        private Condition_Actor state;
-        private StrategyType currentType;
+        private Condition_Actor condition;
+        //private StrategyType currentType;
         private State<Controller_FSM> currentState;
         #endregion
 
@@ -43,7 +43,8 @@ namespace Seti
         // 업그레이드
         public void Upgrade(float increment)
         {
-            power_Normal += increment * power_Normal_Default / 100;
+            attack += increment * attack_Default / 100;
+            actor.Update_Attack(attack);
             Initialize(actor);
         }
 
@@ -51,26 +52,28 @@ namespace Seti
         public void Initialize(Actor actor)
         {
             this.actor = actor;
-            state = actor.ActorState;
+            condition = actor.ActorCondition;
+            attack = actor.Attack;
+
             foreach (var mapping in strategies)
             {
-                IAttackStrategy moveStrategy = mapping.strategy as IAttackStrategy;
-                switch (moveStrategy)
+                IAttackStrategy attackStrategy = mapping.strategy as IAttackStrategy;
+                switch (attackStrategy)
                 {
                     case Attack_Normal:
-                        moveStrategy.Initialize(actor, power_Normal);
+                        attackStrategy.Initialize(actor, attack);
                         break;
 
                     case Attack_Magic:
-                        moveStrategy.Initialize(actor);
+                        attackStrategy.Initialize(actor);
                         break;
 
                     case Attack_Weapon:
-                        moveStrategy.Initialize(actor);
+                        attackStrategy.Initialize(actor);
                         break;
 
                     case Attack_Tackle:
-                        moveStrategy.Initialize(actor);
+                        attackStrategy.Initialize(actor);
                         break;
                 }
             }
@@ -87,7 +90,7 @@ namespace Seti
             }
             else
             {
-                //Debug.LogWarning("Move 전략이 없어 초기 전략을 설정하지 못했습니다.");
+                //Debug.LogWarning($"{} 전략이 없어 초기 전략을 설정하지 못했습니다.");
                 ChangeStrategy(null);
             }
         }
@@ -119,22 +122,22 @@ namespace Seti
             switch (attackStrategies)
             {
                 case StrategyType.Normal:
-                    currentType = StrategyType.Normal;
+                    //currentType = StrategyType.Normal;
                     ChangeStrategy(typeof(Attack_Normal));
                     break;
 
                 case StrategyType.Magic:
-                    currentType = StrategyType.Magic;
+                    //currentType = StrategyType.Magic;
                     ChangeStrategy(typeof(Attack_Magic));
                     break;
 
                 case StrategyType.Weapon:
-                    currentType = StrategyType.Weapon;
+                    //currentType = StrategyType.Weapon;
                     ChangeStrategy(typeof(Attack_Weapon));
                     break;
 
                 case StrategyType.Tackle:
-                    currentType = StrategyType.Tackle;
+                    //currentType = StrategyType.Tackle;
                     ChangeStrategy(typeof(Attack_Tackle));
                     break;
             }
@@ -199,12 +202,12 @@ namespace Seti
         public void FSM_AttackSwitch(State<Controller_FSM> state)
         {
             // FSM 상태에 따라 동작 제어
-            Condition_Enemy condition = actor.ActorState as Condition_Enemy;
+            Condition_Enemy condition = actor.ActorCondition as Condition_Enemy;
             currentState = state;
             switch (currentState)
             {
                 case Enemy_State_Attack:
-                    if (condition.CurrentWeapon == Condition_Actor.Weapon.NULL)
+                    if (condition.CurrentWeaponType == Condition_Actor.WeaponType.NULL)
                         SwitchStrategy(StrategyType.Tackle);
                     else SwitchStrategy(StrategyType.Normal);
                     break;
@@ -221,13 +224,27 @@ namespace Seti
         #region Methods
         private void OnAttack(bool isAttack = true)
         {
-            state.IsAttack = isAttack;
+            condition.IsAttack = isAttack;
             if (isAttack)
             {
-                state.AttactPoint = GameUtility.RayToWorldPosition();
+                condition.AttactPoint = GameUtility.RayToWorldPosition();
                 currentStrategy?.Attack();
+
+                if (actor is Player)
+                {
+                    Condition_Player condition_Player = condition as Condition_Player;
+                    condition_Player.CurrentWeapon.AttackEnter();
+                }
             }
-            else currentStrategy?.AttackExit();
+            else
+            {
+                currentStrategy?.AttackExit();
+                if (actor is Player)
+                {
+                    Condition_Player condition_Player = condition as Condition_Player;
+                    condition_Player.CurrentWeapon.AttackExit();
+                }
+            }
             if (actor is Player)
             actor.Controller_Animator.IsAttack = isAttack;
         }

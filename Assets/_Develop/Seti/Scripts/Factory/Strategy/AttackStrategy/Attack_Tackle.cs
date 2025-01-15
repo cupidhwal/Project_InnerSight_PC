@@ -47,13 +47,13 @@ namespace Seti
                 Vector3 atkDir = enemy.Player.transform.position - enemy.transform.position;
 
                 // 축적
-                enemy.ActorState.IsAttack = true;
+                enemy.ActorCondition.IsAttack = true;
                 float slamBack = 0f;
                 float speed_slamBack = 0f;
-                while (slamBack < 0.2f)
+                while (slamBack < 0.3f)
                 {
                     if (token.IsCancellationRequested) return;
-                    speed_slamBack = Mathf.Lerp(speed_slamBack, 5, 10 * Time.deltaTime);
+                    speed_slamBack = Mathf.Lerp(speed_slamBack, 3, 10 * Time.deltaTime);
                     enemy.transform.Translate(-speed_slamBack * Time.deltaTime * atkDir, Space.World);
                     slamBack += Time.deltaTime;
                     await Task.Delay((int)(Time.deltaTime * 1000), token);
@@ -82,7 +82,7 @@ namespace Seti
                 }
 
                 await Task.Delay(500);
-                enemy.ActorState.IsAttack = false;
+                enemy.ActorCondition.IsAttack = false;
             }
             catch (OperationCanceledException)
             {
