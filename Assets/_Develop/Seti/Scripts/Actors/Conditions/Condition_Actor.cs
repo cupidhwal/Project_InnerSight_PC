@@ -18,16 +18,6 @@ namespace Seti
 
         // 필드
         #region Variables
-        public Actor Actor { get; protected set; }
-
-        // 상태
-        protected bool isGrounded;
-        public bool IsGrounded => isGrounded;
-        public bool IsAttack { get; set; }
-
-        // Attack 지점
-        public Vector3 AttactPoint { get; set; }
-
         // 무기
         protected WeaponType primaryWeaponType;
         [SerializeField]
@@ -36,18 +26,32 @@ namespace Seti
 
         // 속성
         #region Properties
+        public bool IsGrounded { get; protected set; }
+        public bool IsAttack { get; set; }
+
+        // Attack 지점
+        public Vector3 AttactPoint { get; set; }
         public WeaponType CurrentWeaponType => currentWeaponType;
         #endregion
 
-        private void Start()
+        protected virtual void Start()
         {
-            Actor = GetComponent<Actor>();
-            isGrounded = true;
+            GetComponent<Damagable>().OnDeath += Die;
+
+            IsGrounded = true;
         }
 
         // 추상화
         #region Abstract
         protected abstract void Initialize();
+        #endregion
+
+        // 메서드
+        #region Methods
+        private void Die()
+        {
+            Destroy(this, 2);
+        }
         #endregion
 
         // 이벤트 메서드
@@ -58,7 +62,7 @@ namespace Seti
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
-                isGrounded = groundedState;
+                IsGrounded = groundedState;
             }
         }
 

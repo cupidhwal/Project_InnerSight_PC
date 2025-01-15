@@ -10,20 +10,19 @@ namespace Seti
         #region Variables
         [SerializeField]
         public Weapon currentWeapon;
-
         [SerializeField]
-        private bool inAction = false;
+        protected bool inAction = false;
         #endregion
 
         // 속성
         #region Properties
-        public bool InAction => inAction;
         public Weapon CurrentWeapon => currentWeapon;
+        public bool InAction => inAction;
         #endregion
 
         // 라이프 사이클
         #region Life Cycle
-        private void Start()
+        protected override void Start()
         {
             // 초기화
             Initialize();

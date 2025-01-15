@@ -297,11 +297,14 @@ MonoBehaviour:
   blueprint: {fileID: 0}
   actorCondition: {fileID: 0}
   behaviours: []
+  health: 100
+  attack: 10
+  defend: 1
   speed_Walk: 2
   speed_Run: 3
   currentState: 0
   range_Detect: 7.5
-  range_Attack: 2
+  range_Attack: 1
   range_BackOff: 10
   distancePlayer: 0
   distancePlace: 0
@@ -323,6 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHitPoints: 100
+  currentHitPoints: 0
   invulnerablityTime: 1
   hitAngle: 360
   hitForwardRotation: 360

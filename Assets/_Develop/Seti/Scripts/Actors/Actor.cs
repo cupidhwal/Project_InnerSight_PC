@@ -49,9 +49,14 @@ namespace Seti
         public Controller_Animator Controller_Animator => animator;
 
         // Default 스탯
-        public float Health { get { return 100f; } }
-        public float Attack { get { return 10f; } }
-        public float Defend { get { return 1f; } }
+        public float Health_Default { get { return 100f; } }
+        public float Attack_Default { get { return 10f; } }
+        public float Defend_Default { get { return 1f; } }
+
+        //
+        public float Health => health;
+        public float Attack => attack;
+        public float Defend => defend;
         #endregion
 
         // 추상화

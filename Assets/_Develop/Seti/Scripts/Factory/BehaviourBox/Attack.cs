@@ -23,8 +23,8 @@ namespace Seti
         // 필드
         #region Variables
         // 공격력
+        [SerializeField]
         private float attack;
-        private const float attack_Default = 10f;
 
         // 전략 관리
         private Actor actor;
@@ -43,7 +43,7 @@ namespace Seti
         // 업그레이드
         public void Upgrade(float increment)
         {
-            attack += increment * attack_Default / 100;
+            attack += increment * actor.Attack_Default / 100;
             actor.Update_Attack(attack);
             Initialize(actor);
         }
@@ -53,7 +53,9 @@ namespace Seti
         {
             this.actor = actor;
             condition = actor.ActorCondition;
-            attack = actor.Attack;
+
+            if (attack < actor.Attack_Default)
+                attack = actor.Attack_Default;
 
             foreach (var mapping in strategies)
             {

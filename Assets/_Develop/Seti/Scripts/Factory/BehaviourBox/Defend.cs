@@ -11,8 +11,7 @@ namespace Seti
         // 필드
         #region Variables
         // 공격력
-        private float defend;
-        private float defend_Default;
+        [SerializeField] private float defend;
 
         // 전략 관리
         private Actor actor;
@@ -23,9 +22,8 @@ namespace Seti
         // 업그레이드
         public void Upgrade(float increment)
         {
-            defend += increment * defend_Default / 100;
+            defend += increment * actor.Defend_Default / 100;
             actor.Update_Defend(defend);
-            Initialize(actor);
         }
 
         // 초기화
@@ -38,10 +36,7 @@ namespace Seti
             }
 
             this.actor = actor;
-            defend_Default = actor.Defend;
-
-            // 
-            defend = actor.Defend;
+            defend = actor.Defend;  // 이건 나중에 저장한 파일로부터 Load 하도록 바꿔야 함
         }
 
         public Type GetBehaviourType() => typeof(Defend);

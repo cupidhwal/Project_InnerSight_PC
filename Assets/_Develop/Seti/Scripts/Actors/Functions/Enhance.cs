@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Seti
 {
@@ -23,8 +24,13 @@ namespace Seti
 // 경고 무시
 #pragma warning disable 0414
         [Header("Behaviour : Increments (%)")]
+        [SerializeField] private float increment_Health = 10f;
+        [SerializeField] private float increment_Attack = 10f;
+        [SerializeField] private float increment_Defend = 10f;
         [SerializeField] private float increment_Move = 10f;
 #pragma warning restore 0414
+
+        public UnityAction OnEnhance;
         #endregion
 
         // 라이프 사이클
@@ -34,8 +40,6 @@ namespace Seti
             // 초기화
             player = GetComponent<Player>();
             InitializeBehaviourMap();
-
-            EnhanceBehaviour<Attack>();
         }
         #endregion
 
@@ -49,6 +53,8 @@ namespace Seti
             // 행동 검색 및 강화
             if (behaviourMap.TryGetValue(typeof(T), out var behaviour))
                 (behaviour as T)?.Upgrade(increment);
+
+            OnEnhance?.Invoke();
         }
 
         // 행동 강화 - 오버로드, 중앙 집중식
@@ -75,6 +81,8 @@ namespace Seti
 
             // 행동 강화
             (behaviour as T)?.Upgrade(increment);
+
+            OnEnhance?.Invoke();
         }
 
         // 행동 매핑

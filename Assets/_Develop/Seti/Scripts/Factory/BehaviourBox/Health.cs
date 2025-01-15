@@ -11,8 +11,7 @@ namespace Seti
         // 필드
         #region Variables
         // 공격력
-        private float health;
-        private float health_Default;
+        [SerializeField] private float health;
 
         // 전략 관리
         private Actor actor;
@@ -23,29 +22,24 @@ namespace Seti
         // 업그레이드
         public void Upgrade(float increment)
         {
-            health += increment * health_Default / 100;
+            health += increment * actor.Health_Default / 100;
             actor.Update_Health(health);
-            Initialize(actor);
         }
 
         // 초기화
         public void Initialize(Actor actor)
         {
-
-            this.actor = actor;
-            health_Default = actor.Health;
-            
             if (actor is not Player)
             {
-                health = health_Default;
+                Debug.Log("Health Behaviour는 Player만 사용할 수 있습니다.");
                 return;
             }
 
-            // 이건 나중에 저장한 파일로부터 Load 하도록 바꿔야 함
-            health = actor.Health;
+            this.actor = actor;
+            health = actor.Health;  // 이건 나중에 저장한 파일로부터 Load 하도록 바꿔야 함
         }
 
-        public Type GetBehaviourType() => typeof(Defend);
+        public Type GetBehaviourType() => typeof(Health);
         #endregion
     }
 }

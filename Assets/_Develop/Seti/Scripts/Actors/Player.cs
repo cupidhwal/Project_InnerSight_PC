@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Seti
@@ -53,20 +54,20 @@ namespace Seti
         {
             base.Start();
 
-            Upgrade(1);
-            Upgrade(2);
-            Upgrade(3);
-            Upgrade(4);
-            Upgrade(5);
+            StartCoroutine(Upgrade(10));
         }
 
-        private void Upgrade(int t)
+        private IEnumerator Upgrade(int count)
         {
             Enhance enhance = GetComponent<Enhance>();
-
-            Invoke("enhance.EnhanceBehaviour<Health>", t);
-            Invoke("enhance.EnhanceBehaviour<Attack>", t);
-            Invoke("enhance.EnhanceBehaviour<Defend>", t);
+            for (int i = 0; i < count; i++)
+            {
+                yield return new WaitForSeconds(1);
+                enhance.EnhanceBehaviour<Health>();
+                enhance.EnhanceBehaviour<Attack>();
+                enhance.EnhanceBehaviour<Defend>();
+            }
+            yield break;
         }
     }
 }

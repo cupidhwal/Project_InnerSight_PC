@@ -4,7 +4,7 @@ namespace Seti
     {
         // 라이프 사이클
         #region Life Cycle
-        private void Start()
+        protected override void Start()
         {
             // 초기화
             Initialize();

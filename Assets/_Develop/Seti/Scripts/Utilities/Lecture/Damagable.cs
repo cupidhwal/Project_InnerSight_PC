@@ -9,10 +9,12 @@ namespace Seti
     {
         // 필드
         #region Variables
+        private Actor actor;
+
         [SerializeField]
-        private int maxHitPoints = 100;
+        private float maxHitPoints = 100;
         [SerializeField]
-        private int currentHitPoints;
+        private float currentHitPoints;
         [SerializeField]
         private float invulnerablityTime = 1f;
 
@@ -37,7 +39,7 @@ namespace Seti
         // 속성
         #region Properties
         public bool IsInvulnerable { get; set; }                // 무적 여부
-        public int CurrentHitPoints => currentHitPoints;
+        public float CurrentHitPoints => currentHitPoints;
         //public int CurrentHitPoints { get; private set; }       // 현재 체력
         #endregion
 
@@ -48,14 +50,21 @@ namespace Seti
             // 참조
             m_collider = GetComponent<Collider>();
 
-            // 초기화
-            ResetDamage();
-
             // 씬의 모든 Actor(자신 제외)오브젝트 가져오기
             if (TryGetComponent<Actor>(out var actor))
             {
+                this.actor = actor;
                 OnDamageMessageReceivers.AddRange(actor.GetRelevantActors(actor));
+
+                if (actor is Player player)
+                {
+                    player.GetComponent<Enhance>().OnEnhance += ResetDamage;
+                }
             }
+
+            // 초기화
+            ResetDamage();
+            Initialize();
         }
 
         private void Update()
@@ -86,6 +95,11 @@ namespace Seti
 
         // 메서드
         #region Methods
+        private void Initialize()
+        {
+            OnDeath += Die;
+        }
+
         // 충돌체 활성/비활성
         public void SetColliderState(bool enabled)
         {
@@ -95,6 +109,11 @@ namespace Seti
         // 데미지 데이터 초기화
         public void ResetDamage()
         {
+            if (actor)
+            {
+                maxHitPoints = actor.Health;
+            }
+
             currentHitPoints = maxHitPoints;
             IsInvulnerable = false;
             m_timeSinceLastHit = 0.0f;
@@ -150,6 +169,11 @@ namespace Seti
                 var receiver = OnDamageMessageReceivers[i] as IMessageReceiver;
                 receiver.OnReceiveMessage(messageType, this, data);
             }
+        }
+
+        private void Die()
+        {
+            Destroy(gameObject, 2);
         }
         #endregion
 
