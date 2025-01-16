@@ -17,9 +17,13 @@ namespace Noah
         // Start is called before the first frame update
         void Start()
         {
-            for (int i = 0; i < transform.childCount; i++)
+
+            if (buttons.Count == 0)
             {
-                buttons.Add(transform.GetChild(i));
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    buttons.Add(transform.GetChild(i));
+                }
             }
 
             index = 0;

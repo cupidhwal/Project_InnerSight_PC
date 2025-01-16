@@ -1,7 +1,4 @@
 using System;
-using System.Reflection;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Noah
@@ -36,6 +33,7 @@ namespace Noah
         {
             // 스킬이 없을 때
             if (setSkill.skillSlots.Count == 0)
+
                 return;
 
             // 사용할 스킬 Index 확인
@@ -84,7 +82,7 @@ namespace Noah
 
         void ActiveSkill()
         {
-            if (Input.GetKeyDown("1"))
+            if (Input.GetKeyDown("1") && setSkill.skillSlots[0].isSkillOn)
             {
                 if (!isReadySkill)
                 {
@@ -96,7 +94,7 @@ namespace Noah
                 }
 
             }
-            else if (Input.GetKeyDown("2"))
+            else if (Input.GetKeyDown("2") && setSkill.skillSlots[1].isSkillOn)
             {
                 if (!isReadySkill)
                 {
@@ -107,7 +105,7 @@ namespace Noah
                     ChangeSkill(1);
                 }
             }
-            else if (Input.GetKeyDown("3"))
+            else if (Input.GetKeyDown("3") && setSkill.skillSlots[2].isSkillOn)
             {
                 if (!isReadySkill)
                 {
@@ -118,7 +116,7 @@ namespace Noah
                     ChangeSkill(2);
                 }
             }
-            else if (Input.GetKeyDown("4"))
+            else if (Input.GetKeyDown("4") && setSkill.skillSlots[3].isSkillOn)
             {
                 if (!isReadySkill)
                 {
@@ -206,16 +204,6 @@ namespace Noah
 
                         yRot = transform.position.z + skill.skillPos.z;
 
-                        //if (effectGo.transform.rotation.y >= y_SkillRot)
-                        //{
-                        //    yRot = transform.position.z - skill.skillPos.z;
-                        //    Debug.Log("각도 100이상 : " + effectGo.transform.rotation.y);
-                        //}
-                        //else
-                        //{
-                        //    yRot = transform.position.z + skill.skillPos.z;
-                        //    Debug.Log("각도 100이하 : " + effectGo.transform.rotation.y);
-                        //}
                         skillPos = new Vector3(transform.position.x + skill.skillPos.x, skill.skillPrefab.transform.position.y, yRot);
 
                         skillef = Instantiate(skill.skillPrefab, skillPos, yOnlyRotation);
