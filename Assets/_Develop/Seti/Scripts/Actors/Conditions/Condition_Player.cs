@@ -1,23 +1,10 @@
-using UnityEngine;
-
 namespace Seti
 {
     public class Condition_Player : Condition_Actor
     {
-        private MeleeWeapon meleeWeapon;
-
         // 필드
         #region Variables
-        [SerializeField]
-        public Weapon currentWeapon;
-        [SerializeField]
-        protected bool inAction = false;
-        #endregion
-
-        // 속성
-        #region Properties
-        public Weapon CurrentWeapon => currentWeapon;
-        public bool InAction => inAction;
+        private MeleeWeapon meleeWeapon;
         #endregion
 
         // 라이프 사이클

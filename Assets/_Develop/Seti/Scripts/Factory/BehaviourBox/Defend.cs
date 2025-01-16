@@ -10,7 +10,7 @@ namespace Seti
     {
         // 필드
         #region Variables
-        // 공격력
+        // 방어력
         [SerializeField] private float defend;
 
         // 전략 관리

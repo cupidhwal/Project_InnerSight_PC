@@ -18,6 +18,8 @@ namespace Seti
         public InterfaceType type;          // 인벤토리 타입
 
         public Inventory container = new();
+
+        public Action<ItemObject> OnUseItem;// 아이템 사용 시 등록된 메서드 호출
         #endregion
 
         // 속성
@@ -75,6 +77,12 @@ namespace Seti
             return Slots.FirstOrDefault(i => i.item.id == item.id);
         }
 
+        // 매개변수로 들어온 아이템 오브젝트가 인벤토리에 있는지 여부
+        public bool IsContainItem(ItemObject itemObject)
+        {
+            return Slots.FirstOrDefault(i => i.item.id == itemObject.data.id) != null;
+        }
+
         // 빈 슬롯 찾기
         public ItemSlot GetEmptySlot()
         {
@@ -96,6 +104,20 @@ namespace Seti
                 itemB.UpdateSlot(itemA.item, itemA.amount);
                 itemA.UpdateSlot(temp.item, temp.amount);
             }
+        }
+
+        // 아이템 사용하기
+        public void UseItem(ItemSlot useSlot)
+        {
+            if (useSlot.ItemObject == null || useSlot.item.id < 0 || useSlot.amount <= 0)
+            {
+                return;
+            }
+
+            ItemObject itemObject = useSlot.ItemObject;
+            useSlot.UpdateSlot(useSlot.item, useSlot.amount - 1);
+
+            OnUseItem?.Invoke(itemObject);
         }
 
         // 인벤토리 데이터 저장하기/불러오기

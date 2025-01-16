@@ -39,6 +39,13 @@ namespace Seti
         protected float attack = 10f;
         [SerializeField]
         protected float defend = 1f;
+        [SerializeField]
+        protected float rate_Attack = 1f;
+        [SerializeField]
+        protected float rate_Movement = 4f;
+
+        // 부가 기능
+        protected float stagger = 0.3f;   // 경직 시간
         #endregion
 
         // 속성
@@ -48,15 +55,21 @@ namespace Seti
         public List<Behaviour> Behaviours => behaviours;
         public Controller_Animator Controller_Animator => animator;
 
-        // Default 스탯
-        public float Health_Default { get { return 100f; } }
-        public float Attack_Default { get { return 10f; } }
-        public float Defend_Default { get { return 1f; } }
+        // 스탯 Default
+        public float Health_Default => 100f;
+        public float Attack_Default => 10f;
+        public float Defend_Default => 1f;
+        public float Rate_Attack_Default => 10f;
+        public float Rate_Movement_Default => 4f;
+        public float Stagger_Default => 0.3f;
 
-        //
+        // 스탯 외부 참조
         public float Health => health;
         public float Attack => attack;
         public float Defend => defend;
+        public float Rate_Attack => rate_Attack;
+        public float Rate_Movement => rate_Movement;
+        public float Stagger => stagger;
         #endregion
 
         // 추상화
@@ -79,6 +92,9 @@ namespace Seti
         public void Update_Health(float heal) => health = heal;
         public void Update_Attack(float atk) => attack = atk;
         public void Update_Defend(float def) => defend = def;
+        public void Update_Rate_Attack(float r_atk) => rate_Attack = r_atk;
+        public void Update_Rate_Movement(float r_mov) => rate_Movement = r_mov;
+        public void Update_Stagger(float stag) => stagger = stag;
         #endregion
 
         // 메서드
@@ -137,9 +153,15 @@ namespace Seti
             control.OnEnter(this);
         }
 
-        public void SetStats()
+        // Load 한 스탯을 적용
+        public void SetStats(float heal, float atk, float def, float r_atk, float r_mov, float stag = 0.3f)
         {
-
+            Update_Health(heal);
+            Update_Attack(atk);
+            Update_Defend(def);
+            Update_Rate_Attack(r_atk);
+            Update_Rate_Movement(r_mov);
+            Update_Stagger(stag);
         }
 
         // 씬 내의 대적자 액터 가져오기

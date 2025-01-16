@@ -26,11 +26,11 @@ namespace Seti
 
         protected float m_timeSinceLastHit = 0.0f;              // 무적 카운트다운
 
-        public UnityAction OnDeath;
-        public UnityAction OnReceiveDamage;
-        public UnityAction OnHitWhileVulnerable;
-        public UnityAction OnBecomeVulnerable;
-        public UnityAction OnResetDamage;
+        public UnityAction OnDeath;                 // 이벤트: 죽음
+        public UnityAction OnReceiveDamage;         // 이벤트: 피격
+        public UnityAction OnHitWhileInvulnerable;  // 이벤트: 무적 중 피격
+        public UnityAction OnBecomeVulnerable;      // 이벤트: 무적 상태 해제
+        public UnityAction OnResetDamage;           // 이벤트: 데미지 초기화
         private System.Action schedule;
 
         protected Collider m_collider;
@@ -130,7 +130,7 @@ namespace Seti
             // 무적 상태일 경우
             if (IsInvulnerable)
             {
-                OnHitWhileVulnerable?.Invoke();
+                OnHitWhileInvulnerable?.Invoke();
                 return;
             }
 

@@ -10,6 +10,7 @@ namespace Seti
             Chase,
             Patrol,
             Attack,
+            Stagger,
             BackHome,
         }
 

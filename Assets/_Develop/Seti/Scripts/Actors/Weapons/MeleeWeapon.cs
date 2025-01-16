@@ -182,14 +182,16 @@ namespace Seti
             Debug.Log($"targetLayers.value: {targetLayers.value}");
 
             // 데미지 데이터 가공 후 데미지 주기
-            Damagable.DamageMessage data;
-            data.amount = (int)(Damage * m_Owner.GetComponent<Actor>().Attack);
-            data.damager = this;
-            data.direction = m_Direction.normalized;
-            data.damageSource = m_Owner.transform.position;
-            data.throwing = ThrowingHit;
-            data.stopCamera = false;
-            
+            Damagable.DamageMessage data = new()
+            {
+                amount = (int)(Damage * m_Owner.GetComponent<Actor>().Attack),
+                damager = this,
+                direction = m_Direction.normalized,
+                damageSource = m_Owner.transform.position,
+                throwing = ThrowingHit,
+                stopCamera = false
+            };
+
             d.TakeDamage(data);
 
             // 타격 이펙트

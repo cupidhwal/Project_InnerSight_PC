@@ -22,10 +22,16 @@ namespace Seti
         protected WeaponType primaryWeaponType;
         [SerializeField]
         protected WeaponType currentWeaponType;
+        [SerializeField]
+        public Weapon currentWeapon;
+        [SerializeField]
+        protected bool inAction = false;
         #endregion
 
         // 속성
         #region Properties
+        public Weapon CurrentWeapon => currentWeapon;
+        public bool InAction => inAction;
         public bool IsGrounded { get; protected set; }
         public bool IsAttack { get; set; }
 
@@ -36,7 +42,12 @@ namespace Seti
 
         protected virtual void Start()
         {
-            GetComponent<Damagable>().OnDeath += Die;
+            // Damagable 클래스가 존재하면 상태 전환 리스너 구독
+            if (TryGetComponent<Damagable>(out var damagable))
+            {
+                damagable.OnDeath += Die;
+                damagable.OnReceiveDamage += Stagger;
+            }
 
             IsGrounded = true;
         }
@@ -48,8 +59,13 @@ namespace Seti
 
         // 메서드
         #region Methods
+        // 경직
+        private void Stagger() => inAction = false;
+
+        // 죽음
         private void Die()
         {
+            inAction = false;
             Destroy(this, 2);
         }
         #endregion
