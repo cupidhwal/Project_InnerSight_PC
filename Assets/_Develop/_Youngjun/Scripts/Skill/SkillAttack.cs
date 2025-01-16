@@ -1,4 +1,5 @@
 //using Enemy;
+using Seti;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,7 +29,7 @@ namespace Noah
 
         void HitSkill(Transform enemy)
         {
-            switch(effect)
+            switch (effect)
             {
                 case SkillEffect.Pull:
 
@@ -36,48 +37,56 @@ namespace Noah
             }
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            switch (type)
+            {
+                case SkillType.Single:
+                    if (other.CompareTag("Enemy"))
+                    {
+                        Damagable ec = other.GetComponent<Damagable>();
 
-        //private void OnTriggerEnter2D(Collider2D collision)
-        //{
-        //    switch(type)
-        //    {
-        //        case SkillType.Single:
-        //            if (collision.CompareTag("Enemy"))
-        //            {
-        //                EnemyMainController ec = collision.GetComponent<EnemyMainController>();
+                        if (ec != null)
+                        {
+                            // 데미지 데이터 가공 후 데미지 주기
+                            Damagable.DamageMessage data = new();
+                            data.amount = damage;
 
-        //                if (ec != null)
-        //                {
-        //                    ec.TakeDamage(damage);
-        //                }
+                            ec.TakeDamage(data);
+                        }
 
-        //            }
-        //            break;
-        //    }       
-        //}
+                    }
+                    break;
+            }
+        }
 
-        //private void OnTriggerStay2D(Collider2D collision)
-        //{
-        //    switch (type)
-        //    {
-        //        case SkillType.Dot:
-        //            if (collision.CompareTag("Enemy"))
-        //            {
-        //                EnemyMainController ec = collision.GetComponent<EnemyMainController>();
+        private void OnTriggerStay(Collider other)
+        {
+            switch (type)
+            {
+                case SkillType.Dot:
+                    if (other.CompareTag("Enemy"))
+                    {
+                        Damagable ec = other.GetComponent<Damagable>();
 
-        //                if (ec != null)
-        //                {
-        //                    ctime += Time.deltaTime;
+                        if (ec != null)
+                        {
+                            ctime += Time.deltaTime;
 
-        //                    while (ctime > 0.5f)
-        //                    {
-        //                        ctime = 0;
-        //                        ec.TakeDamage(damage);
-        //                    }            
-        //                }
-        //            }
-        //            break;
-        //    }
-        //}
+                            while (ctime > 0.5f)
+                            {
+                                // 데미지 데이터 가공 후 데미지 주기
+                                Damagable.DamageMessage data = new();
+                                data.amount = damage;
+
+                                ec.TakeDamage(data);
+
+                                ctime = 0;
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
     }
 }
