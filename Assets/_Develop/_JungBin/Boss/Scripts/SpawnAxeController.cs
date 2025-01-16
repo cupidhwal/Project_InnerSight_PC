@@ -5,7 +5,7 @@ namespace JungBin
 
     public class SpawnAxeController : MonoBehaviour
     {
-        [SerializeField] private int attackDamage = 0;
+        [SerializeField] private float attackDamage = 0;
         private Transform goalPosition;
         [SerializeField] private float axeSpeed = 10f;
         private Vector3 dir;

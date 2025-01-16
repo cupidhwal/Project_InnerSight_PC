@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
+using Seti;
 
 namespace JungBin
 {
@@ -18,6 +19,11 @@ namespace JungBin
         [SerializeField] private GameObject attackBox;            //기본 공격시 켜지는 콜라이더
 
         [Header("Jump Attack Settings")]
+        [SerializeField] private LayerMask jumpGroundLayer; // 충격파를 적용할 레이어
+        [SerializeField] private float shockwaveRadius = 5f; // 충격파 반경
+        [SerializeField] private float shockwaveDamage = 100f; // 충격파 데미지
+        [SerializeField] private GameObject shockwavePrefab;
+        [SerializeField] private Material shockwaveShaderMaterial;
         [SerializeField] private GameObject rockPrefab;             //낙석시 스폰되는 오브젝트
         [SerializeField] private GameObject warningEffectPrefab;    //낙석시 스폰되는 경고 프리팹
         [SerializeField] private Transform spawnPointsParent;       //낙석 위치 부모 오브젝트
@@ -107,14 +113,15 @@ namespace JungBin
                 HandleJumpAttack();
             }
 
-            if(animator.GetBool("IsAttack02") == true) //======================================================
+            if (animator.GetBool("IsAttack02") == true)
             {
-                if(DetectWall() == true)
+                if (DetectWall() == true)
                 {
-                    animator.speed = 0.2f;
-                    Debug.Log("================");
+                    animator.SetBool("IsWall", true);
+                    //animator.speed = 0.2f;
                 }
-                else
+            }
+ /*               else
                 {
                     animator.speed = 1f;
                 }
@@ -122,7 +129,7 @@ namespace JungBin
             else
             {
                 animator.speed = 1f;
-            }
+            }*/
         }
 
         #region 일반적인 상태
@@ -152,14 +159,10 @@ namespace JungBin
                 float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
                 if (angleToPlayer <= detectionAngle / 2)
                 {
-                    // 디버그용 레이 시각화
-                    //Debug.DrawLine(detectedObj.position, detectedObj.position + directionToPlayer * distanceToPlayer, Color.green);
-                    Debug.Log($"레이 오브젝트 : {detectedObj}");
                     // 레이캐스트로 충돌 객체 확인
-                    if (Physics.Raycast(detectedObj.position, directionToPlayer, out RaycastHit hit, distanceToPlayer))    
+                    if (Physics.Raycast(detectedObj.position, directionToPlayer, out RaycastHit hit, distanceToPlayer))       
                     {
                         
-                        Debug.Log($"Ray hit: {hit.transform.name}");
                         // 충돌한 객체가 플레이어인지 확인
                         if (hit.transform.CompareTag("Wall"))
                         {                            
@@ -168,8 +171,6 @@ namespace JungBin
                     }
                 }
             }
-            // 감지 실패 시 디버그 레이            
-            //Debug.DrawLine(detectedObj.position, detectedObj.position + directionToPlayer, Color.red);
             return true; // 플레이어가 감지되지 않음
         }
 
@@ -215,13 +216,15 @@ namespace JungBin
         private bool DetectWall()    // 시야에 벽이 있으면 불값 리턴
         {
             Vector3 directionToWall = transform.forward; // 보스의 정면 방향
-            float detectionRange = 5f; // 감지 거리
+            float detectionRange =1f; // 감지 거리
 
             // 레이캐스트로 충돌 객체 확인
             if (Physics.Raycast(transform.position, directionToWall, out RaycastHit hit, detectionRange))
             {
                 if (hit.transform.CompareTag("Wall"))
                 {
+                    BrokenWall brokenWall = hit.transform.GetComponent<BrokenWall>();
+                    brokenWall.RushToWall();
                     return true; // 벽이 감지됨
                 }
             }
@@ -269,9 +272,65 @@ namespace JungBin
                         animator.SetBool("IsJump", false);
                         isMaxHeight = false;
                         jumpAttackBox.SetActive(false);
+                        CreateShockwave();
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// 점프 후 착지 시 충격파 생성
+        /// </summary>
+        public void CreateShockwave()
+        {
+            Debug.Log("충격파 생성");
+
+            // 충격파 범위 내 객체 감지
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, shockwaveRadius, jumpGroundLayer);
+            foreach (var hitCollider in hitColliders)
+            {
+                if (hitCollider.TryGetComponent(out Player target))
+                {
+                    target.TakeDamage(shockwaveDamage);
+                }
+            }
+
+            // 충격파 비주얼 효과 실행 (파티클 등 추가 가능)
+            TriggerShockwaveEffect();
+
+            // 충격파 시각화 (디버그용)
+            Debug.DrawLine(transform.position, transform.position + Vector3.up * shockwaveRadius, Color.red, 1f);
+
+            // 애니메이션 속도 조정 및 상태 변경
+            animator.SetTrigger("Shockwave");
+        }
+
+        /// <summary>
+        /// 충격파 비주얼 효과
+        /// </summary>
+        private void TriggerShockwaveEffect()
+        {
+            // 파티클 시스템 생성
+            var shockwaveParticle = Instantiate(shockwavePrefab, transform.position, Quaternion.identity);
+            shockwaveParticle.transform.localScale = Vector3.one * shockwaveRadius;
+            Destroy(shockwaveParticle, 2f); // 2초 후 파괴
+        }
+
+        private void TriggerShockwaveShaderEffect()
+        {
+            // Material 또는 쉐이더를 활성화
+            Material shockwaveMaterial = Instantiate(shockwaveShaderMaterial);
+            shockwaveMaterial.SetFloat("_Radius", shockwaveRadius);
+            shockwaveMaterial.SetVector("_Center", transform.position);
+
+            // 2초 동안 효과 유지 후 제거
+            StartCoroutine(DisableShaderAfterTime(shockwaveMaterial, 2f));
+        }
+
+        private IEnumerator DisableShaderAfterTime(Material material, float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            Destroy(material);
         }
 
         private void JumpTowardsPlayer() //유지중일때 플레이어의 위치로 이동

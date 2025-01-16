@@ -3,16 +3,16 @@ using UnityEngine;
 namespace JungBin
 {
     /// <summary>
-    /// °ø°İ½Ã ÄÑÁö´Â ¾îÅÃ¹Ú½º
+    /// ê³µê²©ì‹œ ì¼œì§€ëŠ” ì–´íƒë°•ìŠ¤
     /// </summary>
     public class AttackBox : MonoBehaviour
     {
-        [SerializeField] private int attackDamage = 0;
+        [SerializeField] private float attackDamage = 0;
         private void OnTriggerEnter(Collider other)
         {
                 if (other.GetComponent<CapsuleCollider>() == GameManager.Instance.Player_HitCapsuleCollider)
                 {
-                    Debug.Log("¸ÂÀ½");
+                    Debug.Log("ë§ìŒ");
                     GameManager.Instance.Player.TakeDamage(attackDamage);
                 }
         }

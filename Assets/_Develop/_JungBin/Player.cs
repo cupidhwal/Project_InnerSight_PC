@@ -6,48 +6,48 @@ namespace JungBin
 
     public class Player : MonoBehaviour
     {
-        public static int Lives { get; private set; } = 1; // ±âº» »ı¸í ¼ö
+        public static int Lives { get; private set; } = 1; // ê¸°ë³¸ ìƒëª… ìˆ˜
 
-        public static int Health { get; private set; } = 100; // ±âº» »ı¸í ¼ö
+        public static float Health { get; private set; } = 100; // ê¸°ë³¸ ìƒëª… ìˆ˜
 
-        public void TakeDamage(int amount)
+        public void TakeDamage(float amount)
         {
             Health -= amount;
-            Debug.Log($"µ¥¹ÌÁö ÀÔÀ½. ³²¾ÆÀÖ´Â HP : {Health}");
+            Debug.Log($"ë°ë¯¸ì§€ ì…ìŒ. ë‚¨ì•„ìˆëŠ” HP : {Health}");
             if( Health <= 0 )
             {
                 Die();
             }
         }
 
-        // »ı¸í Ãß°¡ ¸Ş¼­µå
+        // ìƒëª… ì¶”ê°€ ë©”ì„œë“œ
         public void AddLife(int amount)
         {
             Lives += amount;
-            Debug.Log($"»ı¸í Ãß°¡µÊ: ÇöÀç »ı¸í ¼ö {Lives}");
+            Debug.Log($"ìƒëª… ì¶”ê°€ë¨: í˜„ì¬ ìƒëª… ìˆ˜ {Lives}");
         }
 
-        // »ç¸Á ¸Ş¼­µå
+        // ì‚¬ë§ ë©”ì„œë“œ
         public void Die()
         {
-            if (Lives > 0) // »ı¸íÀÌ ³²¾Æ ÀÖÀ» ¶§¸¸ °¨¼Ò
+            if (Lives > 0) // ìƒëª…ì´ ë‚¨ì•„ ìˆì„ ë•Œë§Œ ê°ì†Œ
             {
-                Lives--; // »ı¸í °¨¼Ò
-                //ÀÌ°÷¿¡ »ç¸Á ¾Ö´Ï¸ŞÀÌ¼Ç Ãß°¡
-                if (Lives == 0) // °¨¼Ò ÈÄ »ı¸íÀÌ ¾øÀ¸¸é Á×À½ Ã³¸®
+                Lives--; // ìƒëª… ê°ì†Œ
+                //ì´ê³³ì— ì‚¬ë§ ì• ë‹ˆë©”ì´ì…˜ ì¶”ê°€
+                if (Lives == 0) // ê°ì†Œ í›„ ìƒëª…ì´ ì—†ìœ¼ë©´ ì£½ìŒ ì²˜ë¦¬
                 {
-                    //°ÔÀÓ ¿À¹ö UI Ãâ·Â
-                    Debug.Log("ÇÃ·¹ÀÌ¾î Á×À½");
+                    //ê²Œì„ ì˜¤ë²„ UI ì¶œë ¥
+                    Debug.Log("í”Œë ˆì´ì–´ ì£½ìŒ");
                 }
                 else
                 {
-                    //¼Ò»ı ¾Ö´Ï¸ŞÀÌ¼Ç Ãß°¡
-                    Debug.Log($"ÇÃ·¹ÀÌ¾î ¼Ò»ı ³²Àº ¸ñ¼û ¼ö : {Lives}");
+                    //ì†Œìƒ ì• ë‹ˆë©”ì´ì…˜ ì¶”ê°€
+                    Debug.Log($"í”Œë ˆì´ì–´ ì†Œìƒ ë‚¨ì€ ëª©ìˆ¨ ìˆ˜ : {Lives}");
                 }
             }
             else
             {
-                Debug.Log("ÇÃ·¹ÀÌ¾î´Â ÀÌ¹Ì Á×À½ »óÅÂÀÔ´Ï´Ù.");
+                Debug.Log("í”Œë ˆì´ì–´ëŠ” ì´ë¯¸ ì£½ìŒ ìƒíƒœì…ë‹ˆë‹¤.");
             }
         }
     }
