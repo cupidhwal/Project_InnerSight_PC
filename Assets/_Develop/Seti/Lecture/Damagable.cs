@@ -60,11 +60,16 @@ namespace Seti
                 {
                     player.GetComponent<Enhance>().OnEnhance += ResetDamage;
                 }
+
+                if (actor is Enemy && OnDamageMessageReceivers[0] is Player targetPlayer)
+                {
+                    targetDamagable = targetPlayer.GetComponent<Damagable>();
+                    OnReceiveDamage += targetPlayer.GetComponent<Condition_Player>().CurrentWeapon.AttackExit;
+                }
             }
 
             // 초기화
             ResetDamage();
-            Initialize();
         }
 
         private void Update()
@@ -91,15 +96,17 @@ namespace Seti
                 schedule = null;
             }
         }
+
+        // 상대방의 리시버에서 자신을 지우기
+        private Damagable targetDamagable;
+        private void OnDisable()
+        {
+            targetDamagable.OnDamageMessageReceivers.Remove(this);
+        }
         #endregion
 
         // 메서드
         #region Methods
-        private void Initialize()
-        {
-            OnDeath += Die;
-        }
-
         // 충돌체 활성/비활성
         public void SetColliderState(bool enabled)
         {
@@ -169,11 +176,6 @@ namespace Seti
                 var receiver = OnDamageMessageReceivers[i] as IMessageReceiver;
                 receiver.OnReceiveMessage(messageType, this, data);
             }
-        }
-
-        private void Die()
-        {
-            Destroy(gameObject, 2);
         }
         #endregion
 

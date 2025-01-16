@@ -266,6 +266,11 @@ namespace Seti
         #region Utilities
         private async void Execute_Dash()
         {
+            // Damagable 컴포넌트가 있다면 대시 중 무적
+            if (actor.TryGetComponent<Damagable>(out var damagable))
+                damagable.IsInvulnerable = true;
+
+            // 대시 시작
             isDashed = true;
 
             actor.Controller_Animator.IsDash = true;
@@ -280,6 +285,10 @@ namespace Seti
 
             await Task.Delay((int)((player.Dash_Cooldown - player.Dash_Duration) * 1000));
             isDashed = false;
+            // 대시 끝
+
+            // Damagable 컴포넌트가 있다면 무적 해제
+            damagable.IsInvulnerable = false;
         }
         #endregion
     }

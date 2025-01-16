@@ -1,3 +1,4 @@
+using Noah;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -45,7 +46,9 @@ namespace Seti
         protected float rate_Movement = 4f;
 
         // 부가 기능
-        protected float stagger = 0.3f;   // 경직 시간
+        [Header("CC Status")]
+        [SerializeField]
+        protected float stagger = 0.5f;   // 경직 시간
         #endregion
 
         // 속성
@@ -61,7 +64,7 @@ namespace Seti
         public float Defend_Default => 1f;
         public float Rate_Attack_Default => 10f;
         public float Rate_Movement_Default => 4f;
-        public float Stagger_Default => 0.3f;
+        public float Stagger_Default => 0.5f;
 
         // 스탯 외부 참조
         public float Health => health;
@@ -84,11 +87,25 @@ namespace Seti
         {
             // 참조
             animator = GetComponentInChildren<Controller_Animator>();
+
+            // 초기화
+            //SetStats(PlayerStateManager.Instance.pla);
         }
         #endregion
 
         // 스탯 적용
         #region Methods_Stats
+        // Load 한 스탯을 적용
+        public void SetStats(float heal, float atk, float def, float r_atk, float r_mov, float stag = 0.3f)
+        {
+            Update_Health(heal);
+            Update_Attack(atk);
+            Update_Defend(def);
+            Update_Rate_Attack(r_atk);
+            Update_Rate_Movement(r_mov);
+            Update_Stagger(stag);
+        }
+
         public void Update_Health(float heal) => health = heal;
         public void Update_Attack(float atk) => attack = atk;
         public void Update_Defend(float def) => defend = def;
@@ -151,17 +168,6 @@ namespace Seti
             }
             control = newControl;
             control.OnEnter(this);
-        }
-
-        // Load 한 스탯을 적용
-        public void SetStats(float heal, float atk, float def, float r_atk, float r_mov, float stag = 0.3f)
-        {
-            Update_Health(heal);
-            Update_Attack(atk);
-            Update_Defend(def);
-            Update_Rate_Attack(r_atk);
-            Update_Rate_Movement(r_mov);
-            Update_Stagger(stag);
         }
 
         // 씬 내의 대적자 액터 가져오기

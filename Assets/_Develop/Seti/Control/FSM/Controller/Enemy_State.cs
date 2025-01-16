@@ -3,14 +3,16 @@ using UnityEngine;
 
 namespace Seti
 {
-    public class Enemy_State : MonoState<Controller_FSM>
+    public abstract class Enemy_State : MonoState<Controller_FSM>
     {
         // 필드
         #region Variables
         protected Enemy enemy;
-        protected float elapsedTime = 1f;   // 상태 전이 시간 경과
-        protected float elapsedCriteria = 10f;
-        protected float steeringInterval;
+        protected Condition_Enemy condition;
+        protected Damagable damagable;
+        protected float elapsedTime = 5f;       // 상태 전이 시간 경과
+        protected float elapsedCriteria = 10f;  // 상태 전이 시간 경과 기준
+        protected float steeringInterval;       // 상태 조작 주기
 
         // Patrol, Chase
         protected Vector2 moveInput;
@@ -22,6 +24,12 @@ namespace Seti
         public override void OnInitialized()
         {
             enemy = context.Actor as Enemy;
+            condition = enemy.GetComponent<Condition_Enemy>();
+
+            if (context.TryGetComponent<Damagable>(out var damagable))
+            {
+                this.damagable = damagable;
+            }
         }
 
         // 상태 전환 시 State Enter에 1회 실행
@@ -31,13 +39,7 @@ namespace Seti
         public override void OnExit() { }
 
         // 상태 전환 조건 메서드
-        public override Type CheckTransitions() => null; // 기본적으로 전환 조건 없음
-
-        // 상태 실행 중
-        public override void Update(float deltaTime)
-        {
-
-        }
+        public override Type CheckTransitions() => null;
         #endregion
     }
 }

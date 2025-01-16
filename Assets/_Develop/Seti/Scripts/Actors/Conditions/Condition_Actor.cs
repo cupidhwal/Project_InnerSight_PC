@@ -22,8 +22,11 @@ namespace Seti
         protected WeaponType primaryWeaponType;
         [SerializeField]
         protected WeaponType currentWeaponType;
+
+        protected Weapon primaryWeapon;
         [SerializeField]
-        public Weapon currentWeapon;
+        protected Weapon currentWeapon;
+
         [SerializeField]
         protected bool inAction = false;
         #endregion
@@ -40,33 +43,48 @@ namespace Seti
         public WeaponType CurrentWeaponType => currentWeaponType;
         #endregion
 
+        // 라이프 사이클
+        #region Life Cycle
         protected virtual void Start()
         {
             // Damagable 클래스가 존재하면 상태 전환 리스너 구독
             if (TryGetComponent<Damagable>(out var damagable))
             {
                 damagable.OnDeath += Die;
-                damagable.OnReceiveDamage += Stagger;
+                damagable.OnReceiveDamage += StaggerOn;
             }
 
             IsGrounded = true;
+            inAction = true;
         }
+
+        protected virtual void Awake()
+        {
+            // 초기화
+            Initialize();
+        }
+        #endregion
 
         // 추상화
         #region Abstract
-        protected abstract void Initialize();
+        protected virtual void Initialize()
+        {
+            primaryWeapon = GetComponentInChildren<Weapon>();
+            primaryWeapon.SetOwner(gameObject);
+        }
         #endregion
 
         // 메서드
         #region Methods
         // 경직
-        private void Stagger() => inAction = false;
+        private void StaggerOn() => inAction = false;
+        public void StaggerOff() => inAction = true;
 
         // 죽음
         private void Die()
         {
             inAction = false;
-            Destroy(this, 2);
+            Destroy(gameObject, 2);
         }
         #endregion
 

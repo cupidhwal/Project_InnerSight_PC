@@ -5,14 +5,10 @@ namespace Seti
 {
     public class Enemy_State_Patrol : Enemy_State
     {
-        // 추상
-        #region Abstract
+        // 오버라이드
+        #region Override
         // 초기화 메서드 - 생성 후 1회 실행
-        public override void OnInitialized()
-        {
-            base.OnInitialized();
-            elapsedCriteria = 10f;
-        }
+        public override void OnInitialized() => base.OnInitialized();
 
         // 상태 전환 시 State Enter에 1회 실행
         public override void OnEnter()
@@ -27,6 +23,12 @@ namespace Seti
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
+            if (damagable.CurrentHitPoints < 0)
+                return typeof(Enemy_State_Dead);
+
+            if (!condition.InAction)
+                return typeof(Enemy_State_Stagger);
+
             if (enemy.GoBackHome)
                 return typeof(Enemy_State_BackOff);
 

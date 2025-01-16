@@ -5,12 +5,8 @@ namespace Seti
 {
     public class Enemy_State_Stagger : Enemy_State
     {
-        // 필드
-        #region Variables
-        #endregion
-
-        // 추상
-        #region Abstract
+        // 오버라이드
+        #region Override
         // 초기화 메서드 - 생성 후 1회 실행
         public override void OnInitialized()
         {
@@ -25,6 +21,7 @@ namespace Seti
         public override void OnEnter()
         {
             base.OnEnter();
+
             elapsedTime = context.Actor.Stagger;
             enemy.SwitchState(Enemy.State.Stagger);
         }
@@ -34,6 +31,8 @@ namespace Seti
         {
             base.OnExit();
 
+            condition.StaggerOff();
+
             // 행동 종료를 명시적으로 작성해야 한다면 이와 같은 양식으로 작성
             //attack?.FSM_AttackInput(false);
         }
@@ -41,6 +40,9 @@ namespace Seti
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
+            if (damagable.CurrentHitPoints < 0)
+                return typeof(Enemy_State_Dead);
+
             if (enemy.GoBackHome && context.StateMachine.ElapsedTime > elapsedTime)
                 return typeof(Enemy_State_BackOff);
 

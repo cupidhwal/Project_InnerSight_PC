@@ -12,6 +12,7 @@ namespace Seti
             Attack,
             Stagger,
             BackHome,
+            Dead
         }
 
         // 필드

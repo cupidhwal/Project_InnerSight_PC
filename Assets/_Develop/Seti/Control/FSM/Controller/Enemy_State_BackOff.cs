@@ -5,8 +5,8 @@ namespace Seti
 {
     public class Enemy_State_BackOff : Enemy_State
     {
-        // 추상
-        #region Abstract
+        // 오버라이드
+        #region Override
         // 초기화 메서드 - 생성 후 1회 실행
         public override void OnInitialized() => base.OnInitialized();
 
@@ -15,14 +15,26 @@ namespace Seti
         {
             base.OnEnter();
             enemy.SwitchState(Enemy.State.BackHome);
+
+            if (damagable)
+                damagable.IsInvulnerable = true;
         }
 
         // 상태 전환 시 State Exit에 1회 실행
-        public override void OnExit() => base.OnExit();
+        public override void OnExit()
+        {
+            base.OnExit();
+
+            if (damagable)
+                damagable.IsInvulnerable = false;
+        }
 
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
+            if (damagable.CurrentHitPoints < 0)
+                return typeof(Enemy_State_Dead);
+
             if (enemy.ImHome)
                 return typeof(Enemy_State_Idle);
 

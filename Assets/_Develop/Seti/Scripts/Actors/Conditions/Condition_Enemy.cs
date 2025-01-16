@@ -6,6 +6,8 @@ namespace Seti
         #region Life Cycle
         protected override void Start()
         {
+            base.Start();
+
             // 초기화
             Initialize();
         }
@@ -18,8 +20,11 @@ namespace Seti
             // 저장된 현재 장비
             primaryWeaponType = WeaponType.NULL;
 
+            base.Initialize();
+
             // 초기 장비 설정
             currentWeaponType = primaryWeaponType;
+            currentWeapon = primaryWeapon;
         }
         #endregion
     }

@@ -11,9 +11,6 @@ namespace Seti
     {
         // 필드
         #region Variables
-        // 경직 시간
-        [SerializeField] private float stagger_Interval;
-
         // 전략 관리
         private Actor actor;
         #endregion

@@ -27,8 +27,14 @@ namespace Seti
         protected void Awake()
         {
             // 초기화
-            actorTransform = GetComponentInParent<Actor>().transform;
+            if (!TryGetComponent<Actor>(out var actor))
+                actor = GetComponentInParent<Actor>();
+            actorTransform = actor.transform;
 
+            if (actor is Player)
+                rightHandTarget = actorTransform.GetChild(2);
+
+            // 애니메이션 컨트롤러 초기화
             Animator = GetComponent<Animator>();
             aniMachine = new StateMachine<Controller_Animator>(
                 this,

@@ -190,6 +190,12 @@ MonoBehaviour:
   blueprint: {fileID: 0}
   actorCondition: {fileID: 0}
   behaviours: []
+  health: 100
+  attack: 10
+  defend: 1
+  rate_Attack: 1
+  rate_Movement: 4
+  stagger: 0.5
   moveSpeed: 4
   dashSpeed: 20
   dashDuration: 0.15
@@ -210,6 +216,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5827bcee972e754cabdaf55de40cfb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  increment_Health: 10
+  increment_Attack: 10
+  increment_Defend: 100
   increment_Move: 10
 --- !u!114 &9056966004656929299
 MonoBehaviour:
@@ -224,6 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHitPoints: 100
+  currentHitPoints: 0
   invulnerablityTime: 1
   hitAngle: 360
   hitForwardRotation: 360

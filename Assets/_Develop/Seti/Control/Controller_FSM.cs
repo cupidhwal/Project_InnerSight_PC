@@ -39,6 +39,8 @@ namespace Seti
             stateMachine.AddState(new Enemy_State_Patrol());
             stateMachine.AddState(new Enemy_State_Attack());
             stateMachine.AddState(new Enemy_State_BackOff());
+            stateMachine.AddState(new Enemy_State_Stagger());
+            stateMachine.AddState(new Enemy_State_Dead());
 
             // 행동 이벤트 바인딩
             BindFSMBehaviours();

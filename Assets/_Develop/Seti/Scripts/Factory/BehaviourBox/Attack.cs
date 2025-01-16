@@ -229,23 +229,16 @@ namespace Seti
             condition.IsAttack = isAttack;
             if (isAttack)
             {
-                condition.AttactPoint = GameUtility.RayToWorldPosition();
-                currentStrategy?.Attack();
-
                 if (actor is Player)
-                {
-                    Condition_Player condition_Player = condition as Condition_Player;
-                    condition_Player.CurrentWeapon.AttackEnter();
-                }
+                    condition.AttactPoint = GameUtility.RayToWorldPosition();
+
+                condition.CurrentWeapon.AttackEnter();
+                currentStrategy?.Attack();
             }
             else
             {
                 currentStrategy?.AttackExit();
-                if (actor is Player)
-                {
-                    Condition_Player condition_Player = condition as Condition_Player;
-                    condition_Player.CurrentWeapon.AttackExit();
-                }
+                condition.CurrentWeapon.AttackExit();
             }
             if (actor is Player)
             actor.Controller_Animator.IsAttack = isAttack;
