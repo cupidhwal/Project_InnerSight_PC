@@ -23,9 +23,15 @@ namespace JungBin
             currentAxe.SetActive(true);
         }
 
+        public void IsAttackFalse()
+        {
+            FirstBossManager.isAttack = false;
+        }
+
         public void AxeActiveFalse()
         {
             currentAxe.SetActive(false);
+            FirstBossManager.isAttack = true;
         }
     }
 }
