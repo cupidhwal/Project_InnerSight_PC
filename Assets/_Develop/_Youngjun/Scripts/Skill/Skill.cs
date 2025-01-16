@@ -19,12 +19,17 @@ namespace Noah
         public float cooldown;
         public float damage;
         public float upgradeDamage;
+        public int skillUpgardeCount = 1;
         public float attackRadius;
         public float skillAtkTime = 1.5f;
         public Vector3 skillPos;
         public Sprite skillImage;
         public Sprite UISprite;
         public bool isSkillOn = true;
+
+        public string skillName;
+        [TextArea(5, 5)]
+        public string skillDescription;
 
         // 스킬 사용 시 실행되는 메서드
         public abstract void Activate();
@@ -93,6 +98,30 @@ namespace Noah
 
     [Serializable]
     public class LaserFire : Skill<LaserFire>
+    {
+        public override void Activate()
+        {
+            isSkillOn = false;
+            Debug.Log(damage + " / " + cooldown);
+
+            ReturnToPool();
+        }
+    }
+
+    [Serializable]
+    public class LaserFire1 : Skill<LaserFire1>
+    {
+        public override void Activate()
+        {
+            isSkillOn = false;
+            Debug.Log(damage + " / " + cooldown);
+
+            ReturnToPool();
+        }
+    }
+
+    [Serializable]
+    public class LaserFire2 : Skill<LaserFire2>
     {
         public override void Activate()
         {

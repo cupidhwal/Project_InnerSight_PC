@@ -8,7 +8,7 @@ namespace Noah
         public UpGradePlayerdata upGradePlayerdata;
         public StartData startPlayerData;
 
-        private PlayerData playerData;
+        public PlayerData playerData;
         private List<float> dataList = new List<float>();
 
         private void Start()

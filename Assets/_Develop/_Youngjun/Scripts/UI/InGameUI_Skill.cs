@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,33 +11,37 @@ namespace Noah
     {
         public static InGameUI_Skill instance;
 
+        public Image changeNewSkill_Image;
+        public TMP_Text changeNewSkill_Text;
+        private Transform skillBtnsPar;
         private Transform skliiObject;
         [SerializeField] private GameObject selectUI;
+        private Transform selectBtnPar;
 
         public List<SkillBase> skills = new List<SkillBase>();
         private List<SkillBase> randomSkills = new List<SkillBase>(); // 랜덤으로 선택된 스킬 목록
         public List<Image> skillUIList = new List<Image>(); // UI 슬롯 리스트
         public List<SkillBase> skillSlots = new List<SkillBase>();
 
-        public SkillBase firstSkill;
-        public SkillBase secondSkill;
-        public SkillBase thirdSkill;
-        public SkillBase fourthSkill;
+        //public SkillBase firstSkill;
+        //public SkillBase secondSkill;
+        //public SkillBase thirdSkill;
+        //public SkillBase fourthSkill;
 
-        public Button btn1, btn2, btn3;
-        public Button selectBtn1, selectBtn2, selectBtn3, selectBtn4;
+        public List<Button> btns = new List<Button> ();
+        public List<Button> changeBtns = new List<Button> ();
 
-        private List<int> randonNum = new List<int>();
+        private List<int> randomNum = new List<int>();
 
         private int selectSkillNum;
-
-        public Image firstSkillUI, secondSkillUI, thridSkillUI, fourthSkillUI;
 
         // 플레이어 스킬
         public FireSkill fireSkill;
         public Kunai kunai;
         public MeteorRain meteorRain;
         public LaserFire laserFire;
+        public LaserFire1 laserFire1;
+        public LaserFire2 laserFire2;
 
         private void Awake()
         {
@@ -51,18 +56,34 @@ namespace Noah
         void Init()
         {
             skliiObject = transform.GetChild(0);
+            skillBtnsPar = skliiObject.GetChild(0);
+            selectBtnPar = selectUI.transform.GetChild(0);
 
             // 스킬 종류 추가
             skills.Add(fireSkill);
             skills.Add(kunai);
             skills.Add(meteorRain);
             skills.Add(laserFire);
+            skills.Add(laserFire1);
+            skills.Add(laserFire2);
 
-            // UI 슬롯을 초기화 (Unity 에디터에서 설정한 UI Image 배열)
-            skillUIList.Add(firstSkillUI);
-            skillUIList.Add(secondSkillUI);
-            skillUIList.Add(thridSkillUI); // 스킬 UI를 추가로 늘릴 수 있음
-            skillUIList.Add(fourthSkillUI); // 스킬 UI를 추가로 늘릴 수 있음
+            for(int i = 0; i < skillBtnsPar.childCount; i++)
+            {
+                if (skillBtnsPar.GetChild(i).GetChild(0).GetComponent<Button>() == null)
+                {
+                    continue;
+                }
+                else
+                {
+                    btns.Add(skillBtnsPar.GetChild(i).GetChild(0).GetComponent<Button>());
+                }
+                
+            }
+
+            for(int i = 0; i < selectBtnPar.childCount; i++)
+            {
+                changeBtns.Add(selectBtnPar.GetChild(i).GetChild(0).GetComponent<Button>());
+            }
 
         }
 
@@ -87,14 +108,17 @@ namespace Noah
                 }
             }
 
-            btn1.onClick.AddListener(() => AssignSkillToKey(0)); // 첫 번째 랜덤 스킬을 버튼1에 할당
-            btn2.onClick.AddListener(() => AssignSkillToKey(1)); // 두 번째 랜덤 스킬을 버튼2에 할당
-            btn3.onClick.AddListener(() => AssignSkillToKey(2)); // 세 번째 랜덤 스킬을 버튼3에 할당
+            for (int i = 0; i < randomSkills.Count; i++)
+            {
+                int index = i; // 로컬 변수로 캡처
 
-            // 랜덤 스킬 이미지 할당
-            btn1.transform.GetChild(1).GetComponent<Image>().sprite = randomSkills[0].skillImage;
-            btn2.transform.GetChild(1).GetComponent<Image>().sprite = randomSkills[1].skillImage;
-            btn3.transform.GetChild(1).GetComponent<Image>().sprite = randomSkills[2].skillImage;
+                btns[i].onClick.AddListener(() => AssignSkillToKey(index));
+
+                // 랜덤 스킬 이미지 할당
+                btns[i].transform.GetChild(1).GetComponent<Image>().sprite = randomSkills[index].skillImage;
+                btns[i].transform.GetChild(2).GetComponent<TMP_Text>().text = randomSkills[index].skillName;
+                btns[i].transform.GetChild(3).GetComponent<TMP_Text>().text = randomSkills[index].skillDescription;
+            }
         }
 
         // 선택된 스킬을 X와 C 키에 할당
@@ -139,7 +163,7 @@ namespace Noah
         void AssignSkillToKey(int skillIndex)
         {
             int maxSkillSlots = skillUIList.Count; // UI 슬롯 개수에 따라 최대 슬롯 개수 결정
-
+            
             // 이미 슬롯에 스킬이 있는 경우 업그레이드 처리
             for (int i = 0; i < skillSlots.Count; i++)
             {
@@ -147,6 +171,7 @@ namespace Noah
                 {
                     Debug.Log($"{skillSlots[i]} + {randomSkills[skillIndex]} 업그레이드");
                     skillSlots[i].damage += skillSlots[i].upgradeDamage;
+                    UpgradeCheck(skillSlots[i], i);
                     ResetBtnData();
                     return;
                 }
@@ -164,7 +189,7 @@ namespace Noah
             {
                 // 슬롯이 가득 찬 경우, 선택 UI 표시
                 selectSkillNum = skillIndex;
-                SetSelectUI();
+                SetSelectUI(randomSkills[skillIndex]);
             }
         }
 
@@ -179,9 +204,11 @@ namespace Noah
             }
         }
 
-        void UpgradeCheck()
-        { 
-            
+        void UpgradeCheck(SkillBase _skill, int _index)
+        {
+            _skill.skillUpgardeCount++;
+
+            skillUIList[_index].transform.GetChild(3).GetComponent<TMP_Text>().text = _skill.skillUpgardeCount.ToString();
         }
 
         void ResetBtnData()
@@ -195,16 +222,18 @@ namespace Noah
 
         void RemoveListener()
         {
-            btn1.onClick.RemoveAllListeners();
-            btn2.onClick.RemoveAllListeners();
-            btn3.onClick.RemoveAllListeners();
-
+            for(int i = 0; i < btns.Count; i++)
+            {
+                btns[i].onClick.RemoveAllListeners();
+            }
         }
 
         void RemoveChangeListener()
         {
-            selectBtn1.onClick.RemoveAllListeners();
-            selectBtn2.onClick.RemoveAllListeners();
+            for(int i = 0; i < changeBtns.Count; i++)
+            {
+                changeBtns[i].onClick.RemoveAllListeners();
+            }
         }
 
         public void UIBack()
@@ -216,37 +245,44 @@ namespace Noah
         }
 
 
-        void SetSelectUI()
+        void SetSelectUI(SkillBase _skill)
         {
             selectUI.SetActive(true);
-            selectBtn1.transform.GetChild(1).GetComponent<Image>().sprite = skillSlots[0].skillImage;
-            selectBtn2.transform.GetChild(1).GetComponent<Image>().sprite = skillSlots[1].skillImage;
-            selectBtn3.transform.GetChild(1).GetComponent<Image>().sprite = skillSlots[2].skillImage;
-            selectBtn4.transform.GetChild(1).GetComponent<Image>().sprite = skillSlots[3].skillImage;
 
-            selectBtn1.onClick.AddListener(() => ChangeSkill(ref firstSkill));
-            selectBtn2.onClick.AddListener(() => ChangeSkill(ref secondSkill));
-            selectBtn3.onClick.AddListener(() => ChangeSkill(ref firstSkill));
-            selectBtn4.onClick.AddListener(() => ChangeSkill(ref secondSkill));
+            for (int i = 0; i < changeBtns.Count; i++)
+            {
+                int index = i;
+
+                changeBtns[i].transform.GetChild(1).GetComponent<Image>().sprite = skillSlots[index].skillImage;
+                changeBtns[i].transform.GetChild(0).GetComponent<TMP_Text>().text = skillSlots[index].skillName;
+
+                changeBtns[i].onClick.AddListener(() => ChangeSkill(skillSlots[index]));
+            }
+
+            changeNewSkill_Image.sprite = _skill.skillImage;
+            changeNewSkill_Text.text = _skill.skillName;
         }
 
-        void ChangeSkill(ref SkillBase skill)
+        void ChangeSkill(SkillBase skill)
         {
             skill.damage = skill.upgradeDamage;
 
             skill = randomSkills[selectSkillNum];
 
-            if(skill == firstSkill)
+            for(int i = 0; i < changeBtns.Count; i++)
             {
-                SetSkillUI(firstSkillUI, skill);
-            }
-            else if(skill == secondSkill)
-            {
-                SetSkillUI(secondSkillUI, skill);
+                if (skill == skillSlots[i])
+                {
+                    SetSkillUI(skillUIList[i], skill);
+
+                    Debug.Log("11");
+                }
+                else
+                {
+                    continue;
+                }
             }
 
-
-            Debug.Log(randomSkills[selectSkillNum].ToString());
             Debug.Log(skill);
 
             selectUI.SetActive(false);
@@ -270,36 +306,28 @@ namespace Noah
         public IEnumerator SkillCoolTime(SkillBase skill, Image skillUI)
         {
             float countdown = 0f;
-            float coolText;
+            float coolText = skill.cooldown; ;
 
             if (skill.isSkillOn == false)
             {
-                //isCooldown = true;
+                skillUI.transform.GetComponent<Image>().fillAmount = 0f;
 
-                //Debug.Log("스킬사용");
+                //skillUI.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
 
-                skillUI.transform.GetChild(0).GetComponent<Image>().fillAmount = 1;
-
-                coolText = skill.cooldown;
-
-                skillUI.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
-
-                while (coolText > countdown)
+                while (countdown < coolText)
                 {
-                    coolText -= Time.deltaTime;
+                    countdown += Time.deltaTime;
 
-          
-                    skillUI.transform.GetChild(0).GetComponent<Image>().fillAmount = coolText / skill.cooldown;
+                    skillUI.transform.GetComponent<Image>().fillAmount = countdown / coolText;
 
-                    skillUI.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = coolText.ToString("0");
-
-
-
+                    //skillUI.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = coolText.ToString("0");
                     yield return null;
                 }
 
+                skillUI.transform.GetComponent<Image>().fillAmount = 1f;
 
-                skillUI.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+
+                //skillUI.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
 
                 //countdown = 0f;
                 //isCooldown = false;
