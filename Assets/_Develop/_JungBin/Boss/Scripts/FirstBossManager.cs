@@ -156,31 +156,23 @@ namespace JungBin
                     //Debug.DrawLine(detectedObj.position, detectedObj.position + directionToPlayer * distanceToPlayer, Color.green);
                     Debug.Log($"레이 오브젝트 : {detectedObj}");
                     // 레이캐스트로 충돌 객체 확인
-                    if (Physics.Raycast(detectedObj.position, directionToPlayer, out RaycastHit hit, distanceToPlayer + 2, playerLayer))    
+                    if (Physics.Raycast(detectedObj.position, directionToPlayer, out RaycastHit hit, distanceToPlayer))    
                     {
                         
                         Debug.Log($"Ray hit: {hit.transform.name}");
                         // 충돌한 객체가 플레이어인지 확인
-                        if (hit.transform.CompareTag("Player"))
+                        if (hit.transform.CompareTag("Wall"))
                         {                            
-                            return true; // 플레이어가 감지됨
+                            return false; // 플레이어가 감지됨
                         }
                     }
                 }
             }
             // 감지 실패 시 디버그 레이            
             //Debug.DrawLine(detectedObj.position, detectedObj.position + directionToPlayer, Color.red);
-            return false; // 플레이어가 감지되지 않음
+            return true; // 플레이어가 감지되지 않음
         }
 
-        private void OnDrawGizmosSelected()
-        {
-            Vector3 direction = new Vector3(player.position.x, detectedObj.position.y, player.position.z) - detectedObj.position;
-            Vector3 directionToPlayer = direction.normalized;
-            
-            Gizmos.color = Color.red;
-            Gizmos.DrawRay(detectedObj.position, directionToPlayer);
-        }
         #endregion
 
         #region 공격 상태
