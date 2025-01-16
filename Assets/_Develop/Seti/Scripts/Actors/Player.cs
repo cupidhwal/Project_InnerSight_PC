@@ -47,14 +47,13 @@ namespace Seti
         // 오버라이드
         #region Override
         protected override Condition_Actor CreateState() => gameObject.AddComponent<Condition_Player>();
-        public override bool IsRelevant(Actor actor) => actor is not NPC && actor != this;
         #endregion
 
         protected override void Start()
         {
             base.Start();
 
-            StartCoroutine(Upgrade(10));
+            StartCoroutine(Upgrade(1));
         }
 
         private IEnumerator Upgrade(int count)
@@ -66,6 +65,7 @@ namespace Seti
                 enhance.EnhanceBehaviour<Health>();
                 enhance.EnhanceBehaviour<Attack>();
                 enhance.EnhanceBehaviour<Defend>();
+                enhance.EnhanceBehaviour<Move>();
             }
             yield break;
         }

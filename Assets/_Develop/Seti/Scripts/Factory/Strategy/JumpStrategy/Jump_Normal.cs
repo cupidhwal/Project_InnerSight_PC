@@ -9,9 +9,9 @@ namespace Seti
     {
         public override void Jump()
         {
-            if (!actor.ActorCondition) return;
+            if (!actor.Condition) return;
 
-            Condition_Actor state = actor.ActorCondition;
+            Condition_Actor state = actor.Condition;
             if (state.IsGrounded)
                 rb.AddForce(rb.transform.up * jumpForce, ForceMode.Impulse);
         }

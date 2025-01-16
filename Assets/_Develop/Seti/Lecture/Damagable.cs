@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 namespace Seti
 {
+    [RequireComponent(typeof(DamageControl))]
     public partial class Damagable : MonoBehaviour
     {
         // 필드
@@ -22,7 +23,7 @@ namespace Seti
         public float hitAngle = 360f;
         [Range(0.0f, 360.0f)]
         public float hitForwardRotation = 360f;
-        public List<MonoBehaviour> OnDamageMessageReceivers;
+        public List<MonoBehaviour> OnDamageMessageReceivers = new();
 
         protected float m_timeSinceLastHit = 0.0f;              // 무적 카운트다운
 
@@ -34,6 +35,10 @@ namespace Seti
         private System.Action schedule;
 
         protected Collider m_collider;
+
+        //
+        private Damagable targetDamagable;
+        private DamageControl damageControl;
         #endregion
 
         // 속성
@@ -41,6 +46,7 @@ namespace Seti
         public bool IsInvulnerable { get; set; }                // 무적 여부
         public float CurrentHitPoints => currentHitPoints;
         //public int CurrentHitPoints { get; private set; }       // 현재 체력
+        //public Actor CurrentTarget { get; private set; }
         #endregion
 
         // 라이프 사이클
@@ -49,24 +55,6 @@ namespace Seti
         {
             // 참조
             m_collider = GetComponent<Collider>();
-
-            // 씬의 모든 Actor(자신 제외)오브젝트 가져오기
-            if (TryGetComponent<Actor>(out var actor))
-            {
-                this.actor = actor;
-                OnDamageMessageReceivers.AddRange(actor.GetRelevantActors(actor));
-
-                if (actor is Player player)
-                {
-                    player.GetComponent<Enhance>().OnEnhance += ResetDamage;
-                }
-
-                if (actor is Enemy && OnDamageMessageReceivers[0] is Player targetPlayer)
-                {
-                    targetDamagable = targetPlayer.GetComponent<Damagable>();
-                    OnReceiveDamage += targetPlayer.GetComponent<Condition_Player>().CurrentWeapon.AttackExit;
-                }
-            }
 
             // 초기화
             ResetDamage();
@@ -97,11 +85,32 @@ namespace Seti
             }
         }
 
-        // 상대방의 리시버에서 자신을 지우기
-        private Damagable targetDamagable;
+        private void OnEnable()
+        {
+            // 씬의 모든 Actor(자신 제외)오브젝트 가져오기
+            if (TryGetComponent<Actor>(out var actor))
+            {
+                /*this.actor = actor;
+                damageControl = GetComponent<DamageControl>();
+                OnDamageMessageReceivers.AddRange(damageControl.GetRelevantActors(damageControl));*/
+
+                if (actor is Player player)
+                {
+                    player.GetComponent<Enhance>().OnEnhance += ResetDamage;
+                }
+
+                if (actor is Enemy && OnDamageMessageReceivers[0] is Player targetPlayer)
+                {
+                    targetDamagable = targetPlayer.GetComponent<Damagable>();
+                    OnReceiveDamage += targetPlayer.GetComponent<Condition_Player>().CurrentWeapon.AttackExit;
+                }
+            }
+        }
+
         private void OnDisable()
         {
-            targetDamagable.OnDamageMessageReceivers.Remove(this);
+            if (actor is Enemy)
+                targetDamagable.OnDamageMessageReceivers.Remove(damageControl);
         }
         #endregion
 

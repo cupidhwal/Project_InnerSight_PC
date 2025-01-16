@@ -67,7 +67,7 @@ namespace Seti
 
         // 추상화
         #region Abstract
-        protected virtual void Initialize()
+        public virtual void Initialize()
         {
             primaryWeapon = GetComponentInChildren<Weapon>();
             primaryWeapon.SetOwner(gameObject);

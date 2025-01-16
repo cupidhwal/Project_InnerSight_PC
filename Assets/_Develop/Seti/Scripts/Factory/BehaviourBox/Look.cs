@@ -46,7 +46,7 @@ namespace Seti
         public void Initialize(Actor actor)
         {
             this.actor = actor;
-            state = actor.ActorCondition;
+            state = actor.Condition;
             foreach (var mapping in strategies)
             {
                 ILookStrategy lookStrategy = mapping.strategy as ILookStrategy;

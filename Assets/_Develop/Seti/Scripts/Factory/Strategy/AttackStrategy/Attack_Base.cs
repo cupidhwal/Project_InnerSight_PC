@@ -20,7 +20,7 @@ namespace Seti
         public void Initialize(Actor actor, float power = 10f)
         {
             this.actor = actor;
-            state = actor.ActorCondition as Condition_Actor;
+            state = actor.Condition as Condition_Actor;
         }
         public Type GetStrategyType() => typeof(IAttackStrategy);
         public virtual void Attack() => state.IsAttack = true;

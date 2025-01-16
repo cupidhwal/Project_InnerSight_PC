@@ -15,6 +15,7 @@ namespace Seti
     /// </summary>
     public interface IMessageReceiver
     {
+        //bool IsRelevant(DamageControl damageControl);
         void OnReceiveMessage(GameMessageType type, object sender, object msg);
     }
 

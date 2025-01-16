@@ -122,7 +122,7 @@ namespace Seti
         // 공중 제어 금지 보정
         protected Vector2 MoveDirection(Vector2 moveInput)
         {
-            Condition_Actor state = actor.ActorCondition;
+            Condition_Actor state = actor.Condition;
             //if (state.IsGrounded)
                 lastMoveDirection = moveInput;
             return lastMoveDirection;

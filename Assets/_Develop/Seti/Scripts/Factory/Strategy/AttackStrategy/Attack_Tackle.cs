@@ -40,6 +40,7 @@ namespace Seti
                 Debug.Log($"Attack_Tackle은 Enemy만 사용할 수 있습니다.");
                 return;
             }
+            if (!enemy.Player) return;
 
             try
             {
@@ -47,7 +48,7 @@ namespace Seti
                 Vector3 atkDir = enemy.Player.transform.position - enemy.transform.position;
 
                 // 축적
-                enemy.ActorCondition.IsAttack = true;
+                enemy.Condition.IsAttack = true;
                 float slamBack = 0f;
                 float speed_slamBack = 0f;
                 while (slamBack < 0.3f)
@@ -82,7 +83,7 @@ namespace Seti
                 }
 
                 await Task.Delay(500);
-                enemy.ActorCondition.IsAttack = false;
+                enemy.Condition.IsAttack = false;
             }
             catch (OperationCanceledException)
             {

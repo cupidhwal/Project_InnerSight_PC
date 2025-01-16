@@ -52,7 +52,7 @@ namespace Seti
         public void Initialize(Actor actor)
         {
             this.actor = actor;
-            condition = actor.ActorCondition;
+            condition = actor.Condition;
 
             if (attack < actor.Attack_Default)
                 attack = actor.Attack_Default;
@@ -204,7 +204,7 @@ namespace Seti
         public void FSM_AttackSwitch(State<Controller_FSM> state)
         {
             // FSM 상태에 따라 동작 제어
-            Condition_Enemy condition = actor.ActorCondition as Condition_Enemy;
+            Condition_Enemy condition = actor.Condition as Condition_Enemy;
             currentState = state;
             switch (currentState)
             {

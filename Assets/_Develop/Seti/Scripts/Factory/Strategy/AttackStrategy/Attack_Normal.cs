@@ -17,7 +17,7 @@ namespace Seti
         #region Methods
         private void Attack_WithWeapon()
         {
-            Condition_Player condition = actor.ActorCondition as Condition_Player;
+            Condition_Player condition = actor.Condition as Condition_Player;
             switch (condition.CurrentWeaponType)
             {
                 case Condition_Actor.WeaponType.Sword:

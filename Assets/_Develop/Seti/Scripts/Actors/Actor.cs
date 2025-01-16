@@ -14,7 +14,7 @@ namespace Seti
     /// <summary>
     /// Actor의 기본 정의
     /// </summary>
-    public abstract class Actor : MonoBehaviour, IActor
+    public abstract class Actor : MonoBehaviour
     {
         // 필드
         #region Variables
@@ -24,7 +24,7 @@ namespace Seti
         protected Blueprint_Actor blueprint;
         [SerializeField]
         [HideInInspector]
-        protected Condition_Actor actorCondition;
+        protected Condition_Actor condition;
         [SerializeField]
         [HideInInspector]
         protected List<Behaviour> behaviours = new();         // [직렬화 된 필드 - 읽기 전용 속성] 구조가 아니면 작동하지 않는다
@@ -54,7 +54,7 @@ namespace Seti
         // 속성
         #region Properties
         public Blueprint_Actor Origin => blueprint;
-        public Condition_Actor ActorCondition => actorCondition;
+        public Condition_Actor Condition => condition;
         public List<Behaviour> Behaviours => behaviours;
         public Controller_Animator Controller_Animator => animator;
 
@@ -78,7 +78,6 @@ namespace Seti
         // 추상화
         #region Abstract
         protected abstract Condition_Actor CreateState();
-        public abstract bool IsRelevant(Actor actor);
         #endregion
 
         // 라이프 사이클
@@ -122,8 +121,9 @@ namespace Seti
             this.blueprint = blueprint;
 
             // Check Actor State
-            if (!actorCondition)
-                actorCondition = CreateState();
+            if (!condition)
+                condition = CreateState();
+            condition.Initialize();
 
             // Check Animator Controller
             Animator animator = GetComponentInChildren<Animator>();
@@ -168,14 +168,6 @@ namespace Seti
             }
             control = newControl;
             control.OnEnter(this);
-        }
-
-        // 씬 내의 대적자 액터 가져오기
-        public List<Actor> GetRelevantActors(IActor filter)
-        {
-            return FindObjectsByType<Actor>(FindObjectsSortMode.None)
-                .Where(filter.IsRelevant)
-                .ToList();
         }
         #endregion
     }

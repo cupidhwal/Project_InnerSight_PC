@@ -51,9 +51,9 @@ namespace Seti
         #region Properties
         public Player Player => player;
         public Vector3 HomePosition { get; private set; }
-        public bool Detected => distancePlayer <= range_Detect;
-        public bool GoAttack => distancePlayer <= range_Attack;
-        public bool CanAttack => distancePlayer <= range_Attack * 2f;
+        public bool Detected => Player && (distancePlayer <= range_Detect);
+        public bool GoAttack => Player && (distancePlayer <= range_Attack);
+        public bool CanAttack => Player && (distancePlayer <= range_Attack * 2f);
         public bool GoBackHome => distancePlace >= range_BackOff;
         public bool TooFarFromHome => distancePlace >= range_BackOff * 2f;
         public bool ImHome => distancePlace <= 0.2f;
@@ -66,7 +66,6 @@ namespace Seti
         // 오버라이드
         #region Override
         protected override Condition_Actor CreateState() => gameObject.AddComponent<Condition_Enemy>();
-        public override bool IsRelevant(Actor actor) => actor is Player || actor is NPC;
         #endregion
 
         // 라이프 사이클
@@ -84,8 +83,11 @@ namespace Seti
 
         protected virtual void Update()
         {
-            distancePlayer = Vector3.Distance(player.transform.position, transform.position);
             distancePlace = Vector3.Distance(HomePosition, transform.position);
+            
+            if (!player) return;
+
+            distancePlayer = Vector3.Distance(player.transform.position, transform.position);
         }
         #endregion
 

@@ -61,7 +61,7 @@ namespace Seti
                 player = actor as Player;
             if (actor is Enemy)
                 enemy = actor as Enemy;
-            condition = actor.ActorCondition;
+            condition = actor.Condition;
             foreach (var mapping in strategies)
             {
                 IMoveStrategy moveStrategy = mapping.strategy as IMoveStrategy;

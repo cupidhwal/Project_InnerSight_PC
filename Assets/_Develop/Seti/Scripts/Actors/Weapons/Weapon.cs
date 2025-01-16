@@ -101,8 +101,6 @@ namespace Seti
                         if (col != null)
                         {
                             //Debug.Log("FixedUpdate_CheckDamage");
-                            Debug.Log($"col: {col}");
-                            Debug.Log($"atp: {atp}");
                             CheckDamage(col, atp);
                         }
                     }
@@ -162,14 +160,9 @@ namespace Seti
         // 콜라이더 확인 후 데미지 주기
         protected void CheckDamage(Collider other, AttackPoint atp)
         {
-            Debug.Log("CheckDamage");
-
             // 콜라이더 확인 후
             if (!other.TryGetComponent<Damagable>(out var d))
                 return;
-
-            Debug.Log($"other: {other}");
-            Debug.Log($"other.d: {d}");
 
             // 셀프 데미지 체크
             if (d.gameObject == m_Owner)
@@ -178,9 +171,6 @@ namespace Seti
             // 타겟 레이어 체크
             if ((targetLayers.value & (1 << other.gameObject.layer)) == 0)
                 return;
-
-            Debug.Log($"targetLayers: {targetLayers}");
-            Debug.Log($"targetLayers.value: {targetLayers.value}");
 
             // 데미지 데이터 가공 후 데미지 주기
             Damagable.DamageMessage data = new()

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Seti
@@ -12,6 +14,28 @@ namespace Seti
 
         // 인터페이스
         #region Interface
+        /*public bool IsRelevant(DamageControl damageControl)
+        {
+            Actor actor = GetComponent<Actor>();
+            switch (actor)
+            {
+                case Player:
+                    return actor is not NPC && actor != this;
+
+                case Player_Alter:
+                    return actor is Player;
+
+                case NPC:
+                    return actor is not Player && actor != this;
+
+                case Enemy:
+                    return actor is Player || actor is NPC;
+
+                default:
+                    return false;
+            }
+        }*/
+
         public void OnReceiveMessage(GameMessageType type, object sender, object msg)
         {
             Damagable.DamageMessage damageData = (Damagable.DamageMessage)msg;
@@ -59,6 +83,14 @@ namespace Seti
             // TODO
             Debug.Log($"{damageMessage.damageSource}의 공격으로 사망하였습니다.");
         }
+
+        // 씬 내의 대적자 액터 가져오기
+        /*public List<DamageControl> GetRelevantActors(IMessageReceiver filter)
+        {
+            return FindObjectsByType<DamageControl>(FindObjectsSortMode.None)
+                .Where(filter.IsRelevant)
+                .ToList();
+        }*/
         #endregion
     }
 }
