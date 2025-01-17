@@ -22,6 +22,9 @@ namespace Seti
         // 업그레이드
         public void Upgrade(float increment)
         {
+            if (actor is not Player) return;
+
+            defend = actor.Defend;
             defend += increment * actor.Defend_Default / 100;
             actor.Update_Defend(defend);
         }
@@ -36,7 +39,6 @@ namespace Seti
             }
 
             this.actor = actor;
-            defend = actor.Defend;  // 이건 나중에 저장한 파일로부터 Load 하도록 바꿔야 함
         }
 
         public Type GetBehaviourType() => typeof(Defend);

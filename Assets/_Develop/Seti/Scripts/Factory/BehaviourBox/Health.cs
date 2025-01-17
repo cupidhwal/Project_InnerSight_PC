@@ -22,6 +22,9 @@ namespace Seti
         // 업그레이드
         public void Upgrade(float increment)
         {
+            if (actor is not Player) return;
+
+            health = actor.Health;
             health += increment * actor.Health_Default / 100;
             actor.Update_Health(health);
         }
@@ -36,7 +39,6 @@ namespace Seti
             }
 
             this.actor = actor;
-            health = actor.Health;  // 이건 나중에 저장한 파일로부터 Load 하도록 바꿔야 함
         }
 
         public Type GetBehaviourType() => typeof(Health);

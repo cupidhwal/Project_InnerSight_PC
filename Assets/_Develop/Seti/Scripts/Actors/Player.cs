@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Noah;
 
 namespace Seti
 {
@@ -52,6 +53,9 @@ namespace Seti
         protected override void Start()
         {
             base.Start();
+
+            PlayerData data = PlayerStateManager.Instance.playerData;
+            SetStats(data.Health, data.Attack, data.Defend, data.AttackSpeed, data.MoveSpeed);
 
             StartCoroutine(Upgrade(1));
         }

@@ -48,8 +48,10 @@ namespace Seti
         // 업그레이드
         public void Upgrade(float increment)
         {
-            if (actor is Player player)
-            speed_Move += increment * player.Speed_Move / 100;
+            if (actor is not Player) return;
+
+            speed_Move = actor.Rate_Movement;
+            speed_Move += increment * player.Rate_Movement_Default / 100;
             Initialize(actor);
         }
 
