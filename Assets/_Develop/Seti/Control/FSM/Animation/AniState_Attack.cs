@@ -5,38 +5,36 @@ namespace Seti
 {
     public class AniState_Attack : AniState_Base
     {
-        // ÇÊµå
+        // í•„ë“œ
         #region Variables
         private int comboIndex;
         private int comboCount = 2;
         #endregion
 
-        // ¼Ó¼º
+        // ì†ì„±
         #region Properties
         private int AttackCombo => comboIndex++ % comboCount;
         #endregion
 
-        // ¿À¹ö¶óÀÌµå
+        // ì˜¤ë²„ë¼ì´ë“œ
         #region Override
-        // ÃÊ±âÈ­ ¸Ş¼­µå - »ı¼º ÈÄ 1È¸ ½ÇÇà
+        // ì´ˆê¸°í™” ë©”ì„œë“œ - ìƒì„± í›„ 1íšŒ ì‹¤í–‰
         public override void OnInitialized() { }
 
-        // »óÅÂ ÀüÈ¯ ½Ã State Enter¿¡ 1È¸ ½ÇÇà
+        // ìƒíƒœ ì „í™˜ ì‹œ State Enterì— 1íšŒ ì‹¤í–‰
         public override void OnEnter()
         {
-            context.Animator.SetInteger(WhichAttack, AttackCombo);
-            context.Animator.SetBool(isAttack, true);
             base.OnEnter();
+            context.aniState = AniState.Attack;
         }
 
-        // »óÅÂ ÀüÈ¯ ½Ã State Exit¿¡ 1È¸ ½ÇÇà
+        // ìƒíƒœ ì „í™˜ ì‹œ State Exitì— 1íšŒ ì‹¤í–‰
         public override void OnExit()
         {
-            context.Animator.SetBool(isAttack, false);
             base.OnExit();
         }
 
-        // »óÅÂ ÀüÈ¯ Á¶°Ç ¸Ş¼­µå
+        // ìƒíƒœ ì „í™˜ ì¡°ê±´ ë©”ì„œë“œ
         public override Type CheckTransitions()
         {
             if (!context.IsAttack && !context.IsMove)
@@ -48,7 +46,7 @@ namespace Seti
             return null;
         }
 
-        // »óÅÂ ½ÇÇà Áß
+        // ìƒíƒœ ì‹¤í–‰ ì¤‘
         public override void Update(float deltaTime)
         {
 

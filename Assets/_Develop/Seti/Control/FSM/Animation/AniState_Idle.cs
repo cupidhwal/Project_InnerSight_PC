@@ -1,40 +1,53 @@
 using System;
+using UnityEngine;
 
 namespace Seti
 {
     public class AniState_Idle : AniState_Base
     {
-        // ¿À¹ö¶óÀÌµå
+        // ì˜¤ë²„ë¼ì´ë“œ
         #region Override
-        // ÃÊ±âÈ­ ¸Ş¼­µå - »ı¼º ÈÄ 1È¸ ½ÇÇà
+        // ì´ˆê¸°í™” ë©”ì„œë“œ - ìƒì„± í›„ 1íšŒ ì‹¤í–‰
         public override void OnInitialized() { }
 
-        // »óÅÂ ÀüÈ¯ ½Ã State Enter¿¡ 1È¸ ½ÇÇà
-        public override void OnEnter() => base.OnEnter();
+        // ìƒíƒœ ì „í™˜ ì‹œ State Enterì— 1íšŒ ì‹¤í–‰
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            context.aniState = AniState.Idle;
+        }
 
-        // »óÅÂ ÀüÈ¯ ½Ã State Exit¿¡ 1È¸ ½ÇÇà
-        public override void OnExit() => base.OnExit();
+        // ìƒíƒœ ì „í™˜ ì‹œ State Exitì— 1íšŒ ì‹¤í–‰
+        public override void OnExit()
+        {
+            base.OnExit();
+            context.Animator.SetBool(Hash_InputDetected, true);
+        }
 
-        // »óÅÂ ÀüÈ¯ Á¶°Ç ¸Ş¼­µå
+        // ìƒíƒœ ì „í™˜ ì¡°ê±´ ë©”ì„œë“œ
         public override Type CheckTransitions()
         {
             if (context.IsMove)
+            {
                 return typeof(AniState_Move);
+            }
 
             else if (context.IsDash)
+            {
                 return typeof(AniState_Dash);
+            }
             
             else if (context.IsAttack)
+            {
+                //context.Animator.SetTrigger(Hash_MeleeAttack);
                 return typeof(AniState_Attack);
+            }
             
             return null;
         }
 
-        // »óÅÂ ½ÇÇà Áß
-        public override void Update(float deltaTime)
-        {
-
-        }
+        // ìƒíƒœ ì‹¤í–‰ ì¤‘
+        public override void Update(float deltaTime) { }
         #endregion
     }
 }

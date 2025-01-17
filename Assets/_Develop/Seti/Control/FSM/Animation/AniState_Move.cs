@@ -5,26 +5,30 @@ namespace Seti
 {
     public class AniState_Move : AniState_Base
     {
-        // ¿À¹ö¶óÀÌµå
+        // ì˜¤ë²„ë¼ì´ë“œ
         #region Override
-        // ÃÊ±âÈ­ ¸Ş¼­µå - »ı¼º ÈÄ 1È¸ ½ÇÇà
+        // ì´ˆê¸°í™” ë©”ì„œë“œ - ìƒì„± í›„ 1íšŒ ì‹¤í–‰
         public override void OnInitialized() { }
 
-        // »óÅÂ ÀüÈ¯ ½Ã State Enter¿¡ 1È¸ ½ÇÇà
+        // ìƒíƒœ ì „í™˜ ì‹œ State Enterì— 1íšŒ ì‹¤í–‰
         public override void OnEnter()
         {
-            context.Animator.SetBool(isMove, true);
+            //context.Animator.SetBool(isMove, true);
+            context.Animator.SetBool(Hash_InputDetected, true);
             base.OnEnter();
+
+            context.aniState = AniState.Move;
         }
 
-        // »óÅÂ ÀüÈ¯ ½Ã State Exit¿¡ 1È¸ ½ÇÇà
+        // ìƒíƒœ ì „í™˜ ì‹œ State Exitì— 1íšŒ ì‹¤í–‰
         public override void OnExit()
         {
-            context.Animator.SetBool(isMove, false);
+            //context.Animator.SetBool(isMove, false);
+            context.Animator.SetBool(Hash_InputDetected, false);
             base.OnExit();
         }
 
-        // »óÅÂ ÀüÈ¯ Á¶°Ç ¸Ş¼­µå
+        // ìƒíƒœ ì „í™˜ ì¡°ê±´ ë©”ì„œë“œ
         public override Type CheckTransitions()
         {
             if (!context.IsMove)
@@ -39,14 +43,14 @@ namespace Seti
             return null;
         }
 
-        // »óÅÂ ½ÇÇà Áß
+        // ìƒíƒœ ì‹¤í–‰ ì¤‘
         public override void Update(float deltaTime)
         {
-            
+            context.Animator.SetFloat(Hash_ForwardSpeed, context.MoveSpeed);
         }
         #endregion
 
-        // ¸Ş¼­µå
+        // ë©”ì„œë“œ
         #region Methods
         #endregion
     }
