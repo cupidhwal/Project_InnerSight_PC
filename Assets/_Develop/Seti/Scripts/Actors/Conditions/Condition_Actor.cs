@@ -52,6 +52,7 @@ namespace Seti
             {
                 damagable.OnDeath += Die;
                 damagable.OnReceiveDamage += StaggerOn;
+                damagable.OnReleaveDamage += StaggerOff;
             }
 
             IsGrounded = true;
@@ -78,7 +79,7 @@ namespace Seti
         #region Methods
         // 경직
         private void StaggerOn() => inAction = false;
-        public void StaggerOff() => inAction = true;
+        private void StaggerOff() => inAction = true;
 
         // 죽음
         private void Die()
