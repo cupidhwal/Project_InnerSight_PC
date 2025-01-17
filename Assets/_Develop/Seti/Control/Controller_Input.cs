@@ -22,10 +22,7 @@ namespace Seti
         #region Life Cycle
         protected override void Update()
         {
-            if (!Actor) return;
-
-            Condition_Player condition_Player = Actor.Condition as Condition_Player;
-            if (!condition_Player.InAction) return;
+            if (!Actor || !Actor.Condition.InAction) return;
 
             base.Update();
 
