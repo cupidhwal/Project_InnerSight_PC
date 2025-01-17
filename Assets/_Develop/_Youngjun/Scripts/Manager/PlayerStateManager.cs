@@ -53,7 +53,7 @@ namespace Noah
             for(int i = 0; i < dataList.Count; i++)
             {
                 dataList[i] = float.Parse(dataTexts[i].GetChild(0).GetComponent<TMP_Text>().text);
-                Debug.Log();
+                
             }
         }
     }
