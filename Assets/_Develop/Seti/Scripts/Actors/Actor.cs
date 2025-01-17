@@ -75,27 +75,10 @@ namespace Seti
         public float Stagger => stagger;
         #endregion
 
-        // 추상화
-        #region Abstract
-        protected abstract Condition_Actor CreateState();
-        #endregion
-
-        // 라이프 사이클
-        #region Life Cycle
-        protected virtual void Start()
-        {
-            // 참조
-            animator = GetComponentInChildren<Controller_Animator>();
-
-            // 초기화
-            //SetStats(PlayerStateManager.Instance.pla);
-        }
-        #endregion
-
         // 스탯 적용
         #region Methods_Stats
         // Load 한 스탯을 적용
-        public void SetStats(float heal, float atk, float def, float r_atk, float r_mov, float stag = 0.3f)
+        public void SetStats(float heal, float atk, float def, float r_atk, float r_mov, float stag = 0.5f)
         {
             Update_Health(heal);
             Update_Attack(atk);
@@ -111,6 +94,23 @@ namespace Seti
         public void Update_Rate_Attack(float r_atk) => rate_Attack = r_atk;
         public void Update_Rate_Movement(float r_mov) => rate_Movement = r_mov;
         public void Update_Stagger(float stag) => stagger = stag;
+        #endregion
+
+        // 추상화
+        #region Abstract
+        protected abstract Condition_Actor CreateState();
+        #endregion
+
+        // 라이프 사이클
+        #region Life Cycle
+        protected virtual void Start()
+        {
+            // 참조
+            animator = GetComponentInChildren<Controller_Animator>();
+
+            // 초기화
+            //SetStats(PlayerStateManager.Instance.pla);
+        }
         #endregion
 
         // 메서드

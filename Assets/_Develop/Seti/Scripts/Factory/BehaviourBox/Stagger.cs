@@ -11,6 +11,9 @@ namespace Seti
     {
         // 필드
         #region Variables
+        // 스탯
+        private float stagger_Interval;
+
         // 전략 관리
         private Actor actor;
         #endregion
@@ -21,15 +24,15 @@ namespace Seti
         public void Upgrade(float increment)
         {
             // 방어력 업그레이드와 함께 경직 시간 감소 기능도 함께 넣을 수 있는 가능성
-            /*stagger_Interval += increment * actor.Defend_Default / 100;
-            actor.Update_Stagger(stagger_Interval);*/
+            stagger_Interval += increment * actor.Stagger_Default / 100;
+            actor.Update_Stagger(stagger_Interval);
         }
 
         // 초기화
         public void Initialize(Actor actor)
         {
             this.actor = actor;
-            //defend = actor.Defend;  // 이건 나중에 저장한 파일로부터 Load 하도록 바꿔야 함
+            stagger_Interval = actor.Stagger;   // 이건 나중에 저장한 파일로부터 Load 하도록 바꿔야 함
         }
 
         public Type GetBehaviourType() => typeof(Stagger);
