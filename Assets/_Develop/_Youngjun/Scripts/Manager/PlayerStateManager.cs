@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace Noah
@@ -9,7 +10,8 @@ namespace Noah
         public StartData startPlayerData;
 
         public PlayerData playerData;
-        private List<float> dataList = new List<float>();
+        public List<float> dataList = new List<float>();
+        public List<float> updateDataList = new List<float>();
 
         private void Start()
         {
@@ -21,12 +23,19 @@ namespace Noah
             playerData = new PlayerData();
 
             playerData.ResetData();
+            upGradePlayerdata.ResetData();
 
-            dataList.Add(playerData.Attack);
             dataList.Add(playerData.Health);
+            dataList.Add(playerData.Attack);
             dataList.Add(playerData.Defend);
             dataList.Add(playerData.MoveSpeed);
             dataList.Add(playerData.AttackSpeed);
+
+            updateDataList.Add(upGradePlayerdata.hp_Up);
+            updateDataList.Add(upGradePlayerdata.atk_Up);
+            updateDataList.Add(upGradePlayerdata.def_Up);
+            updateDataList.Add(upGradePlayerdata.moveSpeed_Up);
+            updateDataList.Add(upGradePlayerdata.atkSpeed_Up);
         }
 
         public List<float> GetPlayerData()
@@ -34,23 +43,18 @@ namespace Noah
             return dataList;
         }
 
-        public void UpdatePlayerData()
-        { 
-            
-        }
-
-        // UI 확인용
-        public void AddState()
+        public List<float> UpdatePlayerData()
         {
-
+            return updateDataList;
         }
 
-        // UI 확인용
-        public void RemoveState()
+        public void UpdateStateData(List<Transform> dataTexts)
         {
-
+            for(int i = 0; i < dataList.Count; i++)
+            {
+                dataList[i] = float.Parse(dataTexts[i].GetChild(0).GetComponent<TMP_Text>().text);
+                Debug.Log();
+            }
         }
-
-        
     }
 }

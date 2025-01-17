@@ -253,35 +253,27 @@ namespace Noah
             {
                 int index = i;
 
+                SkillBase tmpSkill = skillSlots[index];
+
                 changeBtns[i].transform.GetChild(1).GetComponent<Image>().sprite = skillSlots[index].skillImage;
                 changeBtns[i].transform.GetChild(0).GetComponent<TMP_Text>().text = skillSlots[index].skillName;
 
-                changeBtns[i].onClick.AddListener(() => ChangeSkill(skillSlots[index]));
+                changeBtns[i].onClick.AddListener(() => ChangeSkill(ref tmpSkill, index));
             }
 
             changeNewSkill_Image.sprite = _skill.skillImage;
             changeNewSkill_Text.text = _skill.skillName;
         }
 
-        void ChangeSkill(SkillBase skill)
+        void ChangeSkill(ref SkillBase skill, int _index)
         {
             skill.damage = skill.upgradeDamage;
 
             skill = randomSkills[selectSkillNum];
 
-            for(int i = 0; i < changeBtns.Count; i++)
-            {
-                if (skill == skillSlots[i])
-                {
-                    SetSkillUI(skillUIList[i], skill);
+            SetSkillUI(skillUIList[_index], skill);
 
-                    Debug.Log("11");
-                }
-                else
-                {
-                    continue;
-                }
-            }
+            skillSlots[_index] = skill;
 
             Debug.Log(skill);
 
