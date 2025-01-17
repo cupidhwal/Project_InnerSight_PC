@@ -11,7 +11,7 @@ namespace Seti
         #region Variables
         // 세팅
         protected Actor actor;
-        protected Condition_Actor state;
+        protected Condition_Actor condition;
         #endregion
 
         // 인터페이스
@@ -20,11 +20,11 @@ namespace Seti
         public void Initialize(Actor actor, float power = 10f)
         {
             this.actor = actor;
-            state = actor.Condition as Condition_Actor;
+            condition = actor.Condition;
         }
         public Type GetStrategyType() => typeof(IAttackStrategy);
-        public virtual void Attack() => state.IsAttack = true;
-        public virtual void AttackExit() => state.IsAttack = false;
+        public virtual void Attack() => condition.IsAttack = true;
+        public virtual void AttackExit() => condition.IsAttack = false;
         #endregion
 
         // 메서드

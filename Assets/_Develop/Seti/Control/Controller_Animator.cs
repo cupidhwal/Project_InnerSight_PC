@@ -55,9 +55,6 @@ namespace Seti
 
             // 상태 추가
             AddStates();
-
-            // 일반 초기화
-            previousPosition = transform.position;
         }
 
         private void Update()
@@ -111,14 +108,15 @@ namespace Seti
 
         // 유틸리티
         #region Utilities
-        private Vector3 previousPosition;
+        private float forwardSpeed;
         private float CurrentSpeed()
         {
-            Vector3 velocity = 2 * (transform.position - previousPosition) / Time.deltaTime;
+            if (IsMove)
+                forwardSpeed = Mathf.Lerp(forwardSpeed, 4f, 10f * Time.deltaTime);
+            else
+                forwardSpeed = forwardSpeed > 0.01f ? Mathf.Lerp(forwardSpeed, 0f, 10f * Time.deltaTime) : 0f;
 
-            previousPosition = transform.position;
-
-            return velocity.magnitude;
+            return (Actor.Rate_Movement / Actor.Rate_Movement_Default) * forwardSpeed;
         }
         #endregion
     }

@@ -17,8 +17,9 @@ namespace Seti
 
         // 필드
         #region Variables
+        [SerializeField]
+        [HideInInspector]
         protected Player player;
-        //public State state;
 
         [Header("Variables")]
         [SerializeField]
@@ -74,9 +75,6 @@ namespace Seti
         {
             base.Start();
 
-            // 참조
-            player = FindAnyObjectByType<Player>();
-
             // 초기화
             HomePosition = transform.position;
         }
@@ -88,6 +86,12 @@ namespace Seti
             if (!player) return;
 
             distancePlayer = Vector3.Distance(player.transform.position, transform.position);
+        }
+
+        protected virtual void Awake()
+        {
+            // 참조
+            player = FindAnyObjectByType<Player>();
         }
         #endregion
 

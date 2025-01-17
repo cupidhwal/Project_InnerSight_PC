@@ -44,10 +44,7 @@ namespace Seti
         }
 
         // 상태 실행 중
-        public override void Update(float deltaTime)
-        {
-            context.Animator.SetFloat(Hash_ForwardSpeed, context.MoveSpeed);
-        }
+        public override void Update(float deltaTime) => base.Update(deltaTime);
         #endregion
 
         // 메서드

@@ -5152,6 +5152,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7531578248423457190, guid: 6586e34b75dca9e47a9cefc38ec93f41, type: 3}
+      propertyPath: attack
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7531578248423457190, guid: 6586e34b75dca9e47a9cefc38ec93f41, type: 3}
       propertyPath: blueprint
       value: 
       objectReference: {fileID: 11400000, guid: a531f6c57b89b7548b9b435f7cb19cea, type: 2}
@@ -5827,8 +5831,12 @@ MonoBehaviour:
     def_Start: 1
     moveSpeed_Start: 4
     atkSpeed_Start: 1
-  dataList: []
-  updateDataList: []
+  upgradeGold:
+    hp_UpgradeGold: 0
+    atk_UpgradeGold: 0
+    def_UpgradeGold: 0
+    moveSpeed_UpgradeGold: 0
+    atkSpeed_UpgradeGold: 0
 --- !u!4 &1414844749
 Transform:
   m_ObjectHideFlags: 0
@@ -7026,6 +7034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777c50e443efd814f9a9e68618ff0b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startGold: 0
 --- !u!4 &1775904068
 Transform:
   m_ObjectHideFlags: 0

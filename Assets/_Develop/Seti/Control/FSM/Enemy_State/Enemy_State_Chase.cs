@@ -35,7 +35,7 @@ namespace Seti
             if (!enemy.Detected && enemy.GoBackHome)
                 return typeof(Enemy_State_BackOff);
 
-            if (!enemy.Detected)
+            if (!enemy.Detected || !enemy.Player)
                 return typeof(Enemy_State_Idle);
 
             else if (enemy.GoAttack)
@@ -61,6 +61,8 @@ namespace Seti
         #region Methods
         private void Input_Chase()
         {
+            if (!enemy.Player) return;
+
             Vector2 enemyPos = Camera.main.WorldToScreenPoint(enemy.transform.position);
             Vector2 playerPos = Camera.main.WorldToScreenPoint(enemy.Player.transform.position);
             moveInput = playerPos - enemyPos;

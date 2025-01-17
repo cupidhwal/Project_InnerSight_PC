@@ -62,6 +62,23 @@ namespace Seti
 
             // 초기화
             ResetDamage();
+            if (TryGetComponent<Actor>(out var actor))
+            {
+                this.actor = actor;
+                staggerDuration = actor.Stagger;
+
+                if (actor is Player player)
+                {
+                    player.GetComponent<Enhance>().OnEnhance += ResetDamage;
+                }
+
+                if (actor is Enemy enemy)
+                {
+                    Weapon enemyWeapon = enemy.GetComponentInChildren<Weapon>();
+                    targetDamagable = enemy.Player.GetComponent<Damagable>();
+                    targetDamagable.OnReceiveDamage += enemyWeapon.AttackExit;
+                }
+            }
         }
 
         private void Update()
@@ -98,30 +115,6 @@ namespace Seti
             {
                 schedule();
                 schedule = null;
-            }
-        }
-
-        private void OnEnable()
-        {
-            // 씬의 모든 Actor(자신 제외)오브젝트 가져오기
-            if (TryGetComponent<Actor>(out var actor))
-            {
-                /*damageControl = GetComponent<DamageControl>();
-                OnDamageMessageReceivers.AddRange(damageControl.GetRelevantActors(damageControl));*/
-                
-                this.actor = actor;
-                staggerDuration = actor.Stagger;
-
-                if (actor is Player player)
-                {
-                    player.GetComponent<Enhance>().OnEnhance += ResetDamage;
-                }
-
-                if (actor is Enemy && OnDamageMessageReceivers[0] is Player targetPlayer)
-                {
-                    targetDamagable = targetPlayer.GetComponent<Damagable>();
-                    OnReceiveDamage += targetPlayer.GetComponent<Condition_Player>().CurrentWeapon.AttackExit;
-                }
             }
         }
         #endregion

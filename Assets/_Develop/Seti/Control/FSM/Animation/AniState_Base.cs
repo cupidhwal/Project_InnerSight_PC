@@ -39,6 +39,7 @@ namespace Seti
         #region Override
         public override void OnEnter() => context.Initialize();
         public override void OnExit() => context.Initialize();
+        public override void Update(float deltaTime) => context.Animator.SetFloat(Hash_ForwardSpeed, context.MoveSpeed);
         #endregion
     }
 }
