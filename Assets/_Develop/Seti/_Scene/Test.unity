@@ -556,7 +556,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ffc482ad06ab154fa87a3cfe0343d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightHandTarget: {fileID: 0}
 --- !u!1 &1297516366
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,6 +661,64 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 45, y: 0, z: 45}
   m_LocalScale: {x: 10, y: 1, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1414844747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1414844749}
+  - component: {fileID: 1414844748}
+  m_Layer: 0
+  m_Name: PlayerStateManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1414844748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414844747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ed9bb62c2df8f442a9ff1ef0d2829ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upGradePlayerdata:
+    hp_Up: 10
+    atk_Up: 10
+    def_Up: 1
+    moveSpeed_Up: 1.5
+    atkSpeed_Up: 1
+  startPlayerData:
+    hp_Start: 100
+    atk_Start: 10
+    def_Start: 1
+    moveSpeed_Start: 4
+    atkSpeed_Start: 1
+  dataList: []
+  updateDataList: []
+--- !u!4 &1414844749
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414844747}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1074,6 +1131,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 644253843293815330, guid: 1afde7331c6ac61478367d0600d02f36, type: 3}
+      propertyPath: attack
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 644253843293815330, guid: 1afde7331c6ac61478367d0600d02f36, type: 3}
+      propertyPath: defend
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 644253843293815330, guid: 1afde7331c6ac61478367d0600d02f36, type: 3}
+      propertyPath: health
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 644253843293815330, guid: 1afde7331c6ac61478367d0600d02f36, type: 3}
       propertyPath: blueprint
       value: 
       objectReference: {fileID: 11400000, guid: 97118eb898d06804eb96489e4d7bcc52, type: 2}
@@ -1081,6 +1150,14 @@ PrefabInstance:
       propertyPath: condition
       value: 
       objectReference: {fileID: 2066175029}
+    - target: {fileID: 644253843293815330, guid: 1afde7331c6ac61478367d0600d02f36, type: 3}
+      propertyPath: rate_Attack
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 644253843293815330, guid: 1afde7331c6ac61478367d0600d02f36, type: 3}
+      propertyPath: rate_Movement
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 644253843293815330, guid: 1afde7331c6ac61478367d0600d02f36, type: 3}
       propertyPath: behaviours.Array.size
       value: 6
@@ -1399,7 +1476,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ffc482ad06ab154fa87a3cfe0343d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightHandTarget: {fileID: 0}
 --- !u!1001 &7649810032545946095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1478,3 +1554,4 @@ SceneRoots:
   - {fileID: 589826405}
   - {fileID: 2066175024}
   - {fileID: 910659121}
+  - {fileID: 1414844749}

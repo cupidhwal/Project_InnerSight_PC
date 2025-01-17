@@ -62,7 +62,7 @@ namespace Seti
         public float Health_Default => 100f;
         public float Attack_Default => 10f;
         public float Defend_Default => 1f;
-        public float Rate_Attack_Default => 10f;
+        public float Rate_Attack_Default => 1f;
         public float Rate_Movement_Default => 4f;
         public float Stagger_Default => 0.5f;
 
