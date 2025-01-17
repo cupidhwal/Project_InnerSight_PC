@@ -14,6 +14,8 @@ namespace Noah
         private List<float> currentDatas = new List<float>();
 
         private float curData;
+        private float curUpdateCount;
+        private float totalCost;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -42,12 +44,13 @@ namespace Noah
             for (int i = 0; i < states.Count; i++)
             {
                 states[i].GetChild(0).GetComponent<TMP_Text>().text = 
-                    PlayerStateManager.Instance.GetPlayerData()[i].ToString();          
+                    PlayerStateManager.Instance.GetPlayerData()[i].ToString();
+
+                states[i].GetChild(4).GetComponent<TMP_Text>().text =
+                    PlayerStateManager.Instance.GetUpgradeCost()[i].ToString();
             }
 
             gold_Text.text = PlayerInfoManager.Instance.Gold.ToString();
-
-            curData = float.Parse(states[0].GetChild(0).GetComponent<TMP_Text>().text);
         }
 
         public void AddButton(int _index)
@@ -55,15 +58,19 @@ namespace Noah
             float upPoint = float.Parse(states[_index].GetChild(0).GetComponent<TMP_Text>().text) + PlayerStateManager.Instance.UpdatePlayerData()[_index];
 
             states[_index].GetChild(0).GetComponent<TMP_Text>().text = upPoint.ToString();
+
+            states[_index].GetChild(4).GetComponent<TMP_Text>().text = upPoint.ToString();
         }
         
         public void RemoveButton(int _index)
         {
+            curData = PlayerStateManager.Instance.GetPlayerData(_index);
+
             float downPoint = float.Parse(states[_index].GetChild(0).GetComponent<TMP_Text>().text) - PlayerStateManager.Instance.UpdatePlayerData()[_index];
 
-            if (downPoint <= curData)
+            if (downPoint < curData)
             {
-
+                Debug.Log("더 내려갈 수 없음");
             }
             else
             {
@@ -74,6 +81,7 @@ namespace Noah
         public void ApplyState()
         {
             PlayerStateManager.Instance.UpdateStateData(states);
+            //PlayerInfoManager.Instance.UseGold();
             UIManager.Instance.playerStateUI.gameObject.SetActive(false);
         }
 

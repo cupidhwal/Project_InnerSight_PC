@@ -22,7 +22,6 @@ namespace Noah
         public float moveSpeed_Up;
         public float atkSpeed_Up;
 
-
         public void ResetData()
         {
             hp_Up = PlayerStateManager.Instance.upGradePlayerdata.hp_Up;
@@ -98,6 +97,19 @@ namespace Noah
             set
             {
                 atkSpeed = value;
+            }
+        }
+
+        public bool LoadData
+
+        {
+            get
+            {
+                return loadData;
+            }
+            set
+            {
+                loadData = value;
             }
         }
 

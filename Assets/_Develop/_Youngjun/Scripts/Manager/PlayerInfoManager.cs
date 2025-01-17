@@ -5,9 +5,16 @@ namespace Noah
 {
     public class PlayerInfoManager : Singleton<PlayerInfoManager>
     {
-        private int gold = 0;
+        private int gold;
+
+        public int startGold;
 
         public int Gold => gold;
+
+        private void Start()
+        {
+            gold = startGold;
+        }
 
         public void GetGold(int _gold)
         {
@@ -15,6 +22,14 @@ namespace Noah
             UIManager.Instance.UpdateGoldUI();
         }
 
+        public void UseGold(int _gold)
+        {
+            if(gold > 0)
+            {
+                gold -= _gold;
+                UIManager.Instance.UpdateGoldUI();
+            }
+        }
 
     }
 }

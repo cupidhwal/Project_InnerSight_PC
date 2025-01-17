@@ -7,8 +7,8 @@ namespace Noah
     {
         private bool isStartAttack = false;
         public InGameUI_Skill setSkill;
-        private GameObject skillRange_Circle;
-        private GameObject skillRange_Cube;
+        [SerializeField] private GameObject skillRange_Circle;
+        [SerializeField] private GameObject skillRange_Cube;
 
         private GameObject effectGo;
         private GameObject skillef;
@@ -58,8 +58,8 @@ namespace Noah
 
         void Init()
         {
-            skillRange_Circle = transform.GetChild(0).gameObject;
-            skillRange_Cube = transform.GetChild(1).gameObject;
+            //skillRange_Circle = transform.GetChild(0).gameObject;
+            //skillRange_Cube = transform.GetChild(1).gameObject;
         }
 
         void UsePlayerSkill(int _index)
