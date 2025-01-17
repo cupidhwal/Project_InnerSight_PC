@@ -18,7 +18,7 @@ namespace Seti
             context.Animator.SetBool(isDash, true);*/
             base.OnEnter();
 
-            context.aniState = AniState.Dash;
+            context.currentState = AniState.Dash;
         }
 
         // 상태 전환 시 State Exit에 1회 실행

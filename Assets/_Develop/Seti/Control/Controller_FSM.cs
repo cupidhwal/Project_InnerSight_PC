@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Seti
@@ -14,7 +13,6 @@ namespace Seti
         // 속성
         #region Properties
         public StateMachine<Controller_FSM> StateMachine => stateMachine;
-        public Dictionary<Type, IBehaviour> BehaviourMap => behaviourMap;
         #endregion
 
         // 인터페이스

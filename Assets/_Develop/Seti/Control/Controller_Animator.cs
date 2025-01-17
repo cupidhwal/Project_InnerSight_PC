@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Windows;
 
 namespace Seti
 {
@@ -14,16 +15,16 @@ namespace Seti
     {
         // 필드
         #region Variables
-        private StateMachine<Controller_Animator> aniMachine;
         private Controller_Base controller;
 
-        public AniState aniState;
+        public AniState currentState;
         #endregion
 
         // 속성
         #region Properties
-        public Actor Actor { get; private set; }
+        public StateMachine<Controller_Animator> AniMachine { get; private set; }
         public Animator Animator { get; private set; }
+        public Actor Actor { get; private set; }
 
         public float MoveSpeed { get; private set; }
 
@@ -45,7 +46,7 @@ namespace Seti
 
             // 애니메이션 컨트롤러 초기화
             Animator = GetComponent<Animator>();
-            aniMachine = new StateMachine<Controller_Animator>(
+            AniMachine = new StateMachine<Controller_Animator>(
                 this,
                 new AniState_Idle()
             );
@@ -65,7 +66,7 @@ namespace Seti
             MoveSpeed = CurrentSpeed();
 
             // FSM 업데이트
-            aniMachine.Update(Time.deltaTime);
+            AniMachine.Update(Time.deltaTime);
         }
         #endregion
 
@@ -84,10 +85,10 @@ namespace Seti
                 if (moveBehaviour is Move move)
                 {
                     if (move.HasStrategy<Move_Normal>())
-                        aniMachine.AddState(new AniState_Move());
+                        AniMachine.AddState(new AniState_Move());
 
                     if (move.HasStrategy<Move_Dash>())
-                        aniMachine.AddState(new AniState_Dash());
+                        AniMachine.AddState(new AniState_Dash());
                 }
             }
 
@@ -96,7 +97,7 @@ namespace Seti
                 if (attackBehaviour is Attack attack)
                 {
                     if (attack.HasStrategy<Attack_Normal>())
-                        aniMachine.AddState(new AniState_Attack());
+                        AniMachine.AddState(new AniState_Attack());
 
                     //if (attack.HasStrategy<Attack_Weapon>())
 
@@ -108,6 +109,18 @@ namespace Seti
 
         // 유틸리티
         #region Utilities
+        public void MeleeAttackStart(int throwing = 0)
+        {
+            Actor.Condition.CurrentWeapon.BeginAttack(throwing != 0);
+            Actor.Condition.IsAttack = true;
+        }
+
+        public void MeleeAttackEnd()
+        {
+            Actor.Condition.CurrentWeapon.EndAttack();
+            Actor.Condition.IsAttack = false;
+        }
+
         private float forwardSpeed;
         private float CurrentSpeed()
         {

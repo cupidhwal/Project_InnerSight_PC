@@ -7,8 +7,8 @@ namespace Seti
     {
         // 오버라이드
         #region Override
-        public override void AttackEnter() => BeginAttack(true);
-        public override void AttackExit() => EndAttack();
+        public override void AttackEnter() { }
+        public override void AttackExit() { }
         #endregion
     }
 }

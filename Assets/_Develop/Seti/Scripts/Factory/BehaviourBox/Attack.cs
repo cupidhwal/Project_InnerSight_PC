@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -151,7 +153,10 @@ namespace Seti
         #region Controller_Input
         public void OnAttackStarted(InputAction.CallbackContext _) => OnAttack(true);
 
-        public void OnAttackCanceled(InputAction.CallbackContext _) => OnAttack(false);
+        public void OnAttackCanceled(InputAction.CallbackContext _)
+        {
+            //OnAttack(false);
+        }
 
         public void OnSkillStarted(InputAction.CallbackContext _)
         {
@@ -224,16 +229,19 @@ namespace Seti
 
         // 메서드
         #region Methods
-        private void OnAttack(bool isAttack = true)
+        public void OnAttack(bool isAttack = true)
         {
             condition.IsAttack = isAttack;
             if (isAttack)
             {
-                if (actor is Player)
-                    condition.AttactPoint = GameUtility.RayToWorldPosition();
-
                 condition.CurrentWeapon.AttackEnter();
                 currentStrategy?.Attack();
+
+                if (actor is Player)
+                {
+                    condition.AttactPoint = GameUtility.RayToWorldPosition();
+                    AttackWait();
+                }
             }
             else
             {
@@ -242,6 +250,15 @@ namespace Seti
             }
             if (actor is Player)
             actor.Controller_Animator.IsAttack = isAttack;
+        }
+        #endregion
+
+        // 유틸리티
+        #region Utilities
+        async void AttackWait()
+        {
+            await Task.Delay(30);
+            actor.Condition.IsAttack = false;
         }
         #endregion
     }

@@ -17,7 +17,7 @@ namespace Seti
             context.Animator.SetBool(Hash_InputDetected, true);
             base.OnEnter();
 
-            context.aniState = AniState.Move;
+            context.currentState = AniState.Move;
         }
 
         // 상태 전환 시 State Exit에 1회 실행
