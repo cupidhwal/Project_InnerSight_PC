@@ -19781,67 +19781,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe35b0f456bb1d941a98345b88bc30ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  changeNewSkill_Image: {fileID: 0}
+  changeNewSkill_Text: {fileID: 0}
   selectUI: {fileID: 521346984}
   skillUIList: []
-  btn1: {fileID: 1453905263}
-  btn2: {fileID: 0}
-  btn3: {fileID: 1355069451}
-  selectBtn1: {fileID: 92846959}
-  selectBtn2: {fileID: 0}
-  selectBtn3: {fileID: 0}
-  selectBtn4: {fileID: 0}
-  firstSkillUI: {fileID: 0}
-  secondSkillUI: {fileID: 0}
-  thridSkillUI: {fileID: 0}
-  fourthSkillUI: {fileID: 0}
+  btns: []
+  changeBtns: []
   fireSkill:
     rangeType: 1
     skillPrefab: {fileID: 1000011113172478, guid: 84d2bffa2c8675f439fd0435d7ed1e7d, type: 3}
     cooldown: 0
     damage: 10
     upgradeDamage: 10
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 21300000, guid: 55fdfd96bbabde144b5fa43b07938b0a, type: 3}
     UISprite: {fileID: 21300000, guid: 55fdfd96bbabde144b5fa43b07938b0a, type: 3}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
   kunai:
     rangeType: 1
     skillPrefab: {fileID: 100006, guid: 8677ed5c403426c4b818573f5deda45e, type: 3}
     cooldown: 0
     damage: 10
     upgradeDamage: 10
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 21300000, guid: 284dc7824cfa10b4598e058ca49bd1ea, type: 3}
     UISprite: {fileID: 21300000, guid: 284dc7824cfa10b4598e058ca49bd1ea, type: 3}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
   meteorRain:
     rangeType: 0
     skillPrefab: {fileID: 5793841387165916247, guid: 23a54ce77dbc5f147a9132823f39f6a3, type: 3}
     cooldown: 0
     damage: 10
     upgradeDamage: 10
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 21300000, guid: de40a213c7ecc754b862f88954deadc7, type: 3}
     UISprite: {fileID: 21300000, guid: de40a213c7ecc754b862f88954deadc7, type: 3}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
   laserFire:
     rangeType: 0
     skillPrefab: {fileID: 100008, guid: 956438f9493496f46b030988e75789ad, type: 3}
     cooldown: 0
     damage: 10
     upgradeDamage: 10
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 21300000, guid: b80dd2c9b1990f043a101906fd8c4dd4, type: 3}
     UISprite: {fileID: 21300000, guid: b80dd2c9b1990f043a101906fd8c4dd4, type: 3}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
+  laserFire1:
+    rangeType: 0
+    skillPrefab: {fileID: 0}
+    cooldown: 0
+    damage: 0
+    upgradeDamage: 0
+    skillUpgardeCount: 1
+    attackRadius: 0
+    skillAtkTime: 1.5
+    skillPos: {x: 0, y: 0, z: 0}
+    skillImage: {fileID: 0}
+    UISprite: {fileID: 0}
+    isSkillOn: 1
+    skillName: 
+    skillDescription: 
+  laserFire2:
+    rangeType: 0
+    skillPrefab: {fileID: 0}
+    cooldown: 0
+    damage: 0
+    upgradeDamage: 0
+    skillUpgardeCount: 1
+    attackRadius: 0
+    skillAtkTime: 1.5
+    skillPos: {x: 0, y: 0, z: 0}
+    skillImage: {fileID: 0}
+    UISprite: {fileID: 0}
+    isSkillOn: 1
+    skillName: 
+    skillDescription: 
 --- !u!114 &29611181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20455,10 +20490,10 @@ RectTransform:
   - {fileID: 1090996807}
   m_Father: {fileID: 1762353529}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -7.475006, y: 0}
-  m_SizeDelta: {x: -14.950012, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &103445912
 GameObject:
@@ -20758,8 +20793,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC78A\uC5C8\uB2E4\uB294 \uAE30\uC5B5\uC870\uCC28 \uC78A\uC2B5\uB2C8\uB2E4"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: 5609832291784792565, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -21823,13 +21858,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-<<<<<<< HEAD
-  m_AnchoredPosition: {x: 0, y: 16.903639}
-  m_SizeDelta: {x: 0, y: 616}
-=======
   m_AnchoredPosition: {x: 0, y: 299.99997}
   m_SizeDelta: {x: 0, y: 300}
->>>>>>> 4674f95528e95da6b03188e3f2779106191dcab0
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &302310827
 MonoBehaviour:
@@ -21915,7 +21945,7 @@ MonoBehaviour:
   m_text: "\uD30C\uD0A4\uCF00\uD314\uB85C\uC0AC\uC6B0\uB8E8\uC2A4\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_sharedMaterial: {fileID: 1014477772045602528, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -22050,8 +22080,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC2A4\uD0AC\uC774\uB984\uBD09\uBD09\uBD09\uBD09\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -22510,8 +22540,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC2A4\uD0AC\uC774\uB984\uBD09\uBD09\uBD09\uBD09\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -22755,10 +22785,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1762353529}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: 700, y: 40}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &418885211
 MonoBehaviour:
@@ -24888,8 +24918,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uACE0\uB300\uC758 \uD798"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -25479,8 +25509,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD655\uC778"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -26772,8 +26802,8 @@ MonoBehaviour:
   m_text: "\uC2A4\uD0AC\uC5D0 \uB300\uD55C \uC124\uBA85\uC744 \uC801\uC5B4\uC8FC\uC138\uC694.
     \uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: 5609832291784792565, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -28384,142 +28414,6 @@ RectTransform:
   m_AnchoredPosition: {x: 243.9, y: -121.48334}
   m_SizeDelta: {x: 90, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1259351202
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1259351203}
-  - component: {fileID: 1259351205}
-  - component: {fileID: 1259351204}
-  m_Layer: 5
-  m_Name: HealthNumberText
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1259351203
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259351202}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1762353529}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 40}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1259351204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259351202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: 80/100
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &1259351205
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259351202}
-  m_CullTransparentMesh: 1
 --- !u!1 &1262983162
 GameObject:
   m_ObjectHideFlags: 0
@@ -28915,10 +28809,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1762353529}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5.5999756, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1277922244
 MonoBehaviour:
@@ -29361,8 +29255,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 9999
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -29498,8 +29392,8 @@ MonoBehaviour:
   m_text: "\uC624\uB798\uB41C \uBB3C\uAC74\uC5D0\uB294 \uC2E0\uBE44\uD55C \uD798\uC774
     \uAE43\uB4ED\uB2C8\uB2E4"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: 5609832291784792565, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -29907,67 +29801,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe35b0f456bb1d941a98345b88bc30ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  changeNewSkill_Image: {fileID: 0}
+  changeNewSkill_Text: {fileID: 0}
   selectUI: {fileID: 2716538856492324293}
   skillUIList: []
-  btn1: {fileID: 7923332311550876186}
-  btn2: {fileID: 0}
-  btn3: {fileID: 0}
-  selectBtn1: {fileID: 6140381287151142933}
-  selectBtn2: {fileID: 0}
-  selectBtn3: {fileID: 0}
-  selectBtn4: {fileID: 0}
-  firstSkillUI: {fileID: 1890736435}
-  secondSkillUI: {fileID: 1764526126}
-  thridSkillUI: {fileID: 752858804}
-  fourthSkillUI: {fileID: 1977655940}
+  btns: []
+  changeBtns: []
   fireSkill:
     rangeType: 0
     skillPrefab: {fileID: 0}
     cooldown: 0
     damage: 0
     upgradeDamage: 0
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 0}
     UISprite: {fileID: 0}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
   kunai:
     rangeType: 0
     skillPrefab: {fileID: 0}
     cooldown: 0
     damage: 0
     upgradeDamage: 0
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 0}
     UISprite: {fileID: 0}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
   meteorRain:
     rangeType: 0
     skillPrefab: {fileID: 0}
     cooldown: 0
     damage: 0
     upgradeDamage: 0
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 0}
     UISprite: {fileID: 0}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
   laserFire:
     rangeType: 0
     skillPrefab: {fileID: 0}
     cooldown: 0
     damage: 0
     upgradeDamage: 0
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 0}
     UISprite: {fileID: 0}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
+  laserFire1:
+    rangeType: 0
+    skillPrefab: {fileID: 0}
+    cooldown: 0
+    damage: 0
+    upgradeDamage: 0
+    skillUpgardeCount: 1
+    attackRadius: 0
+    skillAtkTime: 1.5
+    skillPos: {x: 0, y: 0, z: 0}
+    skillImage: {fileID: 0}
+    UISprite: {fileID: 0}
+    isSkillOn: 1
+    skillName: 
+    skillDescription: 
+  laserFire2:
+    rangeType: 0
+    skillPrefab: {fileID: 0}
+    cooldown: 0
+    damage: 0
+    upgradeDamage: 0
+    skillUpgardeCount: 1
+    attackRadius: 0
+    skillAtkTime: 1.5
+    skillPos: {x: 0, y: 0, z: 0}
+    skillImage: {fileID: 0}
+    UISprite: {fileID: 0}
+    isSkillOn: 1
+    skillName: 
+    skillDescription: 
 --- !u!1001 &1382111112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30368,8 +30297,8 @@ MonoBehaviour:
   m_text: "\uC720\uBB3C\uC5D0 \uAD00\uD55C \uC124\uBA85\uC744 \uC368\uC8FC\uC138\uC694.
     \uB0D0\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC57C\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC639"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: 5609832291784792565, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -30504,8 +30433,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC720\uBB3C \uC774\uB984"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: 5609832291784792565, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -31660,8 +31589,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC2A4\uD0AC\uC774\uB984\uBD09\uBD09\uBD09\uBD09\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -32681,8 +32610,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC2A4\uD0AC\uC774\uB984\uBD09\uBD09\uBD09\uBD09\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -33662,13 +33591,12 @@ RectTransform:
   - {fileID: 1277922243}
   - {fileID: 102023839}
   - {fileID: 418885210}
-  - {fileID: 1259351203}
   m_Father: {fileID: 847606670}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -102}
-  m_SizeDelta: {x: 700, y: 50}
+  m_AnchoredPosition: {x: 0, y: -100}
+  m_SizeDelta: {x: 1200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1762353530
 MonoBehaviour:
@@ -34671,8 +34599,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC2A4\uD0AC\uC774\uB984\uBD09\uBD09\uBD09\uBD09\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -105223,8 +105151,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD798\uC758 \uB9DD\uAC01"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -105322,8 +105250,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC2A4\uD0AC\uC774\uB984\uC744 \uC801\uC73C\uC138\uC694."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -110333,8 +110261,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC2A4\uD0AC\uC774\uB984\uC744 \uC801\uC73C\uC138\uC694."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -110593,8 +110521,8 @@ MonoBehaviour:
   m_text: "\uC2A4\uD0AC\uC5D0 \uB300\uD55C \uC124\uBA85\uC744 \uC801\uC5B4\uC8FC\uC138\uC694.
     \uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: 5609832291784792565, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -111064,67 +110992,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe35b0f456bb1d941a98345b88bc30ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  changeNewSkill_Image: {fileID: 0}
+  changeNewSkill_Text: {fileID: 0}
   selectUI: {fileID: 2716538856492324293}
   skillUIList: []
-  btn1: {fileID: 7923332311550876186}
-  btn2: {fileID: 0}
-  btn3: {fileID: 0}
-  selectBtn1: {fileID: 6140381287151142933}
-  selectBtn2: {fileID: 0}
-  selectBtn3: {fileID: 0}
-  selectBtn4: {fileID: 0}
-  firstSkillUI: {fileID: 0}
-  secondSkillUI: {fileID: 0}
-  thridSkillUI: {fileID: 0}
-  fourthSkillUI: {fileID: 0}
+  btns: []
+  changeBtns: []
   fireSkill:
     rangeType: 0
     skillPrefab: {fileID: 0}
     cooldown: 0
     damage: 0
     upgradeDamage: 0
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 0}
     UISprite: {fileID: 0}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
   kunai:
     rangeType: 0
     skillPrefab: {fileID: 0}
     cooldown: 0
     damage: 0
     upgradeDamage: 0
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 0}
     UISprite: {fileID: 0}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
   meteorRain:
     rangeType: 0
     skillPrefab: {fileID: 0}
     cooldown: 0
     damage: 0
     upgradeDamage: 0
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 0}
     UISprite: {fileID: 0}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
   laserFire:
     rangeType: 0
     skillPrefab: {fileID: 0}
     cooldown: 0
     damage: 0
     upgradeDamage: 0
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 0}
     UISprite: {fileID: 0}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
+  laserFire1:
+    rangeType: 0
+    skillPrefab: {fileID: 0}
+    cooldown: 0
+    damage: 0
+    upgradeDamage: 0
+    skillUpgardeCount: 1
+    attackRadius: 0
+    skillAtkTime: 1.5
+    skillPos: {x: 0, y: 0, z: 0}
+    skillImage: {fileID: 0}
+    UISprite: {fileID: 0}
+    isSkillOn: 1
+    skillName: 
+    skillDescription: 
+  laserFire2:
+    rangeType: 0
+    skillPrefab: {fileID: 0}
+    cooldown: 0
+    damage: 0
+    upgradeDamage: 0
+    skillUpgardeCount: 1
+    attackRadius: 0
+    skillAtkTime: 1.5
+    skillPos: {x: 0, y: 0, z: 0}
+    skillImage: {fileID: 0}
+    UISprite: {fileID: 0}
+    isSkillOn: 1
+    skillName: 
+    skillDescription: 
 --- !u!1 &2641189813488841761
 GameObject:
   m_ObjectHideFlags: 0
@@ -111357,67 +111320,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe35b0f456bb1d941a98345b88bc30ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  changeNewSkill_Image: {fileID: 0}
+  changeNewSkill_Text: {fileID: 0}
   selectUI: {fileID: 771134661333131114}
   skillUIList: []
-  btn1: {fileID: 336131699718844995}
-  btn2: {fileID: 7321136572337882733}
-  btn3: {fileID: 5592657018400977409}
-  selectBtn1: {fileID: 0}
-  selectBtn2: {fileID: 0}
-  selectBtn3: {fileID: 0}
-  selectBtn4: {fileID: 0}
-  firstSkillUI: {fileID: 4180459148657180665}
-  secondSkillUI: {fileID: 8975878338624398418}
-  thridSkillUI: {fileID: 4662969809046164578}
-  fourthSkillUI: {fileID: 4662969809046164578}
+  btns: []
+  changeBtns: []
   fireSkill:
     rangeType: 1
     skillPrefab: {fileID: 1000011113172478, guid: 84d2bffa2c8675f439fd0435d7ed1e7d, type: 3}
     cooldown: 0
     damage: 10
     upgradeDamage: 10
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 21300000, guid: 55fdfd96bbabde144b5fa43b07938b0a, type: 3}
     UISprite: {fileID: 21300000, guid: 55fdfd96bbabde144b5fa43b07938b0a, type: 3}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
   kunai:
     rangeType: 1
     skillPrefab: {fileID: 100006, guid: 8677ed5c403426c4b818573f5deda45e, type: 3}
     cooldown: 0
     damage: 10
     upgradeDamage: 10
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 21300000, guid: 284dc7824cfa10b4598e058ca49bd1ea, type: 3}
     UISprite: {fileID: 21300000, guid: 284dc7824cfa10b4598e058ca49bd1ea, type: 3}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
   meteorRain:
     rangeType: 0
     skillPrefab: {fileID: 5793841387165916247, guid: 23a54ce77dbc5f147a9132823f39f6a3, type: 3}
     cooldown: 0
     damage: 10
     upgradeDamage: 10
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 21300000, guid: de40a213c7ecc754b862f88954deadc7, type: 3}
     UISprite: {fileID: 21300000, guid: de40a213c7ecc754b862f88954deadc7, type: 3}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
   laserFire:
     rangeType: 0
     skillPrefab: {fileID: 100008, guid: 956438f9493496f46b030988e75789ad, type: 3}
     cooldown: 0
     damage: 10
     upgradeDamage: 10
+    skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
     skillImage: {fileID: 21300000, guid: b80dd2c9b1990f043a101906fd8c4dd4, type: 3}
     UISprite: {fileID: 21300000, guid: b80dd2c9b1990f043a101906fd8c4dd4, type: 3}
     isSkillOn: 1
+    skillName: 
+    skillDescription: 
+  laserFire1:
+    rangeType: 0
+    skillPrefab: {fileID: 0}
+    cooldown: 0
+    damage: 0
+    upgradeDamage: 0
+    skillUpgardeCount: 1
+    attackRadius: 0
+    skillAtkTime: 1.5
+    skillPos: {x: 0, y: 0, z: 0}
+    skillImage: {fileID: 0}
+    UISprite: {fileID: 0}
+    isSkillOn: 1
+    skillName: 
+    skillDescription: 
+  laserFire2:
+    rangeType: 0
+    skillPrefab: {fileID: 0}
+    cooldown: 0
+    damage: 0
+    upgradeDamage: 0
+    skillUpgardeCount: 1
+    attackRadius: 0
+    skillAtkTime: 1.5
+    skillPos: {x: 0, y: 0, z: 0}
+    skillImage: {fileID: 0}
+    UISprite: {fileID: 0}
+    isSkillOn: 1
+    skillName: 
+    skillDescription: 
 --- !u!114 &2862854590752377058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111545,8 +111543,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 99
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -123327,8 +123325,8 @@ MonoBehaviour:
   m_text: "\uC54C \uC218 \uC5C6\uB294 \uD798\uC774 \uB2F9\uC2E0\uC744 \uB354\uC6B1
     \uAC15\uD558\uAC8C \uD569\uB2C8\uB2E4"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: 5609832291784792565, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -123573,8 +123571,8 @@ MonoBehaviour:
   m_text: "\uC2A4\uD0AC\uC5D0 \uB300\uD55C \uC124\uBA85\uC744 \uC801\uC5B4\uC8FC\uC138\uC694.
     \uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: 5609832291784792565, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -123700,8 +123698,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 99
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -124063,8 +124061,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC2A4\uD0AC\uC774\uB984\uC744 \uC801\uC73C\uC138\uC694."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -125024,7 +125022,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 655626818, guid: ade8cfac34578df43a6986416efd7db9, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -126584,8 +126582,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 99
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: 5609832291784792565, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials:
   - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
@@ -126808,8 +126806,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 99
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: 5609832291784792565, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -127118,8 +127116,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC2A4\uD0AC\uC774\uB984\uC744 \uC801\uC73C\uC138\uC694."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -132056,8 +132054,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uBBF8\uC9C0\uC758 \uD798 "
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_sharedMaterial: {fileID: 5428467282039460542, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -132405,8 +132403,8 @@ MonoBehaviour:
   m_text: "\uC2A4\uD0AC\uC5D0 \uB300\uD55C \uC124\uBA85\uC744 \uC801\uC5B4\uC8FC\uC138\uC694.
     \uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D\uBA4D"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: 5609832291784792565, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
