@@ -74,6 +74,7 @@ namespace Noah
         public void ApplyState()
         {
             PlayerStateManager.Instance.UpdateStateData(states);
+            UIManager.Instance.playerStateUI.gameObject.SetActive(false);
         }
 
     }

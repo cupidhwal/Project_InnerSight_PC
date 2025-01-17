@@ -1,3 +1,4 @@
+using Seti;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace Noah
         public PlayerData playerData;
         public List<float> dataList = new List<float>();
         public List<float> updateDataList = new List<float>();
+
+        Actor actor; 
 
         private void Start()
         {
@@ -53,8 +56,16 @@ namespace Noah
             for(int i = 0; i < dataList.Count; i++)
             {
                 dataList[i] = float.Parse(dataTexts[i].GetChild(0).GetComponent<TMP_Text>().text);
-                
             }
+
+            playerData.Health = dataList[0];
+            playerData.Attack = dataList[1];
+            playerData.Defend = dataList[2];
+            playerData.MoveSpeed = dataList[3];
+            playerData.AttackSpeed = dataList[4];
+
+            actor.SetStats(playerData.Health, playerData.Attack, playerData.Defend, 
+                playerData.AttackSpeed, playerData.MoveSpeed);
         }
     }
 }
