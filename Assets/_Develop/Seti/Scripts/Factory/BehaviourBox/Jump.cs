@@ -65,7 +65,7 @@ namespace Seti
         public Type GetStrategyType() => typeof(IJumpStrategy);
 
         // 보유 전략 확인
-        public bool HasStrategy<T>() where T : class, IStrategy => strategies.Any(strategy => strategy is T);
+        public bool HasStrategy<T>() where T : class, IStrategy => strategies.Any(strategy => strategy.strategy is T);
 
         // 행동 전략 설정
         public void SetStrategies(IEnumerable<Strategy> strategies)

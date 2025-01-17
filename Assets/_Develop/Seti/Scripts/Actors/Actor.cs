@@ -1,4 +1,3 @@
-using Noah;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -107,9 +106,6 @@ namespace Seti
         {
             // 참조
             animator = GetComponentInChildren<Controller_Animator>();
-
-            // 초기화
-            //SetStats(PlayerStateManager.Instance.pla);
         }
         #endregion
 

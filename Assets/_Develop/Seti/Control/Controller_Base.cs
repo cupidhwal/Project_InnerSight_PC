@@ -12,6 +12,11 @@ namespace Seti
         protected Dictionary<Type, IBehaviour> behaviourMap;    // 행동 매핑 (타입에 따른 행동 인스턴스)
         #endregion
 
+        // 속성
+        #region Properties
+        public Dictionary<Type, IBehaviour> BehaviourMap => behaviourMap;
+        #endregion
+
         // 인터페이스
         #region Interface
         public void Initialize()
