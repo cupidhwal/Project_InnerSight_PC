@@ -27,6 +27,7 @@ namespace Noah
             if(goldText != null)
             {
                 goldText.text = PlayerInfoManager.Instance.Gold.ToString();
+                inGameUI_PlayerState.gold_Text.text = PlayerInfoManager.Instance.Gold.ToString();
             }         
         }
 
