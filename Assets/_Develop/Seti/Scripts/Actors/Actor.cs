@@ -6,7 +6,7 @@ using UnityEngine.AI;
 namespace Seti
 {
     // Actor가 가져야 할 Component
-    [RequireComponent(typeof(Rigidbody))]
+    //[RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Damagable))]
 

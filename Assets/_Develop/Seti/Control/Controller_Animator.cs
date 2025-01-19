@@ -74,8 +74,8 @@ namespace Seti
         #region Methods
         public void Initialize()
         {
-            transform.position = Actor.transform.position;
-            transform.rotation = Actor.transform.rotation;
+            /*transform.position = Actor.transform.position;
+            transform.rotation = Actor.transform.rotation;*/
         }
 
         private void AddStates()
