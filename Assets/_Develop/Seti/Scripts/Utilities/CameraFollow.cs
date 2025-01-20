@@ -3,7 +3,7 @@ using Unity.Cinemachine;
 
 namespace Seti
 {
-    public class CameraManager : MonoBehaviour
+    public class CameraFollow : MonoBehaviour
     {
         // 필드
         #region Variables

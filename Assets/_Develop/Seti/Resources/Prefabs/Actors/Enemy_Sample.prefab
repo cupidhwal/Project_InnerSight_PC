@@ -218,9 +218,10 @@ GameObject:
   - component: {fileID: 268511591646616248}
   - component: {fileID: 7531578248423457190}
   - component: {fileID: 6532519519953168620}
+  - component: {fileID: 7552008357249084897}
   m_Layer: 6
   m_Name: Enemy_Sample
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -328,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint: {fileID: 0}
-  actorCondition: {fileID: 0}
+  condition: {fileID: 0}
   behaviours: []
   health: 100
   attack: 10
@@ -336,6 +337,7 @@ MonoBehaviour:
   rate_Attack: 1
   rate_Movement: 4
   stagger: 1
+  player: {fileID: 0}
   speed_Walk: 2
   speed_Run: 3
   currentState: 0
@@ -364,9 +366,22 @@ MonoBehaviour:
   maxHitPoints: 100
   currentHitPoints: 0
   invulnerablityTime: 0.1
+  staggerDuration: 0
   hitAngle: 360
   hitForwardRotation: 360
   OnDamageMessageReceivers: []
+--- !u!114 &7552008357249084897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8309244615677021322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b28ec21f49bd944a856b7114d784611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8425121070707550397
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,8 +17,12 @@ namespace Seti
             if (actor is Player player)
             {
                 Vector3 temp = player.Condition.AttactPoint;
-                Vector3 atkPoint = new(temp.x, 0, temp.z);
-                player.transform.LookAt(atkPoint);
+                float tempDis = Vector3.Distance(player.transform.position, temp);
+                if (tempDis > 1.5f)
+                {
+                    Vector3 atkPoint = new(temp.x, 0, temp.z);
+                    player.transform.LookAt(atkPoint);
+                }
             }
         }
         #endregion

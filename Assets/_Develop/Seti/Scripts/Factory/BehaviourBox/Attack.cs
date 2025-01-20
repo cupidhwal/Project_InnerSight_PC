@@ -257,8 +257,9 @@ namespace Seti
         #region Utilities
         async void AttackWait()
         {
-            await Task.Delay(300);
-            actor.Condition.IsAttack = false;
+            await Task.Delay(250);
+            condition.IsAttack = false;
+            actor.Controller_Animator.IsAttack = false;
         }
         #endregion
     }

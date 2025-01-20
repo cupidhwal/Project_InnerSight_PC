@@ -99,10 +99,17 @@ namespace Seti
                     {
                         //Debug.Log("FixedUpdate_Ray");
                         Collider col = s_RaycastHitCache[i].collider;
-                        if (col != null)
+                        try
                         {
-                            //Debug.Log("FixedUpdate_CheckDamage");
-                            CheckDamage(col, atp);
+                            if (col != null)
+                            {
+                                //Debug.Log("FixedUpdate_CheckDamage");
+                                CheckDamage(col, atp);
+                            }
+                        }
+                        catch
+                        {
+                            Debug.Log("해당 Actor는 이미 토벌되었습니다.");
                         }
                     }
 
