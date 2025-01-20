@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Seti;
+using JungBin;
 
 namespace Noah
 {
@@ -14,6 +16,12 @@ namespace Noah
 
         private int curStage = 0;
         private bool isChangeScene = false;
+
+        public GameObject nextStageObject;
+        public GameObject randomSkillObject;
+
+        public Transform enemyPar;
+        public List<GameObject> enemys = new List<GameObject>();
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -37,18 +45,18 @@ namespace Noah
 
         IEnumerator ResetStage()
         {
-            SetCurrentStage(5);
+            SetCurrentStage();
 
             yield return new WaitForSeconds(0.1f);
 
             GetCurrentStage();
         }
 
-        void SetCurrentStage(int _stage)
+        void SetCurrentStage(int _stage = 0)
         {
             curStage = _stage;
 
-            if (currentStagePar.GetChild(0) != null)
+            if (currentStagePar.GetChild(0).gameObject != null)
             {
                 Destroy(currentStagePar.GetChild(0).gameObject);
             }
@@ -63,11 +71,23 @@ namespace Noah
             spawnPoint = currentStage.transform.Find("SpawnPoint");
 
             player.transform.position = spawnPoint.position;
+
+            nextStageObject = currentStage.transform.GetChild(0).GetChild(0).gameObject;
+            randomSkillObject = currentStage.transform.GetChild(0).GetChild(1).gameObject;
+
+            enemyPar = currentStage.transform.GetChild(1);
+
+            for (int i = 0; i < enemyPar.childCount; i++)
+            {
+                enemys.Add(enemyPar.GetChild(i).gameObject);
+            }
         }
 
         public void NextStage()
         {
-            player.GetComponent<Move>().enabled = false;
+            player.GetComponent<Condition_Player>().PlayerSetActive(false);
+            player.GetComponent<PlayerUseSkill>().enabled = false;
+            enemys.Clear();
 
             StartCoroutine(GoNextStage());
         }
@@ -101,9 +121,15 @@ namespace Noah
 
             SceneFade.instance.FadeIn(null);
 
-            player.GetComponent<Move>().enabled = true;
+            player.GetComponent<Condition_Player>().PlayerSetActive(true);
+            player.GetComponent<PlayerUseSkill>().enabled = true;
 
             player.GetComponent<Rigidbody>().useGravity = true;
+        }
+
+        public void EnemyCount(GameObject _enemy)
+        {
+            enemys.Remove(_enemy);
         }
     }
 }

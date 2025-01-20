@@ -33,7 +33,6 @@ namespace Noah
         {
             // 스킬이 없을 때
             if (setSkill.skillSlots.Count == 0)
-
                 return;
 
             // 사용할 스킬 Index 확인
@@ -64,13 +63,10 @@ namespace Noah
 
         void UsePlayerSkill(int _index)
         {
-            if (Input.GetMouseButton(1))
+            if (Input.GetMouseButton(1) && setSkill.skillSlots[_index].rangeType != SkillRangeType.Nomal)
             {
                 isReadySkill = false;
                 isChange = false;
-
-
-                //Destroy(effectGo);
 
                 if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
                 {
@@ -78,11 +74,23 @@ namespace Noah
                     StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[_index], setSkill.skillUIList[_index]));
                 }
             }
+            else if(setSkill.skillSlots[_index].rangeType == SkillRangeType.Nomal)
+            {
+                isReadySkill = false;
+                isChange = false;
+
+                if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
+                {
+                    UseSkill(() => setSkill.skillSlots[_index]);
+                    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[_index], setSkill.skillUIList[_index]));
+                }
+            }
+
         }
 
         void ActiveSkill()
         {
-            if (Input.GetKeyDown("1") && setSkill.skillSlots[0].isSkillOn)
+            if (Input.GetKeyDown("1"))
             {
                 if (!isReadySkill)
                 {
@@ -94,7 +102,7 @@ namespace Noah
                 }
 
             }
-            else if (Input.GetKeyDown("2") && setSkill.skillSlots[1].isSkillOn)
+            else if (Input.GetKeyDown("2"))
             {
                 if (!isReadySkill)
                 {
@@ -105,7 +113,7 @@ namespace Noah
                     ChangeSkill(1);
                 }
             }
-            else if (Input.GetKeyDown("3") && setSkill.skillSlots[2].isSkillOn)
+            else if (Input.GetKeyDown("3"))
             {
                 if (!isReadySkill)
                 {
@@ -116,7 +124,7 @@ namespace Noah
                     ChangeSkill(2);
                 }
             }
-            else if (Input.GetKeyDown("4") && setSkill.skillSlots[3].isSkillOn)
+            else if (Input.GetKeyDown("4"))
             {
                 if (!isReadySkill)
                 {
@@ -146,33 +154,43 @@ namespace Noah
                 {
                     index = _index;
 
-                    effectGo.SetActive(false);
-                    effectGo = null;
+                    if(effectGo != null)
+                    {
+                        effectGo.SetActive(false);
+                        effectGo = null;
+                    }
+
                 }
                 else if (effectGo != null && Input.GetKeyDown($"{index + 1}"))
                 {
                     isReadySkill = false;
                     isChange = false;
-                    effectGo.SetActive(false);
-                    effectGo = null;
 
-                    Debug.Log("22");
+                    if (effectGo != null)
+                    {
+                        effectGo.SetActive(false);
+                        effectGo = null;
+                    }
 
                     return;
                 }
             }
             else
             {
+
                 isChange = false;
                 isReadySkill = false;
-                effectGo.SetActive(false);
 
-                Debug.Log("33");
+                if (effectGo != null)
+                {
+                    effectGo.SetActive(false);
+                }
+
                 return;
             }
         }
 
-        void UseSkill(Func<SkillBase> factoryMethod)
+        void UseSkill(Func<SkillBase> factoryMethod, Transform _parent = null)
         {
             SkillBase skill = factoryMethod();
 
@@ -208,13 +226,22 @@ namespace Noah
 
                         skillef = Instantiate(skill.skillPrefab, skillPos, yOnlyRotation);
                     }
+                    else if(skill.rangeType == SkillRangeType.Nomal)
+                    {
+                        skillef = Instantiate(skill.skillPrefab, transform.position, Quaternion.identity, transform);
+                    }
 
                     //skillef.transform.GetChild(0).GetComponent<SkillAttack>().damage = skill.damage;
 
                     StartCoroutine(skill.SkillCoolTime());
                     Destroy(skillef, skill.skillAtkTime);
-                    effectGo.SetActive(false);
-                    effectGo = null;
+
+                    if(effectGo != null)
+                    {
+                        effectGo.SetActive(false);
+                        effectGo = null;
+                    }
+
                 }
 
             }
@@ -222,48 +249,48 @@ namespace Noah
 
         void CheckSkillRange(GameObject prefab, SkillBase skill)
         {
-            Vector3 pos = Vector3.zero;
-
-            if (skill != null && skill.rangeType == SkillRangeType.Circle)
+            if (skill.isSkillOn)
             {
-                pos = RayManager.Instance.RayToScreen() + new Vector3(0f, 0.1f, 0f);
+                Vector3 pos = Vector3.zero;
 
-                if (prefab != null && effectGo == null)
+                if (skill != null && skill.rangeType == SkillRangeType.Circle)
                 {
-                    skillRange_Circle.SetActive(true);
+                    pos = RayManager.Instance.RayToScreen() + new Vector3(0f, 0.1f, 0f);
 
-                    effectGo = skillRange_Circle;
+                    if (prefab != null && effectGo == null)
+                    {
+                        skillRange_Circle.SetActive(true);
+
+                        effectGo = skillRange_Circle;
+                    }
+
+                    if (effectGo != null)
+                    {
+                        effectGo.transform.position = pos;
+                    }
                 }
-
-                if (effectGo != null)
+                else if (skill != null && skill.rangeType == SkillRangeType.Cube)
                 {
-                    effectGo.transform.position = pos;
+                    if (prefab != null && effectGo == null)
+                    {
+                        skillRange_Cube.SetActive(true);
+
+                        effectGo = skillRange_Cube;
+                    }
+
+                    if (effectGo != null)
+                    {
+                        effectGo.transform.position = transform.position;
+
+                        // Y축 회전만 적용
+                        Quaternion fullRotation = RayManager.Instance.UpdateSkillRangeRotation();
+                        Vector3 eulerRotation = fullRotation.eulerAngles; // 모든 축의 회전 값 가져오기
+                        Quaternion yOnlyRotation = Quaternion.Euler(0f, eulerRotation.y, 0f); // Y축 회전만 적용
+
+                        effectGo.transform.rotation = yOnlyRotation;
+                    }
                 }
             }
-            else if (skill != null && skill.rangeType == SkillRangeType.Cube)
-            {
-                if (prefab != null && effectGo == null)
-                {
-                    skillRange_Cube.SetActive(true);
-
-                    effectGo = skillRange_Cube;
-                }
-
-                if (effectGo != null)
-                {
-                    effectGo.transform.position = transform.position;
-
-                    // Y축 회전만 적용
-                    Quaternion fullRotation = RayManager.Instance.UpdateSkillRangeRotation();
-                    Vector3 eulerRotation = fullRotation.eulerAngles; // 모든 축의 회전 값 가져오기
-                    Quaternion yOnlyRotation = Quaternion.Euler(0f, eulerRotation.y, 0f); // Y축 회전만 적용
-
-                    effectGo.transform.rotation = yOnlyRotation;
-                }
-            }
-
-
-
         }
 
       
@@ -277,6 +304,8 @@ namespace Noah
                     break;      
                 case SkillRangeType.Cube:
                     CheckSkillRange(skillRange_Cube, skill);
+                    break;
+                case SkillRangeType.Nomal:
                     break;
                 
             }
