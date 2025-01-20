@@ -5,7 +5,7 @@ namespace Seti
     /// <summary>
     /// 캐릭터 속성
     /// </summary>
-    public enum CharAttribute
+    public enum Attribute_Character
     {
         Agility,
         Intellect,

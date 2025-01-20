@@ -10,12 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25c7860aff7f7954a91063d055124130, type: 3}
-  m_Name: _Inventory
+  m_Name: _Inventory_Sample
   m_EditorClassIdentifier: 
   database: {fileID: 11400000, guid: 171004e089ddc77479a591e9c1394fe4, type: 2}
   type: 0
   container:
     slots:
+    - item:
+        id: -1
+        name: 
+        specs: []
+      amount: 0
+      AllowedItems: 
+    - item:
+        id: -1
+        name: 
+        specs: []
+      amount: 0
+      AllowedItems: 
+    - item:
+        id: -1
+        name: 
+        specs: []
+      amount: 0
+      AllowedItems: 
     - item:
         id: 0
         name: ItemA
@@ -31,18 +49,54 @@ MonoBehaviour:
       amount: 1
       AllowedItems: 
     - item:
-        id: 2
-        name: Item_Boots
+        id: -1
+        name: 
+        specs: []
+      amount: 0
+      AllowedItems: 
+    - item:
+        id: -1
+        name: 
+        specs: []
+      amount: 0
+      AllowedItems: 
+    - item:
+        id: -1
+        name: 
+        specs: []
+      amount: 0
+      AllowedItems: 
+    - item:
+        id: 0
+        name: ItemA
         specs:
-        - stat: 1
-          value: 5
-          min: 4
+        - stat: 3
+          value: 6
+          min: 5
           max: 8
-        - stat: 2
-          value: 11
-          min: 8
-          max: 12
+        - stat: 0
+          value: 10
+          min: 7
+          max: 11
       amount: 1
+      AllowedItems: 
+    - item:
+        id: -1
+        name: 
+        specs: []
+      amount: 0
+      AllowedItems: 
+    - item:
+        id: -1
+        name: 
+        specs: []
+      amount: 0
+      AllowedItems: 
+    - item:
+        id: -1
+        name: 
+        specs: []
+      amount: 0
       AllowedItems: 
     - item:
         id: 3
@@ -77,63 +131,17 @@ MonoBehaviour:
       amount: 0
       AllowedItems: 
     - item:
-        id: -1
-        name: 
-        specs: []
-      amount: 0
-      AllowedItems: 
-    - item:
-        id: -1
-        name: 
-        specs: []
-      amount: 0
-      AllowedItems: 
-    - item:
-        id: -1
-        name: 
-        specs: []
-      amount: 0
-      AllowedItems: 
-    - item:
-        id: -1
-        name: 
-        specs: []
-      amount: 0
-      AllowedItems: 
-    - item:
-        id: -1
-        name: 
-        specs: []
-      amount: 0
-      AllowedItems: 
-    - item:
-        id: -1
-        name: 
-        specs: []
-      amount: 0
-      AllowedItems: 
-    - item:
-        id: -1
-        name: 
-        specs: []
-      amount: 0
-      AllowedItems: 
-    - item:
-        id: -1
-        name: 
-        specs: []
-      amount: 0
-      AllowedItems: 
-    - item:
-        id: -1
-        name: 
-        specs: []
-      amount: 0
-      AllowedItems: 
-    - item:
-        id: -1
-        name: 
-        specs: []
-      amount: 0
+        id: 3
+        name: Potion
+        specs:
+        - stat: 3
+          value: 7
+          min: 5
+          max: 8
+        - stat: 0
+          value: 7
+          min: 7
+          max: 11
+      amount: 1
       AllowedItems: 
   savePath: /Inventory.json

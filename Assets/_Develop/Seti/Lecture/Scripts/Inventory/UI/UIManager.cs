@@ -10,7 +10,8 @@ namespace Seti
         // 필드
         #region Variables
         public ItemDatabase database;
-        public InventoryUI_Dynamic inventoryUI_Player;
+        public InventoryUI_Static inventoryUI_Static;
+        public InventoryUI_Dynamic inventoryUI_Dynamic;
         #endregion
 
         // 라이프 사이클
@@ -19,23 +20,47 @@ namespace Seti
         {
             if (Input.GetKeyDown(KeyCode.I))
             {
-                inventoryUI_Player.gameObject.SetActive(!inventoryUI_Player.gameObject.activeSelf);
+                inventoryUI_Dynamic.gameObject.SetActive(!inventoryUI_Dynamic.gameObject.activeSelf);
             }
-            if (Input.GetKeyDown(KeyCode.N))
+
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                AddNewItem();
+                inventoryUI_Static.gameObject.SetActive(!inventoryUI_Static.gameObject.activeSelf);
+
+                // 커서
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                AddNewItem(0);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                AddNewItem(1);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                AddNewItem(2);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                AddNewItem(3);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                AddNewItem(4);
             }
         }
         #endregion
 
         // 메서드
         #region Methods
-        public void AddNewItem()
+        public void AddNewItem(int index)
         {
-            ItemObject itemObject = database.itemObjects[1];
+            ItemObject itemObject = database.itemObjects[index];
             Item newItem = itemObject.CreateItem();
 
-            inventoryUI_Player.inventoryObject.AddItem(newItem, 1);
+            inventoryUI_Dynamic.inventoryObject.AddItem(newItem, 1);
         }
         #endregion
     }

@@ -11,7 +11,7 @@ namespace Seti
     {
         // 필드
         #region Variables
-        public CharAttribute stat;
+        public Attribute_Character stat;
         public int value;
 
         [SerializeField] private int min;
