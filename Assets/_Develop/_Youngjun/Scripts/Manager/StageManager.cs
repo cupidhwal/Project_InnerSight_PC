@@ -130,6 +130,12 @@ namespace Noah
         public void EnemyCount(GameObject _enemy)
         {
             enemys.Remove(_enemy);
+
+            if(enemys.Count <= 0)
+            {
+                nextStageObject.SetActive(true);
+                randomSkillObject.SetActive(true);
+            }
         }
     }
 }
