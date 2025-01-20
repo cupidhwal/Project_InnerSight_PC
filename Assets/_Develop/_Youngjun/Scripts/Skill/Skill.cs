@@ -6,6 +6,7 @@ namespace Noah
 {
     public enum SkillRangeType
     { 
+        Nomal,
         Circle,
         Cube
     }

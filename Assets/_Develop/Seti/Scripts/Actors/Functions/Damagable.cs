@@ -1,5 +1,7 @@
+using Noah;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -174,6 +176,7 @@ namespace Seti
                 if (OnDeath != null)
                 {
                     schedule += OnDeath.Invoke;
+                    StageManager.Instance.EnemyCount(gameObject);
                 }
             }
             else
