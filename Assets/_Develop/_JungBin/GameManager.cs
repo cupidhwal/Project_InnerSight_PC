@@ -1,3 +1,4 @@
+using Seti;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,10 +13,14 @@ namespace JungBin
         [SerializeField] private Player player;
         [SerializeField] private CapsuleCollider player_HitCapsuleCollider;
         [SerializeField] private GameObject firstBoss;
+        [SerializeField] private Damagable damagable;
+        [SerializeField] private Actor actor;
 
         public Player Player => player; // 외부에서 접근 가능한 프로퍼티
         public CapsuleCollider Player_HitCapsuleCollider => player_HitCapsuleCollider;
         public GameObject FirstBoss => firstBoss;
+        public Damagable Damagable => damagable;    
+        public Actor Actor => actor;
 
         private void Awake()
         {

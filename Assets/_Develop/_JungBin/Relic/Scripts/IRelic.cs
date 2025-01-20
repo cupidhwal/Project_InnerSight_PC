@@ -5,9 +5,10 @@ namespace JungBin
 
     public interface IRelic
     {
-        string RelicName { get; }    // À¯¹° ÀÌ¸§
-        string Description { get; } // À¯¹° ¼³¸í
+         string RelicName { get; }    // ìœ ë¬¼ ì´ë¦„
+         string Description { get; } // ìœ ë¬¼ ì„¤ëª…
 
-        void ApplyEffect(Player player); // À¯¹° È¿°ú Àû¿ë
+        void ApplyEffect(Player player); // ìœ ë¬¼ íš¨ê³¼ ì ìš©
+        void RemoveEffect(Player player); // ìœ ë¬¼ íš¨ê³¼ ì œê±°
     }
 }

@@ -8,39 +8,85 @@ namespace JungBin
     public class RelicManager : MonoBehaviour
     {
         private List<IRelic> relics = new List<IRelic>();
-        [SerializeField] private TextMeshProUGUI relicDescription;      //À¯¹° ¼³¸íÀ» ÇØÁÙ ÅØ½ºÆ® ¿ÀºêÁ§Æ®
+        private IRelic selectedRelic; // ë§ˆì§€ë§‰ìœ¼ë¡œ ì„ íƒí•œ ìœ ë¬¼ ì €ì¥
 
-        // À¯¹° Ãß°¡
+        [SerializeField] private TextMeshProUGUI relicName;      //ìœ ë¬¼ì˜ ì´ë¦„ì„ ë‚˜íƒ€ë‚´ëŠ” í…ìŠ¤íŠ¸ ì˜¤ë¸Œì íŠ¸
+        [SerializeField] private TextMeshProUGUI relicDescription;      //ìœ ë¬¼ ì„¤ëª…ì„ í•´ì¤„ í…ìŠ¤íŠ¸ ì˜¤ë¸Œì íŠ¸
+        [SerializeField] private GameObject relicSelectUI;
+
+        // ìœ ë¬¼ ì¶”ê°€
         public void AddRelic(IRelic relic, Player player)
         {
             relics.Add(relic);
-            relic.ApplyEffect(player);
-            Debug.Log($"{relic.RelicName} À¯¹°ÀÇ È¿°ú : {relic.Description}");
+            Debug.Log($"{relic.RelicName} ìœ ë¬¼ì˜ íš¨ê³¼ : {relic.Description}");
         }
 
-        // ÇöÀç À¯¹° ¸ñ·Ï ¹İÈ¯
+        // í˜„ì¬ ìœ ë¬¼ ëª©ë¡ ë°˜í™˜
         public List<IRelic> GetRelics()
         {
             return relics;
         }
 
-        public void ShowRelicDescription(string name)
+        // í˜„ì¬ ì ìš© ì¤‘ì¸ ìœ ë¬¼ì´ ìˆëŠ”ì§€ í™•ì¸
+        public bool HasActiveRelic()
         {
+            return selectedRelic != null;
+        }
+
+        public void ClickRelicButton(string name)
+        {
+            ShowRelicDescription(name);
+        }
+
+        public void SelectRelicButton()
+        {
+            ApplyRelicEffect(selectedRelic, GameManager.Instance.Player);
+        }
+
+        public IRelic ShowRelicDescription(string name)
+        {
+            Debug.Log("í´ë¦­");
             if (relicDescription != null)
             {
-                for (int i = 0; i < GetRelics().Count; i++)
+                foreach (var relic in GetRelics())
                 {
-                    if (name == GetRelics()[i].RelicName)
+                    if (name == relic.RelicName)
                     {
                         relicDescription.gameObject.SetActive(true);
-                        relicDescription.text = GetRelics()[i].Description;
-                    }
-                    else
-                    {
-                        Debug.Log("¼±ÅÃÇÑ À¯¹°ÀÇ ÀÌ¸§°ú °®°íÀÖ´Â À¯¹°ÀÇ ÀÌ¸§ÀÌ ´Ù¸¨´Ï´Ù.");
+                        relicName.text = relic.RelicName;
+                        relicDescription.text = relic.Description;
+
+                        selectedRelic = relic; // ì„ íƒëœ ìœ ë¬¼ ì €ì¥
+                        return relic;
                     }
                 }
             }
+            Debug.LogWarning("ì„ íƒí•œ ìœ ë¬¼ì´ ì—†ìŠµë‹ˆë‹¤.");
+            return null;
+        }
+
+        // ìœ ë¬¼ íš¨ê³¼ ì ìš© (ìƒˆ ìœ ë¬¼ ì„ íƒ ì‹œ ì´ì „ íš¨ê³¼ ì œê±°)
+        public void ApplyRelicEffect(IRelic newRelic, Player player)
+        {
+            // ì´ì „ ìœ ë¬¼ íš¨ê³¼ ì œê±°
+            if (selectedRelic != null)
+            {
+                RemoveRelicEffect(selectedRelic, player);
+            }
+
+            // ìƒˆ ìœ ë¬¼ íš¨ê³¼ ì ìš©
+            selectedRelic = newRelic;
+            selectedRelic.ApplyEffect(player);
+            Debug.Log($"{selectedRelic.RelicName} ìœ ë¬¼ íš¨ê³¼ê°€ ì ìš©ë˜ì—ˆìŠµë‹ˆë‹¤.");
+
+            relicSelectUI.SetActive(false);
+        }
+
+        // ì´ì „ ìœ ë¬¼ íš¨ê³¼ ì œê±°
+        private void RemoveRelicEffect(IRelic relic, Player player)
+        {
+            relic.RemoveEffect(player);
+            Debug.Log($"{relic.RelicName} ìœ ë¬¼ íš¨ê³¼ê°€ ì œê±°ë˜ì—ˆìŠµë‹ˆë‹¤.");
         }
     }
 }

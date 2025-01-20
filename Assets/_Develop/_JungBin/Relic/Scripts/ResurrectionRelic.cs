@@ -5,29 +5,34 @@ namespace JungBin
 
     public class ResurrectionRelic : MonoBehaviour, IRelic
     {
-        public string RelicName => "Phoenix Feather";       //À¯¹°ÀÇ ÀÌ¸§
-        public string Description => "Allows you to revive once upon death.";       //À¯¹° ¼³¸í
-        private bool isCollected = false; // Áßº¹ ¼öÁı ¹æÁö ÇÃ·¡±×
+        public string RelicName => "ìƒëª…ì˜ ê³ ë¦¬";       //ìœ ë¬¼ì˜ ì´ë¦„
+         public string Description => "ì£½ìŒì„ ë§ì´í•˜ëŠ” ìˆœê°„, ë‹¨ í•œ ë²ˆ ìƒëª…ë ¥ì„ ë˜ì°¾ì•„ ë‹¤ì‹œ ì¼ì–´ì„­ë‹ˆë‹¤.";       //ìœ ë¬¼ ì„¤ëª…
+        private bool isCollected = false; // ì¤‘ë³µ ìˆ˜ì§‘ ë°©ì§€ í”Œë˜ê·¸
 
         public void ApplyEffect(Player player)
         {
-            player.AddLife(1);  // ÇÃ·¹ÀÌ¾î Life 1 Áõ°¡
+            player.AddLife(1);  // í”Œë ˆì´ì–´ Life 1 ì¦ê°€
         }
 
-        // ÇÃ·¹ÀÌ¾î °¨Áö½Ã ½Àµæ
+        public void RemoveEffect(Player player)
+        {
+            player.RemoveLife(1);
+        }
+
+        // í”Œë ˆì´ì–´ ê°ì§€ì‹œ ìŠµë“
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.GetComponent<Player>())
             {
                 
-                if (isCollected)    // Áßº¹ ¼öÁı ¹æÁö
+                if (isCollected)    // ì¤‘ë³µ ìˆ˜ì§‘ ë°©ì§€
                     return;
 
                 IRelic relic = gameObject.GetComponent<IRelic>();
                 if (relic != null)
                 {
                     
-                    //ÇÃ·¹ÀÌ¾î¿¡°Ô À¯¹° µî·Ï
+                    //í”Œë ˆì´ì–´ì—ê²Œ ìœ ë¬¼ ë“±ë¡
                     GameManager.Instance.RegisterRelic(relic);
                     isCollected = true;
 
