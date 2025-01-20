@@ -74,14 +74,14 @@ namespace Seti
         void Damaged(Damagable.DamageMessage damageMessage)
         {
             // TODO
-            Debug.Log($"{damageMessage.owner.name}로부터 {damageMessage.amount}의 데미지를 입었습니다.");
+            //Debug.Log($"{damageMessage.owner.name}로부터 {damageMessage.amount}의 데미지를 입었습니다.");
         }
 
         // 사망 처리, 애니메이션, 연출, ...
         void Die(Damagable.DamageMessage damageMessage)
         {
             // TODO
-            Debug.Log($"{damageMessage.owner.name}의 공격으로 사망하였습니다.");
+            //Debug.Log($"{damageMessage.owner.name}의 공격으로 사망하였습니다.");
         }
 
         // 씬 내의 대적자 액터 가져오기

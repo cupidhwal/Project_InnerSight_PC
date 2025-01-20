@@ -38,6 +38,7 @@ namespace Seti
 
         // 제어 관리
         private Vector2 moveInput;  // 입력 값
+        public Vector2 MoveInput => moveInput;
         private Condition_Actor condition;
         private StrategyType currentType;
         private State<Controller_FSM> currentState;

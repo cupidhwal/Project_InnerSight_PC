@@ -13,8 +13,9 @@ namespace Seti
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             //지정 이펙트 애니메이션 플레이
-            /*Controller_Animator controller = animator.GetComponent<Controller_Animator>();
-            controller.Weapon.effects[effectIndex].Activate();*/
+            Controller_Animator controller = animator.GetComponent<Controller_Animator>();
+            Weapon weapon = controller.GetComponentInChildren<Weapon>();
+            weapon.effects[effectIndex].Activate();
         }
     }
 }

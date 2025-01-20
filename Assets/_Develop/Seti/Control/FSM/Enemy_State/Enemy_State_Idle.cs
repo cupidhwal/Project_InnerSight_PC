@@ -26,7 +26,7 @@ namespace Seti
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
-            if (damagable.CurrentHitPoints < 0)
+            if (damagable.CurrentHitPoints <= 0)
                 return typeof(Enemy_State_Dead);
 
             if (!condition.InAction)

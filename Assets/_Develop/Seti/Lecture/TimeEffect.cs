@@ -10,7 +10,7 @@ namespace Seti
     {
         // 필드
         #region Variables
-        public Light weaponLight;
+        //public Light weaponLight;
         private Animation m_Animation;
         #endregion
 
@@ -32,7 +32,7 @@ namespace Seti
         public void Activate()
         {
             gameObject.SetActive(true);
-            weaponLight.enabled = true;
+            //weaponLight.enabled = true;
 
             if (m_Animation != null)
             {
@@ -51,7 +51,7 @@ namespace Seti
             yield return new WaitForSeconds(m_Animation.clip.length);
             
             gameObject.SetActive(false);
-            weaponLight.enabled = false;
+            //weaponLight.enabled = false;
         }
         #endregion
     }
