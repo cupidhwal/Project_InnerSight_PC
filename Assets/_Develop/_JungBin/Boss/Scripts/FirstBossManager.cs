@@ -17,13 +17,13 @@ namespace JungBin
         [SerializeField] private GameObject rushAttackBox;          //돌진시 켜지는 콜라이더 오브젝트
         [SerializeField] private BoxCollider throwAttackBox;        //던질때 켜지는 콜라이더
         [SerializeField] private GameObject attackBox;            //기본 공격시 켜지는 콜라이더
+        [SerializeField] private ParticleSystem slashAttack;
 
         [Header("Jump Attack Settings")]
         [SerializeField] private LayerMask jumpGroundLayer; // 충격파를 적용할 레이어
         [SerializeField] private float shockwaveRadius = 5f; // 충격파 반경
         [SerializeField] private float shockwaveDamage = 100f; // 충격파 데미지
         [SerializeField] private GameObject shockwavePrefab;
-        [SerializeField] private Material shockwaveShaderMaterial;
         [SerializeField] private GameObject rockPrefab;             //낙석시 스폰되는 오브젝트
         [SerializeField] private GameObject warningEffectPrefab;    //낙석시 스폰되는 경고 프리팹
         [SerializeField] private Transform spawnPointsParent;       //낙석 위치 부모 오브젝트
@@ -118,18 +118,8 @@ namespace JungBin
                 if (DetectWall() == true)
                 {
                     animator.SetBool("IsWall", true);
-                    //animator.speed = 0.2f;
                 }
             }
- /*               else
-                {
-                    animator.speed = 1f;
-                }
-            }
-            else
-            {
-                animator.speed = 1f;
-            }*/
         }
 
         #region 일반적인 상태
@@ -204,6 +194,8 @@ namespace JungBin
         public void OnAttackBox()
         {
             attackBox.SetActive(!attackBox.activeSelf);
+            slashAttack.gameObject.SetActive(!slashAttack.gameObject.activeSelf);
+            slashAttack.Play();
         }
         #endregion
 
@@ -314,17 +306,6 @@ namespace JungBin
             var shockwaveParticle = Instantiate(shockwavePrefab, transform.position, Quaternion.identity);
             shockwaveParticle.transform.localScale = Vector3.one * shockwaveRadius;
             Destroy(shockwaveParticle, 2f); // 2초 후 파괴
-        }
-
-        private void TriggerShockwaveShaderEffect()
-        {
-            // Material 또는 쉐이더를 활성화
-            Material shockwaveMaterial = Instantiate(shockwaveShaderMaterial);
-            shockwaveMaterial.SetFloat("_Radius", shockwaveRadius);
-            shockwaveMaterial.SetVector("_Center", transform.position);
-
-            // 2초 동안 효과 유지 후 제거
-            StartCoroutine(DisableShaderAfterTime(shockwaveMaterial, 2f));
         }
 
         private IEnumerator DisableShaderAfterTime(Material material, float duration)

@@ -14,12 +14,12 @@ namespace JungBin
             brokenObj.SetActive(true);
             UnBrokenObj.SetActive(false);
 
-            Invoke("Destroy", 3f);
+            Invoke("Destroy", 2f);
         }
 
         public void Destroy()
         {
-            Destroy(brokenObj);
+            Destroy(gameObject);
         }
     }
 }

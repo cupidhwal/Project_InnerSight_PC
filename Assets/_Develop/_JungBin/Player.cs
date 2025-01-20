@@ -27,6 +27,12 @@ namespace JungBin
             Debug.Log($"생명 추가됨: 현재 생명 수 {Lives}");
         }
 
+        public void RemoveLife(int amount)
+        {
+            Lives -= amount;
+            Debug.Log($"생명 제거됨: 현재 생명 수 {Lives}");
+        }
+
         // 사망 메서드
         public void Die()
         {
