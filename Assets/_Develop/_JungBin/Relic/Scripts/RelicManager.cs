@@ -103,5 +103,16 @@ namespace JungBin
             relic.RemoveEffect(player);
             Debug.Log($"{relic.RelicName} 유물 효과가 제거되었습니다.");
         }
+
+        public void CloseRelicUI()
+        {
+            relicSelectUI.SetActive(false);
+
+            Time.timeScale = 1f; // 게임 시간 정상화
+            TestUI testUI = new TestUI();
+            testUI.CloseUI();
+            Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 잠금
+            Cursor.visible = false; // 마우스 커서 숨김
+        }
     }
 }

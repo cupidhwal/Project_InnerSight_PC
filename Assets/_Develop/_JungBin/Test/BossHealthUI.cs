@@ -1,36 +1,42 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace JungBin
-{ 
-
-public class BossHealthUI : MonoBehaviour
 {
-    [SerializeField] private Slider healthSlider; // 보스 체력 슬라이더
-    [SerializeField] private BossStat bossStat;  // 보스 상태 스크립트
 
-    private void Start()
+    public class BossHealthUI : MonoBehaviour
     {
-        if (bossStat != null && healthSlider != null)
+        [SerializeField] private TextMeshProUGUI bossNameText; // 보스 이름 UI
+        [SerializeField] private Slider healthSlider; // 보스 체력 슬라이더
+        private BossStat currentBossStat; // 현재 보스의 상태 스크립트
+
+        public void SetBoss(BossStat bossStat)
         {
-            // 슬라이더의 최대값과 현재값 초기화
-            healthSlider.maxValue = bossStat.MaxHealth;
-            healthSlider.value = bossStat.Health;
+            if (bossStat != null && healthSlider != null)
+            {
+                currentBossStat = bossStat;
+
+                // 보스 이름 및 체력 UI 설정
+                bossNameText.text = bossStat.BossName; // 보스 이름 표시
+                healthSlider.maxValue = bossStat.MaxHealth;
+                healthSlider.value = bossStat.Health;
+
+                Debug.Log($"보스 {bossStat.name}와 체력 UI가 연결되었습니다.");
+            }
+            else
+            {
+                Debug.LogError("BossStat 또는 HealthSlider가 올바르게 설정되지 않았습니다.");
+            }
         }
-        else
+
+        private void Update()
         {
-            Debug.LogWarning("BossStat 또는 HealthSlider가 연결되지 않았습니다.");
+            if (currentBossStat != null && healthSlider != null)
+            {
+                // 현재 보스 체력에 따라 슬라이더 업데이트
+                healthSlider.value = currentBossStat.Health;
+            }
         }
     }
-
-    private void Update()
-    {
-        if (bossStat != null && healthSlider != null)
-        {
-            // 보스 체력에 따라 슬라이더 값 업데이트
-            healthSlider.value = bossStat.Health;
-        }
-    }
-}
-
 }

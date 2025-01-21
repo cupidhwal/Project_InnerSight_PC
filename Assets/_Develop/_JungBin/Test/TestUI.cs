@@ -8,13 +8,18 @@ namespace JungBin
         [SerializeField] private Canvas pauseMenuCanvas; // Inspector에서 등록할 UI 캔버스
         private bool isGamePaused = false; // 게임이 멈춘 상태인지 확인
 
+        [SerializeField] private BossStageManager bossStageManager;
+
         private void Start()
         {
             // UI 캔버스를 비활성화하여 시작 시 보이지 않게 설정
             if (pauseMenuCanvas != null)
             {
                 pauseMenuCanvas.gameObject.SetActive(false);
+
             }
+            bossStageManager.EnterBossStage(0);
+
         }
 
         private void Update()
@@ -59,6 +64,11 @@ namespace JungBin
             isGamePaused = false; // 상태 업데이트
             Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 잠금
             Cursor.visible = false; // 마우스 커서 숨김
+        }
+
+        public void CloseUI()
+        {
+            isGamePaused = false;
         }
     }
 }
