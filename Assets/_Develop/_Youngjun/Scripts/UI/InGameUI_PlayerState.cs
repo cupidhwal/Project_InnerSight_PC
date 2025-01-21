@@ -59,7 +59,8 @@ namespace Noah
 
             states[_index].GetChild(0).GetComponent<TMP_Text>().text = upPoint.ToString();
 
-            states[_index].GetChild(4).GetComponent<TMP_Text>().text = upPoint.ToString();
+            states[_index].GetChild(4).GetComponent<TMP_Text>().text = PlayerStateManager.Instance.GetUpgradeCost()[_index].ToString();
+
         }
         
         public void RemoveButton(int _index)
@@ -84,6 +85,10 @@ namespace Noah
             //PlayerInfoManager.Instance.UseGold();
             UIManager.Instance.playerStateUI.gameObject.SetActive(false);
         }
-
+        
+        public void ActiveUI()
+        {
+            UIManager.Instance.Toggle(transform.GetChild(0).gameObject);
+        }
     }
 }
