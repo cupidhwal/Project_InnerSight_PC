@@ -7,7 +7,7 @@ namespace Yoon
     public class WorldSpaceHealthBar : MonoBehaviour
     {
         #region Variables
-        //public Health health;
+        //public EnemyHealth health;
 
         public Image healthBarImage;
 
