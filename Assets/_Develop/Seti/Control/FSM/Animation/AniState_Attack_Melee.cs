@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Seti
 {
-    public class AniState_Attack : AniState_Base
+    public class AniState_Attack_Melee : AniState_Base
     {
         // 필드
         #region Variables
@@ -42,6 +42,9 @@ namespace Seti
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
+            if (context.IsDead)
+                return typeof(AniState_Die);
+
             if (!context.IsAttack && !context.IsMove)
                 return typeof(AniState_Idle);
 
@@ -55,7 +58,6 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             base.Update(deltaTime);
-            //context.Animator.SetFloat(Hash_StateTime, context.AniMachine.ElapsedTime);
             AttackState();
         }
         #endregion

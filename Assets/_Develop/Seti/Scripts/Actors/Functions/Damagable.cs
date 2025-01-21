@@ -50,8 +50,9 @@ namespace Seti
         // 속성
         #region Properties
         public bool IsInvulnerable { get; set; }                // 무적 여부
-        public float CurrentHitPoints => currentHitPoints;
-        //public int CurrentHitPoints { get; private set; }       // 현재 체력
+        public float MaxHitPoint => maxHitPoints;               // 최대 체력
+        public float CurrentHitPoints => currentHitPoints;      // 현재 체력
+        //public int CurrentHitPoints { get; private set; }
         //public Actor CurrentTarget { get; private set; }
         #endregion
 
@@ -86,7 +87,7 @@ namespace Seti
         private void Update()
         {
             // 피격 타이머
-            if (actor && !actor.Condition.InAction)
+            if (actor && !actor.Condition.InAction && !actor.Condition.IsDead)
             {
                 m_timeSinceStagger += Time.deltaTime;
                 if (m_timeSinceStagger > staggerDuration)

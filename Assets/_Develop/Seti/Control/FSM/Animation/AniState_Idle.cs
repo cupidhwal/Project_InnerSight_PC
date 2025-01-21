@@ -28,6 +28,9 @@ namespace Seti
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
+            if (context.IsDead)
+                return typeof(AniState_Die);
+
             if (context.IsMove)
                 return typeof(AniState_Move);
 
@@ -35,7 +38,7 @@ namespace Seti
                 return typeof(AniState_Dash);
             
             else if (context.IsAttack)
-                return typeof(AniState_Attack);
+                return typeof(AniState_Attack_Melee);
 
             else if (context.IsStagger)
                 return typeof(AniState_Stagger);

@@ -15,7 +15,9 @@ namespace Seti
     {
         // 필드
         #region Variables
+        // 컴포넌트
         private Controller_Base controller;
+        private Damagable damagable;
 
         public AniState currentState;
         #endregion
@@ -30,7 +32,7 @@ namespace Seti
 
         public bool IsMove { get; set; } = false;
         public bool IsDash { get; set; } = false;
-        public bool IsDeath { get; set; } = false;
+        public bool IsDead { get; set; } = false;
         public bool IsAttack { get; set; } = false;
         public bool IsStagger { get; set; } = false;
         #endregion
@@ -39,11 +41,21 @@ namespace Seti
         #region Life Cycle
         protected void Start()
         {
-            // 초기화
+            // 참조
             if (!TryGetComponent<Actor>(out var actor))
                 actor = GetComponentInParent<Actor>();
             Actor = actor;
-            controller = GetComponentInParent<Controller_Base>();
+
+            if (!TryGetComponent<Controller_Base>(out var control))
+                control = GetComponentInParent<Controller_Base>();
+            controller = control;
+
+            if (!TryGetComponent<Damagable>(out var damage))
+                damage = GetComponentInParent<Damagable>();
+            damagable = damage;
+
+            // 이벤트 구독
+            damagable.OnDeath += OnDie;
 
             // 애니메이션 컨트롤러 초기화
             Animator = GetComponent<Animator>();
@@ -80,6 +92,8 @@ namespace Seti
             transform.rotation = Actor.transform.rotation;*/
         }
 
+        private void OnDie() => IsDead = true;
+
         private void AddStates()
         {
             // 누구나 죽는다
@@ -102,7 +116,7 @@ namespace Seti
                 if (attackBehaviour is Attack attack)
                 {
                     if (attack.HasStrategy<Attack_Normal>())
-                        AniMachine.AddState(new AniState_Attack());
+                        AniMachine.AddState(new AniState_Attack_Melee());
                 }
             }
 
