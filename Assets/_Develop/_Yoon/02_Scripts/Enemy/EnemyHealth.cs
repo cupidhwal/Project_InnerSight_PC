@@ -31,7 +31,6 @@ public class EnemyHealth : MonoBehaviour
             Die();
         }
     }
-
     private void ShowDamageIndicator(float damage)
     {
         if (damageTextPrefab != null && fightWorldCanvas != null)
@@ -40,7 +39,7 @@ public class EnemyHealth : MonoBehaviour
             GameObject damageTextInstance = Instantiate(damageTextPrefab, fightWorldCanvas);
 
             // DamageText 위치를 적 머리 위로 설정
-            damageTextInstance.transform.localPosition = new Vector3(0, 1.5f, 0); // Y축 조정으로 머리 위로 배치
+            damageTextInstance.transform.localPosition = new Vector3(0, 0.5f, 0); // 적 머리 위에 배치
 
             // DamageIndicator 스크립트에 데미지 값 전달
             DamageIndicator damageIndicator = damageTextInstance.GetComponent<DamageIndicator>();
