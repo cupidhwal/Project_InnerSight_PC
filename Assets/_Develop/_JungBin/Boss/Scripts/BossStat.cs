@@ -9,7 +9,6 @@ namespace JungBin
         // Public Properties
         [SerializeField] private string bossName; // 보스 이름
 
-        public float Health { get; private set; } // 현재 체력
         [SerializeField] private float maxHealth = 1000f; // 최대 체력
         [SerializeField] private float invulnerabilityTime = 2f; // 무적 시간
         [SerializeField] private GameObject relicPrefab; // 드랍할 유물
@@ -19,18 +18,29 @@ namespace JungBin
         private bool isInvulnerable = false; // 무적 여부
         private float timeSinceLastHit = 0f; // 무적 시간 관리
 
+        private Damagable damagable; // Damagable 참조
+
         // Events
         public UnityAction OnDeath; // 보스가 죽었을 때
         public UnityAction OnBecomeVulnerable; // 무적 해제 시
 
-        public float MaxHealth => maxHealth; // 보스의 최대 체력
+        //public float MaxHealth => damagable != null ? damagable.hip; // 보스의 최대 체력
+        public float Health => damagable != null ? damagable.CurrentHitPoints : 0; // 현재 체력
         public string BossName => bossName; // 보스 이름 접근자
 
         private void Start()
         {
             // 초기화
-            Health = maxHealth;
             animator = GetComponent<Animator>();
+            damagable = GetComponent<Damagable>();
+
+            if (damagable != null)
+            {
+                // Damagable 초기화
+                damagable.OnDeath += HandleDeath;
+                damagable.OnReceiveDamage += HandleReceiveDamage;
+                damagable.OnBecomeVulnerable += HandleBecomeVulnerable;
+            }
 
             ResetHealth();
             OnDeath += SpawnRelic;
@@ -57,27 +67,7 @@ namespace JungBin
             }
         }
 
-        // 데미지 처리
-        public void TakeDamage(Damagable.DamageMessage damageMessage)
-        {
-            // 무적 상태 또는 이미 사망한 경우 데미지 처리 안 함
-            if (Health <= 0 || isInvulnerable)
-            {
-                Debug.Log("보스가 무적 상태이거나 이미 사망했습니다.");
-                return;
-            }
-
-            // 체력 감소
-            Health -= damageMessage.amount;
-            Debug.Log($"보스가 {damageMessage.owner.name}에게 {damageMessage.amount} 데미지를 받았습니다. 남은 체력: {Health}");
-
-            // 죽음 처리
-            if (Health <= 0)
-            {
-                Die();
-            }
-        }
-
+        // 버서커 모드 진입
         private void EnterBerserkMode()
         {
             isBerserk = true;
@@ -86,29 +76,42 @@ namespace JungBin
             Debug.Log("버서커 모드로 전환됨: 무적 상태 활성화");
         }
 
-        private void Die()
+        // 보스 사망 처리
+        private void HandleDeath()
         {
-            if (Health > 0)
-                return; // 이미 죽었으면 처리하지 않음
+            if (Health > 0) return; // 이미 죽었으면 처리하지 않음
 
             animator.SetBool("IsDeath", true);
             OnDeath?.Invoke(); // 죽음 이벤트 호출
             Debug.Log("보스가 사망했습니다.");
         }
 
-        public void CheatDie()
+        // 보스가 데미지를 받을 때
+        private void HandleReceiveDamage()
         {
-            OnDeath?.Invoke(); // 죽음 이벤트 호출
+            Debug.Log("보스가 공격을 받았습니다!");
         }
 
+        // 무적 상태 해제
+        private void HandleBecomeVulnerable()
+        {
+            Debug.Log("보스의 무적 상태가 해제되었습니다.");
+        }
+
+        // 유물 드랍
         private void SpawnRelic()
         {
             Instantiate(relicPrefab, transform.position, Quaternion.identity);
         }
 
+        // 보스 체력 및 상태 초기화
         public void ResetHealth()
         {
-            Health = maxHealth;
+            if (damagable != null)
+            {
+                damagable.ResetDamage();
+            }
+
             isInvulnerable = false;
             isBerserk = false;
             timeSinceLastHit = 0f;
@@ -116,5 +119,23 @@ namespace JungBin
             animator.SetBool("IsDeath", false);
             Debug.Log("보스 체력 및 상태가 초기화되었습니다.");
         }
+
+        /*// 치트로 즉시 죽이기
+        public void CheatDie()
+        {
+            if (damagable != null)
+            {
+                damagable.TakeDamage(new Damagable.DamageMessage
+                {
+                    amount = damagable.CurrentHitPoints, // 현재 체력을 모두 감소시켜 즉시 죽임
+                    damager = this,
+                    owner = this,
+                    damageSource = transform.position,
+                    direction = Vector3.zero,
+                    throwing = false,
+                    stopCamera = false
+                });
+            }
+        }*/
     }
 }
