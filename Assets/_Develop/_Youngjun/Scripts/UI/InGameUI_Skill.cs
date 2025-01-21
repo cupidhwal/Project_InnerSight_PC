@@ -182,6 +182,7 @@ namespace Noah
             {
                 skillSlots.Add(randomSkills[skillIndex]);
                 SetSkillUI(skillUIList[skillSlots.Count - 1], randomSkills[skillIndex]); // UI 갱신
+                skillUIList[skillSlots.Count - 1].transform.GetChild(3).GetComponent<TMP_Text>().text = skillSlots[skillSlots.Count - 1].skillUpgardeCount.ToString();
                 ResetBtnData();
                 //Debug.Log($"Skill assigned to slot {skillSlots.Count}: {randomSkills[skillIndex].GetType().Name}");
             }
