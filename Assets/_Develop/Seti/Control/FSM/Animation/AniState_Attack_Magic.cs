@@ -3,19 +3,8 @@ using UnityEngine;
 
 namespace Seti
 {
-    public class AniState_Attack_Melee : AniState_Base
+    public class AniState_Attack_Magic : AniState_Base
     {
-        // 필드
-        #region Variables
-        private int comboIndex;
-        private int comboCount = 2;
-        #endregion
-
-        // 속성
-        #region Properties
-        private int AttackCombo => comboIndex++ % comboCount;
-        #endregion
-
         // 오버라이드
         #region Override
         // 초기화 메서드 - 생성 후 1회 실행
@@ -25,7 +14,7 @@ namespace Seti
         public override void OnEnter()
         {
             base.OnEnter();
-            context.Animator.SetTrigger(Hash_MeleeAttack);
+            context.Animator.SetTrigger(Hash_MagicAttack);
             context.currentState = AniState.Attack;
         }
 
@@ -36,7 +25,7 @@ namespace Seti
             Controller_Base controller = context.Actor.GetComponent<Controller_Base>();
             if (controller.BehaviourMap.TryGetValue(typeof(Attack), out var behaviour))
                 if (behaviour is Attack attack)
-                    attack?.OnAttack(false);
+                    attack?.OnMagic(false);
         }
 
         // 상태 전환 조건 메서드
@@ -51,8 +40,8 @@ namespace Seti
             else if (!context.IsAttack && context.IsMove)
                 return typeof(AniState_Move);
 
-            else if (context.IsMagic)
-                return typeof(AniState_Attack_Magic);
+            else if (context.IsAttack)
+                return typeof(AniState_Attack_Melee);
 
             return null;
         }
@@ -61,7 +50,7 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             base.Update(deltaTime);
-            AttackState();
+            //AttackState();
         }
         #endregion
 
@@ -72,12 +61,12 @@ namespace Seti
         //공격 처리
         void AttackState()
         {
-            context.Animator.ResetTrigger(Hash_MeleeAttack);
+            context.Animator.ResetTrigger(Hash_MagicAttack);
 
             context.Animator.SetFloat(Hash_StateTime,
                                       Mathf.Repeat(context.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f));
-            if (context.IsAttack)
-                context.Animator.SetTrigger(Hash_MeleeAttack);
+            if (context.IsMagic)
+                context.Animator.SetTrigger(Hash_MagicAttack);
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Seti
 
         // int
         protected int Hash_RandomIdle = Animator.StringToHash("RandomIdle");
+        protected int Hash_RandomMagic = Animator.StringToHash("RandomMagic");
 
         // bool
         protected int Hash_Grounded = Animator.StringToHash("Grounded");
@@ -30,7 +31,7 @@ namespace Seti
         // trigger
         protected int Hash_TimeoutToIdle = Animator.StringToHash("TimeoutToIdle");
         protected int Hash_MeleeAttack = Animator.StringToHash("MeleeAttack");
-        protected int Hash_SkillAttack = Animator.StringToHash("SkillAttack");
+        protected int Hash_MagicAttack = Animator.StringToHash("MagicAttack");
         protected int Hash_Hurt = Animator.StringToHash("Hurt");
         protected int Hash_Death = Animator.StringToHash("Death");
         protected int Hash_Respawn = Animator.StringToHash("Respawn");

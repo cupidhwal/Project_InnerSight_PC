@@ -62,7 +62,7 @@ namespace Seti
             // Look 행동 이벤트 바인딩
             if (behaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
             {
-                // Look_Normal 전략을 포함하고 있는지 확인
+                // 전략을 포함하고 있는지 확인
                 if (lookBehaviour is Look look && look.HasStrategy<Look_Normal>())
                 {
                     control.Player.Look.performed += look.OnLookPerformed;
@@ -73,12 +73,24 @@ namespace Seti
             // Move 행동 이벤트 바인딩
             if (behaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
             {
-                Move move = moveBehaviour as Move;
-                control.Player.Move.performed += move.OnMovePerformed;
-                control.Player.Move.canceled += move.OnMoveCanceled;
-                control.Player.Dash.started += move.OnDashStarted;
-                //control.Player.Run.started += move.OnRunStarted;
-                //control.Player.Run.canceled += move.OnRunCanceled;
+                // 전략을 포함하고 있는지 확인
+                if (moveBehaviour is Move move)
+                {
+                    if (move.HasStrategy<Move_Normal>())
+                    {
+                        control.Player.Move.performed += move.OnMovePerformed;
+                        control.Player.Move.canceled += move.OnMoveCanceled;
+                    }
+                    if (move.HasStrategy<Move_Dash>())
+                    {
+                        control.Player.Dash.started += move.OnDashStarted;
+                    }
+                    if (move.HasStrategy<Move_Run>())
+                    {
+                        //control.Player.Run.started += move.OnRunStarted;
+                        //control.Player.Run.canceled += move.OnRunCanceled;
+                    }
+                }
             }
 
             // Jump 행동 이벤트 바인딩
@@ -91,13 +103,24 @@ namespace Seti
             // Attack 행동 이벤트 바인딩
             if (behaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
             {
-                Attack attack = attackBehaviour as Attack;
-                control.Player.Attack.started += attack.OnAttackStarted;
-                control.Player.Attack.canceled += attack.OnAttackCanceled;
-                control.Player.Skill.started += attack.OnSkillStarted;
-                control.Player.Skill.canceled += attack.OnSkillCanceled;                
-                control.Player.Magic.started += attack.OnMagicStarted;
-                control.Player.Magic.canceled += attack.OnMagicCanceled;
+                if (attackBehaviour is Attack attack)
+                {
+                    if (attack.HasStrategy<Attack_Normal>())
+                    {
+                        control.Player.Attack.started += attack.OnAttackStarted;
+                        control.Player.Attack.canceled += attack.OnAttackCanceled;
+                    }
+                    if (attack.HasStrategy<Attack_Weapon>())
+                    {
+                        control.Player.Skill.started += attack.OnSkillStarted;
+                        control.Player.Skill.canceled += attack.OnSkillCanceled;
+                    }
+                    if (attack.HasStrategy<Attack_Magic>())
+                    {
+                        control.Player.Magic.started += attack.OnMagicStarted;
+                        control.Player.Magic.canceled += attack.OnMagicCanceled;
+                    }
+                }
             }
         }
 
