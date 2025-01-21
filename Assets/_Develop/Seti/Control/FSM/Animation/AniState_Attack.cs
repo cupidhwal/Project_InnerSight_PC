@@ -26,6 +26,7 @@ namespace Seti
         {
             base.OnEnter();
             context.currentState = AniState.Attack;
+            context.Animator.SetTrigger(Hash_MeleeAttack);
         }
 
         // 상태 전환 시 State Exit에 1회 실행

@@ -29,21 +29,17 @@ namespace Seti
         public override Type CheckTransitions()
         {
             if (context.IsMove)
-            {
                 return typeof(AniState_Move);
-            }
 
             else if (context.IsDash)
-            {
                 return typeof(AniState_Dash);
-            }
             
             else if (context.IsAttack)
-            {
-                context.Animator.SetTrigger(Hash_MeleeAttack);
                 return typeof(AniState_Attack);
-            }
-            
+
+            else if (context.IsStagger)
+                return typeof(AniState_Stagger);
+
             return null;
         }
 

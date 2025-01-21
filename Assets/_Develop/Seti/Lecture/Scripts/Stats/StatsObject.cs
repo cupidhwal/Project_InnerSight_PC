@@ -98,7 +98,7 @@ namespace Seti
             Mana = GetModifiedValue(Attribute_Character.Mana);
 
             isInitialized = true;
-            Debug.Log("스탯 초기화 완료!");
+            //Debug.Log("스탯 초기화 완료!");
         }
 
         // 속성값 초기화

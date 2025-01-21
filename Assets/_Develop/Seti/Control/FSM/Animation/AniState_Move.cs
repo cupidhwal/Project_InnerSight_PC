@@ -39,7 +39,10 @@ namespace Seti
             
             else if (context.IsAttack)
                 return typeof(AniState_Attack);
-            
+
+            else if (context.IsStagger)
+                return typeof(AniState_Stagger);
+
             return null;
         }
 

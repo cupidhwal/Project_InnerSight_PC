@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.Windows;
-
 namespace Seti
 {
     public enum AniState
@@ -8,7 +6,8 @@ namespace Seti
         Idle,
         Move,
         Dash,
-        Attack
+        Attack,
+        Stagger
     }
 
     public class Controller_Animator : MonoBehaviour
@@ -32,6 +31,7 @@ namespace Seti
         public bool IsDash { get; set; } = false;
         public bool IsDeath { get; set; } = false;
         public bool IsAttack { get; set; } = false;
+        public bool IsStagger { get; set; } = false;
         #endregion
 
         // 라이프 사이클
@@ -103,6 +103,12 @@ namespace Seti
 
                     //if (attack.HasStrategy<Attack_Magic>())
                 }
+            }
+
+            if (controller.BehaviourMap.TryGetValue(typeof(Stagger), out var staggerBehaviour))
+            {
+                if (staggerBehaviour is Stagger)
+                    AniMachine.AddState(new AniState_Stagger());
             }
         }
         #endregion

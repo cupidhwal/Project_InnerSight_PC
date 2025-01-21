@@ -18,6 +18,8 @@ namespace Seti
 
         // 필드
         #region Variables
+        protected Actor actor;
+
         // 무기
         protected WeaponType primaryWeaponType;
         [SerializeField]
@@ -71,6 +73,8 @@ namespace Seti
         #region Abstract
         public virtual void Initialize()
         {
+            actor = GetComponent<Actor>();
+
             primaryWeapon = GetComponentInChildren<Weapon>();
             primaryWeapon.SetOwner(gameObject);
         }
@@ -79,8 +83,16 @@ namespace Seti
         // 메서드
         #region Methods
         // 경직
-        private void StaggerOn() => inAction = false;
-        private void StaggerOff() => inAction = true;
+        private void StaggerOn()
+        {
+            inAction = false;
+            actor.Controller_Animator.IsStagger = true;
+        }
+        private void StaggerOff()
+        {
+            inAction = true;
+            actor.Controller_Animator.IsStagger = false;
+        }
 
         // 죽음
         private void Die()
