@@ -7,6 +7,8 @@ namespace JungBin
     public class BossStat : MonoBehaviour
     {
         // Public Properties
+        [SerializeField] private string bossName; // 보스 이름
+
         public float Health { get; private set; } // 현재 체력
         [SerializeField] private float maxHealth = 1000f; // 최대 체력
         [SerializeField] private float invulnerabilityTime = 2f; // 무적 시간
@@ -22,6 +24,7 @@ namespace JungBin
         public UnityAction OnBecomeVulnerable; // 무적 해제 시
 
         public float MaxHealth => maxHealth; // 보스의 최대 체력
+        public string BossName => bossName; // 보스 이름 접근자
 
         private void Start()
         {
