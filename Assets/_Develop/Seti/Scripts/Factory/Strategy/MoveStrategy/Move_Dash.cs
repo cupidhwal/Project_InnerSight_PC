@@ -40,7 +40,7 @@ namespace Seti
 
             // 초기 속도 설정
             float currentSpeed = 0f;
-            while (elapsedTime < dashDuration)
+            while (actor.Condition.InAction && elapsedTime < dashDuration)
             {
                 elapsedTime += Time.deltaTime;
                 float t = elapsedTime / dashDuration;
