@@ -120,10 +120,7 @@ namespace Seti
                         AniMachine.AddState(new AniState_Attack_Melee());
 
                     if (attack.HasStrategy<Attack_Magic>())
-                    {
-                        Debug.Log("Attack_Magic 생성 완료");
                         AniMachine.AddState(new AniState_Attack_Magic());
-                    }
                 }
             }
 

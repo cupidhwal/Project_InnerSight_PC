@@ -22,8 +22,6 @@ namespace Seti
         #region Life Cycle
         protected override void Update()
         {
-            if (!Actor || !Actor.Condition.InAction) return;
-
             base.Update();
 
             if (behaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
@@ -112,8 +110,8 @@ namespace Seti
                     }
                     if (attack.HasStrategy<Attack_Weapon>())
                     {
-                        control.Player.Skill.started += attack.OnSkillStarted;
-                        control.Player.Skill.canceled += attack.OnSkillCanceled;
+                        control.Player.Weapon.started += attack.OnWeaponStarted;
+                        control.Player.Weapon.canceled += attack.OnWeaponCanceled;
                     }
                     if (attack.HasStrategy<Attack_Magic>())
                     {
@@ -158,8 +156,8 @@ namespace Seti
                 Attack attack = attackBehaviour as Attack;
                 control.Player.Attack.started -= attack.OnAttackStarted;
                 control.Player.Attack.canceled -= attack.OnAttackCanceled;
-                control.Player.Skill.started -= attack.OnSkillStarted;
-                control.Player.Skill.canceled -= attack.OnSkillCanceled;
+                control.Player.Weapon.started -= attack.OnWeaponStarted;
+                control.Player.Weapon.canceled -= attack.OnWeaponCanceled;
                 control.Player.Magic.started -= attack.OnMagicStarted;
                 control.Player.Magic.canceled -= attack.OnMagicCanceled;
             }

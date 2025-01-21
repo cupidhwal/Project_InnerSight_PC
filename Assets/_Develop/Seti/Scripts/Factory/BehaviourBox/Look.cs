@@ -29,7 +29,6 @@ namespace Seti
         private Vector2 lookInput;
 
         // 제어 관리
-        private Condition_Actor state;
         private StrategyType currentType;
         private State<Controller_FSM> currentState;
         #endregion
@@ -46,7 +45,6 @@ namespace Seti
         public void Initialize(Actor actor)
         {
             this.actor = actor;
-            state = actor.Condition;
             foreach (var mapping in strategies)
             {
                 ILookStrategy lookStrategy = mapping.strategy as ILookStrategy;
@@ -125,9 +123,7 @@ namespace Seti
         #region Life Cycle
         public void Update()
         {
-            // 공격 중일 때만 작동
-            if (state.IsAttack)
-                OnLook();
+            currentStrategy?.Look();
         }
         #endregion
 
@@ -158,7 +154,7 @@ namespace Seti
         #endregion
 
         #region Controller_FSM
-        public void FSM_LookInput() => OnLook();
+        public void FSM_LookInput() => currentStrategy?.Look();
         public void FSM_LookSwitch(State<Controller_FSM> state)
         {
             // FSM 상태에 따라 동작 제어
@@ -175,14 +171,6 @@ namespace Seti
             }
         }
         #endregion
-        #endregion
-
-        // 메서드
-        #region Methods
-        private void OnLook()
-        {
-            currentStrategy?.Look();
-        }
         #endregion
     }
 }

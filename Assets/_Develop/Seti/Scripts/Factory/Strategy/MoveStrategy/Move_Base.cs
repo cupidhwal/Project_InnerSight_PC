@@ -32,6 +32,15 @@ namespace Seti
         // QuaterView - World 기준 이동 로직
         public virtual void Move(Vector2 moveInput)
         {
+            if (!actor ||
+                !actor.Condition.InAction ||
+                actor.Condition.IsAttack || 
+                actor.Condition.IsMagic)
+            {
+                QuaterView_Move(Vector2.zero);
+                return;
+            }
+
             if (actor is Player player)
                 switch (player.View)
                 {

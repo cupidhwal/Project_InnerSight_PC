@@ -33,10 +33,6 @@ namespace Seti
         public override void OnExit()
         {
             base.OnExit();
-            Controller_Base controller = context.Actor.GetComponent<Controller_Base>();
-            if (controller.BehaviourMap.TryGetValue(typeof(Attack), out var behaviour))
-                if (behaviour is Attack attack)
-                    attack?.OnAttack(false);
         }
 
         // 상태 전환 조건 메서드
@@ -50,9 +46,6 @@ namespace Seti
 
             else if (!context.IsAttack && context.IsMove)
                 return typeof(AniState_Move);
-
-            else if (context.IsMagic)
-                return typeof(AniState_Attack_Magic);
 
             return null;
         }

@@ -22,10 +22,6 @@ namespace Seti
         public override void OnExit()
         {
             base.OnExit();
-            Controller_Base controller = context.Actor.GetComponent<Controller_Base>();
-            if (controller.BehaviourMap.TryGetValue(typeof(Attack), out var behaviour))
-                if (behaviour is Attack attack)
-                    attack?.OnMagic(false);
         }
 
         // 상태 전환 조건 메서드
@@ -34,14 +30,11 @@ namespace Seti
             if (context.IsDead)
                 return typeof(AniState_Die);
 
-            if (!context.IsAttack && !context.IsMove)
+            if (!context.IsMagic && !context.IsMove)
                 return typeof(AniState_Idle);
 
-            else if (!context.IsAttack && context.IsMove)
+            else if (!context.IsMagic && context.IsMove)
                 return typeof(AniState_Move);
-
-            else if (context.IsAttack)
-                return typeof(AniState_Attack_Melee);
 
             return null;
         }
@@ -50,7 +43,7 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             base.Update(deltaTime);
-            //AttackState();
+            MagicState();
         }
         #endregion
 
@@ -59,7 +52,7 @@ namespace Seti
 
 
         //공격 처리
-        void AttackState()
+        void MagicState()
         {
             context.Animator.ResetTrigger(Hash_MagicAttack);
 

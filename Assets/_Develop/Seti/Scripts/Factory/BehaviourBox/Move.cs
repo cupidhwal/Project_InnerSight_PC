@@ -184,9 +184,6 @@ namespace Seti
         #region Life Cycle
         public void Update()
         {
-            // 공격 중일 땐 이동 불가
-            if (condition.IsAttack) return;
-
             currentStrategy?.Move(moveInput);
         }
         #endregion
@@ -243,6 +240,7 @@ namespace Seti
         private void OnMove(Vector2 moveInput, bool isMove = true)
         {
             this.moveInput = moveInput;
+            condition.IsMove = isMove;
             actor.Controller_Animator.IsMove = isMove;
         }
 

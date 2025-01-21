@@ -43,7 +43,7 @@ namespace Seti
         public bool IsMove { get; set; }
         public bool IsDead { get; set; }
 
-        public Vector3 AttactPoint { get; set; }    // 마우스로 클릭한 Attack 지점
+        public Vector3 AttackPoint { get; set; }    // 마우스로 클릭한 Attack 지점
         public Vector3 HitDirection { get; set; }   // 피격 방향
         public WeaponType CurrentWeaponType => currentWeaponType;
         #endregion

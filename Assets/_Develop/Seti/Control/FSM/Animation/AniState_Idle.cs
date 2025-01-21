@@ -68,7 +68,7 @@ namespace Seti
         void TimoutToIdle()
         {
             //입력값 체크(이동, 공격)
-            bool inputDetected = context.IsMove || /*m_Input.Jump ||*/ context.IsAttack;
+            bool inputDetected = context.IsMove || context.IsMagic || context.IsAttack;
 
             //타이머 카운트
             if (context.Actor.Condition.IsGrounded && !inputDetected)

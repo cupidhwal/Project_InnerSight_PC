@@ -55,6 +55,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Weapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5630d6b-30bf-42c3-8681-0c1668f33c0f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Magic"",
+                    ""type"": ""Button"",
+                    ""id"": ""9717c53b-4340-40bc-8af9-dff90215efde"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""852140f2-7766-474d-8707-702459ba45f3"",
@@ -112,24 +130,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Dash"",
                     ""type"": ""Button"",
                     ""id"": ""4d1e1e3e-1f38-4d72-b84e-27842335de8d"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Skill"",
-                    ""type"": ""Button"",
-                    ""id"": ""a5630d6b-30bf-42c3-8681-0c1668f33c0f"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Magic"",
-                    ""type"": ""Button"",
-                    ""id"": ""9717c53b-4340-40bc-8af9-dff90215efde"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -540,7 +540,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Skill"",
+                    ""action"": ""Weapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1175,6 +1175,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        m_Player_Weapon = m_Player.FindAction("Weapon", throwIfNotFound: true);
+        m_Player_Magic = m_Player.FindAction("Magic", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
@@ -1182,8 +1184,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
-        m_Player_Skill = m_Player.FindAction("Skill", throwIfNotFound: true);
-        m_Player_Magic = m_Player.FindAction("Magic", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1266,6 +1266,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Attack;
+    private readonly InputAction m_Player_Weapon;
+    private readonly InputAction m_Player_Magic;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Jump;
@@ -1273,8 +1275,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Dash;
-    private readonly InputAction m_Player_Skill;
-    private readonly InputAction m_Player_Magic;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1282,6 +1282,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @Weapon => m_Wrapper.m_Player_Weapon;
+        public InputAction @Magic => m_Wrapper.m_Player_Magic;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
@@ -1289,8 +1291,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Next => m_Wrapper.m_Player_Next;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
-        public InputAction @Skill => m_Wrapper.m_Player_Skill;
-        public InputAction @Magic => m_Wrapper.m_Player_Magic;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1309,6 +1309,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @Weapon.started += instance.OnWeapon;
+            @Weapon.performed += instance.OnWeapon;
+            @Weapon.canceled += instance.OnWeapon;
+            @Magic.started += instance.OnMagic;
+            @Magic.performed += instance.OnMagic;
+            @Magic.canceled += instance.OnMagic;
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
@@ -1330,12 +1336,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
-            @Skill.started += instance.OnSkill;
-            @Skill.performed += instance.OnSkill;
-            @Skill.canceled += instance.OnSkill;
-            @Magic.started += instance.OnMagic;
-            @Magic.performed += instance.OnMagic;
-            @Magic.canceled += instance.OnMagic;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1349,6 +1349,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @Weapon.started -= instance.OnWeapon;
+            @Weapon.performed -= instance.OnWeapon;
+            @Weapon.canceled -= instance.OnWeapon;
+            @Magic.started -= instance.OnMagic;
+            @Magic.performed -= instance.OnMagic;
+            @Magic.canceled -= instance.OnMagic;
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
@@ -1370,12 +1376,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
-            @Skill.started -= instance.OnSkill;
-            @Skill.performed -= instance.OnSkill;
-            @Skill.canceled -= instance.OnSkill;
-            @Magic.started -= instance.OnMagic;
-            @Magic.performed -= instance.OnMagic;
-            @Magic.canceled -= instance.OnMagic;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1561,6 +1561,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnWeapon(InputAction.CallbackContext context);
+        void OnMagic(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
@@ -1568,8 +1570,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnNext(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
-        void OnSkill(InputAction.CallbackContext context);
-        void OnMagic(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

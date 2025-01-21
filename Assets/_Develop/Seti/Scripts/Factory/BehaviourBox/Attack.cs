@@ -16,8 +16,8 @@ namespace Seti
         private enum StrategyType
         {
             Normal,
-            Magic,
             Weapon,
+            Magic,
             Tackle,
             NULL
         }
@@ -130,14 +130,14 @@ namespace Seti
                     ChangeStrategy(typeof(Attack_Normal));
                     break;
 
-                case StrategyType.Magic:
-                    //currentType = StrategyType.Magic;
-                    ChangeStrategy(typeof(Attack_Magic));
-                    break;
-
                 case StrategyType.Weapon:
                     //currentType = StrategyType.Weapon;
                     ChangeStrategy(typeof(Attack_Weapon));
+                    break;
+
+                case StrategyType.Magic:
+                    //currentType = StrategyType.Magic;
+                    ChangeStrategy(typeof(Attack_Magic));
                     break;
 
                 case StrategyType.Tackle:
@@ -152,24 +152,17 @@ namespace Seti
         #region Event Handlers
         #region Controller_Input
         public void OnAttackStarted(InputAction.CallbackContext _) => OnAttack(true);
-
-        public void OnAttackCanceled(InputAction.CallbackContext _)
+        public void OnAttackCanceled(InputAction.CallbackContext _) => OnAttack(false);
+        public void OnWeaponStarted(InputAction.CallbackContext _)
         {
-            //OnAttack(false);
+            SwitchStrategy(StrategyType.Magic);
+            OnMagic(true);
         }
-
-        public void OnSkillStarted(InputAction.CallbackContext _)
+        public void OnWeaponCanceled(InputAction.CallbackContext _)
         {
-            SwitchStrategy(StrategyType.Weapon);
-            OnAttack(true);
+            //OnMagic(false);
+            //SwitchStrategy(StrategyType.Normal);
         }
-
-        public void OnSkillCanceled(InputAction.CallbackContext _)
-        {
-            OnAttack(false);
-            SwitchStrategy(StrategyType.Normal);
-        }
-
         public void OnMagicStarted(InputAction.CallbackContext context)
         {
             SwitchStrategy(StrategyType.Magic);
@@ -178,25 +171,24 @@ namespace Seti
             switch (path)
             {
                 case "/Keyboard/1":
-                    Debug.Log("Magic 1");
+                    //Debug.Log("Magic 1");
                     break;
 
                 case "/Keyboard/2":
-                    Debug.Log("Magic 2");
+                    //Debug.Log("Magic 2");
                     break;
 
                 case "/Keyboard/3":
-                    Debug.Log("Magic 3");
+                    //Debug.Log("Magic 3");
                     break;
 
                 case "/Keyboard/4":
-                    Debug.Log("Magic 4");
+                    //Debug.Log("Magic 4");
                     break;
             }
 
-            OnMagic(true);
+            //OnMagic(true);
         }
-        
         public void OnMagicCanceled(InputAction.CallbackContext _)
         {
             SwitchStrategy(StrategyType.Normal);
@@ -231,6 +223,7 @@ namespace Seti
         public void OnAttack(bool isAttack = true)
         {
             condition.IsAttack = isAttack;
+            actor.Controller_Animator.IsAttack = isAttack;
             if (isAttack)
             {
                 condition.CurrentWeapon.AttackEnter();
@@ -238,8 +231,8 @@ namespace Seti
 
                 if (actor is Player)
                 {
-                    condition.AttactPoint = GameUtility.RayToWorldPosition();
-                    AttackWait();
+                    condition.AttackPoint = GameUtility.RayToWorldPosition();
+                    //AttackWait();
                 }
             }
             else
@@ -247,20 +240,19 @@ namespace Seti
                 currentStrategy?.AttackExit();
                 condition.CurrentWeapon.AttackExit();
             }
-            if (actor is Player)
-            actor.Controller_Animator.IsAttack = isAttack;
         }
 
         public void OnMagic(bool isMagic = true)
         {
             condition.IsMagic = isMagic;
+            actor.Controller_Animator.IsMagic = isMagic;
             if (isMagic)
             {
                 currentStrategy?.Attack();
 
                 if (actor is Player)
                 {
-                    condition.AttactPoint = GameUtility.RayToWorldPosition();
+                    condition.AttackPoint = GameUtility.RayToWorldPosition();
                     MagicWait();
                 }
             }
@@ -268,8 +260,6 @@ namespace Seti
             {
                 currentStrategy?.AttackExit();
             }
-            if (actor is Player)
-                actor.Controller_Animator.IsMagic = isMagic;
         }
         #endregion
 
@@ -278,14 +268,18 @@ namespace Seti
         async void AttackWait()
         {
             await Task.Delay(50);
-            condition.IsAttack = false;
-            actor.Controller_Animator.IsAttack = false;
+            OnAttack(false);
         }
         async void MagicWait()
         {
-            await Task.Delay(500);
-            condition.IsMagic = false;
-            actor.Controller_Animator.IsMagic = false;
+            await Task.Delay(1000);
+            OnMagic(false);
+            SwitchStrategy(StrategyType.Normal);
+        }
+        public void MagicExit()
+        {
+            OnMagic(false);
+            SwitchStrategy(StrategyType.Normal);
         }
         #endregion
     }
