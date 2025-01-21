@@ -21,6 +21,8 @@ namespace JungBin
         public UnityAction OnDeath; // 보스가 죽었을 때
         public UnityAction OnBecomeVulnerable; // 무적 해제 시
 
+        public float MaxHealth => maxHealth; // 보스의 최대 체력
+
         private void Start()
         {
             // 초기화
@@ -89,6 +91,11 @@ namespace JungBin
             animator.SetBool("IsDeath", true);
             OnDeath?.Invoke(); // 죽음 이벤트 호출
             Debug.Log("보스가 사망했습니다.");
+        }
+
+        public void CheatDie()
+        {
+            OnDeath?.Invoke(); // 죽음 이벤트 호출
         }
 
         private void SpawnRelic()

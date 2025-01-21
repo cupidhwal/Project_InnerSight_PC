@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace JungBin
 {
@@ -13,7 +15,10 @@ namespace JungBin
         [SerializeField] private TextMeshProUGUI relicName;      //유물의 이름을 나타내는 텍스트 오브젝트
         [SerializeField] private TextMeshProUGUI relicDescription;      //유물 설명을 해줄 텍스트 오브젝트
         [SerializeField] private GameObject relicSelectUI;
+        [SerializeField] private Image applyImage;
 
+
+        private Sprite sourceImage;
         // 유물 추가
         public void AddRelic(IRelic relic, Player player)
         {
@@ -35,6 +40,15 @@ namespace JungBin
 
         public void ClickRelicButton(string name)
         {
+            GameObject clickedObject = EventSystem.current.currentSelectedGameObject;
+            if (clickedObject != null)
+            {
+                Image image = clickedObject.transform.GetChild(0).GetComponent<Image>();
+                if (image != null)
+                {
+                    sourceImage = image.sprite;
+                }
+            }
             ShowRelicDescription(name);
         }
 
@@ -77,6 +91,7 @@ namespace JungBin
             // 새 유물 효과 적용
             selectedRelic = newRelic;
             selectedRelic.ApplyEffect(player);
+            applyImage.sprite = sourceImage;
             Debug.Log($"{selectedRelic.RelicName} 유물 효과가 적용되었습니다.");
 
             relicSelectUI.SetActive(false);
