@@ -1,7 +1,9 @@
+using JungBin;
 using UnityEngine;
 
 namespace Seti
 {
+    //[RequireComponent(typeof())]
     public class Enemy : Actor
     {
         public enum State
@@ -52,6 +54,7 @@ namespace Seti
         #region Properties
         public Player Player => player;
         public Vector3 HomePosition { get; private set; }
+        public Vector3 AttackDirection { get; private set; }
         public bool Detected => Player && (distancePlayer <= range_Detect);
         public bool GoAttack => Player && (distancePlayer <= range_Attack);
         public bool CanAttack => Player && (distancePlayer <= range_Attack * 2f);

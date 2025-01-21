@@ -7,7 +7,8 @@ namespace Seti
         Move,
         Dash,
         Attack,
-        Stagger
+        Stagger,
+        Dead
     }
 
     public class Controller_Animator : MonoBehaviour
@@ -74,12 +75,16 @@ namespace Seti
         #region Methods
         public void Initialize()
         {
+            // 이건 모델 오브젝트를 루트 오브젝트의 자식으로 붙일 때만 사용한다
             /*transform.position = Actor.transform.position;
             transform.rotation = Actor.transform.rotation;*/
         }
 
         private void AddStates()
         {
+            // 누구나 죽는다
+            AniMachine.AddState(new AniState_Die());
+
             if (controller.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
             {
                 if (moveBehaviour is Move move)
@@ -98,10 +103,6 @@ namespace Seti
                 {
                     if (attack.HasStrategy<Attack_Normal>())
                         AniMachine.AddState(new AniState_Attack());
-
-                    //if (attack.HasStrategy<Attack_Weapon>())
-
-                    //if (attack.HasStrategy<Attack_Magic>())
                 }
             }
 

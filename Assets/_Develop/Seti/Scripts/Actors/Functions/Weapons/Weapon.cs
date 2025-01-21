@@ -180,13 +180,16 @@ namespace Seti
             if ((targetLayers.value & (1 << other.gameObject.layer)) == 0)
                 return;
 
+            // 적 위치
+            Vector3 hitDirection = other.transform.position - m_Owner.transform.position;
+
             // 데미지 데이터 가공 후 데미지 주기
             Damagable.DamageMessage data = new()
             {
                 damager = this,
                 owner = m_Owner.GetComponent<Actor>(),
                 amount = (int)(Damage * m_Owner.GetComponent<Actor>().Attack),
-                direction = m_Direction.normalized,
+                direction = hitDirection.normalized,
                 damageSource = m_Owner.transform.position,
                 throwing = ThrowingHit,
                 stopCamera = false

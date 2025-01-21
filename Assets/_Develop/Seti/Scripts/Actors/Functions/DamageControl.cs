@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Seti
@@ -75,6 +73,12 @@ namespace Seti
         {
             // TODO
             //Debug.Log($"{damageMessage.owner.name}로부터 {damageMessage.amount}의 데미지를 입었습니다.");
+
+            // 참조
+            Condition_Actor condition = GetComponent<Condition_Actor>();
+
+            Debug.Log(damageMessage.direction);
+            condition.HitDirection = damageMessage.direction.normalized;
         }
 
         // 사망 처리, 애니메이션, 연출, ...
