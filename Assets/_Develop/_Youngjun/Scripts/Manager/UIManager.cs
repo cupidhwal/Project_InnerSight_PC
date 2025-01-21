@@ -43,6 +43,11 @@ namespace Noah
                 playerStateUI.SetActive(false);
             }
         }
+
+        public void Toggle(GameObject _ui)
+        {
+            _ui.SetActive(!_ui);
+        }
     }
 
 }
