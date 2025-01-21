@@ -44,6 +44,7 @@ namespace Noah
                 playerData.AttackSpeed, playerData.MoveSpeed);
         }
 
+        #region ResetData
         void ResetData()
         {
             dataList.Add(playerData.Health);
@@ -58,10 +59,12 @@ namespace Noah
             updateDataList.Add(upGradePlayerdata.moveSpeed_Up);
             updateDataList.Add(upGradePlayerdata.atkSpeed_Up);
 
-            for (int i = 0; i < dataList.Count; i++)
-            {
-                updateCount.Add(i);
-            }
+            updateCount.Add(upGradePlayerdata.hp_UpCount);
+            updateCount.Add(upGradePlayerdata.atk_UpCount);
+            updateCount.Add(upGradePlayerdata.def_UpCount);
+            updateCount.Add(upGradePlayerdata.moveSpeed_UpCount);
+            updateCount.Add(upGradePlayerdata.atkSpeed_UpCount);
+
 
             updateGold.Add(upgradeGold.hp_UpgradeGold);
             updateGold.Add(upgradeGold.atk_UpgradeGold);
@@ -69,21 +72,54 @@ namespace Noah
             updateGold.Add(upgradeGold.moveSpeed_UpgradeGold);
             updateGold.Add(upgradeGold.atkSpeed_UpgradeGold);
         }
+        #endregion
+
+        #region 업그레이드 데이터 동기화
+        public void UpdateStateData(List<Transform> dataTexts)
+        {
+            for (int i = 0; i < dataList.Count; i++)
+            {
+                dataList[i] = float.Parse(dataTexts[i].GetChild(0).GetComponent<TMP_Text>().text);
+
+                playerData.Health = dataList[i];
+                playerData.Attack = dataList[i];
+                playerData.Defend = dataList[i];
+                playerData.MoveSpeed = dataList[i];
+                playerData.AttackSpeed = dataList[i];
+
+                upGradePlayerdata.hp_UpCount = updateCount[i];
+                upGradePlayerdata.atk_UpCount = updateCount[i];
+                upGradePlayerdata.def_UpCount = updateCount[i];
+                upGradePlayerdata.moveSpeed_UpCount = updateCount[i];
+                upGradePlayerdata.atkSpeed_UpCount = updateCount[i];
+
+                upgradeGold.hp_UpgradeGold = updateGold[i];
+                upgradeGold.atk_UpgradeGold = updateGold[i];
+                upgradeGold.def_UpgradeGold = updateGold[i];
+                upgradeGold.moveSpeed_UpgradeGold = updateGold[i];
+                upgradeGold.atkSpeed_UpgradeGold = updateGold[i];
+            }
+
+
+            actor.SetStats(playerData.Health, playerData.Attack, playerData.Defend,
+                playerData.AttackSpeed, playerData.MoveSpeed);
+        }
+        #endregion
 
         // 인덱스 번호로 플레이어데이터 찾기
         public float GetPlayerData(int _index)
         {
             return dataList[_index];
         }
+        public List<float> GetPlayerData()
+        {
+            return dataList;
+        }
 
+        // 인덱스 번호로 업그레이드 코스트 찾기
         public int GetUpgradeCost(int _index)
         {
             return updateGold[_index];
-        }
-
-        public List<float> GetPlayerData()
-        { 
-            return dataList;
         }
 
         public List<int> GetUpgradeCost()
@@ -96,28 +132,17 @@ namespace Noah
             return updateDataList;
         }
 
-        public void UpdateStateData(List<Transform> dataTexts)
+        public List<int> UpgardeCount()
         {
-            for(int i = 0; i < dataList.Count; i++)
-            {
-                dataList[i] = float.Parse(dataTexts[i].GetChild(0).GetComponent<TMP_Text>().text);
-            }
-
-            playerData.Health = dataList[0];
-            playerData.Attack = dataList[1];
-            playerData.Defend = dataList[2];
-            playerData.MoveSpeed = dataList[3];
-            playerData.AttackSpeed = dataList[4];
-
-            actor.SetStats(playerData.Health, playerData.Attack, playerData.Defend, 
-                playerData.AttackSpeed, playerData.MoveSpeed);
+            return updateCount;
         }
 
-        public int IncreaseGold(int _index)
+
+        public void IncreaseGold(int _index, int count)
         {
             int amount = updateCount[_index] * updateGold[_index];
 
-            return amount;
+            updateGold[_index] = amount;
         }
     }
 }

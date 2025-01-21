@@ -16,6 +16,12 @@ namespace Noah
     [Serializable]
     public class UpGradePlayerdata
     {
+        public int hp_UpCount = 1;
+        public int atk_UpCount = 1;
+        public int def_UpCount = 1;
+        public int moveSpeed_UpCount = 1;
+        public int atkSpeed_UpCount = 1;
+
         public float hp_Up;
         public float atk_Up;
         public float def_Up;
