@@ -39,6 +39,7 @@ namespace Seti
         public bool InAction => inAction;
         public bool IsGrounded { get; protected set; }
         public bool IsAttack { get; set; }
+        public bool IsMagic { get; set; }
         public bool IsMove { get; set; }
         public bool IsDead { get; set; }
 

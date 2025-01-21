@@ -37,6 +37,9 @@ namespace Seti
             else if (context.IsDash)
                 return typeof(AniState_Dash);
             
+            else if (context.IsMagic)
+                return typeof(AniState_Attack_Magic);
+
             else if (context.IsAttack)
                 return typeof(AniState_Attack_Melee);
 

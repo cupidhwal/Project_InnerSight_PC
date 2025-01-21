@@ -33,6 +33,7 @@ namespace Seti
         public bool IsMove { get; set; } = false;
         public bool IsDash { get; set; } = false;
         public bool IsDead { get; set; } = false;
+        public bool IsMagic { get; set; } = false;
         public bool IsAttack { get; set; } = false;
         public bool IsStagger { get; set; } = false;
         #endregion
@@ -117,6 +118,12 @@ namespace Seti
                 {
                     if (attack.HasStrategy<Attack_Normal>())
                         AniMachine.AddState(new AniState_Attack_Melee());
+
+                    if (attack.HasStrategy<Attack_Magic>())
+                    {
+                        Debug.Log("Attack_Magic 생성 완료");
+                        AniMachine.AddState(new AniState_Attack_Magic());
+                    }
                 }
             }
 

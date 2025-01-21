@@ -76,8 +76,6 @@ namespace Seti
 
             // 참조
             Condition_Actor condition = GetComponent<Condition_Actor>();
-
-            Debug.Log(damageMessage.direction);
             condition.HitDirection = damageMessage.direction.normalized;
         }
 

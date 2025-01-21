@@ -194,12 +194,11 @@ namespace Seti
                     break;
             }
 
-            OnAttack(true);
+            OnMagic(true);
         }
         
         public void OnMagicCanceled(InputAction.CallbackContext _)
         {
-            OnAttack(false);
             SwitchStrategy(StrategyType.Normal);
         }
         #endregion
@@ -251,15 +250,42 @@ namespace Seti
             if (actor is Player)
             actor.Controller_Animator.IsAttack = isAttack;
         }
+
+        public void OnMagic(bool isMagic = true)
+        {
+            condition.IsMagic = isMagic;
+            if (isMagic)
+            {
+                currentStrategy?.Attack();
+
+                if (actor is Player)
+                {
+                    condition.AttactPoint = GameUtility.RayToWorldPosition();
+                    MagicWait();
+                }
+            }
+            else
+            {
+                currentStrategy?.AttackExit();
+            }
+            if (actor is Player)
+                actor.Controller_Animator.IsMagic = isMagic;
+        }
         #endregion
 
         // 유틸리티
         #region Utilities
         async void AttackWait()
         {
-            await Task.Delay(250);
+            await Task.Delay(50);
             condition.IsAttack = false;
             actor.Controller_Animator.IsAttack = false;
+        }
+        async void MagicWait()
+        {
+            await Task.Delay(500);
+            condition.IsMagic = false;
+            actor.Controller_Animator.IsMagic = false;
         }
         #endregion
     }
