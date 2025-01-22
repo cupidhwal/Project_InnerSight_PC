@@ -22,6 +22,12 @@ namespace Noah
             UIManager.Instance.UpdateGoldUI();
         }
 
+        public void SetGold(int _gold)
+        {
+            gold = _gold;
+            UIManager.Instance.UpdateGoldUI();
+        }
+
         public void UseGold(int _gold)
         {
             if(gold > 0)
@@ -30,6 +36,8 @@ namespace Noah
                 UIManager.Instance.UpdateGoldUI();
             }
         }
+
+        
 
     }
 }
