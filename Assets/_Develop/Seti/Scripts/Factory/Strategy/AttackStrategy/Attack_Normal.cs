@@ -17,7 +17,6 @@ namespace Seti
         #region Methods
         private void Attack_WithWeapon()
         {
-            Condition_Player condition = actor.Condition as Condition_Player;
             switch (condition.CurrentWeaponType)
             {
                 case Condition_Actor.WeaponType.Sword:
@@ -34,6 +33,10 @@ namespace Seti
 
                 case Condition_Actor.WeaponType.Bow:
                     Attack_Bow();
+                    break;
+
+                default:
+                    Attack_Null();
                     break;
             }
         }
@@ -56,6 +59,11 @@ namespace Seti
         private void Attack_Bow()
         {
             Debug.Log("평타: Bow");
+        }
+
+        private void Attack_Null()
+        {
+            Debug.Log("평타: Null");
         }
         #endregion
     }

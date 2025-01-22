@@ -1,7 +1,6 @@
 using Noah;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,9 +18,9 @@ namespace Seti
         [SerializeField]
         private float currentHitPoints;
         [SerializeField]
-        private float invulnerablityTime = 1f;
+        private float invulnerablityTime = 0f;
         [SerializeField]
-        private float staggerDuration;
+        private float staggerDuration = 0.5f;
 
         [Range(0.0f, 360.0f)]
         public float hitAngle = 360f;
@@ -52,8 +51,7 @@ namespace Seti
         public bool IsInvulnerable { get; set; }                // 무적 여부
         public float MaxHitPoint => maxHitPoints;               // 최대 체력
         public float CurrentHitPoints => currentHitPoints;      // 현재 체력
-        //public int CurrentHitPoints { get; private set; }
-        //public Actor CurrentTarget { get; private set; }
+        public float CurrentHitRate => currentHitPoints / maxHitPoints;     // 현재 체력 (%)
         #endregion
 
         // 라이프 사이클

@@ -33,6 +33,7 @@ namespace Seti
         public bool IsMove { get; set; } = false;
         public bool IsDash { get; set; } = false;
         public bool IsDead { get; set; } = false;
+        public bool IsChase { get; set; } = false;
         public bool IsMagic { get; set; } = false;
         public bool IsAttack { get; set; } = false;
         public bool IsStagger { get; set; } = false;
@@ -65,18 +66,12 @@ namespace Seti
                 new AniState_Idle()
             );
 
-            // 임시로 플레이어만 확인
-            if (Actor is Enemy) return;
-
             // 상태 추가
             AddStates();
         }
 
         private void Update()
         {
-            // 임시로 플레이어만 확인
-            if (Actor is Enemy) return;
-
             MoveSpeed = CurrentSpeed();
 
             // FSM 업데이트
@@ -104,7 +99,7 @@ namespace Seti
             {
                 if (moveBehaviour is Move move)
                 {
-                    if (move.HasStrategy<Move_Normal>())
+                    if (move.HasStrategy<Move_Normal>() || move.HasStrategy<Move_Walk>() || move.HasStrategy<Move_Run>())
                         AniMachine.AddState(new AniState_Move());
 
                     if (move.HasStrategy<Move_Dash>())
@@ -116,7 +111,7 @@ namespace Seti
             {
                 if (attackBehaviour is Attack attack)
                 {
-                    if (attack.HasStrategy<Attack_Normal>())
+                    if (attack.HasStrategy<Attack_Normal>() || attack.HasStrategy<Attack_Tackle>())
                         AniMachine.AddState(new AniState_Attack_Melee());
 
                     if (attack.HasStrategy<Attack_Magic>())
@@ -146,6 +141,7 @@ namespace Seti
             Actor.Condition.IsAttack = false;
         }
 
+        [SerializeField]
         private float forwardSpeed;
         private float CurrentSpeed()
         {
@@ -154,7 +150,9 @@ namespace Seti
             else
                 forwardSpeed = forwardSpeed > 0.01f ? Mathf.Lerp(forwardSpeed, 0f, 10f * Time.deltaTime) : 0f;
 
-            return (Actor.Rate_Movement / Actor.Rate_Movement_Default) * forwardSpeed;
+            int moveEff = IsChase ? 2 : 1;
+
+            return moveEff * (Actor.Rate_Movement / Actor.Rate_Movement_Default) * forwardSpeed;
         }
         #endregion
     }

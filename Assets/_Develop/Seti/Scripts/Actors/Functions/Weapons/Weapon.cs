@@ -101,7 +101,7 @@ namespace Seti
                         Collider col = s_RaycastHitCache[i].collider;
                         try
                         {
-                            if (col != null)
+                            if (col != null && col.gameObject != m_Owner)
                             {
                                 //Debug.Log("FixedUpdate_CheckDamage");
                                 CheckDamage(col, atp);
@@ -173,8 +173,8 @@ namespace Seti
                 return;
 
             // 셀프 데미지 체크
-            if (d.gameObject == m_Owner)
-                return;
+            /*if (d.gameObject == m_Owner)
+                return;*/
 
             // 타겟 레이어 체크
             if ((targetLayers.value & (1 << other.gameObject.layer)) == 0)

@@ -30,6 +30,7 @@ namespace Seti
         public override void OnEnter()
         {
             base.OnEnter();
+            attack?.FSM_AttackInput(true);
             enemy.SwitchState(Enemy.State.Attack);
         }
 
@@ -63,9 +64,15 @@ namespace Seti
         // 상태 실행 중
         public override void Update(float deltaTime)
         {
+            // Move 행동 AI Input
+            if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
+                if (moveBehaviour is Move move)
+                    move.FSM_MoveInput(moveInput, false);
+
             // Attack 행동 AI Input
             if (Input_Attack(deltaTime))
                 attack?.FSM_AttackInput(true);
+            else attack?.FSM_AttackInput(false);
 
             if (!enemy.Condition.IsAttack)
                 look?.FSM_LookInput();

@@ -44,7 +44,10 @@ namespace Seti
         // 상태 실행 중
         public override void Update(float deltaTime)
         {
-
+            // Move 행동 AI Input
+            if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
+                if (moveBehaviour is Move move)
+                    move.FSM_MoveInput(moveInput, false);
         }
         #endregion
     }

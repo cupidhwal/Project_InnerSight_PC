@@ -105,7 +105,9 @@ namespace Seti
         protected virtual void Start()
         {
             // 참조
-            animator = GetComponentInChildren<Controller_Animator>();
+            if (!TryGetComponent<Controller_Animator>(out var animator))
+                animator = GetComponentInChildren<Controller_Animator>();
+            this.animator = animator;
         }
         #endregion
 

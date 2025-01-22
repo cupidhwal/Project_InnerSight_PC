@@ -14,11 +14,16 @@ namespace Seti
         public override void OnEnter()
         {
             base.OnEnter();
+            enemy.Controller_Animator.IsChase = true;
             enemy.SwitchState(Enemy.State.Chase);
         }
 
         // 상태 전환 시 State Exit에 1회 실행
-        public override void OnExit() => base.OnExit();
+        public override void OnExit()
+        {
+            base.OnExit();
+            enemy.Controller_Animator.IsChase = false;
+        }
 
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
@@ -52,7 +57,7 @@ namespace Seti
                 if (moveBehaviour is Move move)
                 {
                     Input_Chase();
-                    move.FSM_MoveInput(moveInput);
+                    move.FSM_MoveInput(moveInput, true);
                 }
         }
         #endregion

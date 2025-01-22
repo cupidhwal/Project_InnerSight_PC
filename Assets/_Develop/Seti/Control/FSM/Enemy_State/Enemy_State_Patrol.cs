@@ -49,7 +49,7 @@ namespace Seti
                 if (moveBehaviour is Move move)
                 {
                     Input_Patrol(deltaTime);
-                    move.FSM_MoveInput(moveInput);
+                    move.FSM_MoveInput(moveInput, true);
                 }
         }
         #endregion

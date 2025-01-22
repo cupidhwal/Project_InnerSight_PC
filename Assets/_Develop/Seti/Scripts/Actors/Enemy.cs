@@ -1,9 +1,8 @@
-using JungBin;
 using UnityEngine;
 
 namespace Seti
 {
-    //[RequireComponent(typeof())]
+    [RequireComponent(typeof(Rigidbody))]
     public class Enemy : Actor
     {
         public enum State

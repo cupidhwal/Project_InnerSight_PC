@@ -191,7 +191,7 @@ namespace Seti
         // 컨트롤러
         #region Controllers
         #region Controller_Input
-        public void OnMovePerformed(InputAction.CallbackContext context) => OnMove(context.ReadValue<Vector2>());
+        public void OnMovePerformed(InputAction.CallbackContext context) => OnMove(context.ReadValue<Vector2>(), true);
         public void OnMoveCanceled(InputAction.CallbackContext _) => OnMove(Vector2.zero, false);
         public void OnDashStarted(InputAction.CallbackContext _) => OnDash();
         public void OnRunStarted(InputAction.CallbackContext _) => OnRun(StrategyType.Run);
@@ -199,7 +199,7 @@ namespace Seti
         #endregion
 
         #region Controller_FSM
-        public void FSM_MoveInput(Vector2 moveInput) => OnMove(moveInput, true);
+        public void FSM_MoveInput(Vector2 moveInput, bool isMove) => OnMove(moveInput, isMove);
         public void FSM_MoveSwitch(State<Controller_FSM> state)
         {
             // FSM 상태에 따라 동작 제어
@@ -237,7 +237,7 @@ namespace Seti
 
         // 메서드
         #region Methods
-        private void OnMove(Vector2 moveInput, bool isMove = true)
+        private void OnMove(Vector2 moveInput, bool isMove)
         {
             this.moveInput = moveInput;
             condition.IsMove = isMove;

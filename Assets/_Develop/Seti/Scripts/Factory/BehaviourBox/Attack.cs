@@ -232,7 +232,7 @@ namespace Seti
                 if (actor is Player)
                 {
                     condition.AttackPoint = GameUtility.RayToWorldPosition();
-                    //AttackWait();
+                    AttackWait();
                 }
             }
             else
