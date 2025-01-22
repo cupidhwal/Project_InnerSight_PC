@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 415862668565023056}
   - component: {fileID: 7767621101131292189}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: SmashAttackBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1056,6 +1056,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FirstBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1772443926088868188, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 6.2066274
@@ -1397,6 +1401,9 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 689229898053702461}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 6987040206398573826}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       insertIndex: -1
@@ -1410,6 +1417,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6075225281429976208}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5015840150621067844}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4026966746025827601}
     - targetCorrespondingSourceObject: {fileID: -780769333758982494, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1815244457}
@@ -2377,6 +2390,29 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
   m_PrefabInstance: {fileID: 8213408566973470797}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &689229898053702461
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9023676823113278748}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.8
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.74, z: 0}
 --- !u!195 &6987040206398573826
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2388,7 +2424,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 10
-  m_Acceleration: 8
+  m_Acceleration: 12
   avoidancePriority: 50
   m_AngularSpeed: 60
   m_StoppingDistance: 0.2
@@ -2471,7 +2507,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1226a622e1c69d4dbcfd8013d804476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  bossName: "\uD0C0\uC6B0\uB9B0"
+  maxHealth: 2000
   invulnerabilityTime: 2
   relicPrefab: {fileID: 3199772393577486388, guid: 8a67d03c67dab424380aa5e4d5738792, type: 3}
 --- !u!114 &6075225281429976208
@@ -2488,6 +2525,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trailPrefab: {fileID: 2932496193762415157}
   trailSpawnInterval: 0.01
+--- !u!114 &5015840150621067844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9023676823113278748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b28ec21f49bd944a856b7114d784611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4026966746025827601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9023676823113278748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289bfb1f47fad5745a55b3ba7e9ccbc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHitPoints: 2000
+  currentHitPoints: 0
+  invulnerablityTime: 0
+  staggerDuration: 0
+  hitAngle: 360
+  hitForwardRotation: 360
+  OnDamageMessageReceivers: []
 --- !u!1 &9031190210835101065 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 913905503029243332, guid: e93c5659e68727f428296bb07c0f449d, type: 3}

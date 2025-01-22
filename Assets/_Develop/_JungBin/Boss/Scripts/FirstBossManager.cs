@@ -74,6 +74,9 @@ namespace JungBin
 
         private void Update()
         {
+            if (animator.GetBool("IsDeath") == true)
+                return;
+
             Vector3 direction = player.position - transform.position;
             float distance = direction.magnitude;
             if (!isAttack)

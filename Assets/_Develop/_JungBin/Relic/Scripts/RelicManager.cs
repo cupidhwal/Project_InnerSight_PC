@@ -55,6 +55,10 @@ namespace JungBin
         public void SelectRelicButton()
         {
             ApplyRelicEffect(selectedRelic, GameManager.Instance.Player);
+
+            Time.timeScale = 1f; // 게임 시간 정상화
+            TestUI testUI = new TestUI();
+            testUI.CloseUI();
         }
 
         public IRelic ShowRelicDescription(string name)
@@ -111,8 +115,6 @@ namespace JungBin
             Time.timeScale = 1f; // 게임 시간 정상화
             TestUI testUI = new TestUI();
             testUI.CloseUI();
-            Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 잠금
-            Cursor.visible = false; // 마우스 커서 숨김
         }
     }
 }

@@ -29,6 +29,12 @@ namespace JungBin
                     stopCamera = false // 카메라 정지 여부
                 };
 
+                if (damageMessage.owner == null)
+                {
+                    Debug.LogError("DamageMessage의 owner가 null입니다.");
+                    return;
+                }
+
                 // 플레이어에게 데미지 적용
                 playerDamagable.TakeDamage(damageMessage);
 
