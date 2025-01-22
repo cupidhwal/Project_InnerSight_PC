@@ -5,7 +5,7 @@ using Yoon;
 public class EnemyHealth : MonoBehaviour
 {
     public float maxHealth = 100f;          // 최대 체력
-    private float currentHealth;
+    public  float currentHealth;
 
     public Slider healthBar;                // Health Bar Slider 연결
     public GameObject damageTextPrefab;     // DamageText 프리팹 연결
