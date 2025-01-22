@@ -15,7 +15,7 @@ namespace Noah
         private List<float> dataList = new List<float>();
         private List<float> updateDataList = new List<float>();
 
-        private List<int> updateCount = new List<int>();
+        private List<int> upgradeCount = new List<int>();
         private List<int> updateGold = new List<int>();
 
         private GameObject player;
@@ -59,11 +59,11 @@ namespace Noah
             updateDataList.Add(upGradePlayerdata.moveSpeed_Up);
             updateDataList.Add(upGradePlayerdata.atkSpeed_Up);
 
-            updateCount.Add(upGradePlayerdata.hp_UpCount);
-            updateCount.Add(upGradePlayerdata.atk_UpCount);
-            updateCount.Add(upGradePlayerdata.def_UpCount);
-            updateCount.Add(upGradePlayerdata.moveSpeed_UpCount);
-            updateCount.Add(upGradePlayerdata.atkSpeed_UpCount);
+            upgradeCount.Add(upGradePlayerdata.hp_UpCount);
+            upgradeCount.Add(upGradePlayerdata.atk_UpCount);
+            upgradeCount.Add(upGradePlayerdata.def_UpCount);
+            upgradeCount.Add(upGradePlayerdata.moveSpeed_UpCount);
+            upgradeCount.Add(upGradePlayerdata.atkSpeed_UpCount);
 
 
             updateGold.Add(upgradeGold.hp_UpgradeGold);
@@ -75,11 +75,13 @@ namespace Noah
         #endregion
 
         #region 업그레이드 데이터 동기화
-        public void UpdateStateData(List<Transform> dataTexts)
+        public void UpdateStateData(List<Transform> dataTexts, int[] _upgradeCount)
         {
             for (int i = 0; i < dataList.Count; i++)
             {
                 dataList[i] = float.Parse(dataTexts[i].GetChild(0).GetComponent<TMP_Text>().text);
+                //updateGold[i] = int.Parse(dataTexts[i].GetChild(4).GetComponent<TMP_Text>().text);  
+                upgradeCount[i] = _upgradeCount[i];
 
                 playerData.Health = dataList[i];
                 playerData.Attack = dataList[i];
@@ -87,19 +89,18 @@ namespace Noah
                 playerData.MoveSpeed = dataList[i];
                 playerData.AttackSpeed = dataList[i];
 
-                upGradePlayerdata.hp_UpCount = updateCount[i];
-                upGradePlayerdata.atk_UpCount = updateCount[i];
-                upGradePlayerdata.def_UpCount = updateCount[i];
-                upGradePlayerdata.moveSpeed_UpCount = updateCount[i];
-                upGradePlayerdata.atkSpeed_UpCount = updateCount[i];
+                upGradePlayerdata.hp_UpCount = upgradeCount[i];
+                upGradePlayerdata.atk_UpCount = upgradeCount[i];
+                upGradePlayerdata.def_UpCount = upgradeCount[i];
+                upGradePlayerdata.moveSpeed_UpCount = upgradeCount[i];
+                upGradePlayerdata.atkSpeed_UpCount = upgradeCount[i];
 
-                upgradeGold.hp_UpgradeGold = updateGold[i];
-                upgradeGold.atk_UpgradeGold = updateGold[i];
-                upgradeGold.def_UpgradeGold = updateGold[i];
-                upgradeGold.moveSpeed_UpgradeGold = updateGold[i];
-                upgradeGold.atkSpeed_UpgradeGold = updateGold[i];
+                //upgradeGold.hp_UpgradeGold = updateGold[i];
+                //upgradeGold.atk_UpgradeGold = updateGold[i];
+                //upgradeGold.def_UpgradeGold = updateGold[i];
+                //upgradeGold.moveSpeed_UpgradeGold = updateGold[i];
+                //upgradeGold.atkSpeed_UpgradeGold = updateGold[i];
             }
-
 
             actor.SetStats(playerData.Health, playerData.Attack, playerData.Defend,
                 playerData.AttackSpeed, playerData.MoveSpeed);
@@ -134,15 +135,7 @@ namespace Noah
 
         public List<int> UpgardeCount()
         {
-            return updateCount;
-        }
-
-
-        public void IncreaseGold(int _index, int count)
-        {
-            int amount = updateCount[_index] * updateGold[_index];
-
-            updateGold[_index] = amount;
+            return upgradeCount;
         }
     }
 }
