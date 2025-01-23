@@ -34,7 +34,7 @@ namespace JungBin
             }
         }
 
-       
+        
         public void EnterBossStage(int bossIndex)
         {
             if (bossIndex >= 0 && bossIndex < bosses.Length)
