@@ -1,79 +1,68 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using Seti;
-using static Seti.Damagable;
 
 namespace Yoon
 {
     public class WorldSpaceHealthBar : MonoBehaviour
     {
         #region Variables
-        public Transform healthBarPivot;          // 헬스바가 카메라를 바라보도록 설정
-        public Slider EnemyHealthBarSlider;       // 헬스바 슬라이더
-        public GameObject damageTextPrefab;       // DamageText 프리팹
-        public Transform fightWorldCanvas;        // DamageText 부모 오브젝트
+        public Transform healthBarPivot;                          // 헬스바가 카메라를 바라보도록 설정
+        public Slider EnemyHealthBarSlider;                       // 헬스바 슬라이더
 
-        private Damagable damagable;                // Damagable 참조
-
-        private Player player;
+        private Damagable damagable;                            // Damagable 참조
 
         [SerializeField] private bool hideFullHealthBar = true; // 체력이 가득 찼을 때 숨길지 여부
+        private float targetHealth;                              // 목표 체력 값
+        private float lerpSpeed = 1f;                            // 체력 감소 속도
         #endregion
 
         private void Start()
         {
             damagable = GetComponent<Damagable>();
-            player = FindObjectOfType<Player>();
+            targetHealth = damagable.CurrentHitPoints;
         }
 
         private void Update()
         {
-            // 헬스바가 카메라를 바라보도록 설정
-            if (healthBarPivot != null)
-            {
-                healthBarPivot.LookAt(Camera.main.transform.position);
-            }
-
             // 체력이 가득 찼을 때 헬스바 숨김
             if (hideFullHealthBar && damagable != null)
             {
                 EnemyHealthBarSlider.gameObject.SetActive(damagable.CurrentHitPoints < damagable.MaxHitPoint);
             }
-        }
-/*
-        // DamageText를 표시하는 함수
-        public void ShowDamageIndicator()
-        {
-            //float beforeHealth = CurrentHealth;
-            if (damageTextPrefab != null && fightWorldCanvas != null && player != null && damagable != null)
+
+            // 목표 체력 값이 변화한 경우에만 코루틴을 실행
+            if (targetHealth != damagable.CurrentHitPoints)
             {
+                targetHealth = damagable.CurrentHitPoints;
+                StartCoroutine(LerpHealthBar());
+            }
 
-                float realdamage = player.attack - damagable.CurrentHitPoints;
-                GameObject damageTextInstance = Instantiate(damageTextPrefab, fightWorldCanvas);
-                damageTextInstance.transform.localPosition = new Vector3(0, 0.5f, 0);
+            // 헬스바가 카메라를 바라보도록 설정
+            if (healthBarPivot != null)
+            {
+                healthBarPivot.LookAt(Camera.main.transform.position);
+                healthBarPivot.rotation = Quaternion.Euler(0f, healthBarPivot.rotation.eulerAngles.y, 0f);
+            }
+        }
 
-                DamageIndicator damageIndicator = damageTextInstance.GetComponent<DamageIndicator>();
-                if (damageIndicator != null)
-                {
-                    damageIndicator.SetDamage(damage);
-                }
-            }*/
-            /*
-                        if (damageTextPrefab != null && fightWorldCanvas != null)
-                        {
-                            // DamageText 프리팹 생성
-                            GameObject damageTextInstance = Instantiate(damageTextPrefab, fightWorldCanvas);
+        // 체력 값을 서서히 변경하는 코루틴
+        private IEnumerator LerpHealthBar()
+        {
+            float startHealth = EnemyHealthBarSlider.value;
+            float endHealth = damagable.CurrentHitRate; // 체력 비율
 
-                            // DamageText 위치를 적 머리 위로 설정
-                            damageTextInstance.transform.localPosition = new Vector3(0, 0.5f, 0);
+            float elapsedTime = 0f;
+            while (elapsedTime < lerpSpeed)
+            {
+                elapsedTime += Time.deltaTime;
+                EnemyHealthBarSlider.value = Mathf.Lerp(startHealth, endHealth, elapsedTime / lerpSpeed);
+                yield return null;
+            }
 
-                            // DamageText에 데미지 값 전달
-                            DamageIndicator damageIndicator = damageTextInstance.GetComponent<DamageIndicator>();
-                            if (damageIndicator != null)
-                            {
-                                damageIndicator.SetDamage(damage);
-                            }
-                        }
-            */
+            // 최종값을 정확히 설정
+            EnemyHealthBarSlider.value = endHealth;
         }
     }
+}
