@@ -1,4 +1,6 @@
+using Noah;
 using System;
+using UnityEngine;
 
 namespace Seti
 {
@@ -45,9 +47,15 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             // Move 행동 AI Input
+            Debug.Log(context);
+            Debug.Log(context.BehaviourMap);
             if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
                 if (moveBehaviour is Move move)
+                {
+                    Debug.Log(moveBehaviour);
+                    Debug.Log(move);
                     move.FSM_MoveInput(moveInput, false);
+                }
         }
         #endregion
     }
