@@ -40,8 +40,9 @@ namespace JungBin
                 // Damagable 초기화
                 damagable.OnDeath += HandleDeath;
                 damagable.OnReceiveDamage += HandleReceiveDamage;
-                damagable.OnBecomeVulnerable += HandleBecomeVulnerable;
             }
+
+            OnBecomeVulnerable += HandleBecomeVulnerable;
 
             ResetHealth();
             OnDeath += SpawnRelic;
@@ -55,9 +56,10 @@ namespace JungBin
                 timeSinceLastHit += Time.deltaTime;
                 if (timeSinceLastHit >= invulnerabilityTime)
                 {
+                    OnBecomeVulnerable?.Invoke(); // 무적 해제 이벤트 호출
                     isInvulnerable = false;
                     timeSinceLastHit = 0f;
-                    OnBecomeVulnerable?.Invoke(); // 무적 해제 이벤트 호출
+                    
                 }
             }
 

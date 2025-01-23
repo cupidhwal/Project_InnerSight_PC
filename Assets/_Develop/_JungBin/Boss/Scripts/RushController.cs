@@ -18,7 +18,7 @@ namespace JungBin
             }
             if(other.CompareTag("Player"))
             {
-                animator.SetBool("IsWall", true);
+                animator.SetBool("IsPlayer", true);
             }
         }
     }
