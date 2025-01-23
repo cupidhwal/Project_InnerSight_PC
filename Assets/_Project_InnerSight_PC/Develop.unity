@@ -352,7 +352,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.016666668
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: d048392eb4ace364997d97c4ae327a9c, type: 2}
+  m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
 --- !u!1 &1027430772
 GameObject:
@@ -1133,7 +1133,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b88fe0134d4ebe4d8e4a53995a461fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeapon: 0
+  currentWeaponType: 0
+  currentWeapon: {fileID: 0}
+  inAction: 0
 --- !u!114 &1917154920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1146,7 +1148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ffc482ad06ab154fa87a3cfe0343d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightHandTarget: {fileID: 0}
+  currentState: 0
+  forwardSpeed: 0
 --- !u!4 &1917154926 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7178555707682393818, guid: 1afde7331c6ac61478367d0600d02f36, type: 3}
@@ -1310,18 +1313,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8309244615677021322, guid: 6586e34b75dca9e47a9cefc38ec93f41, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1995168278}
-    - targetCorrespondingSourceObject: {fileID: 6372646415506322730, guid: 6586e34b75dca9e47a9cefc38ec93f41, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1995168280}
   m_SourcePrefab: {fileID: 100100000, guid: 6586e34b75dca9e47a9cefc38ec93f41, type: 3}
 --- !u!1 &1995168276 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8309244615677021322, guid: 6586e34b75dca9e47a9cefc38ec93f41, type: 3}
-  m_PrefabInstance: {fileID: 1995168275}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1995168277 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6372646415506322730, guid: 6586e34b75dca9e47a9cefc38ec93f41, type: 3}
   m_PrefabInstance: {fileID: 1995168275}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1995168278
@@ -1348,20 +1343,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aea16b6fa0aba0348865fcab078ab2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeapon: 0
---- !u!114 &1995168280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1995168277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ffc482ad06ab154fa87a3cfe0343d98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rightHandTarget: {fileID: 0}
+  currentWeaponType: 0
+  currentWeapon: {fileID: 0}
+  inAction: 0
 --- !u!1 &2007132115
 GameObject:
   m_ObjectHideFlags: 1
