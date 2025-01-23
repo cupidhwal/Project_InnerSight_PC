@@ -57,10 +57,23 @@ namespace JungBin
         private NavMeshAgent navMeshAgent;
         #endregion
 
+
         private void Start()
         {
             //참조
-            player = GameManager.Instance.Player.transform;
+            // 싱글톤 인스턴스를 통해 Player 가져오기
+            if (BossStageManager.Instance == null)
+            {
+                Debug.LogError("BossStageManager instance not initialized!");
+                return;
+            }
+
+            player = BossStageManager.Instance.Player?.transform;
+
+            if (player == null)
+            {
+                Debug.LogError("Player GameObject is null in BossStageManager!");
+            }
             animator = GetComponent<Animator>();
             navMeshAgent = GetComponent<NavMeshAgent>();
 
@@ -75,7 +88,9 @@ namespace JungBin
         private void Update()
         {
             if (animator.GetBool("IsDeath") == true)
+            {
                 return;
+            }
 
             Vector3 direction = player.position - transform.position;
             float distance = direction.magnitude;

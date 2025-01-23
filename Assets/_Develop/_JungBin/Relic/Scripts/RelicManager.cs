@@ -18,6 +18,7 @@ namespace JungBin
         [SerializeField] private Image applyImage;
 
 
+
         private Sprite sourceImage;
         // 유물 추가
         public void AddRelic(IRelic relic, Player player)
