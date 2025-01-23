@@ -45,7 +45,7 @@ namespace Noah
 
         IEnumerator ResetStage()
         {
-            SetCurrentStage();
+            SetCurrentStage(5);
 
             yield return new WaitForSeconds(0.1f);
 

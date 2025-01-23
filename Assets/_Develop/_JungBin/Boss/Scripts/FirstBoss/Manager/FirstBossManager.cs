@@ -53,7 +53,7 @@ namespace JungBin
         public static bool isAttack { get; set; } = false; // 공격중인지 여부
 
         private Transform player;
-        private Animator animator;
+        [SerializeField] private Animator animator;
         private NavMeshAgent navMeshAgent;
         #endregion
 

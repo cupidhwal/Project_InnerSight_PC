@@ -14,7 +14,7 @@ namespace Seti
         private Actor actor;
         [Header("Variables")]
         [SerializeField]
-        private float maxHitPoints = 100;
+        private float maxHitPoints = 100f;
         [SerializeField]
         private float currentHitPoints;
         [SerializeField]
