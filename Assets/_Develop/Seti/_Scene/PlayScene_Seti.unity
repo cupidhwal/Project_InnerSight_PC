@@ -4422,9 +4422,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 432005028}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 1
   m_WholeNumbers: 1
-  m_Value: 80
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -9135,6 +9135,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b424104e447e240bbbb892345f6ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1624655158 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2826494210915670346, guid: b3afe6d7042b7e54c8ddb314e0ebfd4d, type: 3}
+  m_PrefabInstance: {fileID: 1624655144}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624655145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 283cf9d3c8058884fb5407a9bc362ac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1647088164
 GameObject:
   m_ObjectHideFlags: 0
@@ -9601,6 +9612,7 @@ GameObject:
   - component: {fileID: 1691060066}
   - component: {fileID: 1691060068}
   - component: {fileID: 1691060067}
+  - component: {fileID: 1691060069}
   m_Layer: 5
   m_Name: PlayerHealth
   m_TagString: Untagged
@@ -9667,6 +9679,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691060065}
   m_CullTransparentMesh: 1
+--- !u!114 &1691060069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691060065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f59a43b796089640a754edc741fca12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 796524096}
+  player: {fileID: 1624655158}
+  healthText: {fileID: 1884705218}
 --- !u!1 &1721538116
 GameObject:
   m_ObjectHideFlags: 0
