@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Seti;
 
 namespace Yoon
 {
@@ -20,21 +21,21 @@ namespace Yoon
             }
             else
             {
-                Debug.LogError("DamageText is not assigned!");
+                Debug.LogError("DamageText is not assigned in the prefab!");
             }
 
-            Destroy(gameObject, 1.5f); // 1.5초 후 자동 삭제
+            // 1.5초 후 오브젝트 삭제
+            Destroy(gameObject, 1.5f);
         }
 
         private void Update()
         {
-            // 텍스트가 존재하는 경우에만 처리
             if (damageText != null)
             {
                 // 텍스트를 위로 이동
                 transform.Translate(Vector3.up * moveSpeed * Time.deltaTime);
 
-                // 텍스트 투명도 조정
+                // 텍스트 투명도 감소
                 textColor.a -= fadeSpeed * Time.deltaTime;
                 damageText.color = textColor;
 
@@ -45,22 +46,18 @@ namespace Yoon
                 }
             }
         }
-        
 
-
-
+        // 데미지 값을 설정하는 메서드
         public void SetDamage(float damage)
         {
             if (damageText != null)
             {
-                damageText.text = damage.ToString(); // 데미지 숫자를 문자열로 변환하여 텍스트에 표시
+                damageText.text = damage.ToString(); // 데미지 값을 텍스트로 변환
             }
             else
             {
                 Debug.LogError("DamageText is not assigned in the prefab!");
             }
         }
-
     }
-
 }
