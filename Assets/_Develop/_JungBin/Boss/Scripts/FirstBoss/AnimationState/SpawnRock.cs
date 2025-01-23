@@ -21,7 +21,7 @@ namespace JungBin
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             FirstBossManager firstBossManager = animator.gameObject.GetComponent<FirstBossManager>();
-            firstBossManager.OnLanding();
+            //firstBossManager.OnLanding();
         }
 
         // OnStateMove is called right after Animator.OnAnimatorMove()

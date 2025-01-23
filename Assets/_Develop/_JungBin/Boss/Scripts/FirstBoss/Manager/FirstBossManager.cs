@@ -19,27 +19,6 @@ namespace JungBin
         [SerializeField] private GameObject attackBox;            //기본 공격시 켜지는 콜라이더
         [SerializeField] private ParticleSystem slashAttack;
 
-        [Header("Jump Attack Settings")]
-        [SerializeField] private LayerMask jumpGroundLayer; // 충격파를 적용할 레이어
-        [SerializeField] private float shockwaveRadius = 5f; // 충격파 반경
-        [SerializeField] private float shockwaveDamage = 100f; // 충격파 데미지
-        [SerializeField] private GameObject shockwavePrefab;
-        [SerializeField] private GameObject rockPrefab;             //낙석시 스폰되는 오브젝트
-        [SerializeField] private GameObject warningEffectPrefab;    //낙석시 스폰되는 경고 프리팹
-        [SerializeField] private Transform spawnPointsParent;       //낙석 위치 부모 오브젝트
-        [SerializeField] private float spawnHeight = 10f;           //낙석시 스폰되는 오브젝트의 스폰 위치
-        [SerializeField] private int rocksPerBatch = 2;             //낙석이 한번에 떨어지는 오브젝트 갯수
-        [SerializeField] private float spawnInterval = 0.4f;        //낙석의 시간 간격
-        [SerializeField] private int totalBatches = 2;              //낙석이 몇번 떨어지는지 설정
-        [SerializeField] private float warningDuration = 1f;      //경고 프리팹 지속시간
-
-        [Header("Jump Settings")]
-        [SerializeField] private Transform raycastOffsetObj;        //바닥 감지할 오브젝트 위치
-        [SerializeField] private float raycastOffset = 0.15f;       //바닥 감지 거리
-        [SerializeField] private float jumpSpeed = 10f;             //점프와 하강에 필요한 속도
-        [SerializeField] private float maxHeight = 10f;             //점프 제한 높이
-        [SerializeField] private LayerMask groundLayer;             
-        [SerializeField] private GameObject jumpAttackBox;          //하강시 켜지는 콜라이더 오브젝트
 
         [Header("Detection Settings")]
         [SerializeField] private float detectionRange = 8f; //  최대 감지 거리
@@ -76,13 +55,6 @@ namespace JungBin
             }
             animator = GetComponent<Animator>();
             navMeshAgent = GetComponent<NavMeshAgent>();
-
-            foreach (Transform child in spawnPointsParent)
-            {
-                spawnPoints.Add(child);
-            }
-
-            jumpAttackBox.SetActive(false);
         }
 
         private void Update()
@@ -99,7 +71,7 @@ namespace JungBin
                 RotateTowardsPlayer(direction);
             }
 
-            if(DetectPlayer() == false)
+            if (DetectPlayer() == false)
             {
                 animator.SetBool("IsDetected", false);
             }
@@ -110,7 +82,7 @@ namespace JungBin
 
             ManageDistanceToPlayer(distance);
 
-            if(animator.GetBool("IsRun") == true)
+            if (animator.GetBool("IsRun") == true)
             {
                 //animator.applyRootMotion = false; // Root Motion 비활성화
                 navMeshAgent.enabled = true;
@@ -122,14 +94,10 @@ namespace JungBin
             else if (animator.GetBool("IsRun") == false)
             {
                 navMeshAgent.enabled = false;
-               // animator.applyRootMotion = true; // Root Motion 활성화
+                // animator.applyRootMotion = true; // Root Motion 활성화
             }
             ManageAttackBoxes();
 
-            if (animator.GetBool("IsJump"))
-            {
-                HandleJumpAttack();
-            }
 
             if (animator.GetBool("IsAttack02") == true)
             {
@@ -141,7 +109,7 @@ namespace JungBin
         }
 
         #region 일반적인 상태
-        
+
         private void RotateTowardsPlayer(Vector3 direction) // 보스의 회전
         {
             Vector3 flatDirection = new Vector3(direction.x, 0, direction.z).normalized;
@@ -168,12 +136,12 @@ namespace JungBin
                 if (angleToPlayer <= detectionAngle / 2)
                 {
                     // 레이캐스트로 충돌 객체 확인
-                    if (Physics.Raycast(detectedObj.position, directionToPlayer, out RaycastHit hit, distanceToPlayer))       
+                    if (Physics.Raycast(detectedObj.position, directionToPlayer, out RaycastHit hit, distanceToPlayer))
                     {
-                        
+
                         // 충돌한 객체가 플레이어인지 확인
                         if (hit.transform.CompareTag("Wall"))
-                        {                            
+                        {
                             return false; // 플레이어가 감지됨
                         }
                     }
@@ -226,7 +194,7 @@ namespace JungBin
         private bool DetectWall()    // 시야에 벽이 있으면 불값 리턴
         {
             Vector3 directionToWall = transform.forward; // 보스의 정면 방향
-            float detectionRange =1f; // 감지 거리
+            float detectionRange = 1f; // 감지 거리
 
             // 레이캐스트로 충돌 객체 확인
             if (Physics.Raycast(transform.position, directionToWall, out RaycastHit hit, detectionRange))
@@ -245,158 +213,6 @@ namespace JungBin
 
         #endregion
 
-        #region 점프 공격
-        public void StartJumpAttack()   //애니메이션 이벤트 함수
-        {
-            animator.SetBool("IsJump", true);
-        }
 
-        private void HandleJumpAttack() //점프시 상승 및 하강 담당
-        {
-            if (!isMaxHeight)
-            {
-                // 상승
-                transform.position += Vector3.up * jumpSpeed * Time.deltaTime;
-
-                if (transform.position.y >= maxHeight)
-                {
-                    isMaxHeight = true;
-                }
-            }
-            else
-            {
-                // 유지
-                if (animator.GetBool("IsAttack01"))
-                {
-                    JumpTowardsPlayer();
-                }
-                // 하강
-                else
-                {
-                    transform.position += Vector3.down * jumpSpeed * 3f * Time.deltaTime;
-                    jumpAttackBox.SetActive(true);
-
-                    if (IsGrounded())
-                    {
-                        Debug.Log($"현재 높이 : {transform.position.y}");
-                        animator.SetBool("IsJump", false);
-                        isMaxHeight = false;
-                        jumpAttackBox.SetActive(false);
-                        CreateShockwave();
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 점프 후 착지 시 충격파 생성
-        /// </summary>
-        public void CreateShockwave()
-        {
-            Debug.Log("충격파 생성");
-
-            // 충격파 범위 내 객체 감지
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, shockwaveRadius, jumpGroundLayer);
-            foreach (var hitCollider in hitColliders)
-            {
-                if (hitCollider.TryGetComponent(out Player target))
-                {
-                    target.TakeDamage(shockwaveDamage);
-                }
-            }
-
-            // 충격파 비주얼 효과 실행 (파티클 등 추가 가능)
-            TriggerShockwaveEffect();
-
-            // 충격파 시각화 (디버그용)
-            Debug.DrawLine(transform.position, transform.position + Vector3.up * shockwaveRadius, Color.red, 1f);
-
-            // 애니메이션 속도 조정 및 상태 변경
-            animator.SetTrigger("Shockwave");
-        }
-
-        /// <summary>
-        /// 충격파 비주얼 효과
-        /// </summary>
-        private void TriggerShockwaveEffect()
-        {
-            // 파티클 시스템 생성
-            var shockwaveParticle = Instantiate(shockwavePrefab, transform.position, Quaternion.identity);
-            shockwaveParticle.transform.localScale = Vector3.one * shockwaveRadius;
-            Destroy(shockwaveParticle, 2f); // 2초 후 파괴
-        }
-
-        private IEnumerator DisableShaderAfterTime(Material material, float duration)
-        {
-            yield return new WaitForSeconds(duration);
-            Destroy(material);
-        }
-
-        private void JumpTowardsPlayer() //유지중일때 플레이어의 위치로 이동
-        {
-            // 플레이어의 XZ 방향으로 이동 (Y축 제외)
-            Vector3 direction = (player.position - transform.position).normalized;
-            direction.y = 0; // Y축 이동 제거
-            transform.position += direction * jumpSpeed * 5f * Time.deltaTime;
-
-            // 플레이어 지점에 도달하면 유지 종료
-            if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
-                                 new Vector3(player.position.x, 0, player.position.z)) < 1f)
-            {
-                animator.SetBool("IsAttack01", false); // 유지 종료, 하강으로 전환
-            }
-        }
-
-        private bool IsGrounded()   // 하강시 바닥 감지
-        {
-            return Physics.Raycast(raycastOffsetObj.position, Vector3.down, raycastOffset, groundLayer);
-        }
-
-        #region 낙석 패턴
-        public void OnLanding()  // 착지시 애니메이션 이벤트 함수
-        {
-            StartCoroutine(SpawnRocksWithInterval());
-        }
-
-        private IEnumerator SpawnRocksWithInterval()
-        {
-            for (int batch = 0; batch < totalBatches; batch++)
-            {
-                yield return StartCoroutine(ShowWarningsAndSpawnRocks());
-                yield return new WaitForSeconds(spawnInterval);
-            }
-        }
-
-        private IEnumerator ShowWarningsAndSpawnRocks() // 낙석시 경고표시 소환
-        {
-            int spawnedCount = 0;
-            foreach (Transform spawnPoint in spawnPoints)
-            {
-                if (spawnedCount >= rocksPerBatch) break;
-
-                GameObject warning = Instantiate(warningEffectPrefab, spawnPoint.position, Quaternion.identity);
-                Destroy(warning, warningDuration);
-                spawnedCount++;
-            }
-
-            yield return new WaitForSeconds(warningDuration);
-
-            SpawnRocks();
-        }
-
-        private void SpawnRocks()   // 낙석
-        {
-            int spawnedCount = 0;
-            foreach (Transform spawnPoint in spawnPoints)
-            {
-                if (spawnedCount >= rocksPerBatch) break;
-
-                Vector3 spawnPosition = new Vector3(spawnPoint.position.x, spawnHeight, spawnPoint.position.z);
-                Instantiate(rockPrefab, spawnPosition, Quaternion.identity);
-                spawnedCount++;
-            }
-        }
-        #endregion
-        #endregion
     }
 }
