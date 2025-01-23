@@ -5,9 +5,36 @@ namespace JungBin
 
     public class BossStageManager : MonoBehaviour
     {
+        public static BossStageManager Instance { get; private set; } // 싱글톤 인스턴스
+
+        [SerializeField] private GameObject player;
         [SerializeField] private BossHealthUI bossHealthUI; // 체력 UI 스크립트
         [SerializeField] private BossStat[] bosses; // 스테이지에 있는 모든 보스
 
+        public GameObject Player => player; // 외부에서 접근 가능한 프로퍼티
+
+        private void OnEnable()
+        {
+            // 싱글톤 초기화
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else if (Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            player = GameObject.FindGameObjectWithTag("Player");
+
+            if (player == null)
+            {
+                Debug.LogError("Player GameObject with tag 'Player' not found! Make sure the GameObject is tagged as 'Player'.");
+            }
+        }
+
+       
         public void EnterBossStage(int bossIndex)
         {
             if (bossIndex >= 0 && bossIndex < bosses.Length)

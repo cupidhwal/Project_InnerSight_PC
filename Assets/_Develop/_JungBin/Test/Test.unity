@@ -447,12 +447,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333707316}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 515065350}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &333707318
 MonoBehaviour:
@@ -466,6 +466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d8a5867fa9351a47998f674c22aaca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   bossHealthUI: {fileID: 189404311}
   bosses:
   - {fileID: 1712745848}
@@ -611,9 +612,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   relicManager: {fileID: 2128190991}
   player: {fileID: 1489401150}
-  firstBoss: {fileID: 1712745842}
-  damagable: {fileID: 1489401155}
-  actor: {fileID: 1489401157}
 --- !u!4 &515065350
 Transform:
   m_ObjectHideFlags: 0
@@ -628,7 +626,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2128190990}
-  - {fileID: 333707317}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &518819023 stripped
@@ -1539,28 +1536,6 @@ MonoBehaviour:
   currentWeaponType: 0
   currentWeapon: {fileID: 0}
   inAction: 0
---- !u!114 &1489401155 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1449957297642216058, guid: b3afe6d7042b7e54c8ddb314e0ebfd4d, type: 3}
-  m_PrefabInstance: {fileID: 1494192056}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1489401149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 289bfb1f47fad5745a55b3ba7e9ccbc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1489401157 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2826494210915670346, guid: b3afe6d7042b7e54c8ddb314e0ebfd4d, type: 3}
-  m_PrefabInstance: {fileID: 1494192056}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1489401149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 283cf9d3c8058884fb5407a9bc362ac0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1489401162 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5576585885096278857, guid: b3afe6d7042b7e54c8ddb314e0ebfd4d, type: 3}
@@ -2075,6 +2050,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2932496193762415157, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5271420466812302883, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
       propertyPath: spawnPointsParent
       value: 
@@ -2128,17 +2107,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
---- !u!1 &1712745842 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9023676823113278748, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
-  m_PrefabInstance: {fileID: 1712745841}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1712745848 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 955289352713359935, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
   m_PrefabInstance: {fileID: 1712745841}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1712745842}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1226a622e1c69d4dbcfd8013d804476, type: 3}
@@ -2341,8 +2315,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD30C\uD0A4\uCF00\uD314\uB85C\uC0AC\uC6B0\uB8E8\uC2A4\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: -6938255408728328280, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3373,7 +3347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2128190990
 Transform:
   m_ObjectHideFlags: 0
@@ -4334,8 +4308,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: -6938255408728328280, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials:
   - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
@@ -5177,8 +5151,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uACE0\uB300\uC758 \uD798"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: -6938255408728328280, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8247,8 +8221,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC720\uBB3C \uC774\uB984"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: -6938255408728328280, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -15676,8 +15650,8 @@ MonoBehaviour:
   m_text: "\uC720\uBB3C\uC5D0 \uAD00\uD55C \uC124\uBA85\uC744 \uC368\uC8FC\uC138\uC694.
     \uB0D0\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC57C\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC639"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: -6938255408728328280, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -22841,8 +22815,8 @@ MonoBehaviour:
   m_text: "\uC624\uB798\uB41C \uBB3C\uAC74\uC5D0\uB294 \uC2E0\uBE44\uD55C \uD798\uC774
     \uAE43\uB4ED\uB2C8\uB2E4"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: -6938255408728328280, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -27863,8 +27837,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_sharedMaterial: {fileID: -6938255408728328280, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -28860,6 +28834,7 @@ SceneRoots:
   - {fileID: 1993723769}
   - {fileID: 1926374479}
   - {fileID: 1872713391}
+  - {fileID: 333707317}
   - {fileID: 515065350}
   - {fileID: 2056119512}
   - {fileID: 1129905660}

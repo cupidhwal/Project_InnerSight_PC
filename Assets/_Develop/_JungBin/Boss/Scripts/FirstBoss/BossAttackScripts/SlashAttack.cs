@@ -12,13 +12,14 @@ namespace JungBin
         {
             // 플레이어의 Damagable 컴포넌트 확인
             Damagable playerDamagable = other.GetComponent<Damagable>();
+            Actor actor = other.GetComponent<Actor>();
             if (playerDamagable != null)
             {
                 // DamageMessage 생성
                 Damagable.DamageMessage damageMessage = new Damagable.DamageMessage
                 {
                     damager = this, // 공격자 (SlashAttack)
-                    owner = GameManager.Instance.Actor, // 피해 대상 (플레이어)
+                    owner = actor, // 피해 대상 (플레이어)
                     amount = attackDamage, // 데미지 양
                     direction = attackDirection.normalized, // 공격 방향 (옵션)
                     damageSource = transform.position, // 공격의 시작 위치
@@ -34,7 +35,6 @@ namespace JungBin
 
                 // 플레이어에게 데미지 적용
                 playerDamagable.TakeDamage(damageMessage);
-                Debug.Log($"플레이어가 보스의 공격에 맞았습니다! 플레이어의 남은 체력 : {GameManager.Instance.Actor.Health}");
             }
         }
     }
