@@ -15,7 +15,7 @@ namespace Yoon
 
         [SerializeField] private bool hideFullHealthBar = true; // 체력이 가득 찼을 때 숨길지 여부
         private float targetHealth;                              // 목표 체력 값
-        private float lerpSpeed = 1f;                            // 체력 감소 속도
+        private float lerpSpeed = 0.5f;                            // 체력 감소 속도
         #endregion
 
         private void Start()
