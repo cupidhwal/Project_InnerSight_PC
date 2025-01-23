@@ -12,7 +12,7 @@ namespace Noah
 
         public PlayerData playerData;
         public Gold upgradeGold;
-        private List<float> dataList = new List<float>();
+        public List<float> dataList = new List<float>();
         private List<float> updateDataList = new List<float>();
 
         private List<int> upgradeCount = new List<int>();
@@ -82,25 +82,27 @@ namespace Noah
                 dataList[i] = float.Parse(dataTexts[i].GetChild(0).GetComponent<TMP_Text>().text);
                 //updateGold[i] = int.Parse(dataTexts[i].GetChild(4).GetComponent<TMP_Text>().text);  
                 upgradeCount[i] = _upgradeCount[i];
-
-                playerData.Health = dataList[i];
-                playerData.Attack = dataList[i];
-                playerData.Defend = dataList[i];
-                playerData.MoveSpeed = dataList[i];
-                playerData.AttackSpeed = dataList[i];
-
-                upGradePlayerdata.hp_UpCount = upgradeCount[i];
-                upGradePlayerdata.atk_UpCount = upgradeCount[i];
-                upGradePlayerdata.def_UpCount = upgradeCount[i];
-                upGradePlayerdata.moveSpeed_UpCount = upgradeCount[i];
-                upGradePlayerdata.atkSpeed_UpCount = upgradeCount[i];
-
-                //upgradeGold.hp_UpgradeGold = updateGold[i];
-                //upgradeGold.atk_UpgradeGold = updateGold[i];
-                //upgradeGold.def_UpgradeGold = updateGold[i];
-                //upgradeGold.moveSpeed_UpgradeGold = updateGold[i];
-                //upgradeGold.atkSpeed_UpgradeGold = updateGold[i];
             }
+
+
+            playerData.Health = dataList[0];
+            playerData.Attack = dataList[1];
+            playerData.Defend = dataList[2];
+            playerData.MoveSpeed = dataList[3];
+            playerData.AttackSpeed = dataList[4];
+
+            upGradePlayerdata.hp_UpCount = upgradeCount[0];
+            upGradePlayerdata.atk_UpCount = upgradeCount[1];
+            upGradePlayerdata.def_UpCount = upgradeCount[2];
+            upGradePlayerdata.moveSpeed_UpCount = upgradeCount[3];
+            upGradePlayerdata.atkSpeed_UpCount = upgradeCount[4];
+
+            //upgradeGold.hp_UpgradeGold = updateGold[i];
+            //upgradeGold.atk_UpgradeGold = updateGold[i];
+            //upgradeGold.def_UpgradeGold = updateGold[i];
+            //upgradeGold.moveSpeed_UpgradeGold = updateGold[i];
+            //upgradeGold.atkSpeed_UpgradeGold = updateGold[i];
+
 
             actor.SetStats(playerData.Health, playerData.Attack, playerData.Defend,
                 playerData.AttackSpeed, playerData.MoveSpeed);
