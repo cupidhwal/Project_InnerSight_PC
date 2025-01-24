@@ -219,7 +219,7 @@ namespace Noah
 
                     if (skill.rangeType == SkillRangeType.Circle)
                     {
-                        skillPos = new Vector3(RayManager.Instance.RayToScreen().x, RayManager.Instance.RayToScreen().y, RayManager.Instance.RayToScreen().z);
+                        skillPos = new Vector3(RayManager.Instance.RayToScreen().x, RayManager.Instance.RayToScreen().y + skill.skillPos.y, RayManager.Instance.RayToScreen().z);
 
                         skillef = Instantiate(skill.skillPrefab, skillPos, skill.skillPrefab.transform.rotation);
                     }
@@ -229,7 +229,7 @@ namespace Noah
 
                         yRot = transform.position.z + skill.skillPos.z;
 
-                        skillPos = new Vector3(transform.position.x + skill.skillPos.x, skill.skillPrefab.transform.position.y, yRot);
+                        skillPos = new Vector3(transform.position.x + skill.skillPos.x, RayManager.Instance.RayToScreen().y + skill.skillPos.y, yRot);
 
                         skillef = Instantiate(skill.skillPrefab, skillPos, yOnlyRotation);
                     }
