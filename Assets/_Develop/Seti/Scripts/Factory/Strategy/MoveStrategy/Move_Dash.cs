@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace Seti
     {
         // 필드
         #region Variables
+        CancellationTokenSource dashToken;
+
         private bool isDash = false;
         private Vector2 dir = Vector2.zero;
         private Vector3 moveDirection = Vector3.zero;
