@@ -5,7 +5,6 @@ namespace JungBin
 {
     public class SlashAttack : MonoBehaviour
     {
-        [SerializeField] private float attackDamage = 10f; // 공격 데미지
         [SerializeField] private Vector3 attackDirection;  // 공격 방향 (옵션)
 
         private void OnTriggerEnter(Collider other)
@@ -20,7 +19,7 @@ namespace JungBin
                 {
                     damager = this, // 공격자 (SlashAttack)
                     owner = actor, // 피해 대상 (플레이어)
-                    amount = attackDamage, // 데미지 양
+                    amount = BossStageManager.Instance.Bosses[0].AttackDamage, // 데미지 양
                     direction = attackDirection.normalized, // 공격 방향 (옵션)
                     damageSource = transform.position, // 공격의 시작 위치
                     throwing = true, // 넉백 여부
@@ -29,7 +28,6 @@ namespace JungBin
 
                 if (damageMessage.owner == null)
                 {
-                    Debug.LogError("DamageMessage의 owner가 null입니다.");
                     return;
                 }
 

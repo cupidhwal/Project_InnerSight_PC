@@ -5,15 +5,18 @@ namespace JungBin
 {
     public class SpawnAxeController : MonoBehaviour
     {
-        [SerializeField] private float attackDamage = 10f; // 도끼의 데미지
         [SerializeField] private float axeSpeed = 10f; // 도끼 속도
         private Transform goalPosition; // 목표 위치 (플레이어 위치)
         private Vector3 dir; // 이동 방향
 
         private void Start()
         {
+            if (BossStageManager.Instance.Player.transform == null)
+                return;
             // 플레이어의 위치를 목표로 설정
             goalPosition = BossStageManager.Instance.Player.transform;
+
+
 
             // 방향 계산 (플레이어 방향)
             dir = (goalPosition.position - transform.position).normalized;
@@ -40,7 +43,7 @@ namespace JungBin
                 {
                     damager = this, // 공격자 (도끼)
                     owner = actor, // 피해 대상 (플레이어)
-                    amount = attackDamage, // 데미지 양
+                    amount = BossStageManager.Instance.Bosses[0].AttackDamage / 2, // 데미지 양
                     damageSource = transform.position, // 도끼의 현재 위치
                     direction = dir, // 이동 방향
                     throwing = true, // 투척 공격 여부
@@ -49,7 +52,6 @@ namespace JungBin
 
                 if (damageMessage.owner == null)
                 {
-                    Debug.LogError("DamageMessage의 owner가 null입니다.");
                     return;
                 }
 
