@@ -85,6 +85,9 @@ namespace Seti
             Update_Rate_Attack(r_atk);
             Update_Rate_Movement(r_mov);
             Update_Stagger(stag);
+
+            Damagable damagable = GetComponent<Damagable>();
+            damagable.ResetDamage();
         }
 
         public void Update_Health(float heal) => health = heal;

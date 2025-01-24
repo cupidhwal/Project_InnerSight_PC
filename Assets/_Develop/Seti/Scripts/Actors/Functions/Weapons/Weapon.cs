@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MySampleEx;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace Seti
 {
@@ -26,6 +27,8 @@ namespace Seti
 
         // 필드
         #region Variables
+        private Collider hitBox;
+
         //[SerializeField]
         protected int damage = 1;      // hit 시 데미지
 
@@ -73,7 +76,7 @@ namespace Seti
         #region Life Cycle
         protected void FixedUpdate()
         {
-            if (m_InAttack)
+            /*if (m_InAttack)
             {
                 // 어택 포인트별 히트 판정
                 for (int i = 0; i < attackPoints.Length; i++)
@@ -118,11 +121,13 @@ namespace Seti
                     attackPoints[i].previousPositions.Add(m_PreviousPos[i]);
 #endif
                 }
-            }
+            }*/
         }
 
         private void Awake()
         {
+            hitBox = GetComponent<Collider>();
+
             // 타격 이펙트 풀 생성
             GenEffectPool();
         }
@@ -151,10 +156,12 @@ namespace Seti
             }
 
             m_InAttack = true;
+            hitBox.enabled = true;
         }
 
         public void EndAttack()
         {
+            hitBox.enabled = false;
             m_InAttack = false;
 
 #if UNITY_EDITOR
@@ -173,8 +180,8 @@ namespace Seti
                 return;
 
             // 셀프 데미지 체크
-            /*if (d.gameObject == m_Owner)
-                return;*/
+            if (d.gameObject == m_Owner)
+                return;
 
             // 타겟 레이어 체크
             if ((targetLayers.value & (1 << other.gameObject.layer)) == 0)
@@ -217,6 +224,30 @@ namespace Seti
                     m_ParticlesPool[i] = Instantiate(hitParticlePrefab);
                     m_ParticlesPool[i].Stop();
                 }
+            }
+        }
+        #endregion
+
+        // 이벤트 메서드
+        #region Event Methods
+        private void OnTriggerEnter(Collider other)
+        {
+            Actor actor = m_Owner.GetComponent<Actor>();
+            switch (actor)
+            {
+                case Player:
+                    if (other.CompareTag("Enemy"))
+                    {
+                        CheckDamage(other, attackPoints[0]);
+                    }
+                    break;
+
+                case Enemy:
+                    if (other.CompareTag("Player"))
+                    {
+                        CheckDamage(other, attackPoints[0]);
+                    }
+                    break;
             }
         }
         #endregion
