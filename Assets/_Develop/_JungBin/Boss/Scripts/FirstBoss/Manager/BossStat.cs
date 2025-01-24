@@ -11,6 +11,7 @@ namespace JungBin
 
         [SerializeField] private float maxHealth = 500f; // 최대 체력
         [SerializeField] private float invulnerabilityTime = 2f; // 무적 시간
+        [SerializeField] private float bossAttack = 25f; // 보스 공격력
         [SerializeField] private GameObject relicPrefab; // 드랍할 유물
         [SerializeField] private CapsuleCollider capsuleCollider;
 

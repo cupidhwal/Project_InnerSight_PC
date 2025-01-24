@@ -59,7 +59,7 @@ namespace JungBin
 
         private void Update()
         {
-            if (animator.GetBool("IsDeath") == true)
+            if (animator.GetBool("IsDeath") == true || player != null)
             {
                 return;
             }
