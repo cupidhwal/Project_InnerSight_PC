@@ -12,6 +12,7 @@ namespace JungBin
         [SerializeField] private BossStat[] bosses; // 스테이지에 있는 모든 보스
 
         public GameObject Player => player; // 외부에서 접근 가능한 프로퍼티
+        public BossStat[] Bosses => bosses; 
 
         private void OnEnable()
         {

@@ -26,6 +26,7 @@ namespace JungBin
         public UnityAction OnDeath; // 보스가 죽었을 때
         public UnityAction OnBecomeVulnerable; // 무적 해제 시
 
+        public float AttackDamage => bossAttack;
         public float MaxHealth => maxHealth; // 보스의 최대 체력
         public float Health => damagable != null ? damagable.CurrentHitPoints : 0; // 현재 체력
         public string BossName => bossName; // 보스 이름 접근자

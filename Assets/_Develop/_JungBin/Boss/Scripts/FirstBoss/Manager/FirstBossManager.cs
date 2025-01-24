@@ -31,7 +31,7 @@ namespace JungBin
         private bool isMaxHeight = false;
         public static bool isAttack { get; set; } = false; // 공격중인지 여부
 
-        private Transform player;
+        [SerializeField] private Transform player;
         [SerializeField] private Animator animator;
         private NavMeshAgent navMeshAgent;
         #endregion
@@ -59,8 +59,14 @@ namespace JungBin
 
         private void Update()
         {
-            if (animator.GetBool("IsDeath") == true || player != null)
+            if (animator.GetBool("IsDeath") == true)
             {
+                return;
+            }
+
+            if (player == null)
+            {
+                animator.SetBool("PlayerDie", true);
                 return;
             }
 
