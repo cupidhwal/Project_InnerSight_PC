@@ -222,6 +222,8 @@ namespace Seti
         #region Methods
         public void OnAttack(bool isAttack = true)
         {
+            if (!condition.InAction) return;
+
             condition.IsAttack = isAttack;
             actor.Controller_Animator.IsAttack = isAttack;
             if (isAttack)
@@ -244,6 +246,8 @@ namespace Seti
 
         public void OnMagic(bool isMagic = true)
         {
+            if (!condition.InAction) return;
+
             condition.IsMagic = isMagic;
             actor.Controller_Animator.IsMagic = isMagic;
             if (isMagic)
@@ -268,12 +272,16 @@ namespace Seti
         async void AttackWait()
         {
             await Task.Delay(50);
-            OnAttack(false);
+            condition.IsAttack = false;
+            actor.Controller_Animator.IsAttack = false;
+            currentStrategy?.AttackExit();
         }
         async void MagicWait()
         {
             await Task.Delay(1000);
-            OnMagic(false);
+            condition.IsMagic = false;
+            actor.Controller_Animator.IsMagic = false;
+            currentStrategy?.AttackExit();
             SwitchStrategy(StrategyType.Normal);
         }
         public void MagicExit()
