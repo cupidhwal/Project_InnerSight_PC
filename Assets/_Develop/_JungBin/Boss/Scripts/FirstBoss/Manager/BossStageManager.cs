@@ -50,7 +50,6 @@ namespace JungBin
                 // 보스 체력 UI 연결
                 bossHealthUI.SetBoss(selectedBoss);
 
-                Debug.Log($"스테이지에 {selectedBoss.name} 보스가 활성화되었습니다.");
             }
             else
             {

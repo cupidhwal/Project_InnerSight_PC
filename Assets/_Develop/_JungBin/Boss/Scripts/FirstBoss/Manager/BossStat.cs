@@ -123,7 +123,6 @@ namespace JungBin
             timeSinceLastHit = 0f;
             animator.SetBool("IsBerserk", false);
             animator.SetBool("IsDeath", false);
-            Debug.Log("보스 체력 및 상태가 초기화되었습니다.");
         }
 
         /*// 치트로 즉시 죽이기
