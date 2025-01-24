@@ -12,7 +12,7 @@ namespace Noah
         private Transform player;
         private Transform currentStagePar;
         private GameObject currentStage;
-        public Transform spawnPoint;
+        private Transform spawnPoint;
         public List<GameObject> stageObject = new List<GameObject>();
 
         private int curStage = 0;
@@ -33,12 +33,6 @@ namespace Noah
             Init();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         void Init()
         {
             currentStagePar = transform;
@@ -54,6 +48,8 @@ namespace Noah
             yield return new WaitForSeconds(0.1f);
 
             GetCurrentStage();
+
+            TestStageChage();
         }
 
         void SetCurrentStage(int _stage = 0)
@@ -66,6 +62,12 @@ namespace Noah
             }
 
             Instantiate(stageObject[curStage], currentStagePar);
+
+            // 테스트용
+            player.GetComponent<Condition_Player>().PlayerSetActive(false);
+            player.GetComponent<NavMeshAgent>().enabled = false;
+            player.GetComponent<PlayerUseSkill>().enabled = false;
+            player.GetComponent<Rigidbody>().useGravity = false;
         }
 
         void GetCurrentStage()
@@ -100,6 +102,21 @@ namespace Noah
             enemys.Clear();
 
             StartCoroutine(GoNextStage());
+        }
+
+        // 테스트용
+        void TestStageChage()
+        {
+            player.GetComponent<Condition_Player>().PlayerSetActive(true);
+            player.GetComponent<NavMeshAgent>().enabled = true;
+            player.GetComponent<PlayerUseSkill>().enabled = true;
+            player.GetComponent<Rigidbody>().useGravity = true;
+
+            if (currentStage.GetComponent<NavMeshSurface>() != null)
+            {
+                currentStage.GetComponent<NavMeshSurface>().enabled = true;
+            }
+
         }
 
         IEnumerator GoNextStage()
