@@ -62,7 +62,6 @@ namespace Seti
             m_collider = GetComponent<Collider>();
 
             // 초기화
-            ResetDamage();
             if (TryGetComponent<Actor>(out var actor))
             {
                 this.actor = actor;
@@ -80,6 +79,8 @@ namespace Seti
                     targetDamagable.OnReceiveDamage += enemyWeapon.AttackExit;
                 }
             }
+
+            ResetDamage();
         }
 
         private void Update()
