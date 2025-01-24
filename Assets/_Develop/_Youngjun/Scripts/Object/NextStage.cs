@@ -7,6 +7,7 @@ public class NextStage : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            transform.GetComponent<Collider>().enabled = false;
             StageManager.Instance.NextStage();
         }
     }

@@ -143,6 +143,7 @@ namespace Noah
             PlayerStateManager.Instance.UpdateStateData(states, upgradeCounts);
             PlayerInfoManager.Instance.SetGold(int.Parse(gold_Text.text));
             UIManager.Instance.playerStateUI.gameObject.SetActive(false);
+            player.GetComponent<Condition_Player>().PlayerSetActive(true);
         }
         
         public void ActiveUI()

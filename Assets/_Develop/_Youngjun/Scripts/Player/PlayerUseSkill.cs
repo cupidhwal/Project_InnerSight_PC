@@ -236,9 +236,10 @@ namespace Noah
                     else if(skill.rangeType == SkillRangeType.Nomal)
                     {
                         skillef = Instantiate(skill.skillPrefab, transform.position, Quaternion.identity, transform);
+                    
                     }
 
-                    //skillef.transform.GetChild(0).GetComponent<SkillAttack>().damage = skill.damage;
+                    skillef.transform.GetChild(0).GetComponent<SkillAttack>().damage = skill.damage;
 
                     StartCoroutine(skill.SkillCoolTime());
                     Destroy(skillef, skill.skillAtkTime);
