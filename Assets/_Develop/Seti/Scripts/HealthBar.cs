@@ -24,7 +24,7 @@ namespace Seti
         private readonly float fillSharpness = 10f;
         [SerializeField]
         private float fillDuration = 0.3f;
-        private float currentHealth;
+        private float currentRate;
 
         // 기타
         private IEnumerator fillCor;
@@ -44,14 +44,14 @@ namespace Seti
 
         public void UpdateHealth()
         {
-            float goalHealth = damagable.CurrentHitRate;
+            float goalRate = damagable.CurrentHitRate;
             healthText.text = damagable.CurrentHitPoints.ToString() + " / " + damagable.MaxHitPoint.ToString();
 
             // SmoothHealth
-            UpdateSmoothHealth(goalHealth);
+            UpdateSmoothHealth(goalRate);
         }
 
-        void UpdateSmoothHealth(float goalHealth)
+        void UpdateSmoothHealth(float goalRate)
         {
             if (fillCor != null)
             {
@@ -59,25 +59,25 @@ namespace Seti
                 fillCor = null;
             }
 
-            fillCor = SmoothHealth(goalHealth);
+            fillCor = SmoothHealth(goalRate);
             StartCoroutine(fillCor);
         }
 
-        IEnumerator SmoothHealth(float goalHealth)
+        IEnumerator SmoothHealth(float goalRate)
         {
             // 연출
             float timeStamp = Time.time;
             while (timeStamp + fillDuration > Time.time)
             {
-                currentHealth = Mathf.Lerp(currentHealth, goalHealth, fillSharpness * Time.deltaTime);
-                healthSlider.value = currentHealth;
+                currentRate = Mathf.Lerp(currentRate, goalRate, fillSharpness * Time.deltaTime);
+                healthSlider.value = currentRate;
                 yield return null;
             }
 
             // 마감
-            currentHealth = goalHealth;
-            currentHealth = Mathf.Clamp(currentHealth, 0, damagable.MaxHitPoint);
-            healthSlider.value = goalHealth;
+            currentRate = goalRate;
+            currentRate = Mathf.Clamp01(currentRate);
+            healthSlider.value = goalRate;
 
             // 후처리
             fillCor = null;
