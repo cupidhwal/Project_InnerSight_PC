@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MySampleEx;
 using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.UIElements;
 
 namespace Seti
 {
@@ -27,7 +28,7 @@ namespace Seti
 
         // 필드
         #region Variables
-        private Collider hitBox;
+        protected Collider hitBox;
 
         //[SerializeField]
         protected int damage = 1;      // hit 시 데미지
@@ -41,11 +42,13 @@ namespace Seti
 
         [SerializeField]
         protected GameObject m_Owner;
+        protected Actor m_Owner_Actor;
 
         protected Vector3[] m_PreviousPos = null;
         protected Vector3 m_Direction;
 
         protected bool m_IsThrowingHit = false;
+        [SerializeField]
         protected bool m_InAttack = false;
 
         protected const int PARTICLE_COUNT = 10;
@@ -136,10 +139,16 @@ namespace Seti
         // 메서드
         #region Methods
         // 무기의 주인
-        public void SetOwner(GameObject owner) => m_Owner = owner;
+        public void SetOwner(GameObject owner)
+        {
+            m_Owner = owner;
+            m_Owner_Actor = m_Owner.GetComponent<Actor>();
+        }
 
         public void BeginAttack(bool throwingAttack)
         {
+            if (m_Owner_Actor.Condition.IsDead) return;
+
             ThrowingHit = throwingAttack;
             m_PreviousPos = new Vector3[attackPoints.Length];
 
@@ -156,12 +165,10 @@ namespace Seti
             }
 
             m_InAttack = true;
-            hitBox.enabled = true;
         }
 
         public void EndAttack()
         {
-            hitBox.enabled = false;
             m_InAttack = false;
 
 #if UNITY_EDITOR
@@ -230,10 +237,11 @@ namespace Seti
 
         // 이벤트 메서드
         #region Event Methods
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerStay(Collider other)
         {
-            Actor actor = m_Owner.GetComponent<Actor>();
-            switch (actor)
+            if (!m_InAttack) return;
+
+            switch (m_Owner_Actor)
             {
                 case Player:
                     if (other.CompareTag("Enemy"))

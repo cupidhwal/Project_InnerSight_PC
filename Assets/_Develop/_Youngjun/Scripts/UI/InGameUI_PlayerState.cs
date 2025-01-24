@@ -1,3 +1,4 @@
+using Seti;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace Noah
     {
         public TMP_Text gold_Text;
 
+        public GameObject player;
         private Transform stateGroup;
         public List<Transform> states = new List<Transform>();
         private List<float> currentDatas = new List<float>();
@@ -18,6 +20,8 @@ namespace Noah
         private float curData;
         private int totalCost;
         private int totalGold;
+
+        
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -33,6 +37,8 @@ namespace Noah
 
         void Init()
         {
+            player = FindAnyObjectByType<RayManager>().gameObject;
+
             stateGroup = transform.GetChild(0).GetChild(0);
 
             for (int i = 0; i < stateGroup.childCount; i++)
@@ -45,6 +51,10 @@ namespace Noah
 
         public void GetStateData()
         {
+            player.GetComponent<Condition_Player>().PlayerSetActive(false);
+
+            Debug.Log(player.GetComponent<Condition_Player>().InAction);
+
             for (int i = 0; i < states.Count; i++)
             {
                 upgradeCounts[i] = PlayerStateManager.Instance.UpgardeCount()[i];
@@ -133,11 +143,16 @@ namespace Noah
             PlayerStateManager.Instance.UpdateStateData(states, upgradeCounts);
             PlayerInfoManager.Instance.SetGold(int.Parse(gold_Text.text));
             UIManager.Instance.playerStateUI.gameObject.SetActive(false);
+            player.GetComponent<Condition_Player>().PlayerSetActive(true);
         }
         
         public void ActiveUI()
         {
+            player.GetComponent<Condition_Player>().PlayerSetActive(true);
+
             UIManager.Instance.Toggle(transform.GetChild(0).gameObject);
+
+
         }
     }
 }

@@ -22,7 +22,6 @@ namespace JungBin
                 healthSlider.maxValue = bossStat.MaxHealth;
                 healthSlider.value = bossStat.Health;
 
-                Debug.Log($"보스 {bossStat.name}와 체력 UI가 연결되었습니다.");
             }
             else
             {

@@ -11,19 +11,23 @@ namespace Seti
         #region Override
         public override void Look(Vector2 _)
         {
-            if (!actor.Condition.IsAttack) return;
+            //if (!actor.Condition.IsAttack) return;
 
             if (actor is Enemy enemy && enemy.Player)
-                enemy.transform.LookAt(enemy.Player.transform.position);
+                if (!enemy.Condition.IsAttack)
+                    enemy.transform.LookAt(enemy.Player.transform.position);
 
             if (actor is Player player)
             {
-                Vector3 temp = player.Condition.AttackPoint;
-                float tempDis = Vector3.Distance(player.transform.position, temp);
-                if (tempDis > 1.5f)
+                if (player.Condition.IsAttack)
                 {
-                    Vector3 atkPoint = new(temp.x, temp.y, temp.z);
-                    player.transform.LookAt(atkPoint);
+                    Vector3 temp = player.Condition.AttackPoint;
+                    float tempDis = Vector3.Distance(player.transform.position, temp);
+                    if (tempDis > 1.5f)
+                    {
+                        Vector3 atkPoint = new(temp.x, temp.y, temp.z);
+                        player.transform.LookAt(atkPoint);
+                    }
                 }
             }
         }

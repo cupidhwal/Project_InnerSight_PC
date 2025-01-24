@@ -75,8 +75,11 @@ namespace Seti
             //Debug.Log($"{damageMessage.owner.name}로부터 {damageMessage.amount}의 데미지를 입었습니다.");
 
             // 참조
-            Condition_Actor condition = GetComponent<Condition_Actor>();
-            condition.HitDirection = damageMessage.direction.normalized;
+            if (GetComponent<Actor>())
+            {
+                Condition_Actor condition = GetComponent<Condition_Actor>();
+                condition.HitDirection = damageMessage.direction.normalized;
+            }
         }
 
         // 사망 처리, 애니메이션, 연출, ...

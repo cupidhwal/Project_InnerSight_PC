@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Seti;
-using JungBin;
+using Unity.AI.Navigation;
+using UnityEngine.AI;
 
 namespace Noah
 {
@@ -17,22 +18,19 @@ namespace Noah
         private int curStage = 0;
         private bool isChangeScene = false;
 
-        public GameObject nextStageObject;
-        public GameObject randomSkillObject;
+        private GameObject nextStageObject;
+        private GameObject randomSkillObject;
 
-        public Transform enemyPar;
-        public List<GameObject> enemys = new List<GameObject>();
+        private Transform enemyPar;
+        private List<GameObject> enemys = new List<GameObject>();
+
+        public int testStageChange;
+
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             Init();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
 
         void Init()
@@ -45,11 +43,13 @@ namespace Noah
 
         IEnumerator ResetStage()
         {
-            SetCurrentStage();
+            SetCurrentStage(testStageChange);
 
             yield return new WaitForSeconds(0.1f);
 
             GetCurrentStage();
+
+            TestStageChage();
         }
 
         void SetCurrentStage(int _stage = 0)
@@ -62,6 +62,12 @@ namespace Noah
             }
 
             Instantiate(stageObject[curStage], currentStagePar);
+
+            // 테스트용
+            player.GetComponent<Condition_Player>().PlayerSetActive(false);
+            player.GetComponent<NavMeshAgent>().enabled = false;
+            player.GetComponent<PlayerUseSkill>().enabled = false;
+            player.GetComponent<Rigidbody>().useGravity = false;
         }
 
         void GetCurrentStage()
@@ -69,8 +75,6 @@ namespace Noah
             currentStage = currentStagePar.GetChild(0).gameObject;
 
             spawnPoint = currentStage.transform.Find("SpawnPoint");
-
-            player.transform.position = spawnPoint.position;
 
             nextStageObject = currentStage.transform.GetChild(0).GetChild(0).gameObject;
             randomSkillObject = currentStage.transform.GetChild(0).GetChild(1).gameObject;
@@ -81,15 +85,38 @@ namespace Noah
             {
                 enemys.Add(enemyPar.GetChild(i).gameObject);
             }
+
+            if (currentStage.GetComponent<NavMeshSurface>() != null)
+            {
+                currentStage.GetComponent<NavMeshSurface>().enabled = false;
+            }
+
+            player.transform.position = spawnPoint.position;
         }
 
         public void NextStage()
         {
             player.GetComponent<Condition_Player>().PlayerSetActive(false);
+            player.GetComponent<NavMeshAgent>().enabled = false;
             player.GetComponent<PlayerUseSkill>().enabled = false;
             enemys.Clear();
 
             StartCoroutine(GoNextStage());
+        }
+
+        // 테스트용
+        void TestStageChage()
+        {
+            player.GetComponent<Condition_Player>().PlayerSetActive(true);
+            player.GetComponent<NavMeshAgent>().enabled = true;
+            player.GetComponent<PlayerUseSkill>().enabled = true;
+            player.GetComponent<Rigidbody>().useGravity = true;
+
+            if (currentStage.GetComponent<NavMeshSurface>() != null)
+            {
+                currentStage.GetComponent<NavMeshSurface>().enabled = true;
+            }
+
         }
 
         IEnumerator GoNextStage()
@@ -123,6 +150,12 @@ namespace Noah
 
             player.GetComponent<Condition_Player>().PlayerSetActive(true);
             player.GetComponent<PlayerUseSkill>().enabled = true;
+            player.GetComponent<NavMeshAgent>().enabled = true;
+
+            if (currentStage.GetComponent<NavMeshSurface>() != null)
+            {
+                currentStage.GetComponent<NavMeshSurface>().enabled = true;
+            }
 
             player.GetComponent<Rigidbody>().useGravity = true;
         }

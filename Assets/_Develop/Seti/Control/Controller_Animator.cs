@@ -145,14 +145,17 @@ namespace Seti
         private float forwardSpeed;
         private float CurrentSpeed()
         {
-            if (IsMove)
-                forwardSpeed = Mathf.Lerp(forwardSpeed, 4f, 10f * Time.deltaTime);
-            else
-                forwardSpeed = forwardSpeed > 0.01f ? Mathf.Lerp(forwardSpeed, 0f, 10f * Time.deltaTime) : 0f;
+            if (Actor.Condition.InAction)
+            {
+                if (IsMove)
+                    forwardSpeed = Mathf.Lerp(forwardSpeed, 4f, 20f * Time.deltaTime);
+                else
+                    forwardSpeed = forwardSpeed > 0.01f ? Mathf.Lerp(forwardSpeed, 0f, 10f * Time.deltaTime) : 0f;
 
-            int moveEff = IsChase ? 2 : 1;
-
-            return moveEff * (Actor.Rate_Movement / Actor.Rate_Movement_Default) * forwardSpeed;
+                int moveEff = IsChase ? 2 : 1;
+                return moveEff * (Actor.Rate_Movement / Actor.Rate_Movement_Default) * forwardSpeed;
+            }
+            return 0f;
         }
         #endregion
     }

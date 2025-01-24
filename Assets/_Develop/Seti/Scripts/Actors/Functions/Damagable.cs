@@ -91,7 +91,8 @@ namespace Seti
                 m_timeSinceStagger += Time.deltaTime;
                 if (m_timeSinceStagger > staggerDuration)
                 {
-                    OnReleaveDamage?.Invoke();
+                    if (actor.Condition.IsStagger)
+                        OnReleaveDamage?.Invoke();
 
                     m_timeSinceStagger = 0f;
                 }

@@ -6,7 +6,9 @@ namespace Noah
     public class PlayerUseSkill : MonoBehaviour
     {
         private bool isStartAttack = false;
-        public InGameUI_Skill setSkill;
+
+        private Transform skillUI;
+
         [SerializeField] private GameObject skillRange_Circle;
         [SerializeField] private GameObject skillRange_Cube;
 
@@ -21,6 +23,8 @@ namespace Noah
         public float rotationSpeed = 100f; // 회전 속도
 
         public float y_SkillRot = 100f;
+
+        InGameUI_Skill setSkill;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -57,6 +61,9 @@ namespace Noah
 
         void Init()
         {
+            skillUI = FindAnyObjectByType<InGameUI_Skill>().transform;
+            setSkill = skillUI.GetComponent<InGameUI_Skill>();
+
             //skillRange_Circle = transform.GetChild(0).gameObject;
             //skillRange_Cube = transform.GetChild(1).gameObject;
         }
@@ -212,7 +219,7 @@ namespace Noah
 
                     if (skill.rangeType == SkillRangeType.Circle)
                     {
-                        skillPos = new Vector3(RayManager.Instance.RayToScreen().x, skill.skillPrefab.transform.position.y, RayManager.Instance.RayToScreen().z);
+                        skillPos = new Vector3(RayManager.Instance.RayToScreen().x, RayManager.Instance.RayToScreen().y + skill.skillPos.y, RayManager.Instance.RayToScreen().z);
 
                         skillef = Instantiate(skill.skillPrefab, skillPos, skill.skillPrefab.transform.rotation);
                     }
@@ -222,16 +229,17 @@ namespace Noah
 
                         yRot = transform.position.z + skill.skillPos.z;
 
-                        skillPos = new Vector3(transform.position.x + skill.skillPos.x, skill.skillPrefab.transform.position.y, yRot);
+                        skillPos = new Vector3(transform.position.x + skill.skillPos.x, RayManager.Instance.RayToScreen().y + skill.skillPos.y, yRot);
 
                         skillef = Instantiate(skill.skillPrefab, skillPos, yOnlyRotation);
                     }
                     else if(skill.rangeType == SkillRangeType.Nomal)
                     {
                         skillef = Instantiate(skill.skillPrefab, transform.position, Quaternion.identity, transform);
+                    
                     }
 
-                    //skillef.transform.GetChild(0).GetComponent<SkillAttack>().damage = skill.damage;
+                    skillef.transform.GetChild(0).GetComponent<SkillAttack>().damage = skill.damage;
 
                     StartCoroutine(skill.SkillCoolTime());
                     Destroy(skillef, skill.skillAtkTime);
