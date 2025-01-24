@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -9,17 +10,16 @@ namespace Seti
         // 필드
         #region Variables
         CancellationTokenSource dashToken;
+        Player player;
 
         private bool isDash = false;
         private Vector2 dir = Vector2.zero;
         private Vector3 moveDirection = Vector3.zero;
-
-        private const float dashDuration = 0.1f;
         #endregion
 
         // 오버라이드
         #region Override
-        protected override async void QuaterView_Move(Vector2 moveInput)
+        protected override void QuaterView_Move(Vector2 moveInput)
         {
             //if (rb == null) return;
             if (actor is not Player player)
@@ -27,38 +27,58 @@ namespace Seti
                 Debug.Log("Move_Dash는 Player만 사용할 수 있습니다.");
                 return;
             }
-
-            if (!isDash)    // 대시 중이 아닐 때에만 방향 갱신
+            if (this.player == null)
             {
-                dir = MoveDirection(moveInput);
-                moveDirection = (moveInput == Vector2.zero) ?
-                                Quaternion.Euler(0f, -45f, 0f) * player.transform.forward :
-                                new(dir.x, 0, dir.y);
-                isDash = true;
+                this.player = player;
             }
-            Vector3 move = speed * Time.deltaTime * moveDirection.normalized;
-            Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * move;
 
-            float elapsedTime = 0f;
-
-            // 초기 속도 설정
-            float currentSpeed = 0f;
-            while (actor.Condition.InAction && elapsedTime < dashDuration)
-            {
-                elapsedTime += Time.deltaTime;
-                float t = elapsedTime / dashDuration;
-
-                // Ease In-Out 적용
-                currentSpeed = Mathf.Lerp(currentSpeed, player.Dash_Speed, Mathf.SmoothStep(0f, 1f, t * t));
-                player.transform.Translate(currentSpeed * Time.deltaTime * QuaterView, Space.World);
-
-                await Task.Delay((int)(Time.deltaTime * 1000));
-            }
+            // 대시 후 자동 종료
+            int dashDuration = (int)(player.Dash_Duration * 1000);
+            dashToken = new CancellationTokenSource(dashDuration);
+            Dash(moveInput, dashToken.Token);
         }
         #endregion
 
         // 메서드
         #region Methods
+        private async void Dash(Vector2 moveInput, CancellationToken token)
+        {
+            try
+            {
+                if (!isDash)    // 대시 중이 아닐 때에만 방향 갱신
+                {
+                    dir = MoveDirection(moveInput);
+                    moveDirection = (moveInput == Vector2.zero) ?
+                                    Quaternion.Euler(0f, -45f, 0f) * player.transform.forward :
+                                    new(dir.x, 0, dir.y);
+                    isDash = true;
+                }
+                Vector3 move = speed * Time.deltaTime * moveDirection.normalized;
+                Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * move;
+
+                // 초기 속도 설정
+                float elapsedTime = 0f;
+                float currentSpeed = 0f;
+                while (actor.Condition.InAction && elapsedTime < player.Dash_Duration)
+                {
+                    if (token.IsCancellationRequested) return;
+
+                    elapsedTime += Time.deltaTime;
+                    float t = elapsedTime / player.Dash_Duration;
+
+                    // Ease In-Out 적용
+                    currentSpeed = Mathf.Lerp(currentSpeed, player.Dash_Speed, Mathf.SmoothStep(0f, 1f, t * t));
+                    player.transform.Translate(currentSpeed * Time.deltaTime * QuaterView, Space.World);
+
+                    await Task.Delay((int)(Time.deltaTime * 1000));
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.Log("대시 끝");
+            }
+        }
+
         public void MoveExit()
         {
             isDash = false;

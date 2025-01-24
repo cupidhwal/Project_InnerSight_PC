@@ -267,6 +267,10 @@ namespace Seti
         #region Utilities
         private async void Execute_Dash()
         {
+            // 대시 중 충돌 무시
+            Collider collider = actor.GetComponent<Collider>();
+            collider.excludeLayers = LayerMask.GetMask("Actor");
+
             // Damagable 컴포넌트가 있다면 대시 중 무적
             if (actor.TryGetComponent<Damagable>(out var damagable))
                 damagable.IsInvulnerable = true;
@@ -290,6 +294,9 @@ namespace Seti
 
             // Damagable 컴포넌트가 있다면 무적 해제
             damagable.IsInvulnerable = false;
+
+            // 충돌 확인 재개
+            collider.excludeLayers = LayerMask.GetMask("Nothing");
         }
         #endregion
     }
