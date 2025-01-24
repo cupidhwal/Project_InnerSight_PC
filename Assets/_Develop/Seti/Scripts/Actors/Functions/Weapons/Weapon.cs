@@ -28,7 +28,7 @@ namespace Seti
 
         // 필드
         #region Variables
-        protected Collider hitBox;
+        protected SphereCollider hitBall;
 
         //[SerializeField]
         protected int damage = 1;      // hit 시 데미지
@@ -129,7 +129,7 @@ namespace Seti
 
         private void Awake()
         {
-            hitBox = GetComponent<Collider>();
+            hitBall = GetComponent<SphereCollider>();
 
             // 타격 이펙트 풀 생성
             GenEffectPool();
@@ -165,10 +165,12 @@ namespace Seti
             }
 
             m_InAttack = true;
+            hitBall.radius = 2f;
         }
 
         public void EndAttack()
         {
+            hitBall.radius = 0.001f;
             m_InAttack = false;
 
 #if UNITY_EDITOR
@@ -237,10 +239,8 @@ namespace Seti
 
         // 이벤트 메서드
         #region Event Methods
-        private void OnTriggerStay(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
-            if (!m_InAttack) return;
-
             switch (m_Owner_Actor)
             {
                 case Player:
@@ -257,6 +257,28 @@ namespace Seti
                     }
                     break;
             }
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            /*if (!m_InAttack) return;
+
+            switch (m_Owner_Actor)
+            {
+                case Player:
+                    if (other.CompareTag("Enemy"))
+                    {
+                        CheckDamage(other, attackPoints[0]);
+                    }
+                    break;
+
+                case Enemy:
+                    if (other.CompareTag("Player"))
+                    {
+                        CheckDamage(other, attackPoints[0]);
+                    }
+                    break;
+            }*/
         }
         #endregion
 
