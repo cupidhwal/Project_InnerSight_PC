@@ -76,6 +76,7 @@ namespace Seti
 
             // 마감
             currentHealth = goalHealth;
+            currentHealth = Mathf.Clamp(currentHealth, 0, damagable.MaxHitPoint);
             healthSlider.value = goalHealth;
 
             // 후처리

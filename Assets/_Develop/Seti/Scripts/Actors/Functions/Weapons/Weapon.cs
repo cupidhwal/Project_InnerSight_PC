@@ -41,6 +41,7 @@ namespace Seti
 
         [SerializeField]
         protected GameObject m_Owner;
+        protected Actor m_Owner_Actor;
 
         protected Vector3[] m_PreviousPos = null;
         protected Vector3 m_Direction;
@@ -136,7 +137,11 @@ namespace Seti
         // 메서드
         #region Methods
         // 무기의 주인
-        public void SetOwner(GameObject owner) => m_Owner = owner;
+        public void SetOwner(GameObject owner)
+        {
+            m_Owner = owner;
+            m_Owner_Actor = m_Owner.GetComponent<Actor>();
+        }
 
         public void BeginAttack(bool throwingAttack)
         {
@@ -161,6 +166,8 @@ namespace Seti
 
         public void EndAttack()
         {
+            if (m_Owner_Actor.Condition.IsDead) return;
+
             hitBox.enabled = false;
             m_InAttack = false;
 
@@ -232,8 +239,7 @@ namespace Seti
         #region Event Methods
         private void OnTriggerEnter(Collider other)
         {
-            Actor actor = m_Owner.GetComponent<Actor>();
-            switch (actor)
+            switch (m_Owner_Actor)
             {
                 case Player:
                     if (other.CompareTag("Enemy"))

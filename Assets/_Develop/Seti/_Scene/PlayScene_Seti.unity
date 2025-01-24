@@ -4988,17 +4988,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f5b0a2f2ac5ff42a3ef67abfa50196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 0}
   stageObject:
   - {fileID: 399404163920256742, guid: 12890bf4bed4d7e4489974a2741e05b5, type: 3}
-  - {fileID: 3478970358044328051, guid: 9a7bae1a661ffe648aa6ac03b26197c9, type: 3}
+  - {fileID: 5882166216153003697, guid: 9a7bae1a661ffe648aa6ac03b26197c9, type: 3}
   - {fileID: 2826069815222293669, guid: 96cfe32d2e3667847aebd0349aa50acf, type: 3}
   - {fileID: 3804290310084157671, guid: fd6abd46fa460a64ca17d5deefb8f5e8, type: 3}
   - {fileID: 4223205649371860294, guid: 79c59df7bfbcd38429cb47f934087ce4, type: 3}
   - {fileID: 6193661202192517876, guid: 1913b4ca573dfc54a8956f45a0f8def7, type: 3}
-  nextStageObject: {fileID: 0}
-  randomSkillObject: {fileID: 0}
-  enemyPar: {fileID: 0}
-  enemys: []
+  testStageChange: 0
 --- !u!4 &818013815
 Transform:
   m_ObjectHideFlags: 0
@@ -13109,6 +13107,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -11.019891
       objectReference: {fileID: 0}
+    - target: {fileID: 1697474859030304267, guid: 27e014fb208c1214f9ac03bc89aae45b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1697474859030304267, guid: 27e014fb208c1214f9ac03bc89aae45b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2324583263932844358, guid: 27e014fb208c1214f9ac03bc89aae45b, type: 3}
       propertyPath: m_Name
       value: Enemy_Golem
@@ -13357,6 +13363,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -98.89321
       objectReference: {fileID: 0}
+    - target: {fileID: 6669443848581496016, guid: 27e014fb208c1214f9ac03bc89aae45b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7188564585702348778, guid: 27e014fb208c1214f9ac03bc89aae45b, type: 3}
       propertyPath: damagable
       value: 
@@ -13408,6 +13418,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7640548873189788814, guid: 27e014fb208c1214f9ac03bc89aae45b, type: 3}
+    - {fileID: 5969646265758672692, guid: 27e014fb208c1214f9ac03bc89aae45b, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27e014fb208c1214f9ac03bc89aae45b, type: 3}
