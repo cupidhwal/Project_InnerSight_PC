@@ -67,8 +67,11 @@ namespace Seti
         protected void QuaterView_Move(Vector3 moveDirection)
         {
             Vector3 move = speed * Time.deltaTime * moveDirection.normalized;
-            Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * move;
-            actor.transform.Translate(QuaterView, Space.World);
+            Vector3 QuaterView = Quaternion.Euler(0f, 30f, 0f) * move;
+            
+            // 이번 프로젝트에서 로직을 통한 이동은 Enemy만 쓰기로 하자
+            if (actor is Enemy)
+                actor.transform.Translate(QuaterView, Space.World);
 
             // 이동이 발생할 때만 회전
             if (moveDirection != Vector3.zero)

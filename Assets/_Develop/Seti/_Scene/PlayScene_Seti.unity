@@ -681,9 +681,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -6.9650507
       objectReference: {fileID: 0}
+    - target: {fileID: 3674131873709205711, guid: 12890bf4bed4d7e4489974a2741e05b5, type: 3}
+      propertyPath: m_EndTransform
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3674131873709205711, guid: 12890bf4bed4d7e4489974a2741e05b5, type: 3}
+      propertyPath: m_AutoUpdatePosition
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3960758505489122070, guid: 12890bf4bed4d7e4489974a2741e05b5, type: 3}
       propertyPath: m_LocalPosition.y
       value: -6.9650507
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266928042538132674, guid: 12890bf4bed4d7e4489974a2741e05b5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6717000004160855831, guid: 12890bf4bed4d7e4489974a2741e05b5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -695,7 +707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9189658293470602582, guid: 12890bf4bed4d7e4489974a2741e05b5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 6.94
       objectReference: {fileID: 0}
     - target: {fileID: 9189658293470602582, guid: 12890bf4bed4d7e4489974a2741e05b5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3524,7 +3536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1797096310601727757, guid: b3afe6d7042b7e54c8ddb314e0ebfd4d, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
-      value: 64
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2826494210915670346, guid: b3afe6d7042b7e54c8ddb314e0ebfd4d, type: 3}
       propertyPath: blueprint
@@ -3734,6 +3746,10 @@ PrefabInstance:
       propertyPath: setSkill
       value: 
       objectReference: {fileID: 858173520}
+    - target: {fileID: 3915485768824481983, guid: b3afe6d7042b7e54c8ddb314e0ebfd4d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5576585885096278857, guid: b3afe6d7042b7e54c8ddb314e0ebfd4d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3892,6 +3908,11 @@ MonoBehaviour:
   currentWeaponType: 0
   currentWeapon: {fileID: 1327188512}
   inAction: 0
+--- !u!4 &634987175 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5576585885096278857, guid: b3afe6d7042b7e54c8ddb314e0ebfd4d, type: 3}
+  m_PrefabInstance: {fileID: 590933086}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &638239498
 GameObject:
   m_ObjectHideFlags: 0
@@ -9011,7 +9032,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 0}
+    TrackingTarget: {fileID: 634987175}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -9064,7 +9085,7 @@ MonoBehaviour:
   TargetOffset: {x: 0, y: 5, z: 0}
   TrackerSettings:
     BindingMode: 4
-    PositionDamping: {x: 1, y: 1, z: 1}
+    PositionDamping: {x: 0, y: 0, z: 0}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
