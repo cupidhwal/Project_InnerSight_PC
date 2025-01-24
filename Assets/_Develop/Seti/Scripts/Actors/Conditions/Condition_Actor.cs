@@ -38,6 +38,7 @@ namespace Seti
         public Weapon CurrentWeapon => currentWeapon;
         public bool InAction => inAction;
         public bool IsGrounded { get; protected set; }
+        public bool IsStagger { get; set; }
         public bool IsAttack { get; set; }
         public bool IsMagic { get; set; }
         public bool IsMove { get; set; }
@@ -88,11 +89,13 @@ namespace Seti
         private void StaggerOn()
         {
             inAction = false;
+            IsStagger = true;
             actor.Controller_Animator.IsStagger = true;
         }
         private void StaggerOff()
         {
             inAction = true;
+            IsStagger = false;
             actor.Controller_Animator.IsStagger = false;
         }
 
