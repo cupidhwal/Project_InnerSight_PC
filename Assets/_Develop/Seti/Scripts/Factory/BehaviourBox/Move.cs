@@ -71,19 +71,19 @@ namespace Seti
                 switch (moveStrategy)
                 {
                     case Move_Normal:
-                        moveStrategy.Initialize(actor, speed_Move);
+                        moveStrategy.Initialize(actor);
                         break;
 
                     case Move_Dash:
-                        moveStrategy.Initialize(actor, player.Dash_Speed);
+                        moveStrategy.Initialize(actor);
                         break;
 
                     case Move_Walk:
-                        moveStrategy.Initialize(actor, enemy.Speed_Walk);
+                        moveStrategy.Initialize(actor);
                         break;
 
                     case Move_Run:
-                        moveStrategy.Initialize(actor, enemy.Speed_Run);
+                        moveStrategy.Initialize(actor);
                         break;
                 }
             }

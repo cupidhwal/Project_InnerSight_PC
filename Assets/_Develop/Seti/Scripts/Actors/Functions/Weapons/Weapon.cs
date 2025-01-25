@@ -170,7 +170,7 @@ namespace Seti
 
         public void EndAttack()
         {
-            hitBall.radius = 0.001f;
+            hitBall.radius = 0.00001f;
             m_InAttack = false;
 
 #if UNITY_EDITOR
@@ -241,6 +241,8 @@ namespace Seti
         #region Event Methods
         private void OnTriggerEnter(Collider other)
         {
+            if (!m_InAttack) return;
+
             switch (m_Owner_Actor)
             {
                 case Player:
@@ -257,28 +259,6 @@ namespace Seti
                     }
                     break;
             }
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-            /*if (!m_InAttack) return;
-
-            switch (m_Owner_Actor)
-            {
-                case Player:
-                    if (other.CompareTag("Enemy"))
-                    {
-                        CheckDamage(other, attackPoints[0]);
-                    }
-                    break;
-
-                case Enemy:
-                    if (other.CompareTag("Player"))
-                    {
-                        CheckDamage(other, attackPoints[0]);
-                    }
-                    break;
-            }*/
         }
         #endregion
 

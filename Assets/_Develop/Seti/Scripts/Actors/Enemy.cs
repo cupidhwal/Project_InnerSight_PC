@@ -24,9 +24,7 @@ namespace Seti
 
         [Header("Variables")]
         [SerializeField]
-        protected float speed_Walk = 2f;
-        [SerializeField]
-        protected float speed_Run = 3f;
+        protected float magnification_WalkToRun = 1.5f;
 
         [Header("Criteria : AI Behaviour")]
         [SerializeField]
@@ -60,8 +58,7 @@ namespace Seti
         public bool GoBackHome => distancePlace >= range_BackOff;
         public bool TooFarFromHome => distancePlace >= range_BackOff * 2f;
         public bool ImHome => distancePlace <= 0.5f;
-        public float Speed_Walk => speed_Walk;
-        public float Speed_Run => speed_Run;
+        public float Magnification_WalkToRun => magnification_WalkToRun;
         public float PatrolInterval => patrolInterval;
         public float AttackInterval => attackInterval;
         #endregion

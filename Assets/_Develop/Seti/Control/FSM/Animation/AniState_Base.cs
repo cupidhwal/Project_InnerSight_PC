@@ -77,9 +77,6 @@ namespace Seti
         readonly int m_HashEllenCombo3 = Animator.StringToHash("EllenCombo3");
         readonly int m_HashEllenCombo4 = Animator.StringToHash("EllenCombo4");
 
-        public float maxForwardSpeed = 8f;          //플레이어 최고 이동 속도
-        public float minTurnSpeed = 400f;           //플레이어 최저 회전 속도
-        public float maxTurnSpeed = 1200f;          //플레이어 최고 회전 속도
         protected float m_AngleDiff;                //플레이어의 회전값과 타겟의 회전값의 차이 각도
 
         void UpdateOrientation()
@@ -104,13 +101,13 @@ namespace Seti
                     Quaternion targetRotation = Quaternion.LookRotation(localMovementDirection);
 
                     Vector3 resultingForward = targetRotation * Vector3.forward;
-                    float angleCurrent = Mathf.Atan2(context.transform.forward.x, context.transform.forward.z) * Mathf.Rad2Deg;
+                    float angleCurrent = Mathf.Atan2(context.transform.forward.x, context.transform.forward.z) * Mathf.Rad2Deg * context.Actor.Rate_Movement;
                     float angleTarget = Mathf.Atan2(resultingForward.x, resultingForward.z) * Mathf.Rad2Deg;
                     m_AngleDiff = Mathf.DeltaAngle(angleCurrent, angleTarget);
                 }
             }
 
-            return updateOrientationForLocomotion || /*updateOrientationForAirbon || updateOrientationForLanding ||*/ m_InCombo && !m_InAttack;
+            return updateOrientationForLocomotion || /*updateOrientationForAirbon || updateOrientationForLanding || m_InCombo &&*/ !m_InAttack;
         }
     }
 }

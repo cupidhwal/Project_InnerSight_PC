@@ -37,6 +37,7 @@ namespace Seti
         public bool IsMagic { get; set; } = false;
         public bool IsAttack { get; set; } = false;
         public bool IsStagger { get; set; } = false;
+        public bool CanMove { get; set; } = true;
         #endregion
 
         // 라이프 사이클
@@ -141,19 +142,22 @@ namespace Seti
             Actor.Condition.IsAttack = false;
         }
 
+        public void CantMoveDurAtk() => CanMove = false;
+        public void CanMoveAfterAtk() => CanMove = true;
+
         [SerializeField]
         private float forwardSpeed;
         private float CurrentSpeed()
         {
             if (Actor.Condition.InAction)
             {
-                if (IsMove)
-                    forwardSpeed = Mathf.Lerp(forwardSpeed, 4f, 20f * Time.deltaTime);
+                if (IsMove && CanMove)
+                    forwardSpeed = Mathf.Lerp(forwardSpeed, Actor.Rate_Movement, 20f * Time.deltaTime);
                 else
                     forwardSpeed = forwardSpeed > 0.01f ? Mathf.Lerp(forwardSpeed, 0f, 10f * Time.deltaTime) : 0f;
 
-                int moveEff = IsChase ? 2 : 1;
-                return moveEff * (Actor.Rate_Movement / Actor.Rate_Movement_Default) * forwardSpeed;
+                float moveEff = Actor is Enemy enemy && IsChase ? enemy.Magnification_WalkToRun : 1;
+                return moveEff * forwardSpeed;
             }
             return 0f;
         }

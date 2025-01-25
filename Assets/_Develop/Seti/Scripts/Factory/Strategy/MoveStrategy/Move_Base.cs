@@ -20,10 +20,10 @@ namespace Seti
         // 인터페이스
         #region Interface
         // 초기화
-        public void Initialize(Actor actor, float speed)
+        public virtual void Initialize(Actor actor)
         {
             this.actor = actor;
-            this.speed = speed;
+            speed = actor.Rate_Movement;
             rb = actor.GetComponent<Rigidbody>();
         }
 
@@ -67,10 +67,10 @@ namespace Seti
         protected void QuaterView_Move(Vector3 moveDirection)
         {
             Vector3 move = speed * Time.deltaTime * moveDirection.normalized;
-            Vector3 QuaterView = Quaternion.Euler(0f, 27.5f, 0f) * move;
+            Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * move;
             
-            // 이번 프로젝트에서 로직을 통한 이동은 Enemy만 쓰기로 하자
-            if (actor is Enemy)
+            // Root Motion을 쓰지 않는 경우에만 실행
+            if (!actor.Controller_Animator.Animator.applyRootMotion && actor.Controller_Animator.CanMove)
                 actor.transform.Translate(QuaterView, Space.World);
 
             // 이동이 발생할 때만 회전
@@ -93,7 +93,7 @@ namespace Seti
             Vector3 forward = actor.transform.forward * moveDirection.z;
             Vector3 right = actor.transform.right * moveDirection.x;
 
-            Vector3 move = speed * Time.fixedDeltaTime * (forward + right).normalized;
+            Vector3 move = actor.Rate_Movement * Time.fixedDeltaTime * (forward + right).normalized;
             rb.MovePosition(actor.transform.position + move);
         }
 
@@ -135,7 +135,7 @@ namespace Seti
         protected Vector2 MoveDirection(Vector2 moveInput)
         {
             Condition_Actor state = actor.Condition;
-            //if (state.IsGrounded)
+            if (state.IsGrounded)
                 lastMoveDirection = moveInput;
             return lastMoveDirection;
         }

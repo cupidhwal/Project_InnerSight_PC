@@ -87,6 +87,11 @@ namespace Seti
         {
             // TODO
             //Debug.Log($"{damageMessage.owner.name}의 공격으로 사망하였습니다.");
+            Rigidbody rb = GetComponent<Rigidbody>();
+            Collider collider = GetComponent<Collider>();
+
+            rb.useGravity = false;
+            collider.enabled = false;
         }
 
         // 씬 내의 대적자 액터 가져오기

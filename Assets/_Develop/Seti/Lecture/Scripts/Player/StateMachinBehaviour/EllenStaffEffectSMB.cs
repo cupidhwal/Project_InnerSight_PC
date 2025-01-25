@@ -12,12 +12,12 @@ namespace Seti
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            Actor actor = animator.GetComponent<Actor>();
+            if (!animator.TryGetComponent<Actor>(out var actor))
+                actor = animator.GetComponentInParent<Actor>();
             if (actor is not Player) return;
 
             //지정 이펙트 애니메이션 플레이
-            Controller_Animator controller = animator.GetComponent<Controller_Animator>();
-            Weapon weapon = controller.GetComponentInChildren<Weapon>();
+            Weapon weapon = actor.GetComponentInChildren<Weapon>();
             weapon.effects[effectIndex].Activate();
         }
     }

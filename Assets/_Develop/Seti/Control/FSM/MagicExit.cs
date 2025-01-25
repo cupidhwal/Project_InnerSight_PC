@@ -19,7 +19,9 @@ namespace Seti
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            Controller_Base controller = animator.GetComponent<Controller_Base>();
+            if (!animator.TryGetComponent<Controller_Base>(out var controller))
+                controller = animator.GetComponentInParent<Controller_Base>();
+
             if (controller.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
             {
                 if (attackBehaviour is Attack attack)

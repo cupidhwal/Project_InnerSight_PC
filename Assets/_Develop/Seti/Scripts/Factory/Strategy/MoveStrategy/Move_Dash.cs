@@ -53,8 +53,7 @@ namespace Seti
                                     new(dir.x, 0, dir.y);
                     isDash = true;
                 }
-                Vector3 move = speed * Time.deltaTime * moveDirection.normalized;
-                Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * move;
+                Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * moveDirection.normalized;
 
                 // 초기 속도 설정
                 float elapsedTime = 0f;
@@ -67,7 +66,7 @@ namespace Seti
                     float t = elapsedTime / player.Dash_Duration;
 
                     // Ease In-Out 적용
-                    currentSpeed = Mathf.Lerp(currentSpeed, player.Dash_Speed, Mathf.SmoothStep(0f, 1f, t * t));
+                    currentSpeed = elapsedTime > (player.Dash_Duration / 2f) ? Mathf.Lerp(currentSpeed, player.Dash_Speed, Mathf.SmoothStep(0f, 1f, t)) : 0f;
                     player.transform.Translate(currentSpeed * Time.deltaTime * QuaterView, Space.World);
 
                     await Task.Delay((int)(Time.deltaTime * 1000));
