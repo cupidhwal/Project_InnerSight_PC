@@ -1,5 +1,7 @@
 using UnityEngine;
 using Seti;
+using static Seti.Damagable;
+using Noah;
 
 namespace Yoon
 {
@@ -15,16 +17,34 @@ namespace Yoon
         private void Start()
         {
             damagable = GetComponent<Damagable>();
-            damagable.OnReceiveDamage += TakeDamage;
+            damagable.OnReceiveDamage += OnTakeDamage;
         }
 
 
         // 데미지를 받은 경우 호출되는 메서드
-        public void TakeDamage()
+        public void OnTakeDamage()
         {
+
+
+
+            //DamageAmount(data);    // 데미지 계산 및 출력
+            
+            
             ShowDamageIndicator();
+
+
             // player.Attack 값을 확인
             //Debug.Log("Player's Attack: " + player.Attack);
+        }
+
+        public void DamageAmount(DamageMessage data)
+        {
+
+            // Debug.Log로 데미지 양 출력
+            Debug.Log($"Enemy received {data.amount} damage.");
+
+            // Damageable의 OnReceiveDamage 이벤트 호출
+            damagable.OnReceiveDamage?.Invoke();
         }
 
         // 데미지 텍스트 표시 메서드
