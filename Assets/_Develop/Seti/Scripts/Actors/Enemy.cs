@@ -22,10 +22,6 @@ namespace Seti
         [HideInInspector]
         protected Player player;
 
-        [Header("Variables")]
-        [SerializeField]
-        protected float magnification_WalkToRun = 1.5f;
-
         [Header("Criteria : AI Behaviour")]
         [SerializeField]
         protected State currentState;
@@ -58,7 +54,6 @@ namespace Seti
         public bool GoBackHome => distancePlace >= range_BackOff;
         public bool TooFarFromHome => distancePlace >= range_BackOff * 2f;
         public bool ImHome => distancePlace <= 0.5f;
-        public float Magnification_WalkToRun => magnification_WalkToRun;
         public float PatrolInterval => patrolInterval;
         public float AttackInterval => attackInterval;
         #endregion

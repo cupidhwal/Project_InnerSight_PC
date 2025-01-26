@@ -48,6 +48,10 @@ namespace Seti
         [Header("CC Status")]
         [SerializeField]
         protected float stagger = 0.5f;   // 경직 시간
+
+        [Header("Variables")]
+        [SerializeField]
+        protected float mag_WalkToRun = 1.5f;
         #endregion
 
         // 속성
@@ -72,6 +76,9 @@ namespace Seti
         public float Rate_Attack => rate_Attack;
         public float Rate_Movement => rate_Movement;
         public float Stagger => stagger;
+
+        // 걷기/달리기
+        public float Magnification_WalkToRun => mag_WalkToRun;
         #endregion
 
         // 스탯 적용

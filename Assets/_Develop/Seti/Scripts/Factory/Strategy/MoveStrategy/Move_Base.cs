@@ -11,7 +11,6 @@ namespace Seti
         // 필드
         #region Variables
         // 세팅
-        protected float speed;
         protected Actor actor;
         protected Rigidbody rb;
         protected Vector2 lastMoveDirection;
@@ -23,7 +22,6 @@ namespace Seti
         public virtual void Initialize(Actor actor)
         {
             this.actor = actor;
-            speed = actor.Rate_Movement;
             rb = actor.GetComponent<Rigidbody>();
         }
 
@@ -66,7 +64,8 @@ namespace Seti
         }
         protected void QuaterView_Move(Vector3 moveDirection)
         {
-            Vector3 move = speed * Time.deltaTime * moveDirection.normalized;
+            float moveEff = actor.Controller_Animator.IsChase ? actor.Magnification_WalkToRun : 1;
+            Vector3 move = moveEff * actor.Rate_Movement * Time.deltaTime * moveDirection.normalized;
             Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * move;
             
             // Root Motion을 쓰지 않는 경우에만 실행

@@ -156,7 +156,7 @@ namespace Seti
                 else
                     forwardSpeed = forwardSpeed > 0.01f ? Mathf.Lerp(forwardSpeed, 0f, 10f * Time.deltaTime) : 0f;
 
-                float moveEff = Actor is Enemy enemy && IsChase ? enemy.Magnification_WalkToRun : 1;
+                float moveEff = IsChase ? Actor.Magnification_WalkToRun : 1;
                 return moveEff * forwardSpeed;
             }
             return 0f;
