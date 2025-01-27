@@ -66,7 +66,7 @@ namespace Seti
                     float t = elapsedTime / player.Dash_Duration;
 
                     // Ease In-Out 적용
-                    currentSpeed = elapsedTime > (player.Dash_Duration / 2f) ? Mathf.Lerp(currentSpeed, player.Dash_Speed, Mathf.SmoothStep(0f, 1f, t)) : 0f;
+                    currentSpeed = elapsedTime > (player.Dash_Duration / 2.5f) ? Mathf.Lerp(currentSpeed, player.Dash_Speed, Mathf.SmoothStep(0f, 1f, t)) : 0f;
                     player.transform.Translate(currentSpeed * Time.deltaTime * QuaterView, Space.World);
 
                     await Task.Delay((int)(Time.deltaTime * 1000));

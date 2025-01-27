@@ -113,6 +113,7 @@ namespace Seti
         {
             EditUtility.SubjectLine(Color.gray, 2, "Actor 관리");
 
+            UpdateSpawnedActorsList();
             spawnedActorsList.DoLayoutList();
 
             // 선택된 Actor 설계도 갱신
