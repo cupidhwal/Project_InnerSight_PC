@@ -5,7 +5,6 @@ using Noah;
 
 namespace Yoon
 {
-
     public class DamageText : MonoBehaviour
     {
         public GameObject damageTextPrefab;     // DamageText 프리팹 연결
@@ -20,18 +19,12 @@ namespace Yoon
             damagable.OnReceiveDamage += OnTakeDamage;
         }
 
-
         // 데미지를 받은 경우 호출되는 메서드
         public void OnTakeDamage()
         {
-
-
-
             //DamageAmount(data);    // 데미지 계산 및 출력
             
-            
             ShowDamageIndicator();
-
 
             // player.Attack 값을 확인
             //Debug.Log("Player's Attack: " + player.Attack);
@@ -39,7 +32,6 @@ namespace Yoon
 
         public void DamageAmount(DamageMessage data)
         {
-
             // Debug.Log로 데미지 양 출력
             Debug.Log($"Enemy received {data.amount} damage.");
 
