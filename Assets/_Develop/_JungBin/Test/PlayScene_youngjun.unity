@@ -2911,6 +2911,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   forwardSpeed: 0
+--- !u!114 &406553674 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1269507934481908861, guid: 96b37082ba20e7d498b2b1b656977036, type: 3}
+  m_PrefabInstance: {fileID: 611909153184244477}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c160847800e15244aa6289134ae0ab62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &432005027
 GameObject:
   m_ObjectHideFlags: 0
@@ -10175,6 +10186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ed9bb62c2df8f442a9ff1ef0d2829ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inGameUI_PlayerState: {fileID: 406553674}
   upGradePlayerdata:
     hp_UpCount: 1
     atk_UpCount: 1
@@ -10199,6 +10211,7 @@ MonoBehaviour:
     moveSpeed_UpgradeGold: 20
     atkSpeed_UpgradeGold: 20
   dataList: []
+  upgradeCount: 
 --- !u!4 &1752674478
 Transform:
   m_ObjectHideFlags: 0
@@ -13580,6 +13593,7 @@ MonoBehaviour:
   gold_Text: {fileID: 3321556785627060967}
   player: {fileID: 0}
   states: []
+  upgradeCounts: 
 --- !u!114 &257641160522279894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16664,6 +16678,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1473027670821472899, guid: 7ee7316697578ef45ada6a69d8221c74, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1473027670821472899, guid: 7ee7316697578ef45ada6a69d8221c74, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2017452441751178037, guid: 7ee7316697578ef45ada6a69d8221c74, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
