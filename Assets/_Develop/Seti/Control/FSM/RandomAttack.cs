@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class RandomMagic : StateMachineBehaviour
+public class RandomAttack : StateMachineBehaviour
 {
     [SerializeField]
     int RandomCount = 2;
-    readonly int Hash_RandomMagic = Animator.StringToHash("RandomMagic");
+    readonly int Hash_RandomAttack = Animator.StringToHash("RandomAttack");
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         int rand = Random.Range(0, RandomCount);
-        animator.SetInteger(Hash_RandomMagic, rand);
+        animator.SetInteger(Hash_RandomAttack, rand);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
