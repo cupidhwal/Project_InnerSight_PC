@@ -15,7 +15,7 @@ namespace Noah
         public List<Transform> states = new List<Transform>();
         private List<float> currentDatas = new List<float>();
 
-        public int[] upgradeCounts;
+        private int[] upgradeCounts;
 
         private float curData;
         private int totalCost;
