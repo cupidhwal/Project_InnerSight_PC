@@ -6,7 +6,7 @@ namespace Seti
     /// 현재 오브젝트를 특정 오브젝트의 위치에 부착
     /// </summary>
     [DefaultExecutionOrder(9999)]
-    public class FixedUpdateFollow : MonoBehaviour
+    public class UpdateFollow : MonoBehaviour
     {
         // 필드
         private Transform toFollow;      //부착할 대상
@@ -17,7 +17,7 @@ namespace Seti
             toFollow = GetComponentInParent<Actor>().GetComponentInChildren<Hand_Equip_Weapon>().transform;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             transform.position = toFollow.position;
             transform.rotation = toFollow.rotation;

@@ -1,8 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using MySampleEx;
-using static UnityEngine.Rendering.DebugUI;
-using UnityEngine.UIElements;
 
 namespace Seti
 {
@@ -165,8 +162,9 @@ namespace Seti
             }
 
             m_InAttack = true;
-            if (hitBall != null)
-                hitBall.radius = 2f;
+            if (hitBall == null)
+                hitBall = GetComponent<SphereCollider>();
+            hitBall.radius = 2f;
         }
 
         public void EndAttack()

@@ -122,8 +122,6 @@ namespace Seti
             {
                 currentStrategy = attackStrategy.strategy as IAttackStrategy;
             }
-
-    
         }
 
         private void SwitchStrategy(StrategyType attackStrategies)

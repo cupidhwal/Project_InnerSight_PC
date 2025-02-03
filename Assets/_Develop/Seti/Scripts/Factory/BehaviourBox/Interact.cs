@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Seti
@@ -35,18 +36,15 @@ namespace Seti
 
         // 컨트롤러
         #region Controllers
-        public void OnInteractStarted(InputAction.CallbackContext _) => OnInteraction(true);
-        public void OnInteractCanceled(InputAction.CallbackContext _) => OnInteraction(false);
+        public void OnInteractStarted(InputAction.CallbackContext _) => OnInteraction();
         #endregion
 
         // 메서드
         #region Methods
-        void OnInteraction(bool _)
+        void OnInteraction()
         {
             if (player.CurrentNPC != null)
-            {
                 player.CurrentNPC.Switch_TradeUI();
-            }
         }
         #endregion
     }

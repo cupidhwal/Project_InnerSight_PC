@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Seti
 {
-    public class NPC : MonoBehaviour
+    public class NPC : Actor
     {
         // 필드
         #region Variables
@@ -11,10 +11,16 @@ namespace Seti
         private GameObject targetUI;
         #endregion
 
+        // 인터페이스
+        #region Interface
+        protected override Condition_Actor CreateState() => gameObject.AddComponent<Condition_NPC>();
+        #endregion
+
         // 라이프 사이클
         #region Life Cycle
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             targetUI = Noah.UIManager.Instance.playerStateUI;
         }
         #endregion
