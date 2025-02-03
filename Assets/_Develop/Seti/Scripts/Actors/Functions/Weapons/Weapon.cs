@@ -165,12 +165,14 @@ namespace Seti
             }
 
             m_InAttack = true;
-            hitBall.radius = 2f;
+            if (hitBall != null)
+                hitBall.radius = 2f;
         }
 
         public void EndAttack()
         {
-            hitBall.radius = 0.00001f;
+            if (hitBall != null)
+                hitBall.radius = 0.00001f;
             m_InAttack = false;
 
 #if UNITY_EDITOR

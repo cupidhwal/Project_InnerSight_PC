@@ -90,8 +90,11 @@ namespace Seti
             Rigidbody rb = GetComponent<Rigidbody>();
             Collider collider = GetComponent<Collider>();
 
-            rb.useGravity = false;
-            collider.enabled = false;
+            if (rb != null)
+            {
+                rb.useGravity = false;
+                collider.enabled = false;
+            }
         }
 
         // 씬 내의 대적자 액터 가져오기
