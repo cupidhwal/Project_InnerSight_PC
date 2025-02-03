@@ -150,6 +150,8 @@ namespace Noah
         {
             player.GetComponent<Condition_Player>().PlayerSetActive(true);
 
+            Debug.Log("11");
+
             UIManager.Instance.Toggle(transform.GetChild(0).gameObject);
 
 

@@ -38,6 +38,9 @@ namespace Seti
         private Condition_Actor condition;
         //private StrategyType currentType;
         private State<Controller_FSM> currentState;
+
+        // 스킬 애니메이션 관리
+        public bool isSkillAttack = false;
         #endregion
 
         // 인터페이스
@@ -119,6 +122,8 @@ namespace Seti
             {
                 currentStrategy = attackStrategy.strategy as IAttackStrategy;
             }
+
+    
         }
 
         private void SwitchStrategy(StrategyType attackStrategies)
@@ -156,7 +161,7 @@ namespace Seti
         public void OnWeaponStarted(InputAction.CallbackContext _)
         {
             SwitchStrategy(StrategyType.Magic);
-            OnMagic(true);
+            OnMagic(true);       
         }
         public void OnWeaponCanceled(InputAction.CallbackContext _)
         {
@@ -246,23 +251,28 @@ namespace Seti
 
         public void OnMagic(bool isMagic = true)
         {
-            if (!condition.InAction) return;
-
-            condition.IsMagic = isMagic;
-            actor.Controller_Animator.IsMagic = isMagic;
-            if (isMagic)
+            if (isSkillAttack)
             {
-                currentStrategy?.Attack();
+                if (!condition.InAction) return;
 
-                if (actor is Player)
+                condition.IsMagic = isMagic;
+                actor.Controller_Animator.IsMagic = isMagic;
+                if (isMagic)
                 {
-                    condition.AttackPoint = GameUtility.RayToWorldPosition();
-                    MagicWait();
+                    currentStrategy?.Attack();
+
+                    if (actor is Player)
+                    {
+                        condition.AttackPoint = GameUtility.RayToWorldPosition();
+                        MagicWait();
+                    }
                 }
-            }
-            else
-            {
-                currentStrategy?.AttackExit();
+                else
+                {
+                    currentStrategy?.AttackExit();
+                }
+
+                isSkillAttack = false;
             }
         }
         #endregion

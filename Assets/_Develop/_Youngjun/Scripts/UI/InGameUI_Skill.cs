@@ -40,8 +40,8 @@ namespace Noah
         public Kunai kunai;
         public MeteorRain meteorRain;
         public LaserFire laserFire;
-        public LaserFire1 laserFire1;
-        public LaserFire2 laserFire2;
+        public Bomb bomb;
+        public BloodSycthe bloodSycthe;
 
         private void Awake()
         {
@@ -64,8 +64,8 @@ namespace Noah
             skills.Add(kunai);
             skills.Add(meteorRain);
             skills.Add(laserFire);
-            skills.Add(laserFire1);
-            skills.Add(laserFire2);
+            skills.Add(bomb);
+            skills.Add(bloodSycthe);
 
             for(int i = 0; i < skillBtnsPar.childCount; i++)
             {

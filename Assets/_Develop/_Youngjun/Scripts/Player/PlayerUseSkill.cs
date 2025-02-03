@@ -1,3 +1,4 @@
+using Seti;
 using System;
 using UnityEngine;
 
@@ -149,6 +150,15 @@ namespace Noah
             isReadySkill = true;
 
             index = _index;
+
+            if (transform.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+            {
+                if (attackBehaviour is Attack attack)
+                {
+                    attack.isSkillAttack = true;
+                }
+            }
+
         }
 
         void ChangeSkill(int _index)
@@ -204,7 +214,7 @@ namespace Noah
             if (skill != null)
             {
                 if (skill.isSkillOn)
-                {
+                {                                               
                     isStartAttack = true;
 
                     skill.Activate();
@@ -249,7 +259,6 @@ namespace Noah
                         effectGo.SetActive(false);
                         effectGo = null;
                     }
-
                 }
 
             }
