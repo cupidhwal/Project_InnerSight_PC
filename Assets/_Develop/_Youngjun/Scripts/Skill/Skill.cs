@@ -110,7 +110,7 @@ namespace Noah
     }
 
     [Serializable]
-    public class LaserFire1 : Skill<LaserFire1>
+    public class Bomb : Skill<Bomb>
     {
         public override void Activate()
         {
@@ -122,7 +122,7 @@ namespace Noah
     }
 
     [Serializable]
-    public class LaserFire2 : Skill<LaserFire2>
+    public class BloodSycthe : Skill<BloodSycthe>
     {
         public override void Activate()
         {
