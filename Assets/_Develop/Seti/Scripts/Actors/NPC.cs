@@ -11,8 +11,8 @@ namespace Seti
         private GameObject targetUI;
         #endregion
 
-        // 인터페이스
-        #region Interface
+        // 오버라이드
+        #region Override
         protected override Condition_Actor CreateState() => gameObject.AddComponent<Condition_NPC>();
         #endregion
 
@@ -46,7 +46,7 @@ namespace Seti
             if (player != null)
                 player.SetNPC(null);
 
-            if (targetUI.activeSelf)
+            if (targetUI != null && targetUI.activeSelf)
                 Noah.UIManager.Instance.ActivePlayerStateUI();
         }
         #endregion
