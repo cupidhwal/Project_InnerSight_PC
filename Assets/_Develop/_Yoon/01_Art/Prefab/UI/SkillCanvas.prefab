@@ -332,7 +332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -707,7 +707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -877,7 +877,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2762552552369625844
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2655,7 +2655,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3085,7 +3085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3917,7 +3917,6 @@ GameObject:
   - component: {fileID: 2094354905922269614}
   - component: {fileID: 3443849388880559036}
   - component: {fileID: 4901870972772741634}
-  - component: {fileID: 5026038834114459311}
   m_Layer: 5
   m_Name: SkillCanvas
   m_TagString: Untagged
@@ -4009,118 +4008,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5026038834114459311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5893944921147989417}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe35b0f456bb1d941a98345b88bc30ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  changeNewSkill_Image: {fileID: 2569589437207526977}
-  changeNewSkill_Text: {fileID: 2867646563129728414}
-  selectUI: {fileID: 8462731170631656145}
-  skillUIList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  btns: []
-  changeBtns: []
-  fireSkill:
-    rangeType: 1
-    skillPrefab: {fileID: 1000011113172478, guid: 84d2bffa2c8675f439fd0435d7ed1e7d, type: 3}
-    cooldown: 3
-    damage: 10
-    upgradeDamage: 10
-    skillUpgardeCount: 1
-    attackRadius: 0
-    skillAtkTime: 1.5
-    skillPos: {x: 0, y: 0, z: 0}
-    skillImage: {fileID: -22106661, guid: bd80619497c702449abab3b412a82fd2, type: 3}
-    UISprite: {fileID: -22106661, guid: bd80619497c702449abab3b412a82fd2, type: 3}
-    isSkillOn: 1
-    skillName: "\uD30C\uC774\uC5B4\uBCFC"
-    skillDescription: "\uD30C\uC774\uC5B4\uBCFC"
-  kunai:
-    rangeType: 1
-    skillPrefab: {fileID: 370941697827077415, guid: 8677ed5c403426c4b818573f5deda45e, type: 3}
-    cooldown: 3
-    damage: 10
-    upgradeDamage: 10
-    skillUpgardeCount: 1
-    attackRadius: 0
-    skillAtkTime: 1.5
-    skillPos: {x: 0, y: 0, z: 0}
-    skillImage: {fileID: 1561341459, guid: bd80619497c702449abab3b412a82fd2, type: 3}
-    UISprite: {fileID: 1561341459, guid: bd80619497c702449abab3b412a82fd2, type: 3}
-    isSkillOn: 1
-    skillName: "\uC5BC\uC74C\uD45C\uCC3D"
-    skillDescription: "\uC5BC\uC74C\uD45C\uCC3D"
-  meteorRain:
-    rangeType: 0
-    skillPrefab: {fileID: 5793841387165916247, guid: 23a54ce77dbc5f147a9132823f39f6a3, type: 3}
-    cooldown: 3
-    damage: 10
-    upgradeDamage: 10
-    skillUpgardeCount: 1
-    attackRadius: 0
-    skillAtkTime: 1.5
-    skillPos: {x: 0, y: 0, z: 0}
-    skillImage: {fileID: 533531240, guid: bd80619497c702449abab3b412a82fd2, type: 3}
-    UISprite: {fileID: 533531240, guid: bd80619497c702449abab3b412a82fd2, type: 3}
-    isSkillOn: 1
-    skillName: "\uB3C5\uAD6C\uB984"
-    skillDescription: "\uB3C5\uAD6C\uB984"
-  laserFire:
-    rangeType: 0
-    skillPrefab: {fileID: 100008, guid: 956438f9493496f46b030988e75789ad, type: 3}
-    cooldown: 3
-    damage: 10
-    upgradeDamage: 10
-    skillUpgardeCount: 1
-    attackRadius: 0
-    skillAtkTime: 1.5
-    skillPos: {x: 0, y: 0, z: 0}
-    skillImage: {fileID: -1200562751, guid: bd80619497c702449abab3b412a82fd2, type: 3}
-    UISprite: {fileID: -1200562751, guid: bd80619497c702449abab3b412a82fd2, type: 3}
-    isSkillOn: 1
-    skillName: "\uBE5B\uAD11\uC120"
-    skillDescription: "\uBE5B\uAD11\uC120"
-  laserFire1:
-    rangeType: 0
-    skillPrefab: {fileID: 8584265374633801674, guid: ca6642a7c0c969146b12806f0b062c5b, type: 3}
-    cooldown: 3
-    damage: 10
-    upgradeDamage: 10
-    skillUpgardeCount: 1
-    attackRadius: 0
-    skillAtkTime: 1.5
-    skillPos: {x: 0, y: 0, z: 0}
-    skillImage: {fileID: 21300000, guid: b80dd2c9b1990f043a101906fd8c4dd4, type: 3}
-    UISprite: {fileID: 21300000, guid: b80dd2c9b1990f043a101906fd8c4dd4, type: 3}
-    isSkillOn: 1
-    skillName: Bomb
-    skillDescription: Bomb
-  laserFire2:
-    rangeType: 1
-    skillPrefab: {fileID: 3082853613590577020, guid: 450033efab669414cb2aae973adc3973, type: 3}
-    cooldown: 3
-    damage: 10
-    upgradeDamage: 10
-    skillUpgardeCount: 1
-    attackRadius: 0
-    skillAtkTime: 1.5
-    skillPos: {x: 0, y: 0, z: 0}
-    skillImage: {fileID: 21300000, guid: 55fdfd96bbabde144b5fa43b07938b0a, type: 3}
-    UISprite: {fileID: 21300000, guid: 55fdfd96bbabde144b5fa43b07938b0a, type: 3}
-    isSkillOn: 1
-    skillName: GunShot
-    skillDescription: GunShot
 --- !u!1 &6166935107626869522
 GameObject:
   m_ObjectHideFlags: 0
@@ -4689,7 +4576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4801,7 +4688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5392,7 +5279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3046396755527064836
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5611,7 +5498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5796,10 +5683,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 3135595153087429755}
     m_Modifications:
     - target: {fileID: 3236735803790646449, guid: 1bd6621833d1ea0408e0374f3ab617cb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 5026038834114459311}
-    - target: {fileID: 3236735803790646449, guid: 1bd6621833d1ea0408e0374f3ab617cb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UIBack
       objectReference: {fileID: 0}
@@ -5905,10 +5788,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3046396755527064836}
     m_Modifications:
-    - target: {fileID: 3236735803790646449, guid: 1bd6621833d1ea0408e0374f3ab617cb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 5026038834114459311}
     - target: {fileID: 3236735803790646449, guid: 1bd6621833d1ea0408e0374f3ab617cb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UIBack
