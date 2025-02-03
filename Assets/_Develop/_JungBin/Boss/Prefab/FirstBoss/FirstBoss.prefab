@@ -67,7 +67,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e7abc6b4077ba94981fc346d011f442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 20
   attackDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &2138537779961365991
 GameObject:
@@ -135,7 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e7abc6b4077ba94981fc346d011f442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 15
   attackDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &2497880882555595176
 GameObject:
@@ -270,7 +268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e7abc6b4077ba94981fc346d011f442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 20
   attackDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &2932496193762415157
 GameObject:
@@ -392,7 +389,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e7abc6b4077ba94981fc346d011f442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 15
   attackDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &6123675318104457446
 GameObject:
@@ -606,15 +602,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2428,7 +2424,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 10
-  m_Acceleration: 12
+  m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 60
   m_StoppingDistance: 0.2
@@ -2457,34 +2453,10 @@ MonoBehaviour:
   throwAttackBox: {fileID: 6284033761021959893}
   attackBox: {fileID: 2932496193762415157}
   slashAttack: {fileID: 8946742503880158000}
-  jumpGroundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  shockwaveRadius: 5
-  shockwaveDamage: 100
-  shockwavePrefab: {fileID: 6445451257174852650, guid: 7380d97b76c67f24bac1863100ea3101, type: 3}
-  rockPrefab: {fileID: 3863491262320053999, guid: 86b5b3229ac0d824ea9924cd87587fd5, type: 3}
-  warningEffectPrefab: {fileID: 2331396403307786803, guid: d0aba4e0a5fa5cc4785b5a4d6307ea0e, type: 3}
-  spawnPointsParent: {fileID: 0}
-  spawnHeight: 10
-  rocksPerBatch: 2
-  spawnInterval: 0.4
-  totalBatches: 2
-  warningDuration: 0.6
-  raycastOffsetObj: {fileID: 6818936129997462429}
-  raycastOffset: 1.2
-  jumpSpeed: 10
-  maxHeight: 10
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  jumpAttackBox: {fileID: 2824695590596548380}
   detectionRange: 4
   detectionAngle: 30
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  animator: {fileID: 0}
+  player: {fileID: 0}
+  animator: {fileID: 2346786875644716508}
 --- !u!114 &1518835647791892740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2515,6 +2487,7 @@ MonoBehaviour:
   bossName: "\uD0C0\uC6B0\uB9B0"
   maxHealth: 1000
   invulnerabilityTime: 2
+  bossAttack: 25
   relicPrefab: {fileID: 3199772393577486388, guid: 8a67d03c67dab424380aa5e4d5738792, type: 3}
   capsuleCollider: {fileID: 689229898053702461}
 --- !u!114 &6075225281429976208
