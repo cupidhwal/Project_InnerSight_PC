@@ -40,7 +40,7 @@ namespace Noah
             }
             else
             {
-                playerStateUI.SetActive(false);
+                inGameUI_PlayerState.ActiveUI();
             }
         }
 

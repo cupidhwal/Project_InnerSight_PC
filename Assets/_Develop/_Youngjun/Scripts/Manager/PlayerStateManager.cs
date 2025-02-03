@@ -7,6 +7,8 @@ namespace Noah
 {
     public class PlayerStateManager : Singleton<PlayerStateManager>
     {
+        [SerializeField] private InGameUI_PlayerState inGameUI_PlayerState;
+
         public UpGradePlayerdata upGradePlayerdata;
         public StartData startPlayerData;
 
@@ -15,7 +17,7 @@ namespace Noah
         public List<float> dataList = new List<float>();
         private List<float> updateDataList = new List<float>();
 
-        private List<int> upgradeCount = new List<int>();
+        public List<int> upgradeCount = new List<int>();
         private List<int> updateGold = new List<int>();
 
         private GameObject player;
@@ -42,6 +44,8 @@ namespace Noah
 
             actor.SetStats(playerData.Health, playerData.Attack, playerData.Defend,
                 playerData.AttackSpeed, playerData.MoveSpeed);
+
+            inGameUI_PlayerState.Init();
         }
 
         #region ResetData
