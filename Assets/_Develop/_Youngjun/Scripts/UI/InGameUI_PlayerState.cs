@@ -15,27 +15,15 @@ namespace Noah
         public List<Transform> states = new List<Transform>();
         private List<float> currentDatas = new List<float>();
 
-        private int[] upgradeCounts;
+        public int[] upgradeCounts;
 
         private float curData;
         private int totalCost;
         private int totalGold;
 
-        
-
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-            Init();
-        }
 
-        // Update is called once per frame
-        void Update()
-        {
-            
-        }
-
-        void Init()
+        public void Init()
         {
             player = FindAnyObjectByType<RayManager>().gameObject;
 
@@ -53,12 +41,10 @@ namespace Noah
         {
             player.GetComponent<Condition_Player>().PlayerSetActive(false);
 
-            Debug.Log(player.GetComponent<Condition_Player>().InAction);
-
             for (int i = 0; i < states.Count; i++)
             {
                 upgradeCounts[i] = PlayerStateManager.Instance.UpgardeCount()[i];
-                
+
                 states[i].GetChild(0).GetComponent<TMP_Text>().text = 
                     PlayerStateManager.Instance.GetPlayerData()[i].ToString();
 
@@ -149,8 +135,6 @@ namespace Noah
         public void ActiveUI()
         {
             player.GetComponent<Condition_Player>().PlayerSetActive(true);
-
-            Debug.Log("11");
 
             UIManager.Instance.Toggle(transform.GetChild(0).gameObject);
 
