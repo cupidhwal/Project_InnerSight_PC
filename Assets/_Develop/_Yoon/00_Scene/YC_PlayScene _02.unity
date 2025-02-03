@@ -706,7 +706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 814838059415531097, guid: 03478a5b87a47f44b89b2577c7f8a92a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 814838059415531097, guid: 03478a5b87a47f44b89b2577c7f8a92a, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -734,7 +734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1594565686308334414, guid: 03478a5b87a47f44b89b2577c7f8a92a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 55
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1594565686308334414, guid: 03478a5b87a47f44b89b2577c7f8a92a, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -762,7 +762,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2254054746794409941, guid: 03478a5b87a47f44b89b2577c7f8a92a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -225
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2254054746794409941, guid: 03478a5b87a47f44b89b2577c7f8a92a, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -874,7 +874,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6773413800031932910, guid: 03478a5b87a47f44b89b2577c7f8a92a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -155
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6773413800031932910, guid: 03478a5b87a47f44b89b2577c7f8a92a, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -902,7 +902,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7863589003697273253, guid: 03478a5b87a47f44b89b2577c7f8a92a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -85
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7863589003697273253, guid: 03478a5b87a47f44b89b2577c7f8a92a, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1432,7 +1432,7 @@ MonoBehaviour:
   - {fileID: 3804290310084157671, guid: fd6abd46fa460a64ca17d5deefb8f5e8, type: 3}
   - {fileID: 4223205649371860294, guid: 79c59df7bfbcd38429cb47f934087ce4, type: 3}
   - {fileID: 6193661202192517876, guid: 1913b4ca573dfc54a8956f45a0f8def7, type: 3}
-  testStageChange: 5
+  testStageChange: 0
 --- !u!4 &818013815
 Transform:
   m_ObjectHideFlags: 0
@@ -1618,12 +1618,12 @@ MonoBehaviour:
     isSkillOn: 1
     skillName: "\uBE5B\uAD11\uC120"
     skillDescription: "\uBE5B\uAD11\uC120"
-  laserFire1:
-    rangeType: 1
-    skillPrefab: {fileID: 6977097203509908651, guid: 36c80152066dfd24eb7e9a280aa12a9c, type: 3}
-    cooldown: 3
-    damage: 10
-    upgradeDamage: 10
+  bomb:
+    rangeType: 0
+    skillPrefab: {fileID: 8584265374633801674, guid: ca6642a7c0c969146b12806f0b062c5b, type: 3}
+    cooldown: 0
+    damage: 0
+    upgradeDamage: 0
     skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
@@ -1631,14 +1631,14 @@ MonoBehaviour:
     skillImage: {fileID: -1180104304, guid: bd80619497c702449abab3b412a82fd2, type: 3}
     UISprite: {fileID: -1180104304, guid: bd80619497c702449abab3b412a82fd2, type: 3}
     isSkillOn: 1
-    skillName: "\uC218\uB958\uD0C4"
-    skillDescription: "\uC218\uB958\uD0C4"
-  laserFire2:
+    skillName: 
+    skillDescription: 
+  bloodSycthe:
     rangeType: 0
     skillPrefab: {fileID: 7284282783969889160, guid: 029a9d35c35f9224daf4bcc97d219350, type: 3}
-    cooldown: 3
-    damage: 10
-    upgradeDamage: 10
+    cooldown: 0
+    damage: 0
+    upgradeDamage: 0
     skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
@@ -1646,8 +1646,8 @@ MonoBehaviour:
     skillImage: {fileID: -762610857, guid: bd80619497c702449abab3b412a82fd2, type: 3}
     UISprite: {fileID: -762610857, guid: bd80619497c702449abab3b412a82fd2, type: 3}
     isSkillOn: 1
-    skillName: "\uB0AB"
-    skillDescription: "\uB0AB"
+    skillName: 
+    skillDescription: 
 --- !u!1 &998809481
 GameObject:
   m_ObjectHideFlags: 0
@@ -3699,6 +3699,7 @@ MonoBehaviour:
         - rid: 6561988273006706833
         - rid: 6561988273006706834
         - rid: 6561988273006706835
+        isSkillAttack: 0
     - rid: 6561988273006706827
       type: {class: Health, ns: Seti, asm: Assembly-CSharp}
       data:
@@ -8845,6 +8846,7 @@ MonoBehaviour:
         attack: 0
         strategies:
         - rid: 5367875209058058395
+        isSkillAttack: 0
     - rid: 5367875209058058391
       type: {class: Stagger, ns: Seti, asm: Assembly-CSharp}
       data: 
