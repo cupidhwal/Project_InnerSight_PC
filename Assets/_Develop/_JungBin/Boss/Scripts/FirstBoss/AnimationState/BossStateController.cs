@@ -19,12 +19,19 @@ namespace JungBin
         public bool enterParameterBool;
         public bool exitParameterBool;
 
-        [Header("FirstBossController 인트턴스 설정"), SerializeField]
-        public BossState enterState;
-        public BossState exitState;
+        [Header("FirstBossManager 인트턴스 설정"), SerializeField]
+        public BossState enterStateFir;
+        public BossState exitStateFir;
 
-        public bool enterBool;
-        public bool exitBool;
+        public bool enterBoolFir;
+        public bool exitBoolFir;
+
+        [Header("SecondBossManager 인트턴스 설정"), SerializeField]
+        public BossState enterStateSec;
+        public BossState exitStateSec;
+
+        public bool enterBoolSec;
+        public bool exitBoolSec;
 
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -34,10 +41,9 @@ namespace JungBin
                 animator.SetBool(enterParameter, enterParameterBool);
             }
 
-            if (enterState == BossState.Attack)
+            if (enterStateFir == BossState.Attack)
             {
-                FirstBossManager.isAttack = enterBool;
-
+                FirstBossManager.isAttack = enterBoolFir;
             }
         }
 
@@ -55,9 +61,9 @@ namespace JungBin
                 animator.SetBool(exitParameter, exitParameterBool);
             }
 
-            if (exitState == BossState.Attack)
+            if (exitStateFir == BossState.Attack)
             {
-                FirstBossManager.isAttack = exitBool;
+                FirstBossManager.isAttack = exitBoolFir;
             }
         }
 
