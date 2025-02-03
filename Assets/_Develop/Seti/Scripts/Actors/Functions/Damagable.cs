@@ -170,7 +170,7 @@ namespace Seti
 
             // 예외 처리가 모두 끝나면 데미지 처리
             IsInvulnerable = true;
-            currentHitPoints -= data.amount;
+            currentHitPoints -= (data.amount - actor.Defend);
             OnReceiveDamage?.Invoke();
 
             // 죽음 처리
