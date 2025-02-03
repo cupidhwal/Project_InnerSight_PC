@@ -23,12 +23,8 @@ namespace JungBin
         [Header("Detection Settings")]
         [SerializeField] private float detectionRange = 8f; //  최대 감지 거리
         [SerializeField] private float detectionAngle = 30f; // 레이의 시야각(좁은 각도)
-        private bool isPlayerDetected = false;
-        [SerializeField] private LayerMask playerLayer;
 
-        private List<Transform> spawnPoints = new List<Transform>();
         private int lastAttack = -1;
-        private bool isMaxHeight = false;
         public static bool isAttack { get; set; } = false; // 공격중인지 여부
 
         [SerializeField] private Transform player;

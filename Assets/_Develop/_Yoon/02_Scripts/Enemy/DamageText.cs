@@ -16,15 +16,15 @@ namespace Yoon
         private void Start()
         {
             damagable = GetComponent<Damagable>();
-            damagable.OnReceiveDamage += OnTakeDamage;
+            //damagable.OnReceiveDamage += OnTakeDamage;
         }
 
         // 데미지를 받은 경우 호출되는 메서드
-        public void OnTakeDamage()
+        public void OnTakeDamage(DamageMessage data)
         {
             //DamageAmount(data);    // 데미지 계산 및 출력
             
-            ShowDamageIndicator();
+            ShowDamageIndicator(data);
 
             // player.Attack 값을 확인
             //Debug.Log("Player's Attack: " + player.Attack);
@@ -40,7 +40,7 @@ namespace Yoon
         }
 
         // 데미지 텍스트 표시 메서드
-        private void ShowDamageIndicator()
+        private void ShowDamageIndicator(DamageMessage data)
         {
             if (damageTextPrefab != null && fightWorldCanvas != null && player != null)
             {
@@ -48,13 +48,13 @@ namespace Yoon
                 GameObject damageTextInstance = Instantiate(damageTextPrefab, fightWorldCanvas);
 
                 // DamageText 위치 설정 (적 머리 위)
-                damageTextInstance.transform.position = transform.position + new Vector3(0, 1f, 0);
+                damageTextInstance.transform.position = transform.position + new Vector3(0, 2f, 0);
 
                 // DamageIndicator 스크립트에 데미지 값 전달
                 DamageIndicator damageIndicator = damageTextInstance.GetComponent<DamageIndicator>();
                 if (damageIndicator != null)
                 {
-                    damageIndicator.SetDamage(player.Attack); // 또는 player.GetAttack() 사용
+                    damageIndicator.SetDamage(data.amount); // 또는 player.GetAttack() 사용
                 }
                 /*else
                 {

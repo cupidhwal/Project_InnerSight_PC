@@ -1,4 +1,5 @@
 using UnityEngine;
+using Yoon;
 
 namespace Seti
 {
@@ -80,6 +81,11 @@ namespace Seti
                 Condition_Actor condition = GetComponent<Condition_Actor>();
                 condition.HitDirection = damageMessage.direction.normalized;
             }
+
+            if (TryGetComponent<DamageText>(out var damageText))
+            {
+                damageText.OnTakeDamage(damageMessage);
+            }
         }
 
         // 사망 처리, 애니메이션, 연출, ...
@@ -87,6 +93,12 @@ namespace Seti
         {
             // TODO
             //Debug.Log($"{damageMessage.owner.name}의 공격으로 사망하였습니다.");
+
+            if (TryGetComponent<DamageText>(out var damageText))
+            {
+                damageText.OnTakeDamage(damageMessage);
+            }
+
             Rigidbody rb = GetComponent<Rigidbody>();
             Collider collider = GetComponent<Collider>();
 
