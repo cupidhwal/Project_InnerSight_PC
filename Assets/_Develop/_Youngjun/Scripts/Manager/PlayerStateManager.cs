@@ -17,7 +17,7 @@ namespace Noah
         public List<float> dataList = new List<float>();
         private List<float> updateDataList = new List<float>();
 
-        public List<int> upgradeCount = new List<int>();
+        private List<int> upgradeCount = new List<int>();
         private List<int> updateGold = new List<int>();
 
         private GameObject player;
