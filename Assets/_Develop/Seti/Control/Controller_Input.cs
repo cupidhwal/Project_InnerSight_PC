@@ -120,6 +120,16 @@ namespace Seti
                     }
                 }
             }
+
+            // Interact 행동 이벤트 바인딩
+            if (behaviourMap.TryGetValue(typeof(Interact), out var interactBehaviour))
+            {
+                if (interactBehaviour is Interact interact)
+                {
+                    control.Player.Interact.started += interact.OnInteractStarted;
+                    control.Player.Interact.canceled += interact.OnInteractCanceled;
+                }
+            }
         }
 
         private void UnbindInputEvents()
@@ -160,6 +170,16 @@ namespace Seti
                 control.Player.Weapon.canceled -= attack.OnWeaponCanceled;
                 control.Player.Magic.started -= attack.OnMagicStarted;
                 control.Player.Magic.canceled -= attack.OnMagicCanceled;
+            }
+
+            // Interact 행동 이벤트 해제
+            if (behaviourMap.TryGetValue(typeof(Interact), out var interactBehaviour))
+            {
+                if (interactBehaviour is Interact interact)
+                {
+                    control.Player.Interact.started -= interact.OnInteractStarted;
+                    control.Player.Interact.canceled -= interact.OnInteractCanceled;
+                }
             }
         }
         #endregion

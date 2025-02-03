@@ -2,9 +2,6 @@ using UnityEngine;
 
 namespace Seti
 {
-    // Player가 가져야 할 Component
-    [RequireComponent(typeof(Enhance))]
-
     /// <summary>
     /// Player
     /// </summary>
@@ -37,11 +34,17 @@ namespace Seti
 
         // 속성
         #region Properties
+        // 스탯
         public float Speed_Move => moveSpeed;
         public float Dash_Speed => dashSpeed;
         public float Dash_Cooldown => dashCooldown;
         public float Dash_Duration => dashDuration;
         #endregion
+
+        // 상호작용
+        private NPC currentNPC;
+        public NPC CurrentNPC => currentNPC;
+        public void SetNPC(NPC npc) => currentNPC = npc;
 
         // 오버라이드
         #region Override
