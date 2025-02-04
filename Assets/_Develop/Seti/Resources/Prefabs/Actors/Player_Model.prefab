@@ -2290,7 +2290,7 @@ Animator:
   m_GameObject: {fileID: 1497023816619404209}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 19089aa705f094340b1808084434e2dc, type: 3}
-  m_Controller: {fileID: 9100000, guid: a267eced45f4ba844a3419d74a7d8227, type: 2}
+  m_Controller: {fileID: 9100000, guid: df1f2b6ea5ee29649a38cf286a099699, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2322,11 +2322,10 @@ MonoBehaviour:
   defend: 1
   rate_Attack: 1
   rate_Movement: 4
-  stagger: 0.5
+  stagger: 0.1
   mag_WalkToRun: 1.5
-  moveSpeed: 4
   dashSpeed: 1
-  dashDuration: 0.25
+  dashDuration: 0.2
   dashCooldown: 1
   viewType: 0
   references:
@@ -2392,6 +2391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  canMove: 1
   forwardSpeed: 0
 --- !u!114 &804687201194811556
 MonoBehaviour:

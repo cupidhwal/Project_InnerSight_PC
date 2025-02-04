@@ -1,18 +1,12 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Collections;
 using UnityEngine;
 
 namespace Seti
 {
     public class Attack_Normal : Attack_Base
     {
-        // 필드
-        CancellationTokenSource atkToken;
-        float atkDuration = 0.16f;
-
-        // 추상화
-        #region Abstract
+        // 오버라이드
+        #region Override
         public override void Attack()
         {
             base.Attack();
@@ -27,8 +21,7 @@ namespace Seti
             switch (condition.CurrentWeaponType)
             {
                 case Condition_Actor.WeaponType.Sword:
-                    atkToken = new(200);
-                    Attack_Sword(atkToken.Token);
+                    actor.CoroutineExecutor(Attack_Sword());
                     break;
 
                 case Condition_Actor.WeaponType.Staff:
@@ -49,36 +42,28 @@ namespace Seti
             }
         }
 
-        private async void Attack_Sword(CancellationToken token)
+        private IEnumerator Attack_Sword()
         {
             // 애니메이션의 Root Motion을 쓰지 않을 경우에만 실행
-            if (actor.Controller_Animator.Animator.applyRootMotion) return;
+            if (actor.Controller_Animator.Animator.applyRootMotion) yield break;
 
             // Player의 검 공격, 조금씩 전진
-            try
+            Player player = actor as Player;
+
+            // 초기 속도 설정
+            float elapsedTime = 0f;
+            float atkDuration = 0.16f;
+            float currentSpeed = player.Rate_Movement_Default * 2f;
+            while (actor.Condition.InAction && elapsedTime < atkDuration)
             {
-                Player player = actor as Player;
+                elapsedTime += Time.deltaTime;
+                float t = elapsedTime / atkDuration;
 
-                // 초기 속도 설정
-                float elapsedTime = 0f;
-                float currentSpeed = player.Rate_Movement_Default * 2f;
-                while (actor.Condition.InAction && elapsedTime < atkDuration)
-                {
-                    if (token.IsCancellationRequested) return;
+                // Ease In-Out 적용
+                currentSpeed = Mathf.Lerp(currentSpeed, 0, Mathf.SmoothStep(0f, 1f, t));
+                player.transform.Translate(currentSpeed * Time.deltaTime * player.transform.forward, Space.World);
 
-                    elapsedTime += Time.deltaTime;
-                    float t = elapsedTime / atkDuration;
-
-                    // Ease In-Out 적용
-                    currentSpeed = Mathf.Lerp(currentSpeed, 0, Mathf.SmoothStep(0f, 1f, t));
-                    player.transform.Translate(currentSpeed * Time.deltaTime * player.transform.forward, Space.World);
-
-                    await Task.Delay((int)(Time.deltaTime * 1000));
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                Debug.Log("기본 공격 끝");
+                yield return null;
             }
         }
 
