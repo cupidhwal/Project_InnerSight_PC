@@ -6,7 +6,7 @@ namespace JungBin
     public class SpawnAxeController : MonoBehaviour
     {
         [SerializeField] private float axeSpeed = 10f; // 도끼 속도
-        private Transform goalPosition; // 목표 위치 (플레이어 위치)
+        private Vector3 targetPosition; // 목표 위치 (플레이어 위치)
         private Vector3 dir; // 이동 방향
 
         private void Start()
@@ -14,21 +14,23 @@ namespace JungBin
             if (BossStageManager.Instance.Player.transform == null)
                 return;
             // 플레이어의 위치를 목표로 설정
-            goalPosition = BossStageManager.Instance.Player.transform;
+            targetPosition = BossStageManager.Instance.Player.transform.position;
 
-
+            Debug.Log("방향 계산 (플레이어 방향)");
 
             // 방향 계산 (플레이어 방향)
-            dir = (goalPosition.position - transform.position).normalized;
+            dir = (targetPosition - transform.position).normalized;
+
+            // 도끼는 Y축으로 이동하지 않음
+            dir.y = 0f;
         }
 
         private void Update()
         {
             // 도끼 이동
-            transform.position += dir * axeSpeed * Time.deltaTime;
-
-            // 도끼는 Y축으로 이동하지 않음
-            dir.y = 0f;
+            //transform.position += dir * axeSpeed * Time.deltaTime;
+            transform.Translate(dir * axeSpeed * Time.deltaTime, Space.World);
+            Debug.Log($"dir 방향 {dir}");
         }
 
         private void OnTriggerEnter(Collider other)

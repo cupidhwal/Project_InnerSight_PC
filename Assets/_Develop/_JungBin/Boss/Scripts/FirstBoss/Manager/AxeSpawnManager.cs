@@ -14,7 +14,7 @@ namespace JungBin
             Vector3 spawnpoint = axeSpawnPoint.position;
             Quaternion rotation = axeSpawnPoint.rotation;
 
-            Instantiate(axePrefab, spawnpoint, rotation, this.transform);
+            Instantiate(axePrefab, spawnpoint, rotation);
             
         }
 
