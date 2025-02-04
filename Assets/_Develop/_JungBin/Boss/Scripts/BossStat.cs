@@ -80,6 +80,8 @@ namespace JungBin
             isInvulnerable = true; // 버서커 모드 진입 중 무적
             animator.SetBool("IsBerserk", true);
             animator.SetTrigger("Berserk");
+            animator.SetBool("IsWall", false);
+            animator.SetBool("IsPlayer", false);
             Debug.Log("버서커 모드로 전환됨: 무적 상태 활성화");
         }
 
