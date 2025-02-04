@@ -285,9 +285,10 @@ namespace Seti
             SwitchStrategy(StrategyType.Normal);
 
             // Damagable 컴포넌트가 있다면 무적 해제
+            yield return new WaitForSeconds(player.Dash_Duration);
             damagable.IsInvulnerable = false;
 
-            yield return new WaitForSeconds(player.Dash_Cooldown - player.Dash_Duration);
+            yield return new WaitForSeconds(player.Dash_Cooldown - (2 * player.Dash_Duration));
             isDashed = false;
             // 대시 사용 가능
 
