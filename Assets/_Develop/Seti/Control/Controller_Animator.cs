@@ -58,7 +58,8 @@ namespace Seti
             damagable = damage;
 
             // 이벤트 구독
-            damagable.OnDeath += OnDie;
+            if (damagable != null)
+                damagable.OnDeath += OnDie;
 
             // 애니메이션 컨트롤러 초기화
             Animator = GetComponent<Animator>();

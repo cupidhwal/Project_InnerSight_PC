@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
@@ -31,7 +32,6 @@ namespace Seti
         // 전략 관리
         private Actor actor;
         private Player player;
-        private Enemy enemy;
         [SerializeReference]
         private List<Strategy> strategies;
         private IMoveStrategy currentStrategy;
@@ -39,7 +39,6 @@ namespace Seti
         // 제어 관리
         private Vector2 moveInput;  // 입력 값
         public Vector2 MoveInput => moveInput;
-        private Condition_Actor condition;
         private StrategyType currentType;
         private State<Controller_FSM> currentState;
         #endregion
@@ -62,9 +61,6 @@ namespace Seti
             this.actor = actor;
             if (actor is Player)
                 player = actor as Player;
-            if (actor is Enemy)
-                enemy = actor as Enemy;
-            condition = actor.Condition;
             foreach (var mapping in strategies)
             {
                 IMoveStrategy moveStrategy = mapping.strategy as IMoveStrategy;
@@ -240,16 +236,15 @@ namespace Seti
         private void OnMove(Vector2 moveInput, bool isMove)
         {
             this.moveInput = moveInput;
-            condition.IsMove = isMove;
+            actor.Condition.IsMove = isMove;
             actor.Controller_Animator.IsMove = isMove;
         }
 
         private void OnDash()
         {
             // 체공 중일 경우 착지까지 전략 변경 불가
-            //if (!state.IsGrounded || isDashed) return;
-            if (isDashed) return;
-            Execute_Dash();
+            if (!actor.Condition.IsGrounded || isDashed) return;
+            actor.CoroutineExecutor(Dash_Cor());
         }
 
         private void OnRun(StrategyType type)
@@ -265,7 +260,7 @@ namespace Seti
 
         // 유틸리티
         #region Utilities
-        private async void Execute_Dash()
+        private IEnumerator Dash_Cor()
         {
             // 대시 중 충돌 무시
             Collider collider = actor.GetComponent<Collider>();
@@ -281,16 +276,17 @@ namespace Seti
             actor.Controller_Animator.IsDash = true;
             SwitchStrategy(StrategyType.Dash);
 
-            await Task.Delay((int)(player.Dash_Duration * 1000));
+            // 대시 끝
+            yield return new WaitForSeconds(player.Dash_Duration);
             if (currentStrategy is Move_Dash dash)
                 dash.MoveExit();
 
             actor.Controller_Animator.IsDash = false;
             SwitchStrategy(StrategyType.Normal);
 
-            await Task.Delay((int)((player.Dash_Cooldown - player.Dash_Duration) * 1000));
+            yield return new WaitForSeconds(player.Dash_Cooldown - player.Dash_Duration);
             isDashed = false;
-            // 대시 끝
+            // 대시 사용 가능
 
             // Damagable 컴포넌트가 있다면 무적 해제
             damagable.IsInvulnerable = false;

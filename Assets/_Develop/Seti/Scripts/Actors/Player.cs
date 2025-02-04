@@ -18,8 +18,6 @@ namespace Seti
         #region Variables
         [Header("Variables")]
         [SerializeField]
-        protected float moveSpeed = 4f;
-        [SerializeField]
         protected float dashSpeed = 20f;
         [SerializeField]
         protected float dashDuration = 0.667f;
@@ -35,39 +33,21 @@ namespace Seti
         // 속성
         #region Properties
         // 스탯
-        public float Speed_Move => moveSpeed;
         public float Dash_Speed => dashSpeed;
         public float Dash_Cooldown => dashCooldown;
         public float Dash_Duration => dashDuration;
         #endregion
 
         // 상호작용
+        #region Interaction
         private NPC currentNPC;
         public NPC CurrentNPC => currentNPC;
         public void SetNPC(NPC npc) => currentNPC = npc;
+        #endregion
 
         // 오버라이드
         #region Override
         protected override Condition_Actor CreateState() => gameObject.AddComponent<Condition_Player>();
         #endregion
-
-        /*protected override void Start()
-        {
-            base.Start();
-        }
-
-        private IEnumerator Upgrade(int count)
-        {
-            Enhance enhance = GetComponent<Enhance>();
-            for (int i = 0; i < count; i++)
-            {
-                yield return new WaitForSeconds(1);
-                enhance.EnhanceBehaviour<Health>();
-                enhance.EnhanceBehaviour<Attack>();
-                enhance.EnhanceBehaviour<Defend>();
-                enhance.EnhanceBehaviour<Move>();
-            }
-            yield break;
-        }*/
     }
 }

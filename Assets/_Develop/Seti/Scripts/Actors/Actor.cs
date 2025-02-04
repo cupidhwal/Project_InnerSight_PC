@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -5,9 +6,9 @@ using UnityEngine.AI;
 namespace Seti
 {
     // Actor가 가져야 할 Component
-    //[RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(NavMeshAgent))]
-    [RequireComponent(typeof(Damagable))]
+    //[RequireComponent(typeof(Damagable))]
 
     /// <summary>
     /// Actor의 기본 정의
@@ -175,6 +176,16 @@ namespace Seti
             }
             control = newControl;
             control.OnEnter(this);
+        }
+        #endregion
+
+        // 유틸리티
+        #region Utilities
+        public void CoroutineExecutor(IEnumerator cor)
+        {
+            if (cor != null)
+                StopCoroutine(cor);
+            StartCoroutine(cor);
         }
         #endregion
     }

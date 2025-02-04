@@ -25,7 +25,7 @@ namespace Seti
                     float tempDis = Vector3.Distance(player.transform.position, temp);
                     if (tempDis > 1.5f)
                     {
-                        Vector3 atkPoint = new(temp.x, temp.y, temp.z);
+                        Vector3 atkPoint = new(temp.x, player.transform.position.y, temp.z);
                         player.transform.LookAt(atkPoint);
                     }
                 }

@@ -84,7 +84,7 @@ namespace Seti
         // Local 기준 이동 로직
         public void Follow_Person_Move(Vector2 moveInput)
         {
-            //if (rb == null) return;
+            if (rb == null) return;
 
             Vector2 dir = MoveDirection(moveInput);
             Vector3 moveDirection = new(dir.x, 0, dir.y);
