@@ -94,6 +94,11 @@ namespace Seti
             // TODO
             //Debug.Log($"{damageMessage.owner.name}의 공격으로 사망하였습니다.");
 
+            if (TryGetComponent<DamageText>(out var damageText))
+            {
+                damageText.OnTakeDamage(damageMessage);
+            }
+
             Rigidbody rb = GetComponent<Rigidbody>();
             Collider collider = GetComponent<Collider>();
 
