@@ -52,7 +52,7 @@ namespace Seti
             if (!condition.InAction)
                 return typeof(Enemy_State_Stagger);
 
-            if (!enemy.Detected)
+            if (!enemy.Detected || enemy.Player.Condition.IsDead)
                 return typeof(Enemy_State_Idle);
 
             else if (!enemy.CanAttack)

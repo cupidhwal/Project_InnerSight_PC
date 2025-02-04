@@ -50,7 +50,14 @@ namespace Seti
         #region Properties
         public bool IsInvulnerable { get; set; }                // 무적 여부
         public float MaxHitPoint => maxHitPoints;               // 최대 체력
-        public float CurrentHitPoints => currentHitPoints;      // 현재 체력
+        public float CurrentHitPoints                           // 현재 체력
+        {
+            get
+            {
+                currentHitPoints = Mathf.Clamp(currentHitPoints, 0, float.MaxValue);
+                return currentHitPoints;
+            }
+        }
         public float CurrentHitRate => currentHitPoints / maxHitPoints;     // 현재 체력 (%)
         #endregion
 
@@ -76,7 +83,7 @@ namespace Seti
                 {
                     Weapon enemyWeapon = enemy.GetComponentInChildren<Weapon>();
                     targetDamagable = enemy.Player.GetComponent<Damagable>();
-                    targetDamagable.OnReceiveDamage += enemyWeapon.AttackExit;
+                    //targetDamagable.OnReceiveDamage += enemyWeapon.AttackExit;
                 }
             }
 

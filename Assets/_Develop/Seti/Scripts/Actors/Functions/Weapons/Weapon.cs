@@ -6,7 +6,7 @@ namespace Seti
     /// <summary>
     /// Weapon 추상 클래스
     /// </summary>
-    public abstract class Weapon : MonoBehaviour
+    public class Weapon : MonoBehaviour
     {
         /// <summary>
         /// 무기 공격 시 상대에게 입히는 피해의 구성
@@ -64,12 +64,6 @@ namespace Seti
             get { return m_IsThrowingHit; }
             set { m_IsThrowingHit = value; }
         }
-        #endregion
-
-        // 추상화
-        #region Abstract
-        public abstract void AttackEnter();
-        public abstract void AttackExit();
         #endregion
 
         // 라이프 사이클

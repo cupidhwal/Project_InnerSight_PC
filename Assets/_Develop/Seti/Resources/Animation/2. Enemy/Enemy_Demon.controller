@@ -701,7 +701,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 1827226128182048838, guid: 3cd19cfb3c602f04f9087c5b2fc2745a, type: 3}
-    m_Threshold: 2
+    m_Threshold: 1.75
     m_Position: {x: 0, y: 1}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -1840,7 +1840,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EllenCombo2
+  m_Name: Attack_2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -1855,7 +1855,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: 80a66605b3e16c54299ca5e0dc035fc2, type: 3}
+  m_Motion: {fileID: 7400000, guid: 8b0dff0adee717741b79441d49422333, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1954,7 +1954,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EllenCombo1
+  m_Name: Attack_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -1969,7 +1969,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: c42dab48861f431448e4c234b9474550, type: 3}
+  m_Motion: {fileID: 7400000, guid: 8615f2eba33e2b0499724debbf9df1f0, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -2144,7 +2144,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: fd1a214ad916be042880f9f97e943b4e, type: 3}
+  m_Motion: {fileID: 7400000, guid: 75c0b8ca7a51b3544a4af8381af8db0b, type: 3}
   m_Tag: BlockInput
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -2338,31 +2338,31 @@ AnimatorStateMachine:
   - {fileID: 1101532510285334376}
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: 1107267585127195014}
-    second:
-    - {fileID: 1109724402327276408}
-    - {fileID: 1109978867244363948}
-    - {fileID: 1109429563890313610}
-    - {fileID: 2092944429815217039}
   - first: {fileID: 1107901932556721024}
     second:
     - {fileID: 1109756267749884836}
     - {fileID: 1109844324291011288}
     - {fileID: 1109355376993633130}
     - {fileID: 7323621578332923533}
-  - first: {fileID: 1107516587743271850}
-    second:
-    - {fileID: 1109004608291311438}
   - first: {fileID: 1107228720668996938}
     second:
     - {fileID: 1109831094554419318}
+  - first: {fileID: 8375272359443822817}
+    second:
+    - {fileID: 603386460167338660}
+  - first: {fileID: 1107267585127195014}
+    second:
+    - {fileID: 1109724402327276408}
+    - {fileID: 1109978867244363948}
+    - {fileID: 1109429563890313610}
+    - {fileID: 2092944429815217039}
+  - first: {fileID: 1107516587743271850}
+    second:
+    - {fileID: 1109004608291311438}
   - first: {fileID: 1107144586752185528}
     second:
     - {fileID: 1109481343770542484}
     - {fileID: 1109093518041981768}
-  - first: {fileID: 8375272359443822817}
-    second:
-    - {fileID: 603386460167338660}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 790, y: 120, z: 0}
   m_EntryPosition: {x: -100, y: -90, z: 0}

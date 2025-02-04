@@ -102,6 +102,7 @@ namespace Seti
         // 죽음
         private void Die()
         {
+            IsDead = true;
             inAction = false;
             Destroy(gameObject, 2);
         }

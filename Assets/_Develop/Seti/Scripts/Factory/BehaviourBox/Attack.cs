@@ -227,11 +227,9 @@ namespace Seti
         {
             if (!condition.InAction) return;
 
-            condition.IsAttack = isAttack;
             actor.Controller_Animator.IsAttack = isAttack;
             if (isAttack)
             {
-                condition.CurrentWeapon.AttackEnter();
                 currentStrategy?.Attack();
 
                 if (actor is Player)
@@ -243,7 +241,6 @@ namespace Seti
             else
             {
                 currentStrategy?.AttackExit();
-                condition.CurrentWeapon.AttackExit();
             }
         }
 
