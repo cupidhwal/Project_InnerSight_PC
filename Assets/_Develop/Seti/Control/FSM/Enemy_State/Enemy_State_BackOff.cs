@@ -38,6 +38,9 @@ namespace Seti
             if (enemy.ImHome)
                 return typeof(Enemy_State_Idle);
 
+            if (enemy.Detected && context.StateMachine.ElapsedTime > 1f)
+                return typeof(Enemy_State_Chase);
+
             else return null;
         }
 

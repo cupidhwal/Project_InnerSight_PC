@@ -37,7 +37,7 @@ namespace Seti
             if (enemy.Detected)
                 return typeof(Enemy_State_Chase);
 
-            else if (context.StateMachine.ElapsedTime > elapsedTime)
+            else if (context.StateMachine.ElapsedTime > elapsedDuration)
                 return typeof(Enemy_State_Patrol);
 
             else return null;

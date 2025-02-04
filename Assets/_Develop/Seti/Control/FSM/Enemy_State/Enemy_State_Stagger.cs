@@ -22,7 +22,7 @@ namespace Seti
         {
             base.OnEnter();
 
-            elapsedTime = context.Actor.Stagger;
+            elapsedDuration = context.Actor.Stagger;
             enemy.SwitchState(Enemy.State.Stagger);
         }
 
@@ -41,13 +41,13 @@ namespace Seti
             if (damagable.CurrentHitPoints <= 0)
                 return typeof(Enemy_State_Dead);
 
-            if (enemy.GoBackHome && context.StateMachine.ElapsedTime > elapsedTime)
+            if (enemy.GoBackHome && context.StateMachine.ElapsedTime > elapsedDuration)
                 return typeof(Enemy_State_BackOff);
 
-            if (enemy.Detected && context.StateMachine.ElapsedTime > elapsedTime)
+            if (enemy.Detected && context.StateMachine.ElapsedTime > elapsedDuration)
                 return typeof(Enemy_State_Chase);
 
-            else if (!enemy.Detected && context.StateMachine.ElapsedTime > elapsedTime)
+            else if (!enemy.Detected && context.StateMachine.ElapsedTime > elapsedDuration)
                 return typeof(Enemy_State_Idle);
 
             else return null;

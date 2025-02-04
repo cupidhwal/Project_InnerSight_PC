@@ -11,7 +11,7 @@ namespace Seti
         public override void OnEnter()
         {
             base.OnEnter();
-            elapsedTime = 2;
+            elapsedDuration = 2;
             enemy.SwitchState(Enemy.State.Dead);
         }
 

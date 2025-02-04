@@ -10,7 +10,7 @@ namespace Seti
         protected Enemy enemy;
         protected Condition_Enemy condition;
         protected Damagable damagable;
-        protected float elapsedTime = 5f;       // 상태 전이 시간 경과
+        protected float elapsedDuration = 5f;       // 상태 전이 시간 경과
         protected float elapsedCriteria = 10f;  // 상태 전이 시간 경과 기준
         protected float steeringInterval;       // 상태 조작 주기
 
@@ -33,7 +33,7 @@ namespace Seti
         }
 
         // 상태 전환 시 State Enter에 1회 실행
-        public override void OnEnter() => elapsedTime = UnityEngine.Random.Range(elapsedCriteria * 0.7f, elapsedCriteria * 1.3f);
+        public override void OnEnter() => elapsedDuration = UnityEngine.Random.Range(elapsedCriteria * 0.7f, elapsedCriteria * 1.3f);
 
         // 상태 전환 시 State Exit에 1회 실행
         public override void OnExit() { }
