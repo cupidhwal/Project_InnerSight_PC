@@ -234,7 +234,6 @@ namespace Seti
 
                 if (actor is Player)
                 {
-                    //condition.AttackPoint = GameUtility.RayToWorldPosition(6);
                     condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
                     AttackWait();
                 }
@@ -259,8 +258,7 @@ namespace Seti
 
                     if (actor is Player)
                     {
-                        LayerMask ignoreLayer = LayerMask.GetMask("Actor");
-                        condition.AttackPoint = GameUtility.RayToWorldPosition(ignoreLayer);
+                        condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
                         MagicWait();
                     }
                 }
