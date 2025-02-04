@@ -43,7 +43,7 @@ namespace JungBin
                 if (activeTrail == null)
                 {
                     // Trail Prefab 초기화 및 활성화
-                    activeTrail = Instantiate(trailPrefab, transform.position, transform.rotation);
+                    activeTrail = Instantiate(trailPrefab, transform.position, transform.rotation, this.transform);
                     activeTrail.SetActive(true);
                 }
                 else
