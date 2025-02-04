@@ -1,10 +1,9 @@
-using UnityEngine;
-using TMPro;
-using Seti;
+    using UnityEngine;
+    using TMPro;
+    using Seti;
 
 namespace Yoon
 {
-
     public class DamageIndicator : MonoBehaviour
     {
         public TextMeshProUGUI damageText; // 데미지 표시 Text
