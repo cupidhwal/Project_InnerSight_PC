@@ -1,6 +1,4 @@
-using Noah;
 using System;
-using UnityEngine;
 
 namespace Seti
 {

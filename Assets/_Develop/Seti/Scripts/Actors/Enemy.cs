@@ -53,7 +53,7 @@ namespace Seti
         public bool CanAttack => Player && (distancePlayer <= range_Attack * 2f);
         public bool GoBackHome => distancePlace >= range_BackOff;
         public bool TooFarFromHome => distancePlace >= range_BackOff * 2f;
-        public bool ImHome => distancePlace <= 0.5f;
+        public bool ImHome => distancePlace <= 1f;
         public float PatrolInterval => patrolInterval;
         public float AttackInterval => attackInterval;
         #endregion
