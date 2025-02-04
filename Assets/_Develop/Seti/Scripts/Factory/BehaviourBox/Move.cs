@@ -284,12 +284,12 @@ namespace Seti
             actor.Controller_Animator.IsDash = false;
             SwitchStrategy(StrategyType.Normal);
 
+            // Damagable 컴포넌트가 있다면 무적 해제
+            damagable.IsInvulnerable = false;
+
             yield return new WaitForSeconds(player.Dash_Cooldown - player.Dash_Duration);
             isDashed = false;
             // 대시 사용 가능
-
-            // Damagable 컴포넌트가 있다면 무적 해제
-            damagable.IsInvulnerable = false;
 
             // 충돌 확인 재개
             collider.excludeLayers = LayerMask.GetMask("Nothing");
