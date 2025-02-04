@@ -7,6 +7,7 @@ namespace Seti
     /// </summary>
     public class EllenStaffEffectSMB : StateMachineBehaviour
     {
+        private Player player;
         public int effectIndex;         //이펙트 인덱스 지정
         
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -14,11 +15,30 @@ namespace Seti
         {
             if (!animator.TryGetComponent<Actor>(out var actor))
                 actor = animator.GetComponentInParent<Actor>();
-            if (actor is not Player) return;
+            if (actor is not Player player) return;
+            this.player = player;
 
             //지정 이펙트 애니메이션 플레이
             Weapon weapon = actor.GetComponentInChildren<Weapon>();
             weapon.effects[effectIndex].Activate();
+        }
+
+        // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+        override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            if (player)
+            {
+                player.Controller_Animator.CantMoveDurAtk();
+            }
+        }
+
+        // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+        override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            if (player)
+            {
+                player.Controller_Animator.CanMoveAfterAtk();
+            }
         }
     }
 }

@@ -20,6 +20,9 @@ namespace Seti
         private Damagable damagable;
 
         public AniState currentState;
+
+        [SerializeField]
+        private bool canMove = true;
         #endregion
 
         // 속성
@@ -37,7 +40,7 @@ namespace Seti
         public bool IsMagic { get; set; } = false;
         public bool IsAttack { get; set; } = false;
         public bool IsStagger { get; set; } = false;
-        public bool CanMove { get; set; } = true;
+        public bool CanMove => canMove;
         #endregion
 
         // 라이프 사이클
@@ -143,8 +146,8 @@ namespace Seti
             Actor.Condition.IsAttack = false;
         }
 
-        public void CantMoveDurAtk() => CanMove = false;
-        public void CanMoveAfterAtk() => CanMove = true;
+        public void CantMoveDurAtk() => canMove = false;
+        public void CanMoveAfterAtk() => canMove = true;
 
         [SerializeField]
         private float forwardSpeed;

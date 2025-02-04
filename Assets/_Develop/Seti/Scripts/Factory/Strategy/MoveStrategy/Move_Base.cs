@@ -32,8 +32,7 @@ namespace Seti
         {
             if (!actor ||
                 !actor.Condition.InAction ||
-                actor.Condition.IsAttack || 
-                actor.Condition.IsMagic)
+                !actor.Controller_Animator.CanMove)
             {
                 QuaterView_Move(Vector2.zero);
                 return;
