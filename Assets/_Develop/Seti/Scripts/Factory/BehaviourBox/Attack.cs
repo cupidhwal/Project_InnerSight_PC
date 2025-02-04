@@ -258,7 +258,7 @@ namespace Seti
 
                     if (actor is Player)
                     {
-                        condition.AttackPoint = GameUtility.RayToWorldPosition();
+                        condition.AttackPoint = GameUtility.RayToWorldPosition(6);
                         MagicWait();
                     }
                 }
