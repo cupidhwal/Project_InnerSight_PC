@@ -16,13 +16,14 @@ namespace JungBin
             // 플레이어의 위치를 목표로 설정
             targetPosition = BossStageManager.Instance.Player.transform.position;
 
-            Debug.Log("방향 계산 (플레이어 방향)");
 
             // 방향 계산 (플레이어 방향)
             dir = (targetPosition - transform.position).normalized;
 
             // 도끼는 Y축으로 이동하지 않음
             dir.y = 0f;
+
+            Destroy(gameObject,2f);
         }
 
         private void Update()
@@ -30,7 +31,6 @@ namespace JungBin
             // 도끼 이동
             //transform.position += dir * axeSpeed * Time.deltaTime;
             transform.Translate(dir * axeSpeed * Time.deltaTime, Space.World);
-            Debug.Log($"dir 방향 {dir}");
         }
 
         private void OnTriggerEnter(Collider other)

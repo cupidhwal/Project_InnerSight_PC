@@ -204,7 +204,10 @@ namespace JungBin
                 if (hit.transform.CompareTag("Wall"))
                 {
                     BrokenWall brokenWall = hit.transform.GetComponent<BrokenWall>();
-                    brokenWall.RushToWall();
+                    if (brokenWall != null)
+                    { 
+                        brokenWall.RushToWall();
+                    }
                     return true; // 벽이 감지됨
                 }
             }

@@ -1,4 +1,5 @@
 using Seti;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,6 +15,9 @@ namespace JungBin
         [SerializeField] private float bossAttack = 25f; // 보스 공격력
         [SerializeField] private GameObject relicPrefab; // 드랍할 유물
         [SerializeField] private CapsuleCollider capsuleCollider;
+        [SerializeField] private float fadeDuration = 2f; // 서서히 사라지는 시간
+        [SerializeField] private Material bossMaterial;
+        private Color originalColor;
 
         private Animator animator; // 보스 애니메이션
         private bool isBerserk = false; // 버서커 모드 여부
@@ -44,10 +48,13 @@ namespace JungBin
                 damagable.OnReceiveDamage += HandleReceiveDamage;
             }
 
+            originalColor = bossMaterial.color;
+
             OnBecomeVulnerable += HandleBecomeVulnerable;
 
             ResetHealth();
             OnDeath += SpawnRelic;
+            OnDeath += OnBossDeath;
         }
 
         private void Update()
@@ -109,11 +116,38 @@ namespace JungBin
             capsuleCollider.enabled = true;
         }
 
+        public void OnBossDeath()
+        {
+            StartCoroutine(FadeOut());
+        }
+
+        private IEnumerator FadeOut()
+        {
+            float elapsedTime = 0f;
+            while (elapsedTime < fadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+
+                if (bossMaterial != null)
+                {
+                    Color newColor = bossMaterial.color;
+                    newColor.a = alpha;
+                    bossMaterial.color = newColor;
+                }
+
+                yield return null;
+            }
+
+            Destroy(gameObject); // 보스 완전히 제거
+        }
+
+
         // 유물 드랍
         private void SpawnRelic()
         {
             capsuleCollider.enabled = false;
-            Instantiate(relicPrefab, transform.position, Quaternion.identity, this.transform);
+            Instantiate(relicPrefab, transform.position, Quaternion.identity, this.transform.parent);
         }
 
         // 보스 체력 및 상태 초기화
@@ -129,6 +163,10 @@ namespace JungBin
             timeSinceLastHit = 0f;
             animator.SetBool("IsBerserk", false);
             animator.SetBool("IsDeath", false);
+            Color newColor = originalColor;
+            newColor.a = 1f;
+            bossMaterial.color = newColor;
+
         }
 
         /*// 치트로 즉시 죽이기
