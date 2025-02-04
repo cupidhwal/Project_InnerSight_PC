@@ -10,7 +10,7 @@ namespace JungBin
         [SerializeField] private string bossName; // 보스 이름
 
         [SerializeField] private float maxHealth = 500f; // 최대 체력
-        [SerializeField] private float invulnerabilityTime = 2f; // 무적 시간
+        [SerializeField] private float invulnerabilityTime = 3f; // 무적 시간
         [SerializeField] private float bossAttack = 25f; // 보스 공격력
         [SerializeField] private GameObject relicPrefab; // 드랍할 유물
         [SerializeField] private CapsuleCollider capsuleCollider;
@@ -88,6 +88,7 @@ namespace JungBin
             if (Health > 0) return; // 이미 죽었으면 처리하지 않음
 
             animator.SetBool("IsDeath", true);
+            animator.SetTrigger("Death");
             OnDeath?.Invoke(); // 죽음 이벤트 호출
             Debug.Log("보스가 사망했습니다.");
         }
@@ -109,7 +110,7 @@ namespace JungBin
         private void SpawnRelic()
         {
             capsuleCollider.enabled = false;
-            Instantiate(relicPrefab, transform.position, Quaternion.identity);
+            Instantiate(relicPrefab, transform.position, Quaternion.identity, this.transform);
         }
 
         // 보스 체력 및 상태 초기화
