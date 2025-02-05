@@ -6,7 +6,6 @@ namespace Seti
     {
         // 필드
         #region Variables
-        private Player player;
         [SerializeField]
         private GameObject targetUI;
         #endregion
@@ -35,19 +34,18 @@ namespace Seti
         private void OnTriggerEnter(Collider other)
         {
             if (other.transform.TryGetComponent<Player>(out var player))
-            {
-                this.player = player;
                 player.SetNPC(this);
-            }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (player != null)
+            if (other.transform.TryGetComponent<Player>(out var player))
+            {
                 player.SetNPC(null);
 
-            if (targetUI != null && targetUI.activeSelf)
-                Noah.UIManager.Instance.ActivePlayerStateUI();
+                if (targetUI != null && targetUI.activeSelf)
+                    Noah.UIManager.Instance.ActivePlayerStateUI();
+            }
         }
         #endregion
     }
