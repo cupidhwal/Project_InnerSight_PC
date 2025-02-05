@@ -127,14 +127,14 @@ namespace Seti
             this.animator = animator;
 
             agent = GetComponent<NavMeshAgent>();
-            agent.updatePosition = false;
-            agent.updateRotation = false;
+            /*agent.updatePosition = false;
+            agent.updateRotation = false;*/
         }
 
-        protected virtual void Update()
+        /*protected virtual void Update()
         {
             agent.nextPosition = transform.position;
-        }
+        }*/
         #endregion
 
         // 메서드
