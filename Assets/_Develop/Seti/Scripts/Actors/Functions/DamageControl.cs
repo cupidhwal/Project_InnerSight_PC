@@ -109,8 +109,8 @@ namespace Seti
                 collider.enabled = false;
             }
 
-            StageManager.Instance.ReStartGame();
-
+            if (GetComponent<Player>())
+                StageManager.Instance.ReStartGame();
         }
 
         // 씬 내의 대적자 액터 가져오기
