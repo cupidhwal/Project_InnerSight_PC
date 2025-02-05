@@ -17,6 +17,7 @@ namespace Seti
         public override void OnEnter()
         {
             base.OnEnter();
+            context.Actor.Condition.IsMove = false;
             enemy.SwitchState(Enemy.State.Idle);
         }
 

@@ -95,21 +95,36 @@ namespace Seti
             // TODO
             //Debug.Log($"{damageMessage.owner.name}의 공격으로 사망하였습니다.");
 
+            // 최후의 데미지
             if (TryGetComponent<DamageText>(out var damageText))
             {
                 damageText.OnTakeDamage(damageMessage);
             }
 
+            // 콜라이더 제거
             Rigidbody rb = GetComponent<Rigidbody>();
             Collider collider = GetComponent<Collider>();
-
             if (rb != null)
             {
                 rb.useGravity = false;
                 collider.enabled = false;
             }
 
-            if (GetComponent<Player>())
+            // 이동 속도를 확실하게 제거
+            if (TryGetComponent<Actor>(out var actor))
+            {
+                Controller_Base controller = actor.GetComponent<Controller_Base>();
+                if (controller.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
+                {
+                    if (moveBehaviour is Move move)
+                    {
+                        move.OnMove(Vector2.zero, false);
+                    }
+                }
+            }
+
+            // 플레이어 사망 시 재시작
+            if (actor is Player)
                 StageManager.Instance.ReStartGame();
         }
 

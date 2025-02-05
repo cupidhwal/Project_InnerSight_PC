@@ -25,7 +25,7 @@ namespace Seti
 
         // 필드
         #region Variables
-        protected SphereCollider hitBall;
+        protected Collider hitBox;
 
         //[SerializeField]
         protected int damage = 1;      // hit 시 데미지
@@ -120,7 +120,7 @@ namespace Seti
 
         private void Awake()
         {
-            hitBall = GetComponent<SphereCollider>();
+            hitBox = GetComponent<Collider>();
 
             // 타격 이펙트 풀 생성
             GenEffectPool();
@@ -156,15 +156,15 @@ namespace Seti
             }
 
             m_InAttack = true;
-            if (hitBall == null)
-                hitBall = GetComponent<SphereCollider>();
-            hitBall.radius = 2f;
+            if (hitBox == null)
+                hitBox = GetComponent<Collider>();
+            hitBox.enabled = true;
         }
 
         public void EndAttack()
         {
-            if (hitBall != null)
-                hitBall.radius = 0.00001f;
+            if (hitBox != null)
+                hitBox.enabled = false;
             m_InAttack = false;
 
 #if UNITY_EDITOR

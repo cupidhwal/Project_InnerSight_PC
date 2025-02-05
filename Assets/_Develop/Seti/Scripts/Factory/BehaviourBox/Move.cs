@@ -233,7 +233,7 @@ namespace Seti
 
         // 메서드
         #region Methods
-        private void OnMove(Vector2 moveInput, bool isMove)
+        public void OnMove(Vector2 moveInput, bool isMove)
         {
             this.moveInput = moveInput;
             actor.Condition.IsMove = isMove;

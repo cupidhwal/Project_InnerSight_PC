@@ -14,6 +14,7 @@ namespace Seti
         public override void OnEnter()
         {
             base.OnEnter();
+            context.Actor.Condition.IsMove = true;
             enemy.SwitchState(Enemy.State.BackHome);
 
             if (damagable)

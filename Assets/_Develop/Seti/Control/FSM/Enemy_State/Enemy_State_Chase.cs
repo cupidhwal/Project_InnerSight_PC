@@ -14,7 +14,8 @@ namespace Seti
         public override void OnEnter()
         {
             base.OnEnter();
-            enemy.Controller_Animator.IsChase = true;
+            context.Actor.Condition.IsMove = true;
+            context.Actor.Controller_Animator.IsChase = true;
             enemy.SwitchState(Enemy.State.Chase);
         }
 
