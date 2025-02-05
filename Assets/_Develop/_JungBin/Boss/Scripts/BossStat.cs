@@ -16,6 +16,7 @@ namespace JungBin
         [SerializeField] private GameObject relicPrefab; // 드랍할 유물
         [SerializeField] private CapsuleCollider capsuleCollider;
         [SerializeField] private float fadeDuration = 2f; // 서서히 사라지는 시간
+        [SerializeField] private GameObject bossHealthBarUI;
         [SerializeField] private Material bossMaterial;
         private Color originalColor;
 
@@ -139,6 +140,7 @@ namespace JungBin
                 yield return null;
             }
 
+            Destroy(bossHealthBarUI);
             Destroy(gameObject); // 보스 완전히 제거
         }
 
