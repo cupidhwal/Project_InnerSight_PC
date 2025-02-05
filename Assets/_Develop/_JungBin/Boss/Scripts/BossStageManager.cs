@@ -14,7 +14,7 @@ namespace JungBin
         public GameObject Player => player; // 외부에서 접근 가능한 프로퍼티
         public BossStat[] Bosses => bosses; 
 
-        private void OnEnable()
+        private void Awake()
         {
             // 싱글톤 초기화
             if (Instance == null)

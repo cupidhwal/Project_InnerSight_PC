@@ -1,27 +1,45 @@
 using Seti;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace JungBin
 {
     public class SpawnAxeController : MonoBehaviour
     {
         [SerializeField] private float axeSpeed = 10f; // 도끼 속도
-        private Vector3 targetPosition; // 목표 위치 (플레이어 위치)
         private Vector3 dir; // 이동 방향
 
         private void Start()
         {
-            if (BossStageManager.Instance.Player.transform == null)
-                return;
-            // 플레이어의 위치를 목표로 설정
-            targetPosition = BossStageManager.Instance.Player.transform.position;
+            GameObject bossObject = GameObject.Find("FirstBoss");
+            Transform targetPosition = null; // TargetPosition을 저장할 변수
 
+            if (bossObject != null)
+            {
+                // "TargetPosition"이라는 이름을 가진 자식 오브젝트 찾기
+                targetPosition = bossObject.transform.Find("TargetPosition");
+
+                if (targetPosition != null)
+                {
+                    Debug.Log("TargetPosition 오브젝트를 찾음: " + targetPosition.name);
+                }
+                else
+                {
+                    Debug.LogWarning("TargetPosition 오브젝트를 찾을 수 없음!");
+                }
+            }
+            else
+            {
+                Debug.LogError("BossStat을 가진 오브젝트를 찾을 수 없음!");
+            }
 
             // 방향 계산 (플레이어 방향)
-            dir = (targetPosition - transform.position).normalized;
+            dir = (targetPosition.position - transform.position).normalized;
 
             // 도끼는 Y축으로 이동하지 않음
             dir.y = 0f;
+
 
             Destroy(gameObject,2f);
         }
@@ -30,7 +48,13 @@ namespace JungBin
         {
             // 도끼 이동
             //transform.position += dir * axeSpeed * Time.deltaTime;
-            transform.Translate(dir * axeSpeed * Time.deltaTime, Space.World);
+            //transform.Translate(dir * axeSpeed * Time.deltaTime, Space.World);
+            transform.Translate(dir * axeSpeed * Time.deltaTime);
+
+            Vector3 fixedPosition = transform.position;
+            fixedPosition.y = 1f; // Y값을 0으로 고정
+            transform.position = fixedPosition;
+
         }
 
         private void OnTriggerEnter(Collider other)
