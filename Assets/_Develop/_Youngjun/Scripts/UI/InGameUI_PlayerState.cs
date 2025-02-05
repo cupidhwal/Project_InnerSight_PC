@@ -63,7 +63,8 @@ namespace Noah
 
             if (totalGold >= 0)
             {
-                float upPoint = float.Parse(states[_index].GetChild(0).GetComponent<TMP_Text>().text) + PlayerStateManager.Instance.UpdatePlayerData()[_index];
+                float upPoint = Mathf.Round((float.Parse(states[_index].GetChild(0).GetComponent<TMP_Text>().text)
+            + PlayerStateManager.Instance.UpdatePlayerData()[_index]) * 10f) / 10f;
 
                 states[_index].GetChild(0).GetComponent<TMP_Text>().text = upPoint.ToString();
 
@@ -95,7 +96,7 @@ namespace Noah
             float currentPoint = float.Parse(states[_index].GetChild(0).GetComponent<TMP_Text>().text);
 
             // 상태값 감소 계산
-            float downPoint = currentPoint - PlayerStateManager.Instance.UpdatePlayerData()[_index];
+            float downPoint = Mathf.Round((currentPoint - PlayerStateManager.Instance.UpdatePlayerData()[_index]) * 10f) / 10f;
 
             // 초기 상태 이하로 감소 불가
             if (downPoint < curData && !Mathf.Approximately(downPoint, curData))
