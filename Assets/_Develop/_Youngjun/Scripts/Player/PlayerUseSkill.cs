@@ -147,18 +147,20 @@ namespace Noah
 
         void SetSkill(int _index)
         {
-            isReadySkill = true;
-
-            index = _index;
-
-            if (transform.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+            if (setSkill.skillSlots[_index].isSkillOn)
             {
-                if (attackBehaviour is Attack attack)
+                isReadySkill = true;
+
+                index = _index;
+
+                if (transform.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
                 {
-                    attack.isSkillAttack = true;
+                    if (attackBehaviour is Attack attack)
+                    {
+                        attack.isSkillAttack = true;
+                    }
                 }
             }
-
         }
 
         void ChangeSkill(int _index)
@@ -307,6 +309,10 @@ namespace Noah
                         effectGo.transform.rotation = yOnlyRotation;
                     }
                 }
+            }
+            else
+            {
+                return;
             }
         }
 

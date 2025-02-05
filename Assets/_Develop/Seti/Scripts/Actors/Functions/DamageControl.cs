@@ -1,3 +1,4 @@
+using Noah;
 using UnityEngine;
 using Yoon;
 
@@ -107,6 +108,9 @@ namespace Seti
                 rb.useGravity = false;
                 collider.enabled = false;
             }
+
+            if (GetComponent<Player>())
+                StageManager.Instance.ReStartGame();
         }
 
         // 씬 내의 대적자 액터 가져오기

@@ -4,6 +4,7 @@ using UnityEngine;
 using Seti;
 using Unity.AI.Navigation;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 namespace Noah
 {
@@ -25,7 +26,6 @@ namespace Noah
         private List<GameObject> enemys = new List<GameObject>();
 
         public int testStageChange;
-
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -102,6 +102,11 @@ namespace Noah
             enemys.Clear();
 
             StartCoroutine(GoNextStage());
+        }
+
+        public void ReStartGame()
+        {
+            SceneFade.instance.FadeOut("PlayScene");
         }
 
         // 테스트용
