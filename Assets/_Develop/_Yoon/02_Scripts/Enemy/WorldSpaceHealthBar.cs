@@ -60,6 +60,7 @@ namespace Yoon
             {
                 healthBarPivot.rotation = Quaternion.Euler(0f, 45f, 0f);
             }
+
         }
 
         // 체력 값을 서서히 변경하는 코루틴
