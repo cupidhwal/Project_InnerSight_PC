@@ -117,9 +117,9 @@ namespace Noah
             player.GetComponent<PlayerUseSkill>().enabled = true;
             player.GetComponent<Rigidbody>().useGravity = true;
 
-            if (currentStage.GetComponent<NavMeshSurface>() != null)
+            if (currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>() != null)
             {
-                currentStage.GetComponent<NavMeshSurface>().enabled = true;
+                currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = true;
             }
 
         }
@@ -157,9 +157,9 @@ namespace Noah
             player.GetComponent<PlayerUseSkill>().enabled = true;
             player.GetComponent<NavMeshAgent>().enabled = true;
 
-            if (currentStage.GetComponent<NavMeshSurface>() != null)
+            if (currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>() != null)
             {
-                currentStage.GetComponent<NavMeshSurface>().enabled = true;
+                currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = true;
             }
 
             player.GetComponent<Rigidbody>().useGravity = true;
