@@ -847,7 +847,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4063790283867108891}
-  - component: {fileID: 7906022991825138630}
   m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
@@ -871,27 +870,6 @@ Transform:
   - {fileID: 8343723937808531914}
   m_Father: {fileID: 2501432205526541610}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7906022991825138630
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5911262832740331940}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 15, y: 0, z: 17.3}
-  m_Center: {x: 3.4, y: 0, z: -6.2}
 --- !u!1 &6080791305654254020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1774,7 +1752,7 @@ GameObject:
   - component: {fileID: 8343723937808531914}
   - component: {fileID: 4044196460296281420}
   - component: {fileID: 5534998353004545516}
-  - component: {fileID: 7031943749552781974}
+  - component: {fileID: 4986194461804700468}
   m_Layer: 3
   m_Name: Graveyard Ground
   m_TagString: Untagged
@@ -1851,22 +1829,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &7031943749552781974
-NavMeshObstacle:
+--- !u!65 &4986194461804700468
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9143984443862430030}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 7.431, y: 0.00001, z: 8.776}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 3.38, y: 0, z: -6.3710003}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 14.8621235, y: 0.00000076720585, z: 17.551622}
+  m_Center: {x: 3.3803127, y: -0.00000030271764, z: -6.371413}
 --- !u!1001 &51409344845992443
 PrefabInstance:
   m_ObjectHideFlags: 0

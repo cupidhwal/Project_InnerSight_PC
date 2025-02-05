@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.11666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 601b7cb1a16520340990d4d08b083ed1, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 0075a27a3149b0a4a88ecc396d7ba91d, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &154556504035276440
 GameObject:
@@ -6269,6 +6269,7 @@ GameObject:
   - component: {fileID: 4180006471186089630}
   - component: {fileID: 771035489995885787}
   - component: {fileID: 7889239662713565996}
+  - component: {fileID: 689431264791620378}
   m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
@@ -6366,6 +6367,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!208 &689431264791620378
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8695719362181874911}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5, y: 0.00001, z: 5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8794523347957190170
 GameObject:
   m_ObjectHideFlags: 0
