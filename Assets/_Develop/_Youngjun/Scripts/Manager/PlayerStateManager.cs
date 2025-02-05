@@ -7,7 +7,7 @@ namespace Noah
 {
     public class PlayerStateManager : Singleton<PlayerStateManager>
     {
-        [SerializeField] private InGameUI_PlayerState inGameUI_PlayerState;
+        private InGameUI_PlayerState inGameUI_PlayerState;
 
         public UpGradePlayerdata upGradePlayerdata;
         public StartData startPlayerData;
@@ -39,6 +39,8 @@ namespace Noah
             playerData.ResetData();
             upGradePlayerdata.ResetData();
             upgradeGold.LoadData(playerData.LoadData);
+
+            inGameUI_PlayerState = FindAnyObjectByType<InGameUI_PlayerState>();
 
             ResetData();
 

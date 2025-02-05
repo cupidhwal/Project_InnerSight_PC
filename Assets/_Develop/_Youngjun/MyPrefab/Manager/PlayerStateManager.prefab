@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &609200712017721367
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2594922448308659320}
+  - component: {fileID: 8450958050034000045}
+  m_Layer: 0
+  m_Name: PlayerStateManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2594922448308659320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609200712017721367}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8450958050034000045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609200712017721367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ed9bb62c2df8f442a9ff1ef0d2829ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upGradePlayerdata:
+    hp_UpCount: 1
+    atk_UpCount: 1
+    def_UpCount: 1
+    moveSpeed_UpCount: 1
+    atkSpeed_UpCount: 1
+    hp_Up: 15
+    atk_Up: 3
+    def_Up: 1
+    moveSpeed_Up: 0.2
+    atkSpeed_Up: 0.2
+  startPlayerData:
+    hp_Start: 100
+    atk_Start: 10
+    def_Start: 3
+    moveSpeed_Start: 4
+    atkSpeed_Start: 1
+  upgradeGold:
+    hp_UpgradeGold: 15
+    atk_UpgradeGold: 5
+    def_UpgradeGold: 10
+    moveSpeed_UpgradeGold: 20
+    atkSpeed_UpgradeGold: 20
+  dataList: []
