@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 
 namespace Seti
 {
@@ -16,6 +17,7 @@ namespace Seti
             context.Animator.SetTrigger(Hash_Hurt);
             context.Animator.SetFloat(Hash_HurtFromX, context.Actor.Condition.HitDirection.x);
             context.Animator.SetFloat(Hash_HurtFromY, context.Actor.Condition.HitDirection.z);
+            context.Actor.Controller_Animator.CantMoveDurAtk();
             context.currentState = AniState.Stagger;
         }
 
@@ -23,6 +25,7 @@ namespace Seti
         public override void OnExit()
         {
             base.OnExit();
+            context.Actor.Controller_Animator.CanMoveAfterAtk();
         }
 
         // 상태 전환 조건 메서드

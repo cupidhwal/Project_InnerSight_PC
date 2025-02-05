@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Seti
 {
     public class Condition_Player : Condition_Actor
@@ -24,7 +26,31 @@ namespace Seti
         }
 
         // 플레이어 제어권 여부
-        public void PlayerSetActive(bool inAction) => this.inAction = inAction;
+        public void PlayerSetActive(bool inAction)
+        {
+            this.inAction = inAction;
+
+            // 제어권 박탈 해제 시 초기화
+            if (inAction)
+            {
+                IsGrounded = true;
+                IsStagger = false;
+                IsAttack = false;
+                IsMagic = false;
+                IsMove = false;
+
+                if (TryGetComponent<Controller_Base>(out var controller))
+                {
+                    if (controller.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
+                    {
+                        if (moveBehaviour is Move move)
+                        {
+                            move.OnMove(Vector2.zero, false);
+                        }
+                    }
+                }
+            }
+        }
 
         // 초기 장비 설정
         public void ChangeWeapon(WeaponType weaponType)

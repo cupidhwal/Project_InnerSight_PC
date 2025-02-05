@@ -84,14 +84,14 @@ namespace Seti
         // 스탯 적용
         #region Methods_Stats
         // Load 한 스탯을 적용
-        public void SetStats(float heal, float atk, float def, float r_atk, float r_mov, float stag = 0.5f)
+        public void SetStats(float heal, float atk, float def, float r_atk, float r_mov)
         {
             Update_Health(heal);
             Update_Attack(atk);
             Update_Defend(def);
             Update_Rate_Attack(r_atk);
             Update_Rate_Movement(r_mov);
-            Update_Stagger(stag);
+            Update_Stagger(stagger);
 
             Damagable damagable = GetComponent<Damagable>();
             damagable.ResetDamage();
