@@ -52,6 +52,13 @@ namespace Seti
         [Header("Variables")]
         [SerializeField]
         protected float mag_WalkToRun = 1.5f;
+
+
+
+
+        private NavMeshAgent agent;
+
+
         #endregion
 
         // 속성
@@ -118,6 +125,15 @@ namespace Seti
             if (!TryGetComponent<Controller_Animator>(out var animator))
                 animator = GetComponentInChildren<Controller_Animator>();
             this.animator = animator;
+
+            agent = GetComponent<NavMeshAgent>();
+            agent.updatePosition = false;
+            agent.updateRotation = false;
+        }
+
+        protected virtual void Update()
+        {
+            agent.nextPosition = transform.position;
         }
         #endregion
 
