@@ -98,7 +98,7 @@ namespace Noah
             float downPoint = currentPoint - PlayerStateManager.Instance.UpdatePlayerData()[_index];
 
             // 초기 상태 이하로 감소 불가
-            if (downPoint < curData)
+            if (downPoint < curData && !Mathf.Approximately(downPoint, curData))
             {
                 Debug.Log("더 내려갈 수 없음");
                 return;
