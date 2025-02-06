@@ -173,11 +173,14 @@ namespace Noah
 
                 index = _index;
 
-                if (transform.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+                if (setSkill.skillSlots[_index].rangeType != SkillRangeType.Nomal)
                 {
-                    if (attackBehaviour is Attack attack)
+                    if (transform.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
                     {
-                        attack.isSkillAttack = true;
+                        if (attackBehaviour is Attack attack)
+                        {
+                            attack.isSkillAttack = true;
+                        }
                     }
                 }
             }
@@ -262,8 +265,6 @@ namespace Noah
                     isStartAttack = true;
 
                     skill.Activate();
-
-                  
 
                     if (skill.rangeType == SkillRangeType.Circle)
                     {

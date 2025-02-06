@@ -26,8 +26,6 @@ namespace Noah
 
             if (Physics.Raycast(ray, out hit, 100f, groundLayerMask))
             {
-                Debug.Log(hit.collider.name);
-
                 return hit.point;
             }
 
