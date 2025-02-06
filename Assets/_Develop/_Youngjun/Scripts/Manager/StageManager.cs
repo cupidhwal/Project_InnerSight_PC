@@ -86,12 +86,10 @@ namespace Noah
                 enemys.Add(enemyPar.GetChild(i).gameObject);
             }
 
-            if (currentStage.GetComponent<NavMeshSurface>() != null)
+            if (currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>() != null)
             {
-                currentStage.GetComponent<NavMeshSurface>().enabled = false;
+                currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = false;
             }
-
-            player.transform.position = spawnPoint.position;
         }
 
         public void NextStage()
@@ -130,6 +128,7 @@ namespace Noah
 
             yield return new WaitForSeconds(1f);
 
+            //player.gameObject.SetActive(false);
             player.GetComponent<Rigidbody>().useGravity = false;
 
             if (stageObject.Count == curStage + 1)
@@ -151,6 +150,10 @@ namespace Noah
 
             yield return new WaitForSeconds(1f);
 
+            player.transform.position = spawnPoint.position;
+
+            yield return new WaitForSeconds(0.5f);
+
             SceneFade.instance.FadeIn(null);
 
             player.GetComponent<Condition_Player>().PlayerSetActive(true);
@@ -162,6 +165,8 @@ namespace Noah
                 currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = true;
             }
 
+
+            //player.gameObject.SetActive(true);
             player.GetComponent<Rigidbody>().useGravity = true;
         }
 
