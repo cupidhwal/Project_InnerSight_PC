@@ -30,7 +30,7 @@ namespace Noah
 
             defaultBtn = buttons[0].GetChild(0).GetComponent<Button>();
 
-            EventSystem.current.SetSelectedGameObject(defaultBtn.gameObject);
+            //EventSystem.current.SetSelectedGameObject(defaultBtn.gameObject);
         }
 
         private void OnEnable()
