@@ -6,8 +6,8 @@ namespace Seti
     {
         // 필드
         #region Variables
-        private Attack attack;
         private Look look;
+        private Attack attack;
         #endregion
 
         // 오버라이드
@@ -55,7 +55,7 @@ namespace Seti
             if (!enemy.Detected || enemy.Player.Condition.IsDead)
                 return typeof(Enemy_State_Idle);
 
-            else if (!enemy.CanAttack)
+            else if (!enemy.CanAttack && context.StateMachine.ElapsedTime > enemy.AttackInterval)
                 return typeof(Enemy_State_Chase);
 
             else return null;

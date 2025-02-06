@@ -49,8 +49,7 @@ namespace Seti
         public Vector3 HomePosition { get; private set; }
         public Vector3 AttackDirection { get; private set; }
         public bool Detected => Player && (distancePlayer <= range_Detect);
-        public bool GoAttack => Player && (distancePlayer <= range_Attack);
-        public bool CanAttack => Player && (distancePlayer <= range_Attack * 2f);
+        public bool CanAttack => Player && (distancePlayer <= range_Attack);
         public bool GoBackHome => distancePlace >= range_BackOff;
         public bool TooFarFromHome => distancePlace >= range_BackOff * 2f;
         public bool ImHome => distancePlace <= 1f;

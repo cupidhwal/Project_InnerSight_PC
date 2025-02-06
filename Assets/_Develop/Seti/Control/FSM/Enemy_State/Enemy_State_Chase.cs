@@ -44,7 +44,7 @@ namespace Seti
             if (!enemy.Detected || !enemy.Player)
                 return typeof(Enemy_State_Idle);
 
-            else if (enemy.GoAttack)
+            else if (enemy.CanAttack)
                 return typeof(Enemy_State_Attack);
 
             else return null;

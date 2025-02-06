@@ -162,9 +162,8 @@ namespace Seti
             // 초기 속도 설정 - 가해자 기준
             float elapsedTime = 0f;
             float atkDuration = 0.16f;
-            float currentSpeed = KnockbackCoefficient * 
-                                 antagonist.Rate_Movement_Default * 
-                                 antagonist.Condition.Rigidbody.mass / condition.Rigidbody.mass;
+            float currentSpeed = KnockbackCoefficient *
+                                 antagonist.Rate_Movement_Default;
             while (elapsedTime < atkDuration)
             {
                 elapsedTime += Time.deltaTime;
