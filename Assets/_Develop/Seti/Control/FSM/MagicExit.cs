@@ -13,16 +13,16 @@ namespace Seti
                 actor = animator.GetComponentInParent<Actor>();
             if (actor is not Player player) return;
             this.player = player;
+            
+            // 마법 사용 중에는 이동 금지
+            player.Controller_Animator.CantMoveDurAtk();
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-        override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        {
-            if (player)
-            {
-                player.Controller_Animator.CantMoveDurAtk();
-            }
-        }
+        //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        //{
+        //    
+        //}
 
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
