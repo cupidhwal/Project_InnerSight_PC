@@ -45,6 +45,11 @@ namespace JungBin
             {
                 FirstBossManager.isAttack = enterBoolFir;
             }
+
+            if (enterStateSec == BossState.Attack)
+            {
+                SecondBossManager.isAttack = enterBoolSec;
+            }
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -64,6 +69,11 @@ namespace JungBin
             if (exitStateFir == BossState.Attack)
             {
                 FirstBossManager.isAttack = exitBoolFir;
+            }
+
+            if (exitStateSec == BossState.Attack)
+            {
+                SecondBossManager.isAttack = exitBoolSec;
             }
         }
 
