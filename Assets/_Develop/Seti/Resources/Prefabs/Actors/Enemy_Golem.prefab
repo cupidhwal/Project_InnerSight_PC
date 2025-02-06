@@ -949,15 +949,14 @@ MonoBehaviour:
   blueprint: {fileID: 0}
   condition: {fileID: 0}
   behaviours: []
-  health: 1000
-  attack: 0
+  health: 100
+  attack: 10
   defend: 1
   rate_Attack: 1
   rate_Movement: 4
   stagger: 1
+  mag_WalkToRun: 1.5
   player: {fileID: 0}
-  speed_Walk: 2
-  speed_Run: 3
   currentState: 0
   range_Detect: 7.5
   range_Attack: 1
@@ -1000,6 +999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b28ec21f49bd944a856b7114d784611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KnockbackCoefficient: 4
 --- !u!114 &-8746304351977541504
 MonoBehaviour:
   m_ObjectHideFlags: 0

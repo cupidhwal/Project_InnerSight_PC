@@ -171,7 +171,7 @@ namespace Seti
 
                 // Ease In-Out 적용
                 currentSpeed = Mathf.Lerp(currentSpeed, 0, Mathf.SmoothStep(0f, 1f, t));
-                actor.transform.Translate(currentSpeed * Time.deltaTime * damageMessage.direction.normalized, Space.World);
+                actor.transform.Translate(currentSpeed * Time.deltaTime * antagonist.transform.forward, Space.World);
 
                 yield return null;
             }

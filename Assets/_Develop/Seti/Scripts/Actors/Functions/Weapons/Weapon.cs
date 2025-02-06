@@ -233,7 +233,7 @@ namespace Seti
 
         // 이벤트 메서드
         #region Event Methods
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerStay(Collider other)
         {
             if (!m_InAttack) return;
 

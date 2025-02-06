@@ -53,7 +53,7 @@ namespace Seti
             // 초기 속도 설정
             float elapsedTime = 0f;
             float atkDuration = 0.16f;
-            float currentSpeed = player.Rate_Movement_Default * 2f;
+            float currentSpeed = player.Rate_Movement_Default * 2.5f;
             while (actor.Condition.InAction && elapsedTime < atkDuration)
             {
                 elapsedTime += Time.deltaTime;
