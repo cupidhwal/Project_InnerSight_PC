@@ -16,13 +16,17 @@ namespace Seti
 
         // 필드
         #region Variables
-        [Header("Variables")]
+        [Header("Variables: Attack")]
         [SerializeField]
-        protected float dashSpeed = 20f;
+        private float attackProgressive = 2.5f;
+
+        [Header("Variables: Dash")]
         [SerializeField]
-        protected float dashDuration = 0.667f;
+        private float dashSpeed = 20f;
         [SerializeField]
-        protected float dashCooldown = 1f;
+        private float dashDuration = 0.667f;
+        [SerializeField]
+        private float dashCooldown = 1f;
 
         [Header("View Type")]
         [SerializeField]
@@ -32,7 +36,8 @@ namespace Seti
 
         // 속성
         #region Properties
-        // 스탯
+        // Player 전용
+        public float AttackProgressive => attackProgressive;
         public float Dash_Speed => dashSpeed;
         public float Dash_Cooldown => dashCooldown;
         public float Dash_Duration => dashDuration;
