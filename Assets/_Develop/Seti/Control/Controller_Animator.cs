@@ -1,3 +1,5 @@
+using Noah;
+using Unity.VisualScripting;
 using UnityEngine;
 namespace Seti
 {
@@ -23,6 +25,8 @@ namespace Seti
 
         [SerializeField]
         private bool canMove = true;
+
+        PlayerUseSkill useSkill;
         #endregion
 
         // 속성
@@ -73,6 +77,8 @@ namespace Seti
 
             // 상태 추가
             AddStates();
+
+            useSkill = transform.parent.GetComponent<PlayerUseSkill>();
         }
 
         private void Update()
@@ -166,5 +172,11 @@ namespace Seti
             return 0f;
         }
         #endregion
+
+        // 스킬 애니메이션 실행
+        public void UseSkill()
+        {
+            useSkill.UseSkillAnimation();
+        }
     }
 }
