@@ -57,7 +57,7 @@ namespace JungBin
         {
             if (animator.GetBool(isFlyToPlayer) == true)
             {
-                StartCoroutine(FlyToTarget(player.position, 1.5f));  // 1.5초 동안 이동
+                StartCoroutine(FlyToTarget(player.position, 0.3f));  // 1.5초 동안 이동
             }
             if(animator.GetBool(isFlyNotToPlayer) == true)
             {
@@ -149,24 +149,24 @@ namespace JungBin
             }
 
             // 목표 위치로 이동 시작
-            StartCoroutine(MoveToTarget(targetPosition, 1.5f));
+            StartCoroutine(MoveToTarget(targetPosition, 0.3f));
             animator.SetBool(isFlyNotToPlayer, false);
         }
 
         // 왼쪽 이동 위치 계산
         private Vector3 CalculateLeftMovement()
         {
-            Vector3 directionToPlayer = (player.position - transform.position).normalized; // 플레이어 방향 계산
-            Vector3 leftDirection = Vector3.Cross(directionToPlayer, Vector3.up).normalized; // 왼쪽 방향 계산
-            return transform.position + leftDirection * stopDistance; // 왼쪽 목표 위치 반환
+            Vector3 directionToPlayer = player.position - transform.position; // 플레이어 방향 계산
+            Vector3 leftDirection = Vector3.Cross(directionToPlayer.normalized, Vector3.up).normalized; // 왼쪽 방향 계산
+            return transform.position + leftDirection * directionToPlayer.magnitude; // 왼쪽 목표 위치 반환
         }
 
         // 오른쪽 이동 위치 계산
         private Vector3 CalculateRightMovement()
         {
-            Vector3 directionToPlayer = (player.position - transform.position).normalized; // 플레이어 방향 계산
-            Vector3 rightDirection = -Vector3.Cross(directionToPlayer, Vector3.up).normalized; // 오른쪽 방향 계산
-            return transform.position + rightDirection * stopDistance; // 오른쪽 목표 위치 반환
+            Vector3 directionToPlayer =  player.position - transform.position; // 플레이어 방향 계산
+            Vector3 rightDirection = -Vector3.Cross(directionToPlayer.normalized, Vector3.up).normalized; // 오른쪽 방향 계산
+            return transform.position + rightDirection * directionToPlayer.magnitude; // 오른쪽 목표 위치 반환
         }
 
         // 장애물이 있는지 확인하는 함수
