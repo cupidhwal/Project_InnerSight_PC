@@ -157,23 +157,26 @@ namespace Seti
             condition.HitDirection = damageMessage.direction.normalized;
 
             // 가해자
-            Actor antagonist = damageMessage.owner.GetComponent<Actor>();
-
-            // 초기 속도 설정 - 가해자 기준
-            float elapsedTime = 0f;
-            float atkDuration = 0.16f;
-            float currentSpeed = KnockbackCoefficient *
-                                 antagonist.Rate_Movement_Default;
-            while (elapsedTime < atkDuration)
+            if (damageMessage.owner)
             {
-                elapsedTime += Time.deltaTime;
-                float t = elapsedTime / atkDuration;
+                Actor antagonist = damageMessage.owner.GetComponent<Actor>();
 
-                // Ease In-Out 적용
-                currentSpeed = Mathf.Lerp(currentSpeed, 0, Mathf.SmoothStep(0f, 1f, t));
-                actor.transform.Translate(currentSpeed * Time.deltaTime * antagonist.transform.forward, Space.World);
+                // 초기 속도 설정 - 가해자 기준
+                float elapsedTime = 0f;
+                float atkDuration = 0.16f;
+                float currentSpeed = KnockbackCoefficient *
+                                     antagonist.Rate_Movement_Default;
+                while (elapsedTime < atkDuration)
+                {
+                    elapsedTime += Time.deltaTime;
+                    float t = elapsedTime / atkDuration;
 
-                yield return null;
+                    // Ease In-Out 적용
+                    currentSpeed = Mathf.Lerp(currentSpeed, 0, Mathf.SmoothStep(0f, 1f, t));
+                    actor.transform.Translate(currentSpeed * Time.deltaTime * antagonist.transform.forward, Space.World);
+
+                    yield return null;
+                }
             }
 
             yield break;
