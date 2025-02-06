@@ -64,9 +64,16 @@ namespace Noah
         {
             skillUI = FindAnyObjectByType<InGameUI_Skill>().transform;
             setSkill = skillUI.GetComponent<InGameUI_Skill>();
+        }
 
-            //skillRange_Circle = transform.GetChild(0).gameObject;
-            //skillRange_Cube = transform.GetChild(1).gameObject;
+        public void UseSkillAnimation()
+        {
+            //UsePlayerSkill(index);
+            if (setSkill.skillSlots[index] != null && setSkill.skillSlots[index].isSkillOn)
+            {
+                UseSkill(() => setSkill.skillSlots[index]);
+                StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[index], setSkill.skillUIList[index]));
+            }
         }
 
         void UsePlayerSkill(int _index)
@@ -76,22 +83,22 @@ namespace Noah
                 isReadySkill = false;
                 isChange = false;
 
-                if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
-                {
-                    UseSkill(() => setSkill.skillSlots[_index]);
-                    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[_index], setSkill.skillUIList[_index]));
-                }
+                //if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
+                //{
+                //    UseSkill(() => setSkill.skillSlots[_index]);
+                //    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[_index], setSkill.skillUIList[_index]));
+                //}
             }
             else if(setSkill.skillSlots[_index].rangeType == SkillRangeType.Nomal)
             {
                 isReadySkill = false;
                 isChange = false;
 
-                if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
-                {
-                    UseSkill(() => setSkill.skillSlots[_index]);
-                    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[_index], setSkill.skillUIList[_index]));
-                }
+                //if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
+                //{
+                //    UseSkill(() => setSkill.skillSlots[_index]);
+                //    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[_index], setSkill.skillUIList[_index]));
+                //}
             }
 
         }
