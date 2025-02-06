@@ -1,5 +1,7 @@
 using Seti;
 using System;
+using System.Reflection;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace Noah
@@ -24,6 +26,9 @@ namespace Noah
         public float rotationSpeed = 100f; // 회전 속도
 
         public float y_SkillRot = 100f;
+
+        Vector3 skillPos = Vector3.zero;
+        Quaternion yOnlyRotation;
 
         InGameUI_Skill setSkill;
 
@@ -83,6 +88,14 @@ namespace Noah
                 isReadySkill = false;
                 isChange = false;
 
+                if (effectGo != null)
+                {
+                    effectGo.SetActive(false);
+                    effectGo = null;
+                }
+
+                SkillPosition();
+
                 //if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
                 //{
                 //    UseSkill(() => setSkill.skillSlots[_index]);
@@ -94,11 +107,11 @@ namespace Noah
                 isReadySkill = false;
                 isChange = false;
 
-                //if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
-                //{
-                //    UseSkill(() => setSkill.skillSlots[_index]);
-                //    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[_index], setSkill.skillUIList[_index]));
-                //}
+                if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
+                {
+                    UseSkill(() => setSkill.skillSlots[_index]);
+                    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[_index], setSkill.skillUIList[_index]));
+                }
             }
 
         }
@@ -216,6 +229,28 @@ namespace Noah
             }
         }
 
+        void SkillPosition()
+        {
+            // Y축 회전만 적용
+            Quaternion fullRotation = RayManager.Instance.UpdateSkillRangeRotation();
+            Vector3 eulerRotation = fullRotation.eulerAngles; // 모든 축의 회전 값 가져오기
+            yOnlyRotation = Quaternion.Euler(0f, eulerRotation.y, 0f); // Y축 회전만 적용
+
+            if (setSkill.skillSlots[index].rangeType == SkillRangeType.Circle)
+            {
+                skillPos = new Vector3(RayManager.Instance.RayToScreen().x, RayManager.Instance.RayToScreen().y + setSkill.skillSlots[index].skillPos.y, RayManager.Instance.RayToScreen().z);
+      
+            }
+            else if (setSkill.skillSlots[index].rangeType == SkillRangeType.Cube)
+            {
+                float yRot;
+
+                yRot = transform.position.z + setSkill.skillSlots[index].skillPos.z;
+                skillPos = new Vector3(transform.position.x + setSkill.skillSlots[index].skillPos.x, RayManager.Instance.RayToScreen().y + setSkill.skillSlots[index].skillPos.y, yRot);
+
+            }
+        }
+
         void UseSkill(Func<SkillBase> factoryMethod, Transform _parent = null)
         {
             SkillBase skill = factoryMethod();
@@ -227,19 +262,11 @@ namespace Noah
                     isStartAttack = true;
 
                     skill.Activate();
-                    //animator.SetBool("isSkill", true);
 
-                    Vector3 skillPos = Vector3.zero;
-
-                    // Y축 회전만 적용
-                    Quaternion fullRotation = RayManager.Instance.UpdateSkillRangeRotation();
-                    Vector3 eulerRotation = fullRotation.eulerAngles; // 모든 축의 회전 값 가져오기
-                    Quaternion yOnlyRotation = Quaternion.Euler(0f, eulerRotation.y, 0f); // Y축 회전만 적용
+                  
 
                     if (skill.rangeType == SkillRangeType.Circle)
                     {
-                        skillPos = new Vector3(RayManager.Instance.RayToScreen().x, RayManager.Instance.RayToScreen().y + skill.skillPos.y, RayManager.Instance.RayToScreen().z);
-
                         skillef = Instantiate(skill.skillPrefab, skillPos, skill.skillPrefab.transform.rotation);
                     }
                     else if (skill.rangeType == SkillRangeType.Cube)
@@ -263,11 +290,7 @@ namespace Noah
                     StartCoroutine(skill.SkillCoolTime());
                     Destroy(skillef, skill.skillAtkTime);
 
-                    if(effectGo != null)
-                    {
-                        effectGo.SetActive(false);
-                        effectGo = null;
-                    }
+
                 }
 
             }

@@ -157,7 +157,7 @@ namespace Noah
 
             player.GetComponent<Condition_Player>().PlayerSetActive(true);
             player.GetComponent<PlayerUseSkill>().enabled = true;
-            player.GetComponent<NavMeshAgent>().enabled = true;
+
 
             if (currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>() != null)
             {
@@ -170,8 +170,12 @@ namespace Noah
 
             player.GetComponent<Rigidbody>().useGravity = true;
 
+            yield return new WaitForSeconds(0.5f);
+
+            player.GetComponent<NavMeshAgent>().enabled = true;
 
             SceneFade.instance.FadeIn(null);
+
         }
 
         public void EnemyCount(GameObject _enemy)
