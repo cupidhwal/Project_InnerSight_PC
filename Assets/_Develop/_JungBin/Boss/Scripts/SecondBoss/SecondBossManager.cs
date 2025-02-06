@@ -10,6 +10,9 @@ namespace JungBin
     {
         #region Variables
 
+        [SerializeField] private float bossFlyTime = 0.7f;
+        [SerializeField] private float turnSpeed = 30;              //보스의 회전 속도
+        [SerializeField] private float detectionRange = 5f; //  최대 감지 거리
 
         private int lastAttack = -1;
         public static bool isAttack { get; set; } = false; // 공격중인지 여부
@@ -29,6 +32,8 @@ namespace JungBin
         private string Idle = "Idle";
         private string isFlyToPlayer = "IsFlyTP";
         private string isFlyNotToPlayer = "IsFlyNTP";
+        private string isFar = "IsFar";
+        private string isRun = "IsRun";
         #endregion
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -55,14 +60,53 @@ namespace JungBin
         // Update is called once per frame
         void Update()
         {
+            Vector3 direction = player.position - transform.position;
+            float distance = direction.magnitude;
+            if (!isAttack)
+            {
+                RotateTowardsPlayer(direction);
+            }
+
+            ManageDistanceToPlayer(distance);
+
+            if (animator.GetBool(isRun) == true)
+            {
+                //animator.applyRootMotion = false; // Root Motion 비활성화
+                navMeshAgent.enabled = true;
+                if (navMeshAgent.enabled == true)
+                {
+                    navMeshAgent.SetDestination(player.position);
+                }
+            }
+            else if (animator.GetBool(isRun) == false)
+            {
+                navMeshAgent.enabled = false;
+                // animator.applyRootMotion = true; // Root Motion 활성화
+            }
+
+
             if (animator.GetBool(isFlyToPlayer) == true)
             {
-                StartCoroutine(FlyToTarget(player.position, 0.3f));  // 1.5초 동안 이동
+                StartCoroutine(FlyToTarget(player.position, bossFlyTime));  // 1.5초 동안 이동
             }
             if(animator.GetBool(isFlyNotToPlayer) == true)
             {
                 StartFlightPattern();
             }
+        }
+
+        #region 일반적인 상태
+
+        private void RotateTowardsPlayer(Vector3 direction) // 보스의 회전
+        {
+            Vector3 flatDirection = new Vector3(direction.x, 0, direction.z).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(flatDirection);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+        }
+
+        private void ManageDistanceToPlayer(float distance) // 거리가 멀어질경우 보스의 이동
+        {
+            animator.SetBool(isFar, distance > detectionRange);
         }
 
         public void SelectNextAttack()  //보스의 공격 패턴 결정(연속으로 같은 공격이 나오지는 않음)
@@ -83,6 +127,8 @@ namespace JungBin
             animator.SetBool(Idle, false);
         }
 
+        #endregion
+
         #region 플레이어에게 이동하는 비행 상태
         private IEnumerator FlyToTarget(Vector3 targetPosition, float duration)
         {
@@ -99,7 +145,7 @@ namespace JungBin
                 yield return null;
             }
 
-            transform.position = targetPosition; // 최종적으로 정확한 위치로 이동
+            //transform.position = targetPosition; // 최종적으로 정확한 위치로 이동
             animator.SetBool(isFlyToPlayer, false);
         }
         #endregion
@@ -149,7 +195,7 @@ namespace JungBin
             }
 
             // 목표 위치로 이동 시작
-            StartCoroutine(MoveToTarget(targetPosition, 0.3f));
+            StartCoroutine(MoveToTarget(targetPosition, bossFlyTime));
             animator.SetBool(isFlyNotToPlayer, false);
         }
 
@@ -157,7 +203,7 @@ namespace JungBin
         private Vector3 CalculateLeftMovement()
         {
             Vector3 directionToPlayer = player.position - transform.position; // 플레이어 방향 계산
-            Vector3 leftDirection = Vector3.Cross(directionToPlayer.normalized, Vector3.up).normalized; // 왼쪽 방향 계산
+            Vector3 leftDirection = Quaternion.Euler(0, -45, 0) * directionToPlayer.normalized;
             return transform.position + leftDirection * directionToPlayer.magnitude; // 왼쪽 목표 위치 반환
         }
 
@@ -165,7 +211,7 @@ namespace JungBin
         private Vector3 CalculateRightMovement()
         {
             Vector3 directionToPlayer =  player.position - transform.position; // 플레이어 방향 계산
-            Vector3 rightDirection = -Vector3.Cross(directionToPlayer.normalized, Vector3.up).normalized; // 오른쪽 방향 계산
+            Vector3 rightDirection = Quaternion.Euler(0, 45, 0) * directionToPlayer.normalized;
             return transform.position + rightDirection * directionToPlayer.magnitude; // 오른쪽 목표 위치 반환
         }
 
