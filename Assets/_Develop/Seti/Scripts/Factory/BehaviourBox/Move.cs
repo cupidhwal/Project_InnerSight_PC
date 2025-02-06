@@ -294,6 +294,8 @@ namespace Seti
 
             // 충돌 확인 재개
             collider.excludeLayers = LayerMask.GetMask("Nothing");
+
+            yield break;
         }
         #endregion
     }

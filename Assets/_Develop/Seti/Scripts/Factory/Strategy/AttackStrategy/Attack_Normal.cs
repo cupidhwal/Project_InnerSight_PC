@@ -65,6 +65,8 @@ namespace Seti
 
                 yield return null;
             }
+
+            yield break;
         }
 
         private void Attack_Staff()

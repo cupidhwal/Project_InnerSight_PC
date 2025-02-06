@@ -35,6 +35,7 @@ namespace Seti
 
         // 속성
         #region Properties
+        public Rigidbody Rigidbody { get; private set; }
         public Weapon CurrentWeapon => currentWeapon;
         public bool InAction => inAction;
         public bool IsGrounded { get; protected set; }
@@ -53,6 +54,8 @@ namespace Seti
         #region Life Cycle
         protected virtual void Start()
         {
+            Rigidbody = GetComponent<Rigidbody>();
+
             // Damagable 클래스가 존재하면 상태 전환 리스너 구독
             if (TryGetComponent<Damagable>(out var damagable))
             {

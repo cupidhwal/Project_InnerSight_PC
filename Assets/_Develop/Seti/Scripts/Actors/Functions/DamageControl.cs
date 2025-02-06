@@ -1,5 +1,6 @@
-using Noah;
+using System.Collections;
 using UnityEngine;
+using Noah;
 using Yoon;
 
 namespace Seti
@@ -8,8 +9,14 @@ namespace Seti
     {
         // 필드
         #region Variables
+        private Actor actor;
+
         // 데미지 처리
         protected Damagable m_Damagable;
+
+        [Header("Criteria: Hit")]
+        [SerializeField]
+        private float KnockbackCoefficient = 4f;
         #endregion
 
         // 인터페이스
@@ -56,6 +63,8 @@ namespace Seti
         #region Life Cycle
         private void OnEnable()
         {
+            actor = GetComponent<Actor>();
+
             m_Damagable = GetComponent<Damagable>();
             m_Damagable.OnDamageMessageReceivers.Add(this);
             m_Damagable.IsInvulnerable = true;
@@ -73,14 +82,11 @@ namespace Seti
         // 데미지 처리, 애니메이션, 연출, ...
         void Damaged(Damagable.DamageMessage damageMessage)
         {
-            // TODO
-            //Debug.Log($"{damageMessage.owner.name}로부터 {damageMessage.amount}의 데미지를 입었습니다.");
-
             // 참조
-            if (GetComponent<Actor>())
+            if (actor)
             {
-                Condition_Actor condition = GetComponent<Condition_Actor>();
-                condition.HitDirection = damageMessage.direction.normalized;
+                // 넉백 기능
+                Knockback(Knockback(damageMessage));
             }
 
             if (TryGetComponent<DamageText>(out var damageText))
@@ -92,9 +98,6 @@ namespace Seti
         // 사망 처리, 애니메이션, 연출, ...
         void Die(Damagable.DamageMessage damageMessage)
         {
-            // TODO
-            //Debug.Log($"{damageMessage.owner.name}의 공격으로 사망하였습니다.");
-
             // 최후의 데미지
             if (TryGetComponent<DamageText>(out var damageText))
             {
@@ -111,9 +114,9 @@ namespace Seti
             }
 
             // 이동 속도를 확실하게 제거
-            if (TryGetComponent<Actor>(out var actor))
+            if (actor)
             {
-                Controller_Base controller = actor.GetComponent<Controller_Base>();
+                Controller_Base controller = GetComponent<Controller_Base>();
                 if (controller.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
                 {
                     if (moveBehaviour is Move move)
@@ -136,5 +139,45 @@ namespace Seti
                 .ToList();
         }*/
         #endregion
+
+        // 유틸리티
+        // 넉백
+        private void Knockback(IEnumerator knockbackCor)
+        {
+            StopAllCoroutines();
+            StartCoroutine(knockbackCor);
+        }
+        IEnumerator Knockback(Damagable.DamageMessage damageMessage)
+        {
+            // 애니메이션의 Root Motion을 쓰지 않을 경우에만 실행
+            if (actor.Controller_Animator.Animator.applyRootMotion) yield break;
+
+            // 피해자
+            Condition_Actor condition = GetComponent<Condition_Actor>();
+            condition.HitDirection = damageMessage.direction.normalized;
+
+            // 가해자
+            Actor antagonist = damageMessage.owner.GetComponent<Actor>();
+
+            // 초기 속도 설정 - 가해자 기준
+            float elapsedTime = 0f;
+            float atkDuration = 0.16f;
+            float currentSpeed = KnockbackCoefficient * 
+                                 antagonist.Rate_Movement_Default * 
+                                 antagonist.Condition.Rigidbody.mass / condition.Rigidbody.mass;
+            while (elapsedTime < atkDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = elapsedTime / atkDuration;
+
+                // Ease In-Out 적용
+                currentSpeed = Mathf.Lerp(currentSpeed, 0, Mathf.SmoothStep(0f, 1f, t));
+                actor.transform.Translate(currentSpeed * Time.deltaTime * damageMessage.direction.normalized, Space.World);
+
+                yield return null;
+            }
+
+            yield break;
+        }
     }
 }

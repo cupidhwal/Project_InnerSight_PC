@@ -60,6 +60,8 @@ namespace Seti
 
                 yield return null;
             }
+
+            yield break;
         }
 
         public void MoveExit()
