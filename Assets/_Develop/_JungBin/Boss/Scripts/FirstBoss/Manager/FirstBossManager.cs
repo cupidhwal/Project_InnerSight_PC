@@ -16,7 +16,7 @@ namespace JungBin
         [Header("Attack Settings")]
         [SerializeField] private GameObject rushAttackBox;          //돌진시 켜지는 콜라이더 오브젝트
         [SerializeField] private BoxCollider throwAttackBox;        //던질때 켜지는 콜라이더
-        [SerializeField] private GameObject attackBox;            //기본 공격시 켜지는 콜라이더
+        [SerializeField] private GameObject smashAttackBox;            //기본 공격시 켜지는 콜라이더
         [SerializeField] private ParticleSystem slashAttack;
 
 
@@ -180,9 +180,14 @@ namespace JungBin
 
         public void OnAttackBox()
         {
-            attackBox.SetActive(!attackBox.activeSelf);
+            smashAttackBox.SetActive(true);
             slashAttack.gameObject.SetActive(!slashAttack.gameObject.activeSelf);
             slashAttack.Play();
+        }
+
+        public void OffAttackBox()
+        {
+            smashAttackBox.SetActive(false);
         }
         #endregion
 
