@@ -54,5 +54,10 @@ namespace Seti
         #region Override
         protected override Condition_Actor CreateState() => gameObject.AddComponent<Condition_Player>();
         #endregion
+
+        public void DashSpeed(float speed)
+        {
+            dashSpeed = speed;
+        }
     }
 }

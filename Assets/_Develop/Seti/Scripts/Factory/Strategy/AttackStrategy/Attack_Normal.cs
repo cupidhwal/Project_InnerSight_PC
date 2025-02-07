@@ -56,6 +56,8 @@ namespace Seti
             float currentSpeed = player.Rate_Movement_Default * player.AttackProgressive;
             while (actor.Condition.InAction && elapsedTime < atkDuration)
             {
+                Debug.Log($"평타 전진");
+
                 elapsedTime += Time.deltaTime;
                 float t = elapsedTime / atkDuration;
 
