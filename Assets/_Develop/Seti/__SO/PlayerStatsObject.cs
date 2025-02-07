@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Seti
 {
-    [CreateAssetMenu(fileName = "PlayerStatsObject", menuName = "Scriptable Objects/PlayerStatsObject")]
+    [CreateAssetMenu(fileName = "PlayerStatsObject", menuName = "Scriptable Objects/PlayerStatus")]
     public class PlayerStatsObject : ScriptableObject
     {
         public float hp = 100f;
