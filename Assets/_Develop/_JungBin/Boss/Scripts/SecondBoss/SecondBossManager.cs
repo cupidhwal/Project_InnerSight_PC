@@ -139,7 +139,7 @@ namespace JungBin
             {
                 elapsedTime += Time.deltaTime;
                 float t = elapsedTime / duration;
-                t = Mathf.Sin(t * Mathf.PI * 0.5f); // 출발 빠르고, 도착할수록 느려짐
+                t = Mathf.Sin(t * Mathf.PI * 0.5f); // 출발 빠르고, 도착할수록 느려짐    
 
                 transform.position = Vector3.Lerp(startPosition, targetPosition, t);
                 yield return null;
