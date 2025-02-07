@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Seti;
 
 namespace Noah
 {
@@ -45,6 +46,19 @@ namespace Noah
         private float def;
         private float moveSpeed;
         private float atkSpeed;
+
+        /*private PlayerStatsObject playerStats;
+        public PlayerStatsObject PlayerStats
+        {
+            get
+            {
+                if (playerStats == null)
+                {
+                    playerStats = ScriptableObject.CreateInstance<PlayerStatsObject>();
+                }
+                return playerStats;
+            }
+        }*/
 
         private bool loadData = false;
 
