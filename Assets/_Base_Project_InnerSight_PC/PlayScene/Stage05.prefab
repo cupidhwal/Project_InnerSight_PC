@@ -13798,19 +13798,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 415862668565023056, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
       propertyPath: m_Size.y
-      value: 10
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 415862668565023056, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
       propertyPath: m_Size.z
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 955289352713359935, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
-      propertyPath: maxHealth
-      value: 2000
+    - target: {fileID: 471615966543966290, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
+      propertyPath: m_Size.y
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 955289352713359935, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
-      propertyPath: bossAttack
-      value: 30
+    - target: {fileID: 471615966543966290, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
+      propertyPath: m_Size.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 955289352713359935, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
       propertyPath: bossHealthBarUI
@@ -13820,10 +13820,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4026966746025827601, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
-      propertyPath: maxHitPoints
-      value: 2000
-      objectReference: {fileID: 0}
+    - target: {fileID: 5662833438431564929, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
+      propertyPath: BossHealthBarSlider
+      value: 
+      objectReference: {fileID: 2540222525918942776}
     - target: {fileID: 8534702748219211686, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 27.88
@@ -13871,34 +13871,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9023676823113278748, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8889790009118805684}
-    - targetCorrespondingSourceObject: {fileID: 423052819989458645, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4247191159924147992}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
---- !u!1 &3687999492631322682 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9023676823113278748, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
-  m_PrefabInstance: {fileID: 5626383232435733798}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8889790009118805684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3687999492631322682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b7fe3a0f19b7ad45a25cc31565cc811, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BossHealthBarSlider: {fileID: 2540222525918942776}
-  targetHealth: 0
-  lerpSpeed: 0.5
 --- !u!4 &4063855806698502784 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8534702748219211686, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
@@ -13909,27 +13883,10 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 955289352713359935, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
   m_PrefabInstance: {fileID: 5626383232435733798}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3687999492631322682}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1226a622e1c69d4dbcfd8013d804476, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &5461197225247452147 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 423052819989458645, guid: 1b5ff8b4a5dfc3a49a02e823716ed72e, type: 3}
-  m_PrefabInstance: {fileID: 5626383232435733798}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4247191159924147992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5461197225247452147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89d68840cd35c46468d43a4b687b8ec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5638294637326696749

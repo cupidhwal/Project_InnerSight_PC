@@ -9,6 +9,7 @@ namespace JungBin
     public class AttackBox : MonoBehaviour
     {
         [SerializeField] private Vector3 attackDirection;  // 공격 방향 (옵션)
+        private BoxCollider boxCollider;
 
         private void OnTriggerEnter(Collider other)
         {
