@@ -196,7 +196,7 @@ namespace JungBin
         private bool DetectWall()    // 시야에 벽이 있으면 불값 리턴
         {
             Vector3 directionToWall = transform.forward; // 보스의 정면 방향
-            float detectionRange = 1f; // 감지 거리
+            float detectionRange = 1.5f; // 감지 거리
 
             // 레이캐스트로 충돌 객체 확인
             if (Physics.Raycast(transform.position, directionToWall, out RaycastHit hit, detectionRange))
