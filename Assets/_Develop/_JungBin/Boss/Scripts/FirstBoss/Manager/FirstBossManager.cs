@@ -98,7 +98,7 @@ namespace JungBin
                 navMeshAgent.enabled = false;
                 // animator.applyRootMotion = true; // Root Motion 활성화
             }
-            ManageAttackBoxes();
+            //ManageAttackBoxes();
 
 
             if (animator.GetBool("IsAttack02") == true)
@@ -173,10 +173,9 @@ namespace JungBin
             animator.SetBool("Idle", false);
         }
 
-        private void ManageAttackBoxes()    //공격시의 콜라이더 활성화
+        public void ManageAttackBoxes()    //공격시의 콜라이더 활성화
         {
             rushAttackBox.SetActive(animator.GetBool("IsAttack02"));
-            throwAttackBox.enabled = animator.GetBool("IsAttack03");
         }
 
         public void OnAttackBox()

@@ -36,6 +36,7 @@ namespace JungBin
 
                 // 플레이어에게 데미지 적용
                 playerDamagable.TakeDamage(damageMessage);
+                this.gameObject.SetActive(false);
             }
         }
     }
