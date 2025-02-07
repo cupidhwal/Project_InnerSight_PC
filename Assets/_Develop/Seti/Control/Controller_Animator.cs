@@ -144,12 +144,20 @@ namespace Seti
         {
             Actor.Condition.CurrentWeapon.BeginAttack(throwing != 0);
             Actor.Condition.IsAttack = true;
+
+            if (Actor.Controller.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+                if (attackBehaviour is Attack attack)
+                    attack.OnAttackEnter();
         }
 
         public void MeleeAttackEnd()
         {
             Actor.Condition.CurrentWeapon.EndAttack();
             Actor.Condition.IsAttack = false;
+
+            if (Actor.Controller.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+                if (attackBehaviour is Attack attack)
+                    attack.OnAttackExit();
         }
 
         public void CantMoveDurAtk() => canMove = false;

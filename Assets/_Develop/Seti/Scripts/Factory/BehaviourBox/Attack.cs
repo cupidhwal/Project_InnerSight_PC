@@ -226,16 +226,7 @@ namespace Seti
         public void OnAttack(bool isAttack = true)
         {
             if (!condition.InAction) return;
-
             actor.Controller_Animator.IsAttack = isAttack;
-            if (isAttack)
-            {
-                OnAttackEnter();
-            }
-            else
-            {
-                OnAttackExit();
-            }
         }
 
         public void OnAttackEnter()

@@ -26,6 +26,9 @@ namespace Seti
         protected Condition_Actor condition;
         [SerializeField]
         [HideInInspector]
+        protected Controller_Base controller;
+        [SerializeField]
+        [HideInInspector]
         protected List<Behaviour> behaviours = new();         // [직렬화 된 필드 - 읽기 전용 속성] 구조가 아니면 작동하지 않는다
 
         // 일반
@@ -59,6 +62,7 @@ namespace Seti
         public Blueprint_Actor Origin => blueprint;
         public Condition_Actor Condition => condition;
         public List<Behaviour> Behaviours => behaviours;
+        public Controller_Base Controller => controller;
         public Controller_Animator Controller_Animator => animator;
 
         // 스탯 Default
@@ -118,6 +122,8 @@ namespace Seti
             if (!TryGetComponent<Controller_Animator>(out var animator))
                 animator = GetComponentInChildren<Controller_Animator>();
             this.animator = animator;
+
+            controller = GetComponent<Controller_Base>();
         }
         #endregion
 

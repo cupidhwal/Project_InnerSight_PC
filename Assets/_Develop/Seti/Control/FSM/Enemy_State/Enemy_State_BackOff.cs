@@ -18,7 +18,10 @@ namespace Seti
             enemy.SwitchState(Enemy.State.BackHome);
 
             if (damagable)
+            {
                 damagable.IsInvulnerable = true;
+                damagable.OnReceiveDamage += ReturnToChase;
+            }
         }
 
         // 상태 전환 시 State Exit에 1회 실행
@@ -27,7 +30,10 @@ namespace Seti
             base.OnExit();
 
             if (damagable)
+            {
                 damagable.IsInvulnerable = false;
+                damagable.OnReceiveDamage -= ReturnToChase;
+            }
         }
 
         // 상태 전환 조건 메서드
@@ -65,6 +71,11 @@ namespace Seti
             Vector2 enemyPos = Camera.main.WorldToScreenPoint(enemy.transform.position);
             Vector2 homePos = Camera.main.WorldToScreenPoint(enemy.HomePosition);
             moveInput = homePos - enemyPos;
+        }
+
+        private void ReturnToChase()
+        {
+            context.StateMachine.ChangeState<Enemy_State_Chase>();
         }
         #endregion
     }

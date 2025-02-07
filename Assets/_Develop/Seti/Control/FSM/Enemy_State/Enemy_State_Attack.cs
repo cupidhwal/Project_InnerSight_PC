@@ -49,14 +49,14 @@ namespace Seti
             if (damagable.CurrentHitPoints <= 0)
                 return typeof(Enemy_State_Dead);
 
-            if (!condition.InAction)
+            else if (!condition.InAction)
                 return typeof(Enemy_State_Stagger);
 
-            if (!enemy.Detected || enemy.Player.Condition.IsDead)
-                return typeof(Enemy_State_Idle);
-
-            else if (!enemy.CanAttack && context.StateMachine.ElapsedTime > enemy.AttackInterval)
+            else if (enemy.Detected && !enemy.CanAttack && context.StateMachine.ElapsedTime > enemy.AttackInterval)
                 return typeof(Enemy_State_Chase);
+
+            else if (!enemy.Detected || enemy.Player.Condition.IsDead)
+                return typeof(Enemy_State_Idle);
 
             else return null;
         }

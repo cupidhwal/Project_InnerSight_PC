@@ -42,11 +42,11 @@ namespace Seti
             if (damagable.CurrentHitPoints <= 0)
                 return typeof(Enemy_State_Dead);
 
-            if (enemy.GoBackHome && context.StateMachine.ElapsedTime > elapsedDuration)
-                return typeof(Enemy_State_BackOff);
-
-            if (enemy.Detected && context.StateMachine.ElapsedTime > elapsedDuration)
+            else if (enemy.Detected && context.StateMachine.ElapsedTime > elapsedDuration)
                 return typeof(Enemy_State_Chase);
+
+            else if (!enemy.Detected && enemy.GoBackHome && context.StateMachine.ElapsedTime > elapsedDuration)
+                return typeof(Enemy_State_BackOff);
 
             else if (!enemy.Detected && context.StateMachine.ElapsedTime > elapsedDuration)
                 return typeof(Enemy_State_Idle);
