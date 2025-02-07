@@ -36,7 +36,7 @@ namespace Noah
             player = GameObject.FindWithTag("Player");
             actor = player.GetComponent<Actor>();
 
-            playerData.ResetData();
+            //playerData.ResetData();
             upGradePlayerdata.ResetData();
             upgradeGold.LoadData(playerData.LoadData);
 

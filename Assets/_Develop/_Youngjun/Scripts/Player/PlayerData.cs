@@ -47,19 +47,6 @@ namespace Noah
         private float moveSpeed;
         private float atkSpeed;
 
-        /*private PlayerStatsObject playerStats;
-        public PlayerStatsObject PlayerStats
-        {
-            get
-            {
-                if (playerStats == null)
-                {
-                    playerStats = ScriptableObject.CreateInstance<PlayerStatsObject>();
-                }
-                return playerStats;
-            }
-        }*/
-
         private bool loadData = false;
 
         public float Health
@@ -142,10 +129,7 @@ namespace Noah
                 def = PlayerStateManager.Instance.startPlayerData.def_Start;
                 moveSpeed = PlayerStateManager.Instance.startPlayerData.moveSpeed_Start;
                 atkSpeed = PlayerStateManager.Instance.startPlayerData.atkSpeed_Start;
-
-             
             }
         }
-
     }
 }
