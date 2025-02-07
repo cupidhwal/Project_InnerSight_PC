@@ -32,7 +32,7 @@ namespace Seti
         {
             if (!actor ||
                 !actor.Condition.InAction ||
-                !actor.Controller_Animator.CanMove)
+                !actor.Condition.CanMove)
             {
                 QuaterView_Move(Vector2.zero);
                 return;
@@ -63,12 +63,12 @@ namespace Seti
         }
         protected void QuaterView_Move(Vector3 moveDirection)
         {
-            float moveEff = actor.Controller_Animator.IsChase ? actor.Magnification_WalkToRun : 1;
+            float moveEff = actor.Condition.IsChase ? actor.Magnification_WalkToRun : 1;
             Vector3 move = moveEff * actor.Rate_Movement * Time.deltaTime * moveDirection.normalized;
             Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * move;
 
             // Root Motion을 쓰지 않는 경우에만 실행
-            if (!actor.Controller_Animator.Animator.applyRootMotion && actor.Controller_Animator.CanMove)
+            if (!actor.Controller_Animator.Animator.applyRootMotion && actor.Condition.CanMove)
                 actor.transform.Translate(QuaterView, Space.World);
 
             // 이동이 발생할 때만 회전

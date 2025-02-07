@@ -27,22 +27,22 @@ namespace Seti
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
-            if (context.IsDead)
+            if (context.Actor.Condition.IsDead)
                 return typeof(AniState_Die);
 
-            if (context.IsMove)
+            if (context.Actor.Condition.IsMove)
                 return typeof(AniState_Move);
 
-            else if (context.IsDash)
+            else if (context.Actor.Condition.IsDash)
                 return typeof(AniState_Dash);
             
-            else if (context.IsMagic)
+            else if (context.Actor.Condition.IsMagic)
                 return typeof(AniState_Attack_Magic);
 
-            else if (context.IsAttack)
+            else if (context.Actor.Condition.IsAttack)
                 return typeof(AniState_Attack_Melee);
 
-            else if (context.IsStagger)
+            else if (context.Actor.Condition.IsStagger)
                 return typeof(AniState_Stagger);
 
             return null;
@@ -67,7 +67,7 @@ namespace Seti
         void TimoutToIdle()
         {
             //입력값 체크(이동, 공격)
-            bool inputDetected = context.IsMove || context.IsMagic || context.IsAttack;
+            bool inputDetected = context.Actor.Condition.IsMove || context.Actor.Condition.IsMagic || context.Actor.Condition.IsAttack;
 
             //타이머 카운트
             if (context.Actor.Condition.IsGrounded && !inputDetected)

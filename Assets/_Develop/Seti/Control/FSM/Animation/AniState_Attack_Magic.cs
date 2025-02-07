@@ -27,13 +27,13 @@ namespace Seti
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
-            if (context.IsDead)
+            if (context.Actor.Condition.IsDead)
                 return typeof(AniState_Die);
 
-            if (!context.IsMagic && !context.IsMove)
+            if (!context.Actor.Condition.IsMagic && !context.Actor.Condition.IsMove)
                 return typeof(AniState_Idle);
 
-            else if (!context.IsMagic && context.IsMove)
+            else if (!context.Actor.Condition.IsMagic && context.Actor.Condition.IsMove)
                 return typeof(AniState_Move);
 
             return null;
@@ -58,7 +58,7 @@ namespace Seti
 
             context.Animator.SetFloat(Hash_StateTime,
                                       Mathf.Repeat(context.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f));
-            if (context.IsMagic)
+            if (context.Actor.Condition.IsMagic)
                 context.Animator.SetTrigger(Hash_MagicAttack);
         }
     }

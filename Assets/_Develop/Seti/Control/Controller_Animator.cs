@@ -23,9 +23,6 @@ namespace Seti
 
         public AniState currentState;
 
-        [SerializeField]
-        private bool canMove = true;
-
         PlayerUseSkill useSkill;
         #endregion
 
@@ -36,15 +33,6 @@ namespace Seti
         public Actor Actor { get; private set; }
 
         public float MoveSpeed { get; private set; }
-
-        public bool IsMove { get; set; } = false;
-        public bool IsDash { get; set; } = false;
-        public bool IsDead { get; set; } = false;
-        public bool IsChase { get; set; } = false;
-        public bool IsMagic { get; set; } = false;
-        public bool IsAttack { get; set; } = false;
-        public bool IsStagger { get; set; } = false;
-        public bool CanMove => canMove;
         #endregion
 
         // 라이프 사이클
@@ -99,7 +87,7 @@ namespace Seti
             transform.rotation = Actor.transform.rotation;*/
         }
 
-        private void OnDie() => IsDead = true;
+        private void OnDie() => Actor.Condition.IsDead = true;
 
         private void AddStates()
         {
@@ -160,8 +148,8 @@ namespace Seti
                     attack.OnAttackExit();
         }
 
-        public void CantMoveDurAtk() => canMove = false;
-        public void CanMoveAfterAtk() => canMove = true;
+        public void CantMoveDurAtk() => Actor.Condition.CanMove = false;
+        public void CanMoveAfterAtk() => Actor.Condition.CanMove = true;
 
         [SerializeField]
         private float forwardSpeed;
@@ -169,12 +157,12 @@ namespace Seti
         {
             if (Actor.Condition.InAction)
             {
-                if (IsMove && CanMove)
+                if (Actor.Condition.IsMove && Actor.Condition.CanMove)
                     forwardSpeed = Mathf.Lerp(forwardSpeed, Actor.Rate_Movement, 20f * Time.deltaTime);
                 else
                     forwardSpeed = forwardSpeed > 0.01f ? Mathf.Lerp(forwardSpeed, 0f, 10f * Time.deltaTime) : 0f;
 
-                float moveEff = IsChase ? Actor.Magnification_WalkToRun : 1;
+                float moveEff = Actor.Condition.IsChase ? Actor.Magnification_WalkToRun : 1;
                 return moveEff * forwardSpeed;
             }
             return 0f;

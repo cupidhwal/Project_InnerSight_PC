@@ -23,7 +23,6 @@ namespace Seti
             base.OnEnter();
             elapsedDuration = context.Actor.Stagger;
             context.Actor.Condition.IsStagger = true;
-            context.Actor.Controller_Animator.IsStagger = true;
             enemy.SwitchState(Enemy.State.Stagger);
         }
 

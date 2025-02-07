@@ -31,19 +31,19 @@ namespace Seti
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
-            if (context.IsDead)
+            if (context.Actor.Condition.IsDead)
                 return typeof(AniState_Die);
 
-            if (!context.IsStagger && !context.IsMove)
+            if (!context.Actor.Condition.IsStagger && !context.Actor.Condition.IsMove)
                 return typeof(AniState_Idle);
 
-            else if (!context.IsStagger && context.IsMove)
+            else if (!context.Actor.Condition.IsStagger && context.Actor.Condition.IsMove)
                 return typeof(AniState_Move);
 
-            else if (!context.IsStagger && context.IsDash)
+            else if (!context.Actor.Condition.IsStagger && context.Actor.Condition.IsDash)
                 return typeof(AniState_Dash);
 
-            else if (!context.IsStagger && context.IsAttack)
+            else if (!context.Actor.Condition.IsStagger && context.Actor.Condition.IsAttack)
                 return typeof(AniState_Attack_Melee);
 
             return null;

@@ -15,7 +15,7 @@ namespace Seti
         {
             base.OnEnter();
             context.Actor.Condition.IsMove = true;
-            context.Actor.Controller_Animator.IsChase = true;
+            context.Actor.Condition.IsChase = true;
             enemy.SwitchState(Enemy.State.Chase);
         }
 
@@ -23,7 +23,7 @@ namespace Seti
         public override void OnExit()
         {
             base.OnExit();
-            enemy.Controller_Animator.IsChase = false;
+            enemy.Condition.IsChase = false;
         }
 
         // 상태 전환 조건 메서드

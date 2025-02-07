@@ -237,13 +237,12 @@ namespace Seti
         {
             this.moveInput = moveInput;
             actor.Condition.IsMove = isMove;
-            actor.Controller_Animator.IsMove = isMove;
         }
 
         private void OnDash()
         {
             // 체공 중일 경우 착지까지 전략 변경 불가
-            if (!actor.Condition.IsGrounded || isDashed || !actor.Controller_Animator.CanMove) return;
+            if (isDashed || !actor.Condition.IsGrounded || !actor.Condition.CanMove) return;
             actor.CoroutineExecutor(Dash_Cor());
         }
 
@@ -273,7 +272,7 @@ namespace Seti
             // 대시 시작
             isDashed = true;
 
-            actor.Controller_Animator.IsDash = true;
+            actor.Condition.IsDash = true;
             SwitchStrategy(StrategyType.Dash);
 
             // 대시 끝
@@ -281,7 +280,7 @@ namespace Seti
             if (currentStrategy is Move_Dash dash)
                 dash.MoveExit();
 
-            actor.Controller_Animator.IsDash = false;
+            actor.Condition.IsDash = false;
             SwitchStrategy(StrategyType.Normal);
 
             // Damagable 컴포넌트가 있다면 무적 해제

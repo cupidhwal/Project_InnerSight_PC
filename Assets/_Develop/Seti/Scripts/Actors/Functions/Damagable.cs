@@ -87,7 +87,7 @@ namespace Seti
                 }
             }
 
-            ResetDamage();
+            Initialize();
         }
 
         private void Update()
@@ -131,6 +131,19 @@ namespace Seti
 
         // 메서드
         #region Methods
+        private void Initialize()
+        {
+            if (actor)
+            {
+                maxHitPoints = actor.Health;
+            }
+
+            currentHitPoints = maxHitPoints;
+            IsInvulnerable = false;
+            m_timeSinceLastHit = 0.0f;
+            OnResetDamage?.Invoke();
+        }
+
         // 충돌체 활성/비활성
         public void SetColliderState(bool enabled)
         {
@@ -145,7 +158,7 @@ namespace Seti
                 maxHitPoints = actor.Health;
             }
 
-            currentHitPoints = maxHitPoints;
+            //currentHitPoints = maxHitPoints;
             IsInvulnerable = false;
             m_timeSinceLastHit = 0.0f;
             OnResetDamage?.Invoke();

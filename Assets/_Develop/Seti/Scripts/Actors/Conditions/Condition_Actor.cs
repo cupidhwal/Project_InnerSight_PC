@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Seti
@@ -37,12 +38,15 @@ namespace Seti
         #region Properties
         public Weapon CurrentWeapon => currentWeapon;
         public bool InAction => inAction;
-        public bool IsGrounded { get; protected set; }
-        public bool IsStagger { get; set; }
-        public bool IsAttack { get; set; }
-        public bool IsMagic { get; set; }
-        public bool IsMove { get; set; }
-        public bool IsDead { get; set; }
+        public bool IsGrounded { get; protected set; } = true;
+        public bool CanMove { get; set; } = true;
+        public bool IsStagger { get; set; } = false;
+        public bool IsAttack { get; set; } = false;
+        public bool IsMagic { get; set; } = false;
+        public bool IsMove { get; set; } = false;
+        public bool IsDash { get; set; } = false;
+        public bool IsDead { get; set; } = false;
+        public bool IsChase { get; set; } = false;
 
         public Vector3 AttackPoint { get; set; }    // 마우스로 클릭한 Attack 지점
         public Vector3 HitDirection { get; set; }   // 피격 방향
@@ -90,13 +94,11 @@ namespace Seti
         {
             inAction = false;
             IsStagger = true;
-            actor.Controller_Animator.IsStagger = true;
         }
         private void StaggerOff()
         {
             inAction = true;
             IsStagger = false;
-            actor.Controller_Animator.IsStagger = false;
         }
 
         // 죽음

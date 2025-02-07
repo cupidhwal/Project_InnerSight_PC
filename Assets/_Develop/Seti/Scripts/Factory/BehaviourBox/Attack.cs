@@ -226,7 +226,7 @@ namespace Seti
         public void OnAttack(bool isAttack = true)
         {
             if (!condition.InAction) return;
-            actor.Controller_Animator.IsAttack = isAttack;
+            actor.Condition.IsAttack = isAttack;
         }
 
         public void OnAttackEnter()
@@ -252,7 +252,6 @@ namespace Seti
                 if (!condition.InAction) return;
 
                 condition.IsMagic = isMagic;
-                actor.Controller_Animator.IsMagic = isMagic;
                 if (isMagic)
                 {
                     currentStrategy?.Attack();
@@ -279,14 +278,14 @@ namespace Seti
         {
             await Task.Delay(50);
             condition.IsAttack = false;
-            actor.Controller_Animator.IsAttack = false;
+            actor.Condition.IsAttack = false;
             currentStrategy?.AttackExit();
         }
         async void MagicWait()
         {
             await Task.Delay(1000);
             condition.IsMagic = false;
-            actor.Controller_Animator.IsMagic = false;
+            actor.Condition.IsMagic = false;
             currentStrategy?.AttackExit();
             SwitchStrategy(StrategyType.Normal);
         }

@@ -13,7 +13,6 @@ namespace Seti
             base.OnEnter();
             elapsedDuration = 100;
             context.Actor.Condition.IsDead = true;
-            context.Actor.Controller_Animator.IsDead = true;
             enemy.SwitchState(Enemy.State.Dead);
         }
 
