@@ -31,11 +31,11 @@ namespace JungBin
 
         private void Update()
         {
-            if (currentBossStat != null && healthSlider != null)
+            /*if (currentBossStat != null && healthSlider != null)
             {
                 // 현재 보스 체력에 따라 슬라이더 업데이트
                 healthSlider.value = currentBossStat.Health;
-            }
+            }*/
         }
     }
 }
