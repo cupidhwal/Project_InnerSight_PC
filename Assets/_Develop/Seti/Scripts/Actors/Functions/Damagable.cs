@@ -87,7 +87,7 @@ namespace Seti
                 }
             }
 
-            Initialize();
+            ResetDamage();
         }
 
         private void Update()
@@ -158,7 +158,7 @@ namespace Seti
                 maxHitPoints = actor.Health;
             }
 
-            //currentHitPoints = maxHitPoints;
+            currentHitPoints = maxHitPoints;
             IsInvulnerable = false;
             m_timeSinceLastHit = 0.0f;
             OnResetDamage?.Invoke();
