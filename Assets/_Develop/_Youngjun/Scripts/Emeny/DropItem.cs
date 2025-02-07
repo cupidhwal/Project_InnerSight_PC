@@ -18,7 +18,7 @@ namespace Noah
 
         void EnemyDropItem()
         {
-            Invoke("SpwanItem", 2f);
+            Invoke("SpwanItem", 1f);
         }
 
         void SpwanItem()
