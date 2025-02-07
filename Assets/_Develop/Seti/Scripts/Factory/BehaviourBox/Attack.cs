@@ -230,18 +230,28 @@ namespace Seti
             actor.Controller_Animator.IsAttack = isAttack;
             if (isAttack)
             {
-                currentStrategy?.Attack();
-
-                if (actor is Player)
-                {
-                    condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
-                    AttackWait();
-                }
+                OnAttackEnter();
             }
             else
             {
-                currentStrategy?.AttackExit();
+                OnAttackExit();
             }
+        }
+
+        public void OnAttackEnter()
+        {
+            currentStrategy?.Attack();
+
+            if (actor is Player)
+            {
+                condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
+                AttackWait();
+            }
+        }
+
+        public void OnAttackExit()
+        {
+            currentStrategy?.AttackExit();
         }
 
         public void OnMagic(bool isMagic = true)
