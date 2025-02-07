@@ -196,7 +196,7 @@ namespace Seti
                 if (OnDeath != null)
                 {
                     schedule += OnDeath.Invoke;
-                    StageManager.Instance.EnemyCount(gameObject);
+                    //StageManager.Instance.EnemyCount(gameObject);
                 }
             }
 
