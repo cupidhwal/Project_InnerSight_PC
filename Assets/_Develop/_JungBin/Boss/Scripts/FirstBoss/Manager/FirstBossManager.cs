@@ -181,13 +181,15 @@ namespace JungBin
         public void OnAttackBox()
         {
             smashAttackBox.SetActive(true);
-            slashAttack.gameObject.SetActive(!slashAttack.gameObject.activeSelf);
+            slashAttack.gameObject.SetActive(true);
             slashAttack.Play();
         }
 
         public void OffAttackBox()
         {
             smashAttackBox.SetActive(false);
+            slashAttack.gameObject.SetActive(false);
+            
         }
         #endregion
 

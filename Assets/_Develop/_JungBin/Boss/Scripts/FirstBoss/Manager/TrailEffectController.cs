@@ -6,6 +6,7 @@ namespace JungBin
     public class TrailEffectController : MonoBehaviour
     {
         [Header("Trail Settings")]
+        [SerializeField] private GameObject spawnPoint;
         [SerializeField] private GameObject trailPrefab; // 잔상을 나타낼 프리팹
         [SerializeField] private float trailSpawnInterval = 0.1f; // 잔상 생성 간격
 
@@ -43,7 +44,7 @@ namespace JungBin
                 if (activeTrail == null)
                 {
                     // Trail Prefab 초기화 및 활성화
-                    activeTrail = Instantiate(trailPrefab, transform.position, transform.rotation, this.transform);
+                    activeTrail = Instantiate(trailPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation, spawnPoint.transform);
                     activeTrail.SetActive(true);
                 }
                 else
