@@ -48,10 +48,19 @@ namespace Seti
         #region Utilities
         IEnumerator DisableAtEndOfAnimation()
         {
-            yield return new WaitForSeconds(m_Animation.clip.length);
+            Player player = GetComponentInParent<Player>();
+            float timeStamp = Time.time;
+            while (timeStamp + m_Animation.clip.length > Time.time)
+            {
+                if (player.Condition.IsDash)
+                    break;
+                yield return null;
+            }
             
             gameObject.SetActive(false);
             //weaponLight.enabled = false;
+
+            yield break;
         }
         #endregion
     }
