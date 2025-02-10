@@ -112,12 +112,12 @@ namespace Seti
 
             // 유지 시간
             float timeStamp = Time.time;
-            while (timeStamp + searchDuration > Time.time)
+            while (timeStamp + searchDuration + 1f > Time.time)
             {
                 elapsedTime += Time.deltaTime;
                 float t = elapsedTime / searchDuration;
 
-                range_Detect = elapsedTime < 2 ? 100f : Mathf.Lerp(range_Detect, initialRange, Mathf.SmoothStep(0f, 1f, t));
+                range_Detect = elapsedTime < searchDuration ? 100f : Mathf.Lerp(range_Detect, initialRange, Mathf.SmoothStep(0f, 1f, t));
                 yield return null;
             }
             range_Detect = initialRange;
