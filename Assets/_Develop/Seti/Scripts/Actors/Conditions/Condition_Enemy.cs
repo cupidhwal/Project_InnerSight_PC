@@ -26,6 +26,12 @@ namespace Seti
             currentWeaponType = primaryWeaponType;
             currentWeapon = primaryWeapon;
         }
+
+        protected override void Die()
+        {
+            base.Die();
+            Destroy(gameObject, 2);
+        }
         #endregion
     }
 }

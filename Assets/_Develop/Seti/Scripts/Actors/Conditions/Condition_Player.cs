@@ -14,6 +14,12 @@ namespace Seti
 
         // 메서드
         #region Methods
+        private void Revive()
+        {
+            IsDead = false;
+            inAction = true;
+        }
+
         public override void Initialize()
         {
             // 저장된 현재 장비

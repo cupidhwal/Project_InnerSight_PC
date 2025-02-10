@@ -102,11 +102,10 @@ namespace Seti
         }
 
         // 죽음
-        private void Die()
+        protected virtual void Die()
         {
             IsDead = true;
             inAction = false;
-            Destroy(gameObject, 2);
         }
         #endregion
 
