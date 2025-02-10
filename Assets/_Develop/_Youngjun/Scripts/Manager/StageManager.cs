@@ -6,6 +6,7 @@ using Unity.AI.Navigation;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using Unity.Cinemachine;
+using UnityEngine.Playables;
 
 namespace Noah
 {
@@ -35,6 +36,8 @@ namespace Noah
         InGameUI_Skill inGameUI_Skill;
         MinimapControl minimapControl;
         CinemachineCamera cinemachineCamera;
+        InGameUI_PlayerState playerState;
+        HealthBar healthBar;
 
 
 
@@ -51,8 +54,11 @@ namespace Noah
 
             StartCoroutine(ResetStage());
 
+            // Test
             inGameUI_Skill = FindAnyObjectByType<InGameUI_Skill>();
             minimapControl = FindAnyObjectByType<MinimapControl>();
+            playerState = FindAnyObjectByType<InGameUI_PlayerState>();
+            healthBar = FindAnyObjectByType<HealthBar>();
         }
 
         IEnumerator ResetStage()
@@ -187,13 +193,16 @@ namespace Noah
 
             player.GetComponent<NavMeshAgent>().enabled = false;
 
-            //Instantiate(playerPrefab);
+            //Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
 
             //player = FindAnyObjectByType<RayManager>().transform;
             //cinemachineCamera = FindAnyObjectByType<CinemachineCamera>();
+            //playerState.TestSetPlayer();
+            //healthBar.UpdateHealth();
+            //PlayerStateManager.Instance.TestSetPlayer(); 
 
             //cinemachineCamera.Follow = player.transform;
-            //player.transform.position = spawnPoint.position;
+            player.transform.position = spawnPoint.position;
 
             player.GetComponent<Rigidbody>().useGravity = true;
 
