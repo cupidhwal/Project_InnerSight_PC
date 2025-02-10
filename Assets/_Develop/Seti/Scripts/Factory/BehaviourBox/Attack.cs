@@ -226,6 +226,7 @@ namespace Seti
         public void OnAttack(bool isAttack = true)
         {
             if (!condition.InAction) return;
+            SwitchStrategy(StrategyType.Normal);
             actor.Condition.IsAttack = isAttack;
         }
 
