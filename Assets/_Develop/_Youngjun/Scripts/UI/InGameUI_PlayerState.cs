@@ -10,7 +10,7 @@ namespace Noah
     {
         public TMP_Text gold_Text;
 
-        public GameObject player;
+        private GameObject player;
         private Transform stateGroup;
         public List<Transform> states = new List<Transform>();
         private List<float> currentDatas = new List<float>();
@@ -55,6 +55,18 @@ namespace Noah
             gold_Text.text = PlayerInfoManager.Instance.Gold.ToString();
         }
 
+        void LimitState(int _index, ref float amount)
+        {
+            if (_index == 3 || _index == 4) // MoveSpeed 또는 AttackSpeed
+            {
+                if (amount > 13)
+                {
+                    amount = 13; // 13 이상으로 못 올라가게 제한
+                } 
+            }
+
+        }
+
         public void AddButton(int _index)
         {
             int cost = upgradeCounts[_index] * PlayerStateManager.Instance.GetUpgradeCost()[_index];
@@ -65,6 +77,15 @@ namespace Noah
             {
                 float upPoint = Mathf.Round((float.Parse(states[_index].GetChild(0).GetComponent<TMP_Text>().text)
             + PlayerStateManager.Instance.UpdatePlayerData()[_index]) * 10f) / 10f;
+
+                LimitState(_index, ref upPoint);
+
+                // upPoint가 13으로 수정되었을 경우 return하여 실행 중단
+                if ((_index == 3 || _index == 4 )&& upPoint >= 13)
+                {
+                    states[_index].GetChild(0).GetComponent<TMP_Text>().text = "MAX";          
+                    return;
+                }
 
                 states[_index].GetChild(0).GetComponent<TMP_Text>().text = upPoint.ToString();
 
