@@ -193,6 +193,7 @@ namespace Seti
                 StopCoroutine(cor);
             StartCoroutine(cor);
         }
+        public void CoroutineStopper() => StopAllCoroutines();
         #endregion
     }
 }

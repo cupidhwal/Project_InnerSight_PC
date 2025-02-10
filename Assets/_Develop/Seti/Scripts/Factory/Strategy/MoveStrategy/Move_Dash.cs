@@ -61,14 +61,14 @@ namespace Seti
             float currentSpeed = 0f;
             while (actor.Condition.InAction && elapsedTime < player.Dash_Duration)
             {
-                elapsedTime += Time.fixedDeltaTime;
+                elapsedTime += Time.deltaTime;
                 float t = elapsedTime / player.Dash_Duration;
 
                 // Ease In-Out 적용
                 currentSpeed = elapsedTime > (player.Dash_Duration / 2.5f) ? Mathf.Lerp(currentSpeed, player.Dash_Speed, Mathf.SmoothStep(0f, 1f, t)) : 0f;
-                player.transform.Translate(currentSpeed * Time.fixedDeltaTime * QuaterView, Space.World);
+                player.transform.Translate(currentSpeed * Time.deltaTime * QuaterView, Space.World);
 
-                yield return new WaitForSeconds(Time.fixedDeltaTime);
+                yield return null;
             }
             yield break;
         }

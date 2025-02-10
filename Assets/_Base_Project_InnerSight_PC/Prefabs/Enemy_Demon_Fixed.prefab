@@ -796,19 +796,20 @@ MonoBehaviour:
   - behaviour:
       rid: 8920205316600365225
   health: 100
-  attack: 20
+  attack: 15
   defend: 0
   rate_Attack: 1
   rate_Movement: 2
-  stagger: 1
+  stagger: 0.8
   mag_WalkToRun: 2
   player: {fileID: 0}
   currentState: 0
-  range_Detect: 7.5
-  range_Attack: 1
-  range_BackOff: 10
+  range_Detect: 10
+  range_Attack: 0.7
+  range_BackOff: 20
   distancePlayer: 0
   distancePlace: 0
+  searchDuration: 3
   patrolInterval: 3
   attackInterval: 1.5
   references:
@@ -886,7 +887,7 @@ MonoBehaviour:
   maxHitPoints: 100
   currentHitPoints: 0
   invulnerablityTime: 0.1
-  staggerDuration: 0.5
+  staggerDuration: 0.8
   hitAngle: 360
   hitForwardRotation: 360
   OnDamageMessageReceivers: []

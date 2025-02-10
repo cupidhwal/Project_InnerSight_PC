@@ -39,16 +39,14 @@ namespace Seti
                 IsMagic = false;
                 IsMove = false;
 
-                if (TryGetComponent<Controller_Base>(out var controller))
+                if (actor.Controller.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
                 {
-                    if (controller.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
+                    if (moveBehaviour is Move move)
                     {
-                        if (moveBehaviour is Move move)
-                        {
-                            move.OnMove(Vector2.zero, false);
-                        }
+                        move.OnMove(Vector2.zero, false);
                     }
                 }
+                actor.CoroutineStopper();
             }
         }
 
