@@ -40,10 +40,12 @@ namespace Seti
             damagable = player.GetComponent<Damagable>();
             damagable.OnReceiveDamage += UpdateHealth;
             damagable.OnResetDamage += UpdateHealth;
-            damagable.OnRevive += UpdateHealth;
+            damagable.OnRevive += UpdateHealthInvoke;
 
             UpdateHealth();
         }
+
+        private void UpdateHealthInvoke() => Invoke("UpdateHealth", 0.1f);
 
         public void UpdateHealth()
         {
