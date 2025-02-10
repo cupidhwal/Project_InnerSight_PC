@@ -13,17 +13,17 @@ namespace Seti
     }
 
     /// <summary>
-    /// ActorÀÇ Blueprint
+    /// Actorì˜ Blueprint
     /// </summary>
     [CreateAssetMenu(fileName = "New Actor", menuName = "Blueprint/Actor")]
     public class Blueprint_Actor : ScriptableObject
     {
         [SerializeField]
-        private string actorName; // ¾×ÅÍ ÀÌ¸§
-        public GameObject actorPrefab; // ¾×ÅÍ ¿ÀºêÁ§Æ®
-        public ControlType controlType; // Actor Å¸ÀÔ(enum)
-        public Box_Strategy strategyBox; // Box_Strategy ÂüÁ¶
-        public Box_Behaviour behaviourBox; // Box_Behaviour ÂüÁ¶
+        private string actorName; // ì•¡í„° ì´ë¦„
+        public GameObject actorPrefab; // ì•¡í„° ì˜¤ë¸Œì íŠ¸
+        public ControlType controlType; // Actor íƒ€ì…(enum)
+        public Box_Strategy strategyBox; // Box_Strategy ì°¸ì¡°
+        public Box_Behaviour behaviourBox; // Box_Behaviour ì°¸ì¡°
 
         [HideInInspector]
         [SerializeReference]
@@ -31,7 +31,7 @@ namespace Seti
 
         public string ActorName => actorName;
 
-        // Æ¯Á¤ Çàµ¿¿¡ ´ëÇÑ Àü·« °¡Á®¿À±â
+        // íŠ¹ì • í–‰ë™ì— ëŒ€í•œ ì „ëµ ê°€ì ¸ì˜¤ê¸°
         public List<Strategy> GetStrategiesForBehaviour(IBehaviour behaviour)
         {
             return behaviourStrategies
@@ -39,7 +39,7 @@ namespace Seti
                 .strategies ?? new List<Strategy>();
         }
 
-        // Æ¯Á¤ Àü·«ÀÇ È°¼º »óÅÂ ¾÷µ¥ÀÌÆ®
+        // íŠ¹ì • ì „ëµì˜ í™œì„± ìƒíƒœ ì—…ë°ì´íŠ¸
         public void UpdateStrategy(IBehaviour behaviour, IStrategy strategy, bool isActive)
         {
             var mapping = behaviourStrategies.FirstOrDefault(m => m.behaviour == behaviour);
@@ -49,7 +49,9 @@ namespace Seti
                 if (target != null)
                 {
                     target.isActive = isActive;
-                    EditorUtility.SetDirty(this); // º¯°æ »çÇ× ÀúÀå
+#if UNITY_EDITOR
+                    EditorUtility.SetDirty(this); // ë³€ê²½ ì‚¬í•­ ì €ì¥
+#endif
                 }
             }
         }

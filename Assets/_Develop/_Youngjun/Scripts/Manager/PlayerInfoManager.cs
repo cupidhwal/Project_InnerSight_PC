@@ -16,6 +16,14 @@ namespace Noah
             gold = startGold;
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                GetGold(100000);
+            }
+        }
+
         public void GetGold(int _gold)
         {
             gold += _gold;
