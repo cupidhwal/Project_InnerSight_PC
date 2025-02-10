@@ -11,6 +11,10 @@ namespace Noah
     {
         public static InGameUI_Skill instance;
 
+        // Test
+        public Sprite reset;
+
+
         public Image changeNewSkill_Image;
         public TMP_Text changeNewSkill_Text;
         private Transform skillBtnsPar;
@@ -324,6 +328,19 @@ namespace Noah
 
                 //countdown = 0f;
                 //isCooldown = false;
+            }
+        }
+
+        // Test
+        public void ResetSkill()
+        {
+            skillSlots.Clear();
+
+            foreach (var ui in skillUIList)
+            { 
+                ui.GetComponent<Image>().sprite = reset;
+                ui.transform.GetChild(3).GetComponent<TMP_Text>().text = "-";
+
             }
         }
     }

@@ -5,6 +5,7 @@ using Seti;
 using Unity.AI.Navigation;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using Unity.Cinemachine;
 
 namespace Noah
 {
@@ -29,6 +30,14 @@ namespace Noah
 
         public GameObject CurrentStage => currentStage;
 
+        // Test
+        [SerializeField] private GameObject playerPrefab;
+        InGameUI_Skill inGameUI_Skill;
+        MinimapControl minimapControl;
+        CinemachineCamera cinemachineCamera;
+
+
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -41,6 +50,9 @@ namespace Noah
             player = FindAnyObjectByType<RayManager>().transform;
 
             StartCoroutine(ResetStage());
+
+            inGameUI_Skill = FindAnyObjectByType<InGameUI_Skill>();
+            minimapControl = FindAnyObjectByType<MinimapControl>();
         }
 
         IEnumerator ResetStage()
@@ -105,9 +117,24 @@ namespace Noah
             StartCoroutine(GoNextStage());
         }
 
+        // Test
+        public void NewStage()
+        {
+            player.GetComponent<Condition_Player>().PlayerSetActive(false);
+            player.GetComponent<PlayerUseSkill>().enabled = false;
+            enemys.Clear();
+
+            StartCoroutine(ReStart());
+
+            inGameUI_Skill.ResetSkill();
+            minimapControl.SetPlayer();
+        }
+
         public void ReStartGame()
         {
-            SceneFade.instance.FadeOut("PlayScene");
+            NewStage();
+
+            //SceneFade.instance.FadeOut("PlayScene");
         }
 
         // 테스트용
@@ -122,6 +149,59 @@ namespace Noah
             {
                 currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = true;
             }
+
+        }
+
+        // Test
+        IEnumerator ReStart()
+        {
+            SceneFade.instance.FadeOut(null);
+
+            yield return new WaitForSeconds(1f);
+
+            player.GetComponent<Rigidbody>().useGravity = false;
+
+            curStage = 0;
+
+            yield return new WaitForSeconds(0.5f);
+
+            Destroy(currentStage);
+
+            Instantiate(stageObject[curStage], currentStagePar);
+
+            yield return new WaitForSeconds(0.5f);
+
+            GetCurrentStage();
+
+            yield return new WaitForSeconds(0.5f);
+
+
+            player.GetComponent<Condition_Player>().PlayerSetActive(true);
+            player.GetComponent<PlayerUseSkill>().enabled = true;
+
+
+            if (currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>() != null)
+            {
+                currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = true;
+            }
+
+            player.GetComponent<NavMeshAgent>().enabled = false;
+
+            //Instantiate(playerPrefab);
+
+            //player = FindAnyObjectByType<RayManager>().transform;
+            //cinemachineCamera = FindAnyObjectByType<CinemachineCamera>();
+
+            //cinemachineCamera.Follow = player.transform;
+            //player.transform.position = spawnPoint.position;
+
+            player.GetComponent<Rigidbody>().useGravity = true;
+
+            yield return new WaitForSeconds(0.5f);
+
+            player.GetComponent<NavMeshAgent>().enabled = true;
+
+            SceneFade.instance.FadeIn(null);
 
         }
 

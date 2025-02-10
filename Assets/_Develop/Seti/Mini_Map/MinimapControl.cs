@@ -20,6 +20,9 @@ namespace Seti
 
         private void LateUpdate()
         {
+            if (player == null)
+                return;
+
             ViewPort();
             SyncRotation_Icon();
         }
@@ -42,6 +45,11 @@ namespace Seti
             /*else playerIcon.localRotation = Quaternion.Euler(0,
                                                              0,
                                                              -player.ridingGear.transform.rotation.eulerAngles.y);*/
+        }
+
+        public void SetPlayer()
+        {
+            player = FindAnyObjectByType<Player>();
         }
         #endregion
     }
