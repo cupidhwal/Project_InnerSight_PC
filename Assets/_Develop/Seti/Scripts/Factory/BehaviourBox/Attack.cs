@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -279,14 +278,12 @@ namespace Seti
         {
             await Task.Delay(50);
             condition.IsAttack = false;
-            actor.Condition.IsAttack = false;
             currentStrategy?.AttackExit();
         }
         async void MagicWait()
         {
             await Task.Delay(1000);
             condition.IsMagic = false;
-            actor.Condition.IsMagic = false;
             currentStrategy?.AttackExit();
             SwitchStrategy(StrategyType.Normal);
         }

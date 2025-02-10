@@ -242,7 +242,7 @@ namespace Seti
         private void OnDash()
         {
             // 체공 중일 경우 착지까지 전략 변경 불가
-            if (isDashed || !actor.Condition.IsGrounded || !actor.Condition.CanMove) return;
+            if (isDashed || !actor.Condition.IsGrounded/* || !actor.Condition.CanMove*/) return;
             actor.CoroutineExecutor(Dash_Cor());
         }
 
