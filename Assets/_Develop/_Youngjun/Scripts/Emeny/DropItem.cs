@@ -6,6 +6,7 @@ namespace Noah
     public class DropItem : MonoBehaviour
     {
         public GameObject gold;
+        public int chargeGold;
 
         Damagable e_Damagable;
 
@@ -18,12 +19,14 @@ namespace Noah
 
         void EnemyDropItem()
         {
-            Invoke("SpwanItem", 1f);
+            Invoke("SpwanItem", 2f);
         }
 
         void SpwanItem()
         {
             Vector3 pos = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
+
+            gold.GetComponent<Item_Gold>().chargeGold = chargeGold;
 
             Instantiate(gold, pos, gold.transform.rotation, transform.parent);
         }
