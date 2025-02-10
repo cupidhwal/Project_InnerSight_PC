@@ -9,12 +9,26 @@ namespace Seti
         protected override void Start()
         {
             base.Start();
+
+            if (TryGetComponent<Damagable>(out var damagable))
+                damagable.OnDeath += ReviveInvoke;
         }
         #endregion
 
         // 메서드
         #region Methods
-        private void Revive()
+        protected override void Die()
+        {
+            base.Die();
+            //Destroy(gameObject, 2);
+        }
+
+        private void ReviveInvoke()
+        {
+            Invoke("Revive", 1);
+        }
+
+        public void Revive()
         {
             IsDead = false;
             inAction = true;

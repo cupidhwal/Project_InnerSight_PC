@@ -31,6 +31,7 @@ namespace Seti
         protected float m_timeSinceLastHit = 0.0f;  // 무적 카운트다운
         protected float m_timeSinceStagger = 0.0f;  // 피격 카운트다운
 
+        public UnityAction OnRevive;                // 이벤트: 부활
         public UnityAction OnDeath;                 // 이벤트: 죽음
         public UnityAction OnReceiveDamage;         // 이벤트: 피격
         public UnityAction OnReleaveDamage;         // 이벤트: 피격 상태 해제
@@ -77,6 +78,7 @@ namespace Seti
                 if (actor is Player player)
                 {
                     player.GetComponent<Enhance>().OnEnhance += ResetDamage;
+                    OnRevive += ResetDamage;
                 }
 
                 if (actor is Enemy enemy)
@@ -87,6 +89,7 @@ namespace Seti
                 }
             }
 
+            // 초기화
             ResetDamage();
         }
 

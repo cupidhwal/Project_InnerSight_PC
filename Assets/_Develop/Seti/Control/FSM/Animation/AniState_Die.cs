@@ -19,10 +19,19 @@ namespace Seti
         }
 
         // 상태 전환 시 State Exit에 1회 실행
-        public override void OnExit() { }
+        public override void OnExit()
+        {
+            context.currentState = AniState.Idle;
+        }
 
         // 상태 전환 조건 메서드
-        public override Type CheckTransitions() => null;
+        public override Type CheckTransitions()
+        {
+            if (!context.Actor.Condition.IsDead)
+                return typeof(AniState_Idle);
+
+            return null;
+        }
 
         // 상태 실행 중
         public override void Update(float deltaTime) { }

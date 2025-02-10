@@ -8,7 +8,7 @@ namespace Seti
     /// <summary>
     /// HealthBar 기능 클래스
     /// </summary>
-    public class HealthBar : MonoBehaviour
+    public class HealthBar : Singleton<HealthBar>
     {
         // 필드
         #region Variables
@@ -40,6 +40,7 @@ namespace Seti
             damagable = player.GetComponent<Damagable>();
             damagable.OnReceiveDamage += UpdateHealth;
             damagable.OnResetDamage += UpdateHealth;
+            damagable.OnRevive += UpdateHealth;
 
             UpdateHealth();
         }

@@ -45,6 +45,7 @@ namespace Seti
 
         // 상호작용
         #region Interaction
+        [SerializeField]
         private NPC currentNPC;
         public NPC CurrentNPC => currentNPC;
         public void SetNPC(NPC npc) => currentNPC = npc;

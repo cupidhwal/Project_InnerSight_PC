@@ -105,12 +105,15 @@ namespace Seti
             }
 
             // 콜라이더 제거
-            Rigidbody rb = GetComponent<Rigidbody>();
-            Collider collider = GetComponent<Collider>();
-            if (rb != null)
+            if (actor is Enemy)
             {
-                rb.useGravity = false;
-                collider.enabled = false;
+                Rigidbody rb = GetComponent<Rigidbody>();
+                Collider collider = GetComponent<Collider>();
+                if (rb != null)
+                {
+                    rb.useGravity = false;
+                    collider.enabled = false;
+                }
             }
 
             // 이동 속도를 확실하게 제거
