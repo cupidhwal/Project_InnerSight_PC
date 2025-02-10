@@ -193,6 +193,8 @@ namespace Noah
 
             player.GetComponent<NavMeshAgent>().enabled = false;
 
+            player.GetComponent<Damagable>().OnRevive?.Invoke();
+
             //Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
 
             //player = FindAnyObjectByType<RayManager>().transform;
