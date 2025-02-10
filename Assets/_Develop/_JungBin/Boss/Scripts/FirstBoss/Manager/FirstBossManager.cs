@@ -98,7 +98,7 @@ namespace JungBin
                 navMeshAgent.enabled = false;
                 // animator.applyRootMotion = true; // Root Motion 활성화
             }
-            //ManageAttackBoxes();
+            ManageAttackBoxes();
 
 
             if (animator.GetBool("IsAttack02") == true)
