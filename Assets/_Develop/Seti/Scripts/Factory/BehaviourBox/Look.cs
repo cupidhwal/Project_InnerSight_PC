@@ -161,7 +161,7 @@ namespace Seti
             currentState = state;
             switch (currentState)
             {
-                case Enemy_State_Attack:
+                case Enemy_State_Attack_Normal:
                     SwitchStrategy(StrategyType.Watch);
                     break;
 

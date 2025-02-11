@@ -14,6 +14,8 @@ namespace Seti
         protected Actor actor;
         protected Rigidbody rb;
         protected Vector2 lastMoveDirection;
+
+        protected Vector2 dir;
         #endregion
 
         // 인터페이스
@@ -30,6 +32,8 @@ namespace Seti
         // QuaterView - World 기준 이동 로직
         public virtual void Move(Vector2 moveInput)
         {
+            dir = MoveDirection(moveInput);
+
             if (!actor ||
                 !actor.Condition.InAction ||
                 !actor.Condition.CanMove)
@@ -56,9 +60,7 @@ namespace Seti
         {
             //if (rb == null) return;
 
-            Vector2 dir = MoveDirection(moveInput);
             Vector3 moveDirection = new(dir.x, 0, dir.y);
-
             QuaterView_Move(moveDirection);
         }
         protected void QuaterView_Move(Vector3 moveDirection)
@@ -76,7 +78,7 @@ namespace Seti
             {
                 // 진행 방향으로 회전
                 Quaternion targetRotation = Quaternion.LookRotation(QuaterView, Vector3.up);
-                actor.transform.rotation = (Quaternion.Slerp(actor.transform.rotation, targetRotation, 10f * Time.deltaTime));
+                actor.transform.rotation = Quaternion.Slerp(actor.transform.rotation, targetRotation, 20f * Time.deltaTime);
             }
         }
 

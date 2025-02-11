@@ -32,20 +32,17 @@ namespace Seti
             if (damagable.CurrentHitPoints <= 0)
                 return typeof(Enemy_State_Dead);
 
-            if (!condition.InAction)
+            else if (!condition.InAction)
                 return typeof(Enemy_State_Stagger);
 
-            if (enemy.TooFarFromHome)
+            else if (enemy.TooFarFromHome || (!enemy.Detected && enemy.GoBackHome))
                 return typeof(Enemy_State_BackOff);
-
-            if (!enemy.Detected && enemy.GoBackHome)
-                return typeof(Enemy_State_BackOff);
-
-            if (!enemy.Detected || !enemy.Player)
-                return typeof(Enemy_State_Idle);
 
             else if (enemy.CanAttack)
-                return typeof(Enemy_State_Attack);
+                return typeof(Enemy_State_Attack_Normal);
+
+            else if (!enemy.Detected || !enemy.Player)
+                return typeof(Enemy_State_Idle);
 
             else return null;
         }

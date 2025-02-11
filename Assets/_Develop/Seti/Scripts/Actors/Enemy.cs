@@ -33,6 +33,8 @@ namespace Seti
         [SerializeField]
         protected float range_Attack = 1f;
         [SerializeField]
+        protected float range_Magic = 15f;
+        [SerializeField]
         protected float range_BackOff = 10f;
         [SerializeField]
         protected float distancePlayer;     // Player와의 거리
@@ -46,6 +48,8 @@ namespace Seti
         protected float patrolInterval = 3f;
         [SerializeField]
         protected float attackInterval = 3f;
+        [SerializeField]
+        protected float magicInterval = 5f;
         #endregion
 
         // 속성
@@ -55,11 +59,13 @@ namespace Seti
         public Vector3 AttackDirection { get; private set; }
         public bool Detected => Player && (distancePlayer <= range_Detect);
         public bool CanAttack => Player && (distancePlayer <= range_Attack);
+        public bool CanMagic => Player && (distancePlayer <= range_Magic);
         public bool GoBackHome => distancePlace >= range_BackOff;
         public bool TooFarFromHome => distancePlace >= range_BackOff * 2f;
         public bool ImHome => distancePlace <= 1f;
         public float PatrolInterval => patrolInterval;
         public float AttackInterval => attackInterval;
+        public float MagicInterval => magicInterval;
         #endregion
 
         // 오버라이드

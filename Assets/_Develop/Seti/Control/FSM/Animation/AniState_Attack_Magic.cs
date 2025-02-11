@@ -30,7 +30,7 @@ namespace Seti
             if (context.Actor.Condition.IsDead)
                 return typeof(AniState_Die);
 
-            if (!context.Actor.Condition.IsMagic && !context.Actor.Condition.IsMove)
+            else if (!context.Actor.Condition.IsMagic && !context.Actor.Condition.IsMove)
                 return typeof(AniState_Idle);
 
             else if (!context.Actor.Condition.IsMagic && context.Actor.Condition.IsMove)

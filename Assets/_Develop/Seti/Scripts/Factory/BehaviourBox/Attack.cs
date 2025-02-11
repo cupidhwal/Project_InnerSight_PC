@@ -1,7 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -199,6 +199,7 @@ namespace Seti
 
         #region Controller_FSM
         public void FSM_AttackInput(bool isAttack) => OnAttack(isAttack);
+        public void FSM_MagicInput(bool isMagic) => OnMagic(isMagic);
         public void FSM_AttackSwitch(State<Controller_FSM> state)
         {
             // FSM 상태에 따라 동작 제어
@@ -206,10 +207,14 @@ namespace Seti
             currentState = state;
             switch (currentState)
             {
-                case Enemy_State_Attack:
+                case Enemy_State_Attack_Normal:
                     if (condition.CurrentWeaponType == Condition_Actor.WeaponType.NULL)
                         SwitchStrategy(StrategyType.Tackle);
                     else SwitchStrategy(StrategyType.Normal);
+                    break;
+
+                case Enemy_State_Attack_Magic:
+                    SwitchStrategy(StrategyType.Magic);
                     break;
 
                 default:
@@ -236,7 +241,7 @@ namespace Seti
             if (actor is Player)
             {
                 condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
-                AttackWait();
+                actor.CoroutineExecutor(AttackWait());
             }
         }
 
@@ -259,7 +264,7 @@ namespace Seti
                     if (actor is Player)
                     {
                         condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
-                        MagicWait();
+                        actor.CoroutineExecutor(MagicWait());
                     }
                 }
                 else
@@ -274,15 +279,15 @@ namespace Seti
 
         // 유틸리티
         #region Utilities
-        async void AttackWait()
+        IEnumerator AttackWait()
         {
-            await Task.Delay(50);
+            yield return new WaitForSeconds(0.05f);
             condition.IsAttack = false;
             currentStrategy?.AttackExit();
         }
-        async void MagicWait()
+        IEnumerator MagicWait()
         {
-            await Task.Delay(1000);
+            yield return new WaitForSeconds(1f);
             condition.IsMagic = false;
             currentStrategy?.AttackExit();
             SwitchStrategy(StrategyType.Normal);

@@ -100,7 +100,7 @@ namespace Seti
                     if (move.HasStrategy<Move_Normal>() || move.HasStrategy<Move_Walk>() || move.HasStrategy<Move_Run>())
                         AniMachine.AddState(new AniState_Move());
 
-                    if (move.HasStrategy<Move_Dash>())
+                    else if (move.HasStrategy<Move_Dash>())
                         AniMachine.AddState(new AniState_Dash());
                 }
             }
@@ -112,7 +112,7 @@ namespace Seti
                     if (attack.HasStrategy<Attack_Normal>() || attack.HasStrategy<Attack_Tackle>())
                         AniMachine.AddState(new AniState_Attack_Melee());
 
-                    if (attack.HasStrategy<Attack_Magic>())
+                    else if (attack.HasStrategy<Attack_Magic>())
                         AniMachine.AddState(new AniState_Attack_Magic());
                 }
             }

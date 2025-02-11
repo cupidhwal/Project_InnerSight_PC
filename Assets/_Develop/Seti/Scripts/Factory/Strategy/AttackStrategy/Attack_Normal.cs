@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Seti
 {
+    /// <summary>
+    /// 평타
+    /// </summary>
     public class Attack_Normal : Attack_Base
     {
         // 오버라이드

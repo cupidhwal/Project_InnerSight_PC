@@ -27,14 +27,17 @@ namespace Seti
             if (damagable.CurrentHitPoints <= 0)
                 return typeof(Enemy_State_Dead);
 
-            if (!condition.InAction)
+            else if (!condition.InAction)
                 return typeof(Enemy_State_Stagger);
 
-            if (enemy.GoBackHome)
+            else if (enemy.GoBackHome)
                 return typeof(Enemy_State_BackOff);
 
-            if (enemy.Detected)
+            else if (enemy.Detected)
                 return typeof(Enemy_State_Chase);
+
+            else if (enemy.CanMagic)
+                return typeof(Enemy_State_Attack_Magic);
 
             else if (!enemy.Detected && context.StateMachine.ElapsedTime > elapsedDuration)
                 return typeof(Enemy_State_Idle);
