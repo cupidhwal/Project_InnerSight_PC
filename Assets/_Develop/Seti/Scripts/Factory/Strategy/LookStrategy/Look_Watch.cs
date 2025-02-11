@@ -15,11 +15,13 @@ namespace Seti
 
             if (actor is Enemy enemy && enemy.Player)
                 if (!enemy.Condition.IsAttack)
+                {
                     enemy.transform.LookAt(enemy.Player.transform.position);
+                }
 
             if (actor is Player player)
             {
-                if (player.Condition.IsAttack)
+                if (player.Condition.IsMagic)
                 {
                     Vector3 temp = player.Condition.AttackPoint;
                     float tempDis = Vector3.Distance(player.transform.position, temp);

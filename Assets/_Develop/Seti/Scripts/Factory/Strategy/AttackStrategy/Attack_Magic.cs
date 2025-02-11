@@ -8,7 +8,12 @@ namespace Seti
         #region Abstract
         public override void Attack()
         {
-            base.Attack();
+            condition.IsMagic = true;
+        }
+
+        public override void AttackExit()
+        {
+            condition.IsMagic = false;
         }
         #endregion
     }

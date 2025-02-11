@@ -34,10 +34,10 @@ namespace Seti
             if (!context.Actor.Condition.IsDash && !context.Actor.Condition.IsMove)
                 return typeof(AniState_Idle);
             
-            else if (!context.Actor.Condition.IsDash && context.Actor.Condition.IsMove)
+            if (!context.Actor.Condition.IsDash && context.Actor.Condition.IsMove)
                 return typeof(AniState_Move);
 
-            else if (!context.Actor.Condition.IsDash && context.Actor.Condition.IsStagger)
+            if (!context.Actor.Condition.IsDash && context.Actor.Condition.IsStagger)
                 return typeof(AniState_Stagger);
 
             return null;

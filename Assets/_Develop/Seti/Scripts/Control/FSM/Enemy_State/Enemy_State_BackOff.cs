@@ -48,7 +48,7 @@ namespace Seti
             if (enemy.Detected && context.StateMachine.ElapsedTime > 5f)
                 return typeof(Enemy_State_Chase);
 
-            else return null;
+            return null;
         }
 
         // 상태 실행 중

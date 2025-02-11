@@ -61,10 +61,13 @@ namespace Seti
             if (behaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
             {
                 // 전략을 포함하고 있는지 확인
-                if (lookBehaviour is Look look && look.HasStrategy<Look_Normal>())
+                if (lookBehaviour is Look look)
                 {
-                    control.Player.Look.performed += look.OnLookPerformed;
-                    control.Player.Look.canceled += look.OnLookCanceled;
+                    if (look.HasStrategy<Look_Normal>())
+                    {
+                        control.Player.Look.performed += look.OnLookPerformed;
+                        control.Player.Look.canceled += look.OnLookCanceled;
+                    }
                 }
             }
 

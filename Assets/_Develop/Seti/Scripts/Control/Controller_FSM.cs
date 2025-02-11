@@ -98,7 +98,7 @@ namespace Seti
                     if (attack.HasStrategy<Attack_Normal>() || attack.HasStrategy<Attack_Tackle>())
                         stateMachine.AddState(new Enemy_State_Attack_Normal());
 
-                    else if (attack.HasStrategy<Attack_Magic>())
+                    if (attack.HasStrategy<Attack_Magic>())
                         stateMachine.AddState(new Enemy_State_Attack_Magic());
                 }
             }

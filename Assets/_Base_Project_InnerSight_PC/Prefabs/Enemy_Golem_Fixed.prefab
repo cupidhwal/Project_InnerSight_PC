@@ -138,7 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8649828104970446049}
   - component: {fileID: 8107756076270768346}
-  - component: {fileID: 8783235951518982782}
+  - component: {fileID: 3967522624568327070}
   m_Layer: 0
   m_Name: Golem
   m_TagString: Untagged
@@ -185,7 +185,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8783235951518982782
+--- !u!114 &3967522624568327070
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 759653451806284457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ffc482ad06ab154fa87a3cfe0343d98, type: 3}
+  m_Script: {fileID: 11500000, guid: 97f045293e1341f4a8acef7b28734a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
@@ -546,14 +546,16 @@ MonoBehaviour:
   mag_WalkToRun: 1.5
   player: {fileID: 0}
   currentState: 0
-  range_Detect: 7.5
-  range_Attack: 0.7
-  range_BackOff: 15
   distancePlayer: 0
   distancePlace: 0
+  range_Detect: 7.5
+  range_Attack: 0.7
+  range_Magic: 15
+  range_BackOff: 15
   searchDuration: 5
   patrolInterval: 3
   attackInterval: 2
+  magicInterval: 5
   references:
     version: 2
     RefIds:

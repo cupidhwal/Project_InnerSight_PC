@@ -398,7 +398,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2080420038434259679}
   - component: {fileID: 1969650277230731129}
-  - component: {fileID: 2794569791217407129}
+  - component: {fileID: 750727536477494813}
   m_Layer: 0
   m_Name: Drakonit_monster_lod_0
   m_TagString: Untagged
@@ -445,7 +445,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2794569791217407129
+--- !u!114 &750727536477494813
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -454,7 +454,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1699250879565846629}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ffc482ad06ab154fa87a3cfe0343d98, type: 3}
+  m_Script: {fileID: 11500000, guid: 97f045293e1341f4a8acef7b28734a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
@@ -804,14 +804,16 @@ MonoBehaviour:
   mag_WalkToRun: 2
   player: {fileID: 0}
   currentState: 0
-  range_Detect: 10
-  range_Attack: 0.7
-  range_BackOff: 20
   distancePlayer: 0
   distancePlace: 0
+  range_Detect: 10
+  range_Attack: 0.7
+  range_Magic: 15
+  range_BackOff: 20
   searchDuration: 5
   patrolInterval: 3
   attackInterval: 1.5
+  magicInterval: 5
   references:
     version: 2
     RefIds:

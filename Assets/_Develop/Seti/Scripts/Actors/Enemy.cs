@@ -23,11 +23,16 @@ namespace Seti
         [HideInInspector]
         protected Player player;
         protected IEnumerator chaseCor;     // 피격 시 실행할 코루틴
-        
 
-        [Header("Criteria : AI Behaviour")]
+        [Header("Calculator : AI Behaviour")]
         [SerializeField]
         protected State currentState;
+        [SerializeField]
+        protected float distancePlayer;     // Player와의 거리
+        [SerializeField]
+        protected float distancePlace;      // 원래 자리와의 거리
+
+        [Header("Criteria : AI Behaviour")]
         [SerializeField]
         protected float range_Detect = 7.5f;
         [SerializeField]
@@ -36,10 +41,6 @@ namespace Seti
         protected float range_Magic = 15f;
         [SerializeField]
         protected float range_BackOff = 10f;
-        [SerializeField]
-        protected float distancePlayer;     // Player와의 거리
-        [SerializeField]
-        protected float distancePlace;      // 원래 자리와의 거리
         [SerializeField]
         protected float searchDuration = 3;     // 탐지 시간
 

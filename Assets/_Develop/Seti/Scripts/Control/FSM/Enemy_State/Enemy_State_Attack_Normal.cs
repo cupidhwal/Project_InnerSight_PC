@@ -49,16 +49,16 @@ namespace Seti
             if (damagable.CurrentHitPoints <= 0)
                 return typeof(Enemy_State_Dead);
 
-            else if (!condition.InAction)
+            if (!condition.InAction)
                 return typeof(Enemy_State_Stagger);
 
-            else if (enemy.Detected && !enemy.CanAttack && context.StateMachine.ElapsedTime > enemy.AttackInterval)
+            if (enemy.Detected && !enemy.CanAttack && context.StateMachine.ElapsedTime > enemy.AttackInterval)
                 return typeof(Enemy_State_Chase);
 
-            else if (!enemy.Detected || enemy.Player.Condition.IsDead)
+            if (!enemy.Detected || enemy.Player.Condition.IsDead)
                 return typeof(Enemy_State_Idle);
 
-            else return null;
+            return null;
         }
 
         // 상태 실행 중

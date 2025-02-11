@@ -50,11 +50,7 @@ namespace Seti
             if (volume)
             {
                 volume.profile.TryGet(out vignette);
-                if (vignette)
-                {
-                    Debug.Log($"Vignette 세팅 완료");
-                }
-                else
+                if (!vignette)
                 {
                     Debug.LogWarning($"[Add Override]를 통해 [Vignette] 프로필을 추가해주세요.");
                 }

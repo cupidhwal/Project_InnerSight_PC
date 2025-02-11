@@ -4,32 +4,32 @@ namespace Seti
 {
     public class MagicExit : StateMachineBehaviour
     {
-        private Player player;
+        private Actor actor;
 
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             if (!animator.TryGetComponent<Actor>(out var actor))
                 actor = animator.GetComponentInParent<Actor>();
-            if (actor is not Player player) return;
-            this.player = player;
-            
+            this.actor = actor;
+
             // 마법 사용 중에는 이동 금지
-            player.Controller_Animator.CantMoveDurAtk();
+            actor.Controller_Animator.CantMoveDurAtk();
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         //{
-        //    
+        //    // 마법 사용 중에는 이동 금지
+        //    //actor.Controller_Animator.CantMoveDurAtk();
         //}
 
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            if (player)
+            if (actor)
             {
-                player.Controller_Animator.CanMoveAfterAtk();
+                actor.Controller_Animator.CanMoveAfterAtk();
             }
 
             if (!animator.TryGetComponent<Controller_Base>(out var controller))

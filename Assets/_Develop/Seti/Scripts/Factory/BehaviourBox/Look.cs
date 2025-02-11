@@ -165,6 +165,10 @@ namespace Seti
                     SwitchStrategy(StrategyType.Watch);
                     break;
 
+                case Enemy_State_Attack_Magic:
+                    SwitchStrategy(StrategyType.Watch);
+                    break;
+
                 default:
                     SwitchStrategy(StrategyType.NULL);
                     break;

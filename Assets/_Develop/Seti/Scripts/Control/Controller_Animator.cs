@@ -17,8 +17,8 @@ namespace Seti
         // 필드
         #region Variables
         // 컴포넌트
-        private Controller_Base controller;
-        private Damagable damagable;
+        protected Controller_Base controller;
+        protected Damagable damagable;
 
         public AniState currentState;
 
@@ -100,7 +100,7 @@ namespace Seti
                     if (move.HasStrategy<Move_Normal>() || move.HasStrategy<Move_Walk>() || move.HasStrategy<Move_Run>())
                         AniMachine.AddState(new AniState_Move());
 
-                    else if (move.HasStrategy<Move_Dash>())
+                    if (move.HasStrategy<Move_Dash>())
                         AniMachine.AddState(new AniState_Dash());
                 }
             }
@@ -112,7 +112,7 @@ namespace Seti
                     if (attack.HasStrategy<Attack_Normal>() || attack.HasStrategy<Attack_Tackle>())
                         AniMachine.AddState(new AniState_Attack_Melee());
 
-                    else if (attack.HasStrategy<Attack_Magic>())
+                    if (attack.HasStrategy<Attack_Magic>())
                         AniMachine.AddState(new AniState_Attack_Magic());
                 }
             }
@@ -151,8 +151,8 @@ namespace Seti
         public void CanMoveAfterAtk() => Actor.Condition.CanMove = true;
 
         [SerializeField]
-        private float forwardSpeed;
-        private float CurrentSpeed()
+        protected float forwardSpeed;
+        protected float CurrentSpeed()
         {
             if (Actor.Condition.InAction)
             {

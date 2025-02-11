@@ -1,5 +1,3 @@
-using JungBin;
-using Noah;
 using System.Collections;
 using UnityEngine;
 
@@ -12,7 +10,6 @@ namespace Seti
         Player player;
 
         private bool isDash = false;
-        private Vector2 dir = Vector2.zero;
         private Vector3 moveDirection = Vector3.zero;
         #endregion
 

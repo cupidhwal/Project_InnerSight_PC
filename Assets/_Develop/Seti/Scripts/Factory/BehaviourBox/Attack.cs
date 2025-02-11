@@ -230,7 +230,6 @@ namespace Seti
         public void OnAttack(bool isAttack = true)
         {
             if (!condition.InAction) return;
-            SwitchStrategy(StrategyType.Normal);
             actor.Condition.IsAttack = isAttack;
         }
 
@@ -252,27 +251,25 @@ namespace Seti
 
         public void OnMagic(bool isMagic = true)
         {
-            if (isSkillAttack)
-            {
-                if (!condition.InAction) return;
+            if (!condition.InAction) return;
 
-                condition.IsMagic = isMagic;
+            if (actor is Player && isSkillAttack)
+            {
                 if (isMagic)
                 {
                     currentStrategy?.Attack();
 
-                    if (actor is Player)
-                    {
-                        condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
-                        actor.CoroutineExecutor(MagicWait());
-                    }
-                }
-                else
-                {
-                    currentStrategy?.AttackExit();
+                    condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
+                    actor.CoroutineExecutor(MagicWait());
                 }
 
                 isSkillAttack = false;
+            }
+
+            else if (isMagic)
+            {
+                currentStrategy?.Attack();
+                actor.CoroutineExecutor(MagicWait());
             }
         }
         #endregion
@@ -282,20 +279,16 @@ namespace Seti
         IEnumerator AttackWait()
         {
             yield return new WaitForSeconds(0.05f);
-            condition.IsAttack = false;
             currentStrategy?.AttackExit();
         }
         IEnumerator MagicWait()
         {
             yield return new WaitForSeconds(1f);
-            condition.IsMagic = false;
             currentStrategy?.AttackExit();
-            SwitchStrategy(StrategyType.Normal);
         }
         public void MagicExit()
         {
             OnMagic(false);
-            SwitchStrategy(StrategyType.Normal);
         }
         #endregion
     }

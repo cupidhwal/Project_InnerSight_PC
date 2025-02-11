@@ -33,16 +33,16 @@ namespace Seti
             if (context.Actor.Condition.IsMove)
                 return typeof(AniState_Move);
 
-            else if (context.Actor.Condition.IsDash)
+            if (context.Actor.Condition.IsDash)
                 return typeof(AniState_Dash);
             
-            else if (context.Actor.Condition.IsMagic)
+            if (context.Actor.Condition.IsMagic)
                 return typeof(AniState_Attack_Magic);
 
-            else if (context.Actor.Condition.IsAttack)
+            if (context.Actor.Condition.IsAttack)
                 return typeof(AniState_Attack_Melee);
 
-            else if (context.Actor.Condition.IsStagger)
+            if (context.Actor.Condition.IsStagger)
                 return typeof(AniState_Stagger);
 
             return null;

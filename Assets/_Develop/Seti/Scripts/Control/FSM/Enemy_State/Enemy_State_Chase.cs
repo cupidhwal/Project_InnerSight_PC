@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Seti
 {
-    public class Enemy_State_Patrol : Enemy_State
+    public class Enemy_State_Chase : Enemy_State
     {
         // 오버라이드
         #region Override
@@ -15,11 +15,16 @@ namespace Seti
         {
             base.OnEnter();
             context.Actor.Condition.IsMove = true;
-            enemy.SwitchState(Enemy.State.Patrol);
+            context.Actor.Condition.IsChase = true;
+            enemy.SwitchState(Enemy.State.Chase);
         }
 
         // 상태 전환 시 State Exit에 1회 실행
-        public override void OnExit() => base.OnExit();
+        public override void OnExit()
+        {
+            base.OnExit();
+            enemy.Condition.IsChase = false;
+        }
 
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
@@ -27,22 +32,19 @@ namespace Seti
             if (damagable.CurrentHitPoints <= 0)
                 return typeof(Enemy_State_Dead);
 
-            else if (!condition.InAction)
+            if (!condition.InAction)
                 return typeof(Enemy_State_Stagger);
 
-            else if (enemy.GoBackHome)
+            if (enemy.TooFarFromHome || (!enemy.Detected && enemy.GoBackHome))
                 return typeof(Enemy_State_BackOff);
 
-            else if (enemy.Detected)
-                return typeof(Enemy_State_Chase);
+            if (enemy.CanAttack)
+                return typeof(Enemy_State_Attack_Normal);
 
-            else if (enemy.CanMagic)
-                return typeof(Enemy_State_Attack_Magic);
-
-            else if (!enemy.Detected && context.StateMachine.ElapsedTime > elapsedDuration)
+            if (!enemy.Detected || !enemy.Player)
                 return typeof(Enemy_State_Idle);
 
-            else return null;
+            return null;
         }
 
         // 상태 실행 중
@@ -52,7 +54,7 @@ namespace Seti
             if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
                 if (moveBehaviour is Move move)
                 {
-                    Input_Patrol(deltaTime);
+                    Input_Chase();
                     move.FSM_MoveInput(moveInput, true);
                 }
         }
@@ -60,24 +62,13 @@ namespace Seti
 
         // 메서드
         #region Methods
-        private void Input_Patrol(float deltaTime)
+        private void Input_Chase()
         {
-            // 카운트다운 진행
-            steeringInterval -= deltaTime;
-            if (steeringInterval <= 0)
-            {
-                // 카운트다운 완료 시 행동
-                moveInput = GenRandomVec2();
+            if (!enemy.Player) return;
 
-                // 다음 카운트다운 시간 초기화
-                steeringInterval = UnityEngine.Random.Range(enemy.PatrolInterval / 3, enemy.PatrolInterval);
-            }
-        }
-        private Vector2 GenRandomVec2()
-        {
-            float x = UnityEngine.Random.Range(-1f, 1f);
-            float y = UnityEngine.Random.Range(-1f, 1f);
-            return new Vector2(x, y);
+            Vector2 enemyPos = Camera.main.WorldToScreenPoint(enemy.transform.position);
+            Vector2 playerPos = Camera.main.WorldToScreenPoint(enemy.Player.transform.position);
+            moveInput = playerPos - enemyPos;
         }
         #endregion
     }

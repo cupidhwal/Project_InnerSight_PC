@@ -8,6 +8,7 @@ namespace Seti
         // 필드
         #region Variables
         private Look look;
+        private Move move;
         private Attack attack;
         #endregion
 
@@ -23,6 +24,9 @@ namespace Seti
 
             if (context.BehaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
                 look = lookBehaviour as Look;
+
+            if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
+                move = moveBehaviour as Move;
 
             steeringInterval = enemy.MagicInterval;
         }
@@ -50,13 +54,16 @@ namespace Seti
             if (damagable.CurrentHitPoints <= 0)
                 return typeof(Enemy_State_Dead);
 
-            else if (!condition.InAction)
+            if (!condition.InAction)
                 return typeof(Enemy_State_Stagger);
 
-            else if (!enemy.Detected || enemy.Player.Condition.IsDead)
+            if (enemy.Detected && enemy.Condition.CanMove)
+                return typeof(Enemy_State_Chase);
+
+            if ((!enemy.Condition.IsMagic && !enemy.Detected && !enemy.CanMagic) || enemy.Player.Condition.IsDead)
                 return typeof(Enemy_State_Idle);
 
-            else return null;
+            return null;
         }
 
         // 상태 실행 중
@@ -67,8 +74,11 @@ namespace Seti
                 attack?.FSM_MagicInput(true);
             else attack?.FSM_MagicInput(false);
 
-            if (!enemy.Condition.IsAttack)
-                look?.FSM_LookInput();
+            // Look 행동 AI Input
+            look?.FSM_LookInput();
+
+            // Move 행동 AI Input
+            move?.FSM_MoveInput(moveInput, false);
         }
         #endregion
 

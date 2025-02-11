@@ -3,19 +3,8 @@ using UnityEngine;
 
 namespace Seti
 {
-    public class AniState_Attack_Melee : AniState_Base
+    public class AniState_Attack_Magic : AniState_Base
     {
-        // 필드
-        #region Variables
-        private int comboIndex;
-        private int comboCount = 2;
-        #endregion
-
-        // 속성
-        #region Properties
-        private int AttackCombo => comboIndex++ % comboCount;
-        #endregion
-
         // 오버라이드
         #region Override
         // 초기화 메서드 - 생성 후 1회 실행
@@ -25,7 +14,7 @@ namespace Seti
         public override void OnEnter()
         {
             base.OnEnter();
-            context.Animator.SetTrigger(Hash_MeleeAttack);
+            context.Animator.SetTrigger(Hash_MagicAttack);
             context.currentState = AniState.Attack;
         }
 
@@ -41,10 +30,10 @@ namespace Seti
             if (context.Actor.Condition.IsDead)
                 return typeof(AniState_Die);
 
-            if (!context.Actor.Condition.IsAttack && !context.Actor.Condition.IsMove)
+            if (!context.Actor.Condition.IsMagic && !context.Actor.Condition.IsMove)
                 return typeof(AniState_Idle);
 
-            else if (!context.Actor.Condition.IsAttack && context.Actor.Condition.IsMove)
+            if (!context.Actor.Condition.IsMagic && context.Actor.Condition.IsMove)
                 return typeof(AniState_Move);
 
             return null;
@@ -54,23 +43,22 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             base.Update(deltaTime);
-            AttackState();
+            MagicState();
+
+            Debug.Log($"IsAttack: {context.Actor.Condition.IsAttack}");
+            Debug.Log($"IsMagic: {context.Actor.Condition.IsMagic}");
         }
         #endregion
 
-
-
-
-
         //공격 처리
-        void AttackState()
+        void MagicState()
         {
-            context.Animator.ResetTrigger(Hash_MeleeAttack);
+            context.Animator.ResetTrigger(Hash_MagicAttack);
 
             context.Animator.SetFloat(Hash_StateTime,
                                       Mathf.Repeat(context.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f));
-            if (context.Actor.Condition.IsAttack)
-                context.Animator.SetTrigger(Hash_MeleeAttack);
+            if (context.Actor.Condition.IsMagic)
+                context.Animator.SetTrigger(Hash_MagicAttack);
         }
     }
 }
