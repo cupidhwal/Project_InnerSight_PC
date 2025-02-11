@@ -43,23 +43,7 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             base.Update(deltaTime);
-            MagicState();
         }
         #endregion
-
-
-
-
-
-        //공격 처리
-        void MagicState()
-        {
-            context.Animator.ResetTrigger(Hash_MagicAttack);
-
-            context.Animator.SetFloat(Hash_StateTime,
-                                      Mathf.Repeat(context.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f));
-            if (context.Actor.Condition.IsMagic)
-                context.Animator.SetTrigger(Hash_MagicAttack);
-        }
     }
 }
