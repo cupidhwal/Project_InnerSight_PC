@@ -88,7 +88,7 @@ namespace JungBin
                 Destroy(gameObject);
             }
             // 벽과 충돌했을 때
-            else if (other.CompareTag("Wall"))
+            else if (other.CompareTag("BWall"))
             {
                 Destroy(gameObject);
             }

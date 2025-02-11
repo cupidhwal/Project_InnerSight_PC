@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2126470510521891506
 Transform:
   m_ObjectHideFlags: 0
@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDirection: {x: 0, y: 0, z: 0}
+  damageCooldown: 1
 --- !u!1 &1431761859981353239
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDirection: {x: 0, y: 0, z: 0}
+  damageCooldown: 1
 --- !u!1 &2497880882555595176
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,6 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDirection: {x: 0, y: 0, z: 0}
+  damageCooldown: 1
 --- !u!1 &2932496193762415157
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6498946531561311706
 Transform:
   m_ObjectHideFlags: 0
@@ -428,7 +431,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 2, z: 4}
+  m_Size: {x: 0.4, y: 4, z: 6}
   m_Center: {x: -0.3, y: 0, z: 0}
 --- !u!114 &6458689853693445184
 MonoBehaviour:
@@ -443,6 +446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDirection: {x: 0, y: 0, z: 0}
+  damageCooldown: 1
 --- !u!1 &6123675318104457446
 GameObject:
   m_ObjectHideFlags: 0
@@ -2585,7 +2589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossName: "\uD0C0\uC6B0\uB85C\uC2A4"
-  maxHealth: 1500
+  maxHealth: 1000
   invulnerabilityTime: 3.5
   bossAttack: 30
   relicPrefab: {fileID: 3199772393577486388, guid: 8a67d03c67dab424380aa5e4d5738792, type: 3}
@@ -2633,7 +2637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289bfb1f47fad5745a55b3ba7e9ccbc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoints: 1500
+  maxHitPoints: 1000
   currentHitPoints: 0
   invulnerablityTime: 0.1
   staggerDuration: 0
