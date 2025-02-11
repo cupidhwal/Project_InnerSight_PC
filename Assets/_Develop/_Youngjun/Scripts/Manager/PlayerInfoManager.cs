@@ -5,42 +5,47 @@ namespace Noah
 {
     public class PlayerInfoManager : Singleton<PlayerInfoManager>
     {
-        private int gold;
-
         public int startGold;
 
-        public int Gold => gold;
+        PlayerItem playerItem;
 
         private void Start()
         {
-            gold = startGold;
+            playerItem = SaveLoadManager.Instance.playerItem;
+
+            playerItem.gold = startGold;
         }
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.B))
             {
-                GetGold(100000);
+                AddGold(100000);
             }
         }
 
-        public void GetGold(int _gold)
+        public int GetGold()
         {
-            gold += _gold;
+            return playerItem.gold;
+        }
+
+        public void AddGold(int _gold)
+        {
+            playerItem.gold += _gold;
             UIManager.Instance.UpdateGoldUI();
         }
 
         public void SetGold(int _gold)
         {
-            gold = _gold;
+            playerItem.gold = _gold;
             UIManager.Instance.UpdateGoldUI();
         }
 
         public void UseGold(int _gold)
         {
-            if(gold > 0)
+            if(playerItem.gold > 0)
             {
-                gold -= _gold;
+                playerItem.gold -= _gold;
                 UIManager.Instance.UpdateGoldUI();
             }
         }

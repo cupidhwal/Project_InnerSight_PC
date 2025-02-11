@@ -9,7 +9,7 @@ namespace Noah
         public GameObject playerStateUI;
         public TMP_Text goldText;
 
-        InGameUI_PlayerState inGameUI_PlayerState;
+        InGameUI_PlayerStats inGameUI_PlayerState;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -19,15 +19,15 @@ namespace Noah
 
         void Init()
         {
-            inGameUI_PlayerState = playerStateUI.transform.parent.GetComponent<InGameUI_PlayerState>();
+            inGameUI_PlayerState = playerStateUI.transform.parent.GetComponent<InGameUI_PlayerStats>();
         }
 
         public void UpdateGoldUI()
         {
             if(goldText != null)
             {
-                goldText.text = PlayerInfoManager.Instance.Gold.ToString();
-                inGameUI_PlayerState.gold_Text.text = PlayerInfoManager.Instance.Gold.ToString();
+                goldText.text = PlayerInfoManager.Instance.GetGold().ToString();
+                inGameUI_PlayerState.gold_Text.text = PlayerInfoManager.Instance.GetGold().ToString();
             }         
         }
 

@@ -31,15 +31,6 @@ namespace Noah
 
         public GameObject CurrentStage => currentStage;
 
-        // Test
-        [SerializeField] private GameObject playerPrefab;
-        InGameUI_Skill inGameUI_Skill;
-        MinimapControl minimapControl;
-        CinemachineCamera cinemachineCamera;
-        InGameUI_PlayerState playerState;
-        HealthBar healthBar;
-
-
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -53,12 +44,6 @@ namespace Noah
             player = FindAnyObjectByType<RayManager>().transform;
 
             StartCoroutine(ResetStage());
-
-            // Test
-            inGameUI_Skill = FindAnyObjectByType<InGameUI_Skill>();
-            minimapControl = FindAnyObjectByType<MinimapControl>();
-            playerState = FindAnyObjectByType<InGameUI_PlayerState>();
-            healthBar = FindAnyObjectByType<HealthBar>();
         }
 
         IEnumerator ResetStage()
@@ -131,16 +116,14 @@ namespace Noah
             enemys.Clear();
 
             StartCoroutine(ReStart());
-
-            inGameUI_Skill.ResetSkill();
-            minimapControl.SetPlayer();
         }
 
         public void ReStartGame()
         {
-            NewStage();
+            // 테스트
+            //NewStage();
 
-            //SceneFade.instance.FadeOut("PlayScene");
+            SceneFade.instance.FadeOut(SceneManager.GetActiveScene().name);
         }
 
         // 테스트용
@@ -195,15 +178,6 @@ namespace Noah
 
             player.GetComponent<Damagable>().OnRevive?.Invoke();
 
-            //Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
-
-            //player = FindAnyObjectByType<RayManager>().transform;
-            //cinemachineCamera = FindAnyObjectByType<CinemachineCamera>();
-            //playerState.TestSetPlayer();
-            //healthBar.UpdateHealth();
-            //PlayerStateManager.Instance.TestSetPlayer(); 
-
-            //cinemachineCamera.Follow = player.transform;
             player.transform.position = spawnPoint.position;
 
             player.GetComponent<Rigidbody>().useGravity = true;
