@@ -271,7 +271,6 @@ namespace Seti
 
             // 대시 시작
             isDashed = true;
-
             actor.Condition.IsDash = true;
             SwitchStrategy(StrategyType.Dash);
 
@@ -284,10 +283,12 @@ namespace Seti
             SwitchStrategy(StrategyType.Normal);
 
             // Damagable 컴포넌트가 있다면 무적 해제
-            yield return new WaitForSeconds(player.Dash_Duration);
+            float remaining = player.Dash_InvulnerablityTime - player.Dash_Duration;
+            remaining = Mathf.Clamp01(remaining);
+            yield return new WaitForSeconds(remaining);
             damagable.IsInvulnerable = false;
 
-            yield return new WaitForSeconds(player.Dash_Cooldown - (2 * player.Dash_Duration));
+            yield return new WaitForSeconds(player.Dash_Cooldown - player.Dash_InvulnerablityTime);
             isDashed = false;
             // 대시 사용 가능
 
