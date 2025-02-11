@@ -1,4 +1,5 @@
 using Seti;
+using System.Collections;
 using UnityEngine;
 
 namespace JungBin
@@ -10,13 +11,15 @@ namespace JungBin
     {
         [SerializeField] private Vector3 attackDirection;  // 공격 방향 (옵션)
         private BoxCollider boxCollider;
+        [SerializeField] private float damageCooldown = 1f; // 데미지 입은 후 쿨타임
+        private bool canTakeDamage = true; // 데미지 가능 여부
 
         private void OnTriggerEnter(Collider other)
         {
             // 플레이어의 Damagable 컴포넌트 확인
             Damagable playerDamagable = other.GetComponent<Damagable>();
             Actor actor = other.GetComponent<Actor>();
-            if (playerDamagable != null)
+            if (playerDamagable != null && canTakeDamage)
             {
                 // DamageMessage 생성
                 Damagable.DamageMessage damageMessage = new Damagable.DamageMessage
@@ -37,8 +40,14 @@ namespace JungBin
 
                 // 플레이어에게 데미지 적용
                 playerDamagable.TakeDamage(damageMessage);
-                this.gameObject.SetActive(false);
+                StartCoroutine(ResetDamageCooldown());
             }
+        }
+
+        private IEnumerator ResetDamageCooldown()
+        {
+            yield return new WaitForSeconds(damageCooldown);
+            canTakeDamage = true; // 쿨타임 후 다시 데미지 허용
         }
     }
 }
