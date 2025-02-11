@@ -22,7 +22,9 @@ namespace Seti
         // 피격 연출
         private IEnumerator damageCor;
         [SerializeField]
-        private float damageDuration = 0.2f;
+        private float damageDuration = 1f;
+        [SerializeField]
+        private float damageIntensity = 0.7f;
         #endregion
 
         // 라이프 사이클
@@ -75,15 +77,15 @@ namespace Seti
         IEnumerator ReceiveDamageCor(float duration)
         {
             // 피격 시작
-            vignette.intensity.value = 0.5f;
+            vignette.intensity.value = damageIntensity;
 
             // 원상복귀
             float elapsed = 0f;
             float timeStamp = Time.time;
-            while (timeStamp + damageDuration > Time.time)
+            while (timeStamp + duration > Time.time)
             {
                 elapsed += Time.deltaTime;
-                float sharpness = elapsed / damageDuration;
+                float sharpness = elapsed / duration;
 
                 vignette.intensity.value = Mathf.Lerp(vignette.intensity.value, 0, Mathf.SmoothStep(0, 1, sharpness));
                 yield return null;
