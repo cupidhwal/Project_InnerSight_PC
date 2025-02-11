@@ -5,6 +5,25 @@ using Seti;
 namespace Noah
 {
     [Serializable]
+    public class UpGradeData
+    {
+        public float hp_Up;
+        public float atk_Up;
+        public float def_Up;
+        public float moveSpeed_Up;
+        public float atkSpeed_Up;
+
+        public void ResetData()
+        {
+            hp_Up = PlayerStatsManager.Instance.upgradeData.hp_Up;
+            atk_Up = PlayerStatsManager.Instance.upgradeData.atk_Up;
+            def_Up = PlayerStatsManager.Instance.upgradeData.def_Up;
+            moveSpeed_Up = PlayerStatsManager.Instance.upgradeData.moveSpeed_Up;
+            atkSpeed_Up = PlayerStatsManager.Instance.upgradeData.atkSpeed_Up;
+        }
+    }
+
+    [Serializable]
     public class StartData
     {
         public float hp_Start;
@@ -15,39 +34,23 @@ namespace Noah
     }
 
     [Serializable]
-    public class UpGradePlayerdata
+    public class UpGradeCountData
     {
         public int hp_UpCount = 1;
         public int atk_UpCount = 1;
         public int def_UpCount = 1;
         public int moveSpeed_UpCount = 1;
-        public int atkSpeed_UpCount = 1;
-
-        public float hp_Up;
-        public float atk_Up;
-        public float def_Up;
-        public float moveSpeed_Up;
-        public float atkSpeed_Up;
-
-        public void ResetData()
-        {
-            hp_Up = PlayerStateManager.Instance.upGradePlayerdata.hp_Up;
-            atk_Up = PlayerStateManager.Instance.upGradePlayerdata.atk_Up;
-            def_Up = PlayerStateManager.Instance.upGradePlayerdata.def_Up;
-            moveSpeed_Up = PlayerStateManager.Instance.upGradePlayerdata.moveSpeed_Up;
-            atkSpeed_Up = PlayerStateManager.Instance.upGradePlayerdata.atkSpeed_Up;         
-        }
+        public int atkSpeed_UpCount = 1;    
     }
 
+    [Serializable]
     public class PlayerData
     {
-        private float hp;
-        private float atk;
-        private float def;
-        private float moveSpeed;
-        private float atkSpeed;
-
-        private bool loadData = false;
+        public float hp;
+        public float atk;
+        public float def;
+        public float moveSpeed;
+        public float atkSpeed;
 
         public float Health
         {
@@ -107,29 +110,37 @@ namespace Noah
             }
         }
 
-        public bool LoadData
-
-        {
-            get
-            {
-                return loadData;
-            }
-            set
-            {
-                loadData = value;
-            }
-        }
+        //public PlayerData(float _hp, float _atk, float _def, float _moveSpeed, float _atkSpeed)
+        //{
+        //    hp = _hp;
+        //    atk = _atk;
+        //    def = _def;
+        //    moveSpeed = _moveSpeed;
+        //    atkSpeed = _atkSpeed;
+        //}
 
         public void ResetData()
         {
-            if (!loadData)
+            if (!SaveLoadManager.Instance.isLoadData)
             {
-                hp = PlayerStateManager.Instance.startPlayerData.hp_Start;
-                atk = PlayerStateManager.Instance.startPlayerData.atk_Start;
-                def = PlayerStateManager.Instance.startPlayerData.def_Start;
-                moveSpeed = PlayerStateManager.Instance.startPlayerData.moveSpeed_Start;
-                atkSpeed = PlayerStateManager.Instance.startPlayerData.atkSpeed_Start;
+                hp = PlayerStatsManager.Instance.startPlayerData.hp_Start;
+                atk = PlayerStatsManager.Instance.startPlayerData.atk_Start;
+                def = PlayerStatsManager.Instance.startPlayerData.def_Start;
+                moveSpeed = PlayerStatsManager.Instance.startPlayerData.moveSpeed_Start;
+                atkSpeed = PlayerStatsManager.Instance.startPlayerData.atkSpeed_Start;
+            }
+            else
+            {
+                // 저장된 데이터가 있으면 적용
+                PlayerData loadedStats = SaveLoadManager.Instance.playerStats;
+                
+                hp = loadedStats.hp;
+                atk = loadedStats.atk;
+                def = loadedStats.def;
+                moveSpeed = loadedStats.moveSpeed;
+                atkSpeed = loadedStats.atkSpeed;
             }
         }
+
     }
 }

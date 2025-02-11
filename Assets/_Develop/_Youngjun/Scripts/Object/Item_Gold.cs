@@ -75,7 +75,7 @@ namespace Noah
         {
             if (other.CompareTag("Player"))
             {
-                PlayerInfoManager.Instance.GetGold(chargeGold);
+                PlayerInfoManager.Instance.AddGold(chargeGold);
 
                 Destroy(gameObject);
             }
