@@ -8,11 +8,14 @@ namespace Seti
     public class MagicAttack_Particle : MonoBehaviour
     {
         // 필드
+        private ParticleSystem magic;
         public Damagable.DamageMessage DamageData { get; private set; }
 
         // 라이프 사이클
         private void Start()
         {
+            magic = GetComponent<ParticleSystem>();
+
             Enemy attacker = GetComponentInParent<Actor>() as Enemy;
             Vector3 hitDirection = attacker.Player.transform.position - attacker.transform.position;
 
@@ -27,6 +30,9 @@ namespace Seti
                 throwing = true,
                 stopCamera = false
             };
+
+            if (!magic.isPlaying)
+                magic.Play();
         }
     }
 }

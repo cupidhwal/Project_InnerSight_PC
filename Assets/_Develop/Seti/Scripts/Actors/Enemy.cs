@@ -149,7 +149,7 @@ namespace Seti
 
                 // 마법 시전
                 GameObject go = Instantiate(magicObject, hand.transform.position, rot, transform);
-                Destroy(go, 0.5f);
+                Destroy(go, 1f);
             }
         }
         #endregion

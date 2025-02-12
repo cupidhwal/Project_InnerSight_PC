@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4572393023880310}
   - component: {fileID: 198549077654335888}
   - component: {fileID: 199141469417565000}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TinyShards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -169,8 +169,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 8
-      minScalar: 0
+      scalar: 3
+      minScalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4752,7 +4752,7 @@ GameObject:
   - component: {fileID: 4846699676719904}
   - component: {fileID: 33822666002094466}
   - component: {fileID: 23059951589126170}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: IceBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4839,7 +4839,7 @@ GameObject:
   - component: {fileID: 198433943929519872}
   - component: {fileID: 199651061282982800}
   - component: {fileID: 6752455727562633118}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: IceLance_Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4856,7 +4856,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4572393023880310}
@@ -4880,8 +4880,8 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 1
-  playOnAwake: 1
+  prewarm: 0
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -4937,7 +4937,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 1
+  moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
   randomSeed: 0
@@ -6432,7 +6432,7 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 80
+      scalar: 30
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -9710,7 +9710,7 @@ GameObject:
   - component: {fileID: 4534318803784408}
   - component: {fileID: 198563964752515286}
   - component: {fileID: 199437207930952974}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9749,7 +9749,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
