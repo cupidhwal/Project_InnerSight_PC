@@ -20,6 +20,8 @@ namespace JungBin
         [SerializeField] private ParticleSystem slashAttack;
         [SerializeField] private GameObject warningEffectPrefab;
         [SerializeField] private float warningDuration;
+        [SerializeField] private float secondWarningDuration;
+        [SerializeField] private float Duration;
         [SerializeField] private float warningLength = 5f;
         private bool canTakeDamage = true; // 데미지 가능 여부
 
@@ -195,15 +197,53 @@ namespace JungBin
             Quaternion warningRotation = Quaternion.LookRotation(rushDirection);
 
             // 경고 이펙트 생성
-            GameObject warningEffect = Instantiate(warningEffectPrefab, startPosition, warningRotation);
+            GameObject warningEffect = Instantiate(warningEffectPrefab, startPosition, warningRotation, this.transform);
             warningEffect.transform.GetChild(0).localScale = new Vector3(1, 0.1f, warningLength); // 길이 조정
-            //warningEffect.transform.localScale = new Vector3(2f, 1f, warningLength); // 길이를 돌진 거리만큼 조정
 
-            yield return new WaitForSeconds(warningDuration); // 경고 표시 지속 시간
             canTakeDamage = false;
-            StartCoroutine(ShowRushWarning());
-            Destroy(warningEffect); // 경고 표시 제거 후 돌진 시작
+
+            // 경고 지속 시간 동안 계속 체크하여 벽이 감지되면 즉시 중단
+            float elapsedTime = 0f;
+            while (elapsedTime < warningDuration)
+            {
+                if (animator.GetBool("IsWall"))
+                {
+                    Destroy(warningEffect); // 기존 경고 이펙트 제거
+                    yield break; // 즉시 종료 (return 역할)
+                }
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            Destroy(warningEffect); // 경고 표시 제거 후 돌진 시작 
+
+            yield return new WaitForSeconds(Duration);
+
+            startPosition = transform.position; // 보스의 현재 위치
+            rushDirection = transform.forward; // 돌진 방향 (현재 보스의 정면 방향)
+
+            warningRotation = Quaternion.LookRotation(rushDirection);
+
+            GameObject secondWarningEffect = Instantiate(warningEffectPrefab, startPosition, warningRotation, this.transform);
+            secondWarningEffect.transform.GetChild(0).localScale = new Vector3(1, 0.1f, warningLength); // 길이 조정
+
+            StartCoroutine(ResetDamageCooldown());
+
+            elapsedTime = 0f;
+            while (elapsedTime < secondWarningDuration)
+            {
+                if (animator.GetBool("IsWall"))
+                {
+                    Destroy(secondWarningEffect); // 두 번째 경고 이펙트 제거
+                    yield break; // 즉시 종료
+                }
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            Destroy(secondWarningEffect);
         }
+
 
         private IEnumerator ResetDamageCooldown()
         {
