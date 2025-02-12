@@ -18,6 +18,10 @@ namespace JungBin
         [SerializeField] private BoxCollider throwAttackBox;
         [SerializeField] private GameObject smashAttackBox;
         [SerializeField] private ParticleSystem slashAttack;
+        [SerializeField] private GameObject warningEffectPrefab;
+        [SerializeField] private float warningDuration;
+        [SerializeField] private float warningLength = 5f;
+        private bool canTakeDamage = true; // 데미지 가능 여부
 
         [Header("Detection Settings")]
         [SerializeField] private float detectionRange = 8f;
@@ -87,6 +91,15 @@ namespace JungBin
                     animator.SetBool("IsBWall", true);
                     hit.transform.GetComponent<BrokenWall>()?.RushToWall();
                 }
+            }
+
+            if(animator.GetBool("IsAttack01") || animator.GetBool("IsAttack03"))
+            {
+                animator.applyRootMotion = false;
+            }
+            else if (!animator.GetBool("IsAttack01") && !animator.GetBool("IsAttack03"))
+            {
+                animator.applyRootMotion = true;
             }
         }
 
@@ -162,6 +175,40 @@ namespace JungBin
             Vector3 directionToWall = transform.forward;
             float detectionRange = 1.5f;
             return Physics.Raycast(transform.position, directionToWall, out hitInfo, detectionRange) && hitInfo.transform.CompareTag(tag);
+        }
+
+        public void TriggerRushWarning()
+        {
+            if (canTakeDamage)
+            {
+                StartCoroutine(ShowRushWarning());
+            }
+        }
+
+        private IEnumerator ShowRushWarning()
+        {
+            Vector3 startPosition = transform.position; // 보스의 현재 위치
+            Vector3 rushDirection = transform.forward; // 돌진 방향 (현재 보스의 정면 방향)
+
+            // 경고 이펙트를 돌진 방향으로 길게 생성
+            Vector3 warningPosition = startPosition + rushDirection * (warningLength / 2f);
+            Quaternion warningRotation = Quaternion.LookRotation(rushDirection);
+
+            // 경고 이펙트 생성
+            GameObject warningEffect = Instantiate(warningEffectPrefab, startPosition, warningRotation);
+            warningEffect.transform.GetChild(0).localScale = new Vector3(1, 0.1f, warningLength); // 길이 조정
+            //warningEffect.transform.localScale = new Vector3(2f, 1f, warningLength); // 길이를 돌진 거리만큼 조정
+
+            yield return new WaitForSeconds(warningDuration); // 경고 표시 지속 시간
+            canTakeDamage = false;
+            StartCoroutine(ShowRushWarning());
+            Destroy(warningEffect); // 경고 표시 제거 후 돌진 시작
+        }
+
+        private IEnumerator ResetDamageCooldown()
+        {
+            yield return new WaitForSeconds(warningDuration);
+            canTakeDamage = true; // 쿨타임 후 다시 데미지 허용
         }
 
         private bool DetectWall() => DetectObstacle("Wall", out _);
