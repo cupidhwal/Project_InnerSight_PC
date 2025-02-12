@@ -36,7 +36,7 @@ namespace Seti
             if (enemy.Detected)
                 return typeof(Enemy_State_Chase);
 
-            if (enemy.CanMagic)
+            if (!enemy.Detected && enemy.CanMagic)
                 return typeof(Enemy_State_Attack_Magic);
 
             if (context.StateMachine.ElapsedTime > elapsedDuration)

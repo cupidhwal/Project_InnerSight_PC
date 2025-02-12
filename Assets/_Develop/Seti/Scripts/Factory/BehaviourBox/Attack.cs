@@ -253,17 +253,20 @@ namespace Seti
         {
             if (!condition.InAction) return;
 
-            if (actor is Player && isSkillAttack)
+            if (actor is Player)
             {
-                if (isMagic)
+                if (isSkillAttack)
                 {
-                    currentStrategy?.Attack();
+                    if (isMagic)
+                    {
+                        currentStrategy?.Attack();
 
-                    condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
-                    actor.CoroutineExecutor(MagicWait());
+                        condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
+                        actor.CoroutineExecutor(MagicWait());
+                    }
+
+                    isSkillAttack = false;
                 }
-
-                isSkillAttack = false;
             }
 
             else if (isMagic)
@@ -283,7 +286,7 @@ namespace Seti
         }
         IEnumerator MagicWait()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             currentStrategy?.AttackExit();
         }
         public void MagicExit()
