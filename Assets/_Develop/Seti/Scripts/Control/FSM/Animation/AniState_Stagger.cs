@@ -40,7 +40,7 @@ namespace Seti
             if (!context.Actor.Condition.IsStagger && context.Actor.Condition.IsMove)
                 return typeof(AniState_Move);
 
-            if (!context.Actor.Condition.IsStagger && context.Actor.Condition.IsDash)
+            if (!context.Actor.Condition.IsStagger && Condition_Player.IsDash)
                 return typeof(AniState_Dash);
 
             if (!context.Actor.Condition.IsStagger && context.Actor.Condition.IsAttack)

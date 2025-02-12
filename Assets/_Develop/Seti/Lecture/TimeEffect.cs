@@ -49,10 +49,12 @@ namespace Seti
         IEnumerator DisableAtEndOfAnimation()
         {
             Player player = GetComponentInParent<Player>();
+            Condition_Player condition = player.GetComponent<Condition_Player>();
+
             float timeStamp = Time.time;
             while (timeStamp + m_Animation.clip.length > Time.time)
             {
-                if (player.Condition.IsDash)
+                if (condition.IsDash)
                     break;
                 yield return null;
             }

@@ -24,7 +24,7 @@ namespace Seti
             switch (condition.CurrentWeaponType)
             {
                 case Condition_Actor.WeaponType.Sword:
-                    actor.CoroutineExecutor(Attack_Sword());
+                    Attack_Sword();
                     break;
 
                 case Condition_Actor.WeaponType.Staff:
@@ -40,36 +40,14 @@ namespace Seti
                     break;
 
                 default:
-                    Attack_Null();
+                    actor.CoroutineExecutor(Attack_Null());
                     break;
             }
         }
 
-        private IEnumerator Attack_Sword()
+        private void Attack_Sword()
         {
-            // 애니메이션의 Root Motion을 쓰지 않을 경우에만 실행
-            if (actor.Controller_Animator.Animator.applyRootMotion) yield break;
-
-            // Player의 검 공격, 조금씩 전진
-            Player player = actor as Player;
-
-            // 초기 속도 설정
-            float elapsedTime = 0f;
-            float atkDuration = 0.16f;
-            float currentSpeed = player.Rate_Movement_Default * player.AttackProgressive;
-            while (actor.Condition.InAction && elapsedTime < atkDuration)
-            {
-                elapsedTime += Time.deltaTime;
-                float t = elapsedTime / atkDuration;
-
-                // Ease In-Out 적용
-                currentSpeed = Mathf.Lerp(currentSpeed, 0, Mathf.SmoothStep(0f, 1f, t));
-                player.transform.Translate(currentSpeed * Time.deltaTime * player.transform.forward, Space.World);
-
-                yield return null;
-            }
-
-            yield break;
+            actor.CoroutineExecutor(Attack_Null());
         }
 
         private void Attack_Staff()
@@ -87,10 +65,28 @@ namespace Seti
             Debug.Log("평타: Bow");
         }
 
-        private void Attack_Null()
+        private IEnumerator Attack_Null()
         {
-            // Enemy의 맨손 공격
-            //Debug.Log("평타: Null");
+            // 애니메이션의 Root Motion을 쓰지 않을 경우에만 실행
+            if (actor.Controller_Animator.Animator.applyRootMotion) yield break;
+
+            // 초기 속도 설정
+            float elapsedTime = 0f;
+            float atkDuration = 0.16f;
+            float currentSpeed = actor.Rate_Movement_Default * actor.AttackProgressive;
+            while (actor.Condition.InAction && elapsedTime < atkDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = elapsedTime / atkDuration;
+
+                // Ease In-Out 적용
+                currentSpeed = Mathf.Lerp(currentSpeed, 0, Mathf.SmoothStep(0f, 1f, t));
+                actor.transform.Translate(currentSpeed * Time.deltaTime * actor.transform.forward, Space.World);
+
+                yield return null;
+            }
+
+            yield break;
         }
         #endregion
     }

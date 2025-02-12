@@ -37,7 +37,7 @@ namespace Seti
             if (!context.Actor.Condition.IsMove)
                 return typeof(AniState_Idle);
 
-            if (context.Actor.Condition.IsDash)
+            if (Player && Condition_Player.IsDash)
                 return typeof(AniState_Dash);
             
             if (context.Actor.Condition.IsMagic)

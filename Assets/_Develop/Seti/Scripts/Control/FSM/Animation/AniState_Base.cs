@@ -37,6 +37,29 @@ namespace Seti
         protected int Hash_Respawn = Animator.StringToHash("Respawn");
         #endregion
 
+        // 속성
+        #region Properties
+        public Player Player
+        {
+            get
+            {
+                if (context.Actor is Player player)
+                    return player;
+                return null;
+            }
+        }
+        public Condition_Player Condition_Player
+        {
+            get
+            {
+                if (context.Actor is Player)
+                    if (context.Actor.Condition is Condition_Player condition_Player)
+                        return condition_Player;
+                return null;
+            }
+        }
+        #endregion
+
         // 오버라이드
         #region Override
         public override void OnEnter() => context.Initialize();

@@ -44,7 +44,6 @@ namespace Seti
         public bool IsAttack { get; set; } = false;
         public bool IsMagic { get; set; } = false;
         public bool IsMove { get; set; } = false;
-        public bool IsDash { get; set; } = false;
         public bool IsDead { get; set; } = false;
         public bool IsChase { get; set; } = false;
 

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 namespace Seti
 {
     // Actor가 가져야 할 Component
+    [RequireComponent(typeof(CapsuleCollider))]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(NavMeshAgent))]
     //[RequireComponent(typeof(Damagable))]
@@ -55,6 +56,8 @@ namespace Seti
         [Header("Variables: Common")]
         [SerializeField]
         protected float mag_WalkToRun = 1.5f;
+        [SerializeField]
+        protected float attackProgressive = 2.5f;
         #endregion
 
         // 속성
@@ -81,8 +84,9 @@ namespace Seti
         public float Rate_Movement => rate_Movement;
         public float Stagger => stagger;
 
-        // 걷기/달리기
-        public float Magnification_WalkToRun => mag_WalkToRun;
+        // 기타 속성
+        public float Magnification_WalkToRun => mag_WalkToRun;  // 걷기/달리기
+        public float AttackProgressive => attackProgressive;    // 공격 시 전진 계수
         #endregion
 
         // 스탯 적용

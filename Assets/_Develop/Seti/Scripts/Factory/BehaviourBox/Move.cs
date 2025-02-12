@@ -26,7 +26,6 @@ namespace Seti
         #region Variables
         // Player
         private float speed_Move = 4f;
-        private bool isDashed = false;
 
         // 전략 관리
         private Actor actor;
@@ -241,7 +240,9 @@ namespace Seti
         private void OnDash()
         {
             // 체공 중일 경우 착지까지 전략 변경 불가
-            if (isDashed || !actor.Condition.IsGrounded) return;
+            Condition_Player condition_Player = player.Condition as Condition_Player;
+
+            if (condition_Player.CanDash || !actor.Condition.IsGrounded) return;
             actor.CoroutineExecutor(Dash_Cor());
         }
 
@@ -258,35 +259,32 @@ namespace Seti
         #region Utilities
         private IEnumerator Dash_Cor()
         {
+            // 참조
+            Condition_Player condition_Player = player.Condition as Condition_Player;
+
             // 대시 중 충돌 무시
-            Collider collider = actor.GetComponent<Collider>();
+            Collider collider = player.GetComponent<Collider>();
             collider.excludeLayers = LayerMask.GetMask("Actor");
+
+            // 대시 시작
+            condition_Player.IsDash = true;
+            condition_Player.CanDash = true;
+            SwitchStrategy(StrategyType.Dash);
 
             // Damagable 컴포넌트가 있다면 대시 중 무적
             if (actor.TryGetComponent<Damagable>(out var damagable))
-                damagable.IsInvulnerable = true;
-
-            // 대시 시작
-            isDashed = true;
-            actor.Condition.IsDash = true;
-            SwitchStrategy(StrategyType.Dash);
+                damagable.isDashInvulnerable = true;
 
             // 대시 끝
             yield return new WaitForSeconds(player.Dash_Duration);
             if (currentStrategy is Move_Dash dash)
                 dash.MoveExit();
 
-            actor.Condition.IsDash = false;
+            condition_Player.IsDash = false;
             SwitchStrategy(StrategyType.Normal);
 
-            // Damagable 컴포넌트가 있다면 무적 해제
-            float remaining = player.Dash_InvulnerablityTime - player.Dash_Duration;
-            remaining = Mathf.Clamp01(remaining);
-            yield return new WaitForSeconds(remaining);
-            damagable.IsInvulnerable = false;
-
-            yield return new WaitForSeconds(player.Dash_Cooldown - player.Dash_InvulnerablityTime);
-            isDashed = false;
+            yield return new WaitForSeconds(player.Dash_Cooldown - player.Dash_Duration);
+            condition_Player.CanDash = false;
             // 대시 사용 가능
 
             // 충돌 확인 재개

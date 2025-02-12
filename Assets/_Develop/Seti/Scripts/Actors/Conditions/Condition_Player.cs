@@ -4,6 +4,10 @@ namespace Seti
 {
     public class Condition_Player : Condition_Actor
     {
+        // 필드
+        public bool CanDash { get; set; } = false;
+        public bool IsDash { get; set; } = false;
+
         // 라이프 사이클
         #region Life Cycle
         protected override void Start()

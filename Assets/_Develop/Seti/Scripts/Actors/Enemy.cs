@@ -1,9 +1,17 @@
+using Noah;
 using System.Collections;
 using UnityEngine;
+using Yoon;
 
 namespace Seti
 {
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Condition_Enemy))]
+    [RequireComponent(typeof(Controller_FSM))]
+    [RequireComponent(typeof(Damagable))]
+    [RequireComponent(typeof(WorldSpaceHealthBar))]
+    [RequireComponent(typeof(DamageText))]
+    [RequireComponent(typeof(DropItem))]
+
     public class Enemy : Actor
     {
         public enum State
@@ -38,7 +46,7 @@ namespace Seti
         [SerializeField]
         protected float range_Attack = 1f;
         [SerializeField]
-        protected float range_Magic = 15f;
+        protected float range_Magic = 0f;
         [SerializeField]
         protected float range_BackOff = 10f;
         [SerializeField]
@@ -56,7 +64,7 @@ namespace Seti
         [SerializeField]
         protected GameObject magicObject;
         [SerializeField]
-        protected float magicDamage = 15f;
+        protected float magicDamage = 0f;
         #endregion
 
         // 속성

@@ -33,7 +33,7 @@ namespace Seti
             if (context.Actor.Condition.IsMove)
                 return typeof(AniState_Move);
 
-            if (context.Actor.Condition.IsDash)
+            if (context.Actor.Condition is Condition_Player condition_Player && condition_Player.IsDash)
                 return typeof(AniState_Dash);
             
             if (context.Actor.Condition.IsMagic)

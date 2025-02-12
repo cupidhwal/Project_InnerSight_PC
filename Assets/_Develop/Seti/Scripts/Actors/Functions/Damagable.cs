@@ -12,13 +12,15 @@ namespace Seti
         // 필드
         #region Variables
         private Actor actor;
+        public bool isDashInvulnerable = false;
+
         [Header("Variables")]
         [SerializeField]
         private float maxHitPoints = 100f;
         [SerializeField]
         private float currentHitPoints;
         [SerializeField]
-        private float invulnerablityTime = 0f;
+        private float invulnerablityTime = 0.1f;
         [SerializeField]
         private float staggerDuration = 0.5f;
 
@@ -30,6 +32,7 @@ namespace Seti
 
         protected float m_timeSinceLastHit = 0.0f;  // 무적 카운트다운
         protected float m_timeSinceStagger = 0.0f;  // 피격 카운트다운
+        protected float m_timeSinceDash = 0.0f;     // 대시 카운트다운
 
         public UnityAction OnRevive;                // 이벤트: 부활
         public UnityAction OnDeath;                 // 이벤트: 죽음
@@ -60,6 +63,15 @@ namespace Seti
             }
         }
         public float CurrentHitRate => currentHitPoints / maxHitPoints;     // 현재 체력 (%)
+        /*public float InvulnerablityTime_Dash
+        {
+            get
+            {
+                if (actor is Player player)
+                    return player.Dash_InvulnerablityTime;
+                return invulnerablityTime;
+            }
+        }*/
         #endregion
 
         // 라이프 사이클
@@ -120,6 +132,17 @@ namespace Seti
                     m_timeSinceLastHit = 0f;
                 }
             }
+
+            if (isDashInvulnerable)
+            {
+                Player player = actor as Player;
+                m_timeSinceDash += Time.deltaTime;
+                if (m_timeSinceDash > player.Dash_InvulnerablityTime)
+                {
+                    isDashInvulnerable = false;
+                    m_timeSinceDash = 0f;
+                }
+            }
         }
 
         private void LateUpdate()
@@ -175,7 +198,7 @@ namespace Seti
                 return;
 
             // 무적 상태일 경우
-            if (IsInvulnerable)
+            if (IsInvulnerable || isDashInvulnerable)
             {
                 OnHitWhileInvulnerable?.Invoke();
                 return;

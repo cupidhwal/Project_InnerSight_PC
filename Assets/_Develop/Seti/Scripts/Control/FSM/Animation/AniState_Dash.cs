@@ -31,13 +31,13 @@ namespace Seti
             if (context.Actor.Condition.IsDead)
                 return typeof(AniState_Die);
 
-            if (!context.Actor.Condition.IsDash && !context.Actor.Condition.IsMove)
+            if (!Condition_Player.IsDash && !context.Actor.Condition.IsMove)
                 return typeof(AniState_Idle);
             
-            if (!context.Actor.Condition.IsDash && context.Actor.Condition.IsMove)
+            if (!Condition_Player.IsDash && context.Actor.Condition.IsMove)
                 return typeof(AniState_Move);
 
-            if (!context.Actor.Condition.IsDash && context.Actor.Condition.IsStagger)
+            if (!Condition_Player.IsDash && context.Actor.Condition.IsStagger)
                 return typeof(AniState_Stagger);
 
             return null;
