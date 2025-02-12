@@ -286,7 +286,7 @@ namespace Seti
         }
         IEnumerator MagicWait()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             currentStrategy?.AttackExit();
         }
         public void MagicExit()
