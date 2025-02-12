@@ -8,9 +8,10 @@ namespace Seti
     /// </summary>
     public interface IHasStrategy
     {
-        public void SetStrategies(IEnumerable<Strategy> strategies);
-        public void ChangeStrategy(Type strategyType);
         public Type GetStrategyType();
         public bool HasStrategy<T>() where T : class, IStrategy;
+        public void SetStrategies(IEnumerable<Strategy> strategies);
+        public void ChangeStrategy(Type strategyType);
+        public void SwitchStrategy(State<Controller_FSM> state);
     }
 }

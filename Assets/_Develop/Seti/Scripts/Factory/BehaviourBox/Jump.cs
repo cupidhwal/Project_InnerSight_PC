@@ -82,6 +82,11 @@ namespace Seti
                 currentStrategy = moveStrategy.strategy as IJumpStrategy;
             }
         }
+
+        public void SwitchStrategy(State<Controller_FSM> state)
+        {
+
+        }
         #endregion
 
         // 이벤트 핸들러

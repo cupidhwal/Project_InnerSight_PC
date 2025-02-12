@@ -23,12 +23,6 @@ namespace Seti
             atkToken = new CancellationTokenSource(1000);   // 1초 후 자동 취소
             Tackle(atkToken.Token);
         }
-
-        public override void AttackExit()
-        {
-            base.AttackExit();
-            atkToken?.Cancel();
-        }
         #endregion
 
         // 메서드

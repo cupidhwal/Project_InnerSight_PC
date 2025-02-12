@@ -123,28 +123,26 @@ namespace Seti
             }
         }
 
-        private void SwitchStrategy(StrategyType attackStrategies)
+        public void SwitchStrategy(State<Controller_FSM> state)
         {
-            switch (attackStrategies)
+            // FSM 상태에 따라 동작 제어
+            currentState = state;
+            switch (currentState)
             {
-                case StrategyType.Normal:
-                    //currentType = StrategyType.Normal;
+                case Enemy_State_Attack_Normal:
                     ChangeStrategy(typeof(Attack_Normal));
                     break;
 
-                case StrategyType.Weapon:
-                    //currentType = StrategyType.Weapon;
+                /*case Enemy_State_Attack_Weapon:
                     ChangeStrategy(typeof(Attack_Weapon));
-                    break;
+                    break;*/
 
-                case StrategyType.Magic:
-                    //currentType = StrategyType.Magic;
+                case Enemy_State_Attack_Magic:
                     ChangeStrategy(typeof(Attack_Magic));
                     break;
 
-                case StrategyType.Tackle:
-                    //currentType = StrategyType.Tackle;
-                    ChangeStrategy(typeof(Attack_Tackle));
+                default:
+                    ChangeStrategy(null);
                     break;
             }
         }
@@ -157,18 +155,15 @@ namespace Seti
         public void OnAttackCanceled(InputAction.CallbackContext _) => OnAttack(false);
         public void OnWeaponStarted(InputAction.CallbackContext _)
         {
-            SwitchStrategy(StrategyType.Magic);
-            OnMagic(true);       
+            ChangeStrategy(typeof(Attack_Magic));
+            OnMagic(true);
         }
         public void OnWeaponCanceled(InputAction.CallbackContext _)
         {
             //OnMagic(false);
-            //SwitchStrategy(StrategyType.Normal);
         }
         public void OnMagicStarted(InputAction.CallbackContext context)
         {
-            SwitchStrategy(StrategyType.Magic);
-
             string path = context.control.path;
             switch (path)
             {
@@ -193,35 +188,13 @@ namespace Seti
         }
         public void OnMagicCanceled(InputAction.CallbackContext _)
         {
-            SwitchStrategy(StrategyType.Normal);
+            //SwitchStrategy(StrategyType.Normal);
         }
         #endregion
 
         #region Controller_FSM
         public void FSM_AttackInput(bool isAttack) => OnAttack(isAttack);
         public void FSM_MagicInput(bool isMagic) => OnMagic(isMagic);
-        public void FSM_AttackSwitch(State<Controller_FSM> state)
-        {
-            // FSM 상태에 따라 동작 제어
-            Condition_Enemy condition = actor.Condition as Condition_Enemy;
-            currentState = state;
-            switch (currentState)
-            {
-                case Enemy_State_Attack_Normal:
-                    if (condition.CurrentWeaponType == Condition_Actor.WeaponType.NULL)
-                        SwitchStrategy(StrategyType.Tackle);
-                    else SwitchStrategy(StrategyType.Normal);
-                    break;
-
-                case Enemy_State_Attack_Magic:
-                    SwitchStrategy(StrategyType.Magic);
-                    break;
-
-                default:
-                    SwitchStrategy(StrategyType.NULL);
-                    break;
-            }
-        }
         #endregion
         #endregion
 
@@ -230,24 +203,12 @@ namespace Seti
         public void OnAttack(bool isAttack = true)
         {
             if (!condition.InAction) return;
-            SwitchStrategy(StrategyType.Normal);
+
+            ChangeStrategy(typeof(Attack_Normal));
             actor.Condition.IsAttack = isAttack;
-        }
 
-        public void OnAttackEnter()
-        {
-            currentStrategy?.Attack();
-
-            if (actor is Player)
-            {
-                condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
-                actor.CoroutineExecutor(AttackWait());
-            }
-        }
-
-        public void OnAttackExit()
-        {
-            currentStrategy?.AttackExit();
+            if (isSkillAttack)
+                isSkillAttack = false;
         }
 
         public void OnMagic(bool isMagic = true)
@@ -260,10 +221,10 @@ namespace Seti
                 {
                     if (isMagic)
                     {
-                        currentStrategy?.Attack();
+                        condition.IsMagic = true;
 
                         condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
-                        actor.CoroutineExecutor(MagicWait());
+                        ChangeStrategy(typeof(Attack_Normal));
                     }
 
                     isSkillAttack = false;
@@ -272,27 +233,8 @@ namespace Seti
 
             else if (isMagic)
             {
-                currentStrategy?.Attack();
-                actor.CoroutineExecutor(MagicWait());
+                condition.IsMagic = true;
             }
-        }
-        #endregion
-
-        // 유틸리티
-        #region Utilities
-        IEnumerator AttackWait()
-        {
-            yield return new WaitForSeconds(0.05f);
-            currentStrategy?.AttackExit();
-        }
-        IEnumerator MagicWait()
-        {
-            yield return new WaitForSeconds(1f);
-            currentStrategy?.AttackExit();
-        }
-        public void MagicExit()
-        {
-            OnMagic(false);
         }
         #endregion
     }

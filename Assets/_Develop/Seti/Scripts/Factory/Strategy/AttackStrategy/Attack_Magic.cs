@@ -10,11 +10,6 @@ namespace Seti
         {
             condition.IsMagic = true;
         }
-
-        public override void AttackExit()
-        {
-            condition.IsMagic = false;
-        }
         #endregion
     }
 }

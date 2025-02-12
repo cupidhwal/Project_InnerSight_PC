@@ -1,5 +1,6 @@
-using Noah;
 using UnityEngine;
+using Noah;
+
 namespace Seti
 {
     public enum AniState
@@ -131,22 +132,14 @@ namespace Seti
         {
             Actor.Condition.CurrentWeapon.BeginAttack(throwing != 0);
             Actor.Condition.IsAttack = true;
-
-            if (Actor.Controller.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
-                if (attackBehaviour is Attack attack)
-                    attack.OnAttackEnter();
+            Actor.Condition.AttackPoint = RayManager.Instance.RayToScreen();
         }
-
         public void MeleeAttackEnd()
         {
             Actor.Condition.CurrentWeapon.EndAttack();
             Actor.Condition.IsAttack = false;
-
-            if (Actor.Controller.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
-                if (attackBehaviour is Attack attack)
-                    attack.OnAttackExit();
         }
-
+        public void MagicAttackEnd() => Actor.Condition.IsMagic = false;
         public void CantMoveDurAtk() => Actor.Condition.CanMove = false;
         public void CanMoveAfterAtk() => Actor.Condition.CanMove = true;
 
@@ -172,6 +165,7 @@ namespace Seti
         public void UseSkill()
         {
             useSkill.UseSkillAnimation();
+            MagicAttackEnd();
         }
     }
 }

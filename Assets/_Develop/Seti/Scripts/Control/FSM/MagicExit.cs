@@ -35,13 +35,7 @@ namespace Seti
             if (!animator.TryGetComponent<Controller_Base>(out var controller))
                 controller = animator.GetComponentInParent<Controller_Base>();
 
-            if (controller.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
-            {
-                if (attackBehaviour is Attack attack)
-                {
-                    attack.MagicExit();
-                }
-            }
+            actor.Condition.IsMagic = false;
         }
 
         // OnStateMove is called right after Animator.OnAnimatorMove()

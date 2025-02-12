@@ -121,34 +121,33 @@ namespace Seti
             }
         }
 
-        private void SwitchStrategy(StrategyType type)
+        public void SwitchStrategy(State<Controller_FSM> state)
         {
-            currentType = type;
-            switch (currentType)
+            // FSM 상태에 따라 동작 제어
+            currentState = state;
+            switch (currentState)
             {
-                case StrategyType.Normal:
-                    ChangeStrategy(typeof(Move_Normal));
-                    break;
-
-                case StrategyType.Dash:
-                    ChangeStrategy(typeof(Move_Dash));
-                    break;
-
-                case StrategyType.Walk:
+                case Enemy_State_Patrol:
                     ChangeStrategy(typeof(Move_Walk));
                     break;
 
-                case StrategyType.Run:
+                case Enemy_State_Chase:
+                    ChangeStrategy(typeof(Move_Run));
+                    break;
+
+                case Enemy_State_BackOff:
                     ChangeStrategy(typeof(Move_Run));
                     break;
 
                 default:
-                    currentStrategy = null;
+                    ChangeStrategy(null);
                     break;
             }
         }
-        private void SwitchStrategy()
+
+        private void SwitchStrategy(StrategyType type)
         {
+            currentType = type;
             switch (currentType)
             {
                 case StrategyType.Normal:
@@ -194,29 +193,6 @@ namespace Seti
 
         #region Controller_FSM
         public void FSM_MoveInput(Vector2 moveInput, bool isMove) => OnMove(moveInput, isMove);
-        public void FSM_MoveSwitch(State<Controller_FSM> state)
-        {
-            // FSM 상태에 따라 동작 제어
-            currentState = state;
-            switch (currentState)
-            {
-                case Enemy_State_Patrol:
-                    SwitchStrategy(StrategyType.Walk);
-                    break;
-
-                case Enemy_State_Chase:
-                    SwitchStrategy(StrategyType.Run);
-                    break;
-
-                case Enemy_State_BackOff:
-                    SwitchStrategy(StrategyType.Run);
-                    break;
-
-                default:
-                    SwitchStrategy(StrategyType.NULL);
-                    break;
-            }
-        }
         #endregion
         #endregion
 
@@ -225,7 +201,6 @@ namespace Seti
         public void OnCollisionEnter(Collision collision)
         {
             currentStrategy?.GetOverCurb(collision);
-            SwitchStrategy();
         }
         #endregion
 

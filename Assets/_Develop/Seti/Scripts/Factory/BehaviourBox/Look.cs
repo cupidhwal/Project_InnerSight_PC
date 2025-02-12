@@ -99,21 +99,22 @@ namespace Seti
             }
         }
 
-        private void SwitchStrategy(StrategyType type)
+        public void SwitchStrategy(State<Controller_FSM> state)
         {
-            currentType = type;
-            switch (currentType)
+            // FSM 상태에 따라 동작 제어
+            currentState = state;
+            switch (currentState)
             {
-                case StrategyType.Normal:
-                    ChangeStrategy(typeof(Look_Normal));
+                case Enemy_State_Attack_Normal:
+                    ChangeStrategy(typeof(Look_Watch));
                     break;
 
-                case StrategyType.Watch:
+                case Enemy_State_Attack_Magic:
                     ChangeStrategy(typeof(Look_Watch));
                     break;
 
                 default:
-                    currentStrategy = null;
+                    ChangeStrategy(null);
                     break;
             }
         }
@@ -155,25 +156,6 @@ namespace Seti
 
         #region Controller_FSM
         public void FSM_LookInput() => currentStrategy?.Look();
-        public void FSM_LookSwitch(State<Controller_FSM> state)
-        {
-            // FSM 상태에 따라 동작 제어
-            currentState = state;
-            switch (currentState)
-            {
-                case Enemy_State_Attack_Normal:
-                    SwitchStrategy(StrategyType.Watch);
-                    break;
-
-                case Enemy_State_Attack_Magic:
-                    SwitchStrategy(StrategyType.Watch);
-                    break;
-
-                default:
-                    SwitchStrategy(StrategyType.NULL);
-                    break;
-            }
-        }
         #endregion
         #endregion
     }

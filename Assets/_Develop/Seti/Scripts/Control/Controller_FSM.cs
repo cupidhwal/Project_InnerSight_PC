@@ -50,27 +50,6 @@ namespace Seti
 
         // 메서드
         #region Methods
-        private void BindFSMBehaviours()
-        {
-            // Move 행동 이벤트 바인딩
-            if (behaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
-                if (moveBehaviour is Move move)
-                    stateMachine.OnStateChanged += move.FSM_MoveSwitch;
-
-            // Look 행동 이벤트 바인딩
-            if (behaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
-                if (lookBehaviour is Look look)
-                    stateMachine.OnStateChanged += look.FSM_LookSwitch;
-
-            // Attack 행동 이벤트 바인딩
-            if (behaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
-                if (attackBehaviour is Attack attack)
-                    stateMachine.OnStateChanged += attack.FSM_AttackSwitch;
-
-            // 다른 행동 이벤트 바인딩 가능
-            // if (behaviourMap.TryGetValue(typeof(Jump), out var jumpBehaviour)) { ... }
-        }
-
         private void AddStates()
         {
             // 누구나 죽는다
@@ -85,7 +64,7 @@ namespace Seti
                         stateMachine.AddState(new Enemy_State_Patrol());
                         stateMachine.AddState(new Enemy_State_BackOff());
                     }
-                    
+
                     if (move.HasStrategy<Move_Run>())
                         stateMachine.AddState(new Enemy_State_Chase());
                 }
@@ -108,6 +87,27 @@ namespace Seti
                 if (staggerBehaviour is Stagger)
                     stateMachine.AddState(new Enemy_State_Stagger());
             }
+        }
+
+        private void BindFSMBehaviours()
+        {
+            // Move 행동 이벤트 바인딩
+            if (behaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
+                if (moveBehaviour is Move move)
+                    stateMachine.OnStateChanged += move.SwitchStrategy;
+
+            // Look 행동 이벤트 바인딩
+            if (behaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
+                if (lookBehaviour is Look look)
+                    stateMachine.OnStateChanged += look.SwitchStrategy;
+
+            // Attack 행동 이벤트 바인딩
+            if (behaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+                if (attackBehaviour is Attack attack)
+                    stateMachine.OnStateChanged += attack.SwitchStrategy;
+
+            // 다른 행동 이벤트 바인딩 가능
+            // if (behaviourMap.TryGetValue(typeof(Jump), out var jumpBehaviour)) { ... }
         }
         #endregion
     }

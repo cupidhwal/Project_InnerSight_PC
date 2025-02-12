@@ -1,6 +1,6 @@
-using Noah;
 using System.Collections;
 using UnityEngine;
+using Noah;
 using Yoon;
 
 namespace Seti

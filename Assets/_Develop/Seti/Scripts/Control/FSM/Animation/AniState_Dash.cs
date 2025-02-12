@@ -15,8 +15,8 @@ namespace Seti
         {
             base.OnEnter();
 
-            context.currentState = AniState.Dash;
             context.Animator.SetTrigger(OnDash);
+            context.currentState = AniState.Dash;
         }
 
         // 상태 전환 시 State Exit에 1회 실행

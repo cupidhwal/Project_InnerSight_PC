@@ -24,7 +24,6 @@ namespace Seti
         }
         public Type GetStrategyType() => typeof(IAttackStrategy);
         public virtual void Attack() => condition.IsAttack = true;
-        public virtual void AttackExit() => condition.IsAttack = false;
         #endregion
 
         // 메서드
