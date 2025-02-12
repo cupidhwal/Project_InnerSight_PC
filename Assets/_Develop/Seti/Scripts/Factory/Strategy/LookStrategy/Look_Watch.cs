@@ -21,7 +21,7 @@ namespace Seti
 
             if (actor is Player player)
             {
-                if (player.Condition.IsMagic)
+                if (player.Condition.IsAttack || player.Condition.IsMagic)
                 {
                     Vector3 temp = player.Condition.AttackPoint;
                     float tempDis = Vector3.Distance(player.transform.position, temp);

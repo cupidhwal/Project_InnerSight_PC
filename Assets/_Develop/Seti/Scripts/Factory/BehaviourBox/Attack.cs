@@ -230,6 +230,7 @@ namespace Seti
         public void OnAttack(bool isAttack = true)
         {
             if (!condition.InAction) return;
+            SwitchStrategy(StrategyType.Normal);
             actor.Condition.IsAttack = isAttack;
         }
 
@@ -286,7 +287,7 @@ namespace Seti
         }
         IEnumerator MagicWait()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
             currentStrategy?.AttackExit();
         }
         public void MagicExit()

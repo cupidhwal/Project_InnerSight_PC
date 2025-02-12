@@ -60,7 +60,7 @@ namespace Seti
             if (enemy.Detected && enemy.Condition.CanMove)
                 return typeof(Enemy_State_Chase);
 
-            if ((!enemy.Condition.IsMagic && !enemy.Detected && !enemy.CanMagic) || enemy.Player.Condition.IsDead)
+            if ((!enemy.Condition.IsMagic && !enemy.CanMagic) || enemy.Player.Condition.IsDead)
                 return typeof(Enemy_State_Idle);
 
             return null;
