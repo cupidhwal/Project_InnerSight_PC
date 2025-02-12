@@ -10,16 +10,12 @@ namespace Noah
         public TMP_Text goldText;
 
         InGameUI_PlayerStats inGameUI_PlayerState;
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-            Init();
-            UpdateGoldUI();
-        }
 
-        void Init()
+        public void Init()
         {
             inGameUI_PlayerState = playerStateUI.transform.parent.GetComponent<InGameUI_PlayerStats>();
+
+            UpdateGoldUI();
         }
 
         public void UpdateGoldUI()

@@ -77,6 +77,7 @@ namespace Noah
             {
                 PlayerInfoManager.Instance.AddGold(chargeGold);
 
+                SaveLoadManager.Instance.Save(SaveLoadManager.Instance.playerItemSavePath, SaveLoadManager.Instance.playerItem);
                 Destroy(gameObject);
             }
 
