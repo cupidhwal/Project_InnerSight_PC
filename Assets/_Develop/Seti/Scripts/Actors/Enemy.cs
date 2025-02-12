@@ -51,6 +51,12 @@ namespace Seti
         protected float attackInterval = 3f;
         [SerializeField]
         protected float magicInterval = 5f;
+
+        [Header("Function : AI Behaviour")]
+        [SerializeField]
+        protected GameObject magicObject;
+        [SerializeField]
+        protected float magicDamage = 15f;
         #endregion
 
         // 속성
@@ -67,6 +73,7 @@ namespace Seti
         public float PatrolInterval => patrolInterval;
         public float AttackInterval => attackInterval;
         public float MagicInterval => magicInterval;
+        public float MagicDamage => magicDamage;
         #endregion
 
         // 오버라이드
@@ -130,6 +137,20 @@ namespace Seti
             range_Detect = initialRange;
 
             yield break;
+        }
+
+        public void MagicAttack()
+        {
+            if (player && magicObject && ComponentUtility.TryGetComponentInChildren<Hand_Magic_Attack>(transform, out var hand))
+            {
+                // 공격 방향
+                Vector3 dir = player.transform.position - transform.position;
+                Quaternion rot = Quaternion.LookRotation(dir) * Quaternion.Euler(0f, -2f, 0f);
+
+                // 마법 시전
+                GameObject go = Instantiate(magicObject, hand.transform.position, rot, transform);
+                Destroy(go, 0.5f);
+            }
         }
         #endregion
     }

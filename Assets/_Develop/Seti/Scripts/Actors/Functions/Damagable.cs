@@ -256,5 +256,14 @@ namespace Seti
         }
 #endif
         #endregion
+
+        // 이벤트 메서드
+        private void OnParticleCollision(GameObject other)
+        {
+            if (other.TryGetComponent<MagicAttack_Particle>(out var magic))
+            {
+                TakeDamage(magic.DamageData);
+            }
+        }
     }
 }

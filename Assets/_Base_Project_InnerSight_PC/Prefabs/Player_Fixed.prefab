@@ -883,7 +883,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.3
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
@@ -911,9 +911,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!195 &7756248871358595911
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -962,6 +962,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blueprint: {fileID: 11400000, guid: 3a3dee55a4efd9f45bbd303522838f37, type: 2}
   condition: {fileID: 8663753969922810462}
+  controller: {fileID: 0}
   behaviours:
   - behaviour:
       rid: 5367875209058058522
@@ -984,10 +985,13 @@ MonoBehaviour:
   rate_Movement: 4
   stagger: 0.5
   mag_WalkToRun: 1.5
+  attackProgressive: 2.5
   dashSpeed: 1
   dashDuration: 0.2
   dashCooldown: 1
+  dashInvulnerablityTime: 0.4
   viewType: 0
+  currentNPC: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -8300,7 +8304,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  canMove: 1
   forwardSpeed: 0
 --- !u!1 &7255470833273876848
 GameObject:

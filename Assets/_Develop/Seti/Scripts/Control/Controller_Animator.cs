@@ -36,7 +36,7 @@ namespace Seti
 
         // 라이프 사이클
         #region Life Cycle
-        protected void Start()
+        protected virtual void Start()
         {
             // 참조
             if (!TryGetComponent<Actor>(out var actor))

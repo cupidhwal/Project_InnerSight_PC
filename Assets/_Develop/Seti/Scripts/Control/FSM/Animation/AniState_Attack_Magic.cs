@@ -44,9 +44,6 @@ namespace Seti
         {
             base.Update(deltaTime);
             MagicState();
-
-            Debug.Log($"IsAttack: {context.Actor.Condition.IsAttack}");
-            Debug.Log($"IsMagic: {context.Actor.Condition.IsMagic}");
         }
         #endregion
 
