@@ -40,6 +40,7 @@ namespace JungBin
 
                 // 플레이어에게 데미지 적용
                 playerDamagable.TakeDamage(damageMessage);
+                canTakeDamage = false;
                 StartCoroutine(ResetDamageCooldown());
             }
         }
