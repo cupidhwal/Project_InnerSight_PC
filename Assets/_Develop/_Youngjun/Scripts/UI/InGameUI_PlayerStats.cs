@@ -18,10 +18,9 @@ namespace Noah
         private int[] upgradeCounts;
 
         private float curData;
-        private int totalCost;
-        private int totalGold;
+        private float currentPoint;
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        public float maxData_Speed = 13f;
 
         public void Init()
         {
@@ -59,9 +58,9 @@ namespace Noah
         {
             if (_index == 3 || _index == 4) // MoveSpeed 또는 AttackSpeed
             {
-                if (amount > 13)
+                if (amount > maxData_Speed)
                 {
-                    amount = 13; // 13 이상으로 못 올라가게 제한
+                    amount = maxData_Speed; // maxData_Speed 이상으로 못 올라가게 제한
                 } 
             }
 
@@ -75,19 +74,26 @@ namespace Noah
 
             if (totalGold >= 0)
             {
-                float upPoint = Mathf.Round((float.Parse(states[_index].GetChild(0).GetComponent<TMP_Text>().text)
-            + PlayerStatsManager.Instance.UpdatePlayerData()[_index]) * 10f) / 10f;
-
-                LimitState(_index, ref upPoint);
-
-                // upPoint가 13으로 수정되었을 경우 return하여 실행 중단
-                if ((_index == 3 || _index == 4 )&& upPoint >= 13)
+                if(states[_index].GetChild(0).GetComponent<TMP_Text>().text == "MAX")
                 {
-                    states[_index].GetChild(0).GetComponent<TMP_Text>().text = "MAX";          
                     return;
                 }
 
-                states[_index].GetChild(0).GetComponent<TMP_Text>().text = upPoint.ToString();
+                float upPoint = Mathf.Round((float.Parse(states[_index].GetChild(0).GetComponent<TMP_Text>().text)
+                                                + PlayerStatsManager.Instance.UpdatePlayerData()[_index]) * 10f) / 10f;
+
+                //LimitState(_index, ref upPoint);
+
+                // upPoint가 maxData_Speed으로 수정되었을 경우 return하여 실행 중단
+                if ((_index == 3 || _index == 4) && upPoint >= maxData_Speed)
+                {
+                    states[_index].GetChild(0).GetComponent<TMP_Text>().text = "MAX";
+                    //return;
+                }
+                else
+                {
+                    states[_index].GetChild(0).GetComponent<TMP_Text>().text = upPoint.ToString();
+                }
 
                 upgradeCounts[_index]++;
 
@@ -114,7 +120,17 @@ namespace Noah
 
             // 현재 상태값과 초기 상태값 가져오기
             curData = PlayerStatsManager.Instance.GetPlayerData(_index);
-            float currentPoint = float.Parse(states[_index].GetChild(0).GetComponent<TMP_Text>().text);
+
+            if (states[_index].GetChild(0).GetComponent<TMP_Text>().text == "MAX")
+            {
+                currentPoint = maxData_Speed;
+            }
+            else
+            {
+                currentPoint = float.Parse(states[_index].GetChild(0).GetComponent<TMP_Text>().text);
+            }
+
+         
 
             // 상태값 감소 계산
             float downPoint = Mathf.Round((currentPoint - PlayerStatsManager.Instance.UpdatePlayerData()[_index]) * 10f) / 10f;

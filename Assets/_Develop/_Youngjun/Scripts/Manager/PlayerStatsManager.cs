@@ -36,17 +36,13 @@ namespace Noah
             playerData = SaveLoadManager.Instance.playerStats;
             upgradeCountData = SaveLoadManager.Instance.upgradeCount;
 
-
-
             player = GameObject.FindWithTag("Player");
             actor = player.GetComponent<Actor>();
 
+            //playerData.ResetData();
 
-            playerData.ResetData();
             upgradeGold.ResetData();
-            
             upgradeData.ResetData();
-
 
             inGameUI_PlayerState = FindAnyObjectByType<InGameUI_PlayerStats>();
 
@@ -99,7 +95,17 @@ namespace Noah
         {
             for (int i = 0; i < dataList.Count; i++)
             {
-                dataList[i] = float.Parse(dataTexts[i].GetChild(0).GetComponent<TMP_Text>().text);
+                if (dataTexts[i].GetChild(0).GetComponent<TMP_Text>().text == "MAX" &&
+                    (i == 3 || i == 4))
+                {
+                    dataList[i] = inGameUI_PlayerState.maxData_Speed;
+                }
+                else
+                {
+                    dataList[i] = float.Parse(dataTexts[i].GetChild(0).GetComponent<TMP_Text>().text);
+                }
+
+                
                 //updateGold[i] = int.Parse(dataTexts[i].GetChild(4).GetComponent<TMP_Text>().text);  
                 upgradeCount[i] = _upgradeCount[i];
             }

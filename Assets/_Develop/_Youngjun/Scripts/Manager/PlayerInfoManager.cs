@@ -13,7 +13,7 @@ namespace Noah
         {
             playerItem = SaveLoadManager.Instance.playerItem;
 
-            playerItem.gold = startGold;
+            UIManager.Instance.Init();
         }
 
         private void Update()

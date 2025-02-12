@@ -32,6 +32,9 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
         //    ps_Manager.startPlayerData.def_Start, ps_Manager.startPlayerData.moveSpeed_Start, ps_Manager.startPlayerData.atkSpeed_Start);
 
         LoadAll();
+
+        playerStats.ResetData();
+        playerItem.ResetData();
     }
 
     [ContextMenu("Save")]
