@@ -3386,10 +3386,10 @@ GameObject:
   - component: {fileID: 132088449897813482}
   - component: {fileID: 5787943078838920931}
   - component: {fileID: 5876252634406523773}
-  - component: {fileID: 7163008205139051634}
-  - component: {fileID: 5915633957716539000}
   - component: {fileID: 6725351614019376741}
   - component: {fileID: 97535866348285823}
+  - component: {fileID: 236363477758083094}
+  - component: {fileID: 7163008205139051634}
   m_Layer: 6
   m_Name: Enemy_Demon_Fixed
   m_TagString: Enemy
@@ -3477,11 +3477,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 7
-  m_Acceleration: 8
+  m_Speed: 6
+  m_Acceleration: 7
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0.1
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -3506,13 +3506,13 @@ MonoBehaviour:
   controller: {fileID: 0}
   behaviours:
   - behaviour:
-      rid: 5367875437818282461
+      rid: 5367875440153199055
   - behaviour:
-      rid: 5367875437818282462
+      rid: 5367875440153199056
   - behaviour:
-      rid: 5367875437818282463
+      rid: 5367875440153199057
   - behaviour:
-      rid: 5367875437818282464
+      rid: 5367875440153199058
   health: 100
   attack: 15
   defend: 0
@@ -3538,83 +3538,83 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 5367875437818282461
+    - rid: 5367875440153199021
+      type: {class: Look_Watch, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875440153199022
+      type: {class: Attack_Magic, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875440153199023
+      type: {class: Attack_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875440153199024
+      type: {class: Move_Run, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875440153199025
+      type: {class: Move_Walk, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875440153199026
+      type: {class: Move_Nav, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875440153199055
       type: {class: Look, ns: Seti, asm: Assembly-CSharp}
       data:
         strategies:
-        - rid: 5367875437818282465
-    - rid: 5367875437818282462
+        - rid: 5367875440153199059
+    - rid: 5367875440153199056
       type: {class: Attack, ns: Seti, asm: Assembly-CSharp}
       data:
         attack: 0
         strategies:
-        - rid: 5367875437818282466
-        - rid: 5367875437818282467
+        - rid: 5367875440153199060
+        - rid: 5367875440153199061
         isSkillAttack: 0
-    - rid: 5367875437818282463
+    - rid: 5367875440153199057
       type: {class: Stagger, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 5367875437818282464
+    - rid: 5367875440153199058
       type: {class: Move, ns: Seti, asm: Assembly-CSharp}
       data:
         strategies:
-        - rid: 5367875437818282468
-        - rid: 5367875437818282469
-        - rid: 5367875437818282470
-    - rid: 5367875437818282465
+        - rid: 5367875440153199062
+        - rid: 5367875440153199063
+        - rid: 5367875440153199064
+    - rid: 5367875440153199059
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 5367875437818282471
+          rid: 5367875440153199021
         isActive: 1
-    - rid: 5367875437818282466
+    - rid: 5367875440153199060
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 5367875437818282472
+          rid: 5367875440153199022
         isActive: 1
-    - rid: 5367875437818282467
+    - rid: 5367875440153199061
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 5367875437818282473
+          rid: 5367875440153199023
         isActive: 1
-    - rid: 5367875437818282468
+    - rid: 5367875440153199062
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 5367875437818282474
+          rid: 5367875440153199024
         isActive: 1
-    - rid: 5367875437818282469
+    - rid: 5367875440153199063
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 5367875437818282475
+          rid: 5367875440153199025
         isActive: 1
-    - rid: 5367875437818282470
+    - rid: 5367875440153199064
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 5367875437818282476
+          rid: 5367875440153199026
         isActive: 1
-    - rid: 5367875437818282471
-      type: {class: Look_Watch, ns: Seti, asm: Assembly-CSharp}
-      data: 
-    - rid: 5367875437818282472
-      type: {class: Attack_Magic, ns: Seti, asm: Assembly-CSharp}
-      data: 
-    - rid: 5367875437818282473
-      type: {class: Attack_Normal, ns: Seti, asm: Assembly-CSharp}
-      data: 
-    - rid: 5367875437818282474
-      type: {class: Move_Run, ns: Seti, asm: Assembly-CSharp}
-      data: 
-    - rid: 5367875437818282475
-      type: {class: Move_Walk, ns: Seti, asm: Assembly-CSharp}
-      data: 
-    - rid: 5367875437818282476
-      type: {class: Move_Nav, ns: Seti, asm: Assembly-CSharp}
-      data: 
 --- !u!114 &132088449897813482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3662,33 +3662,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold: {fileID: 1786689574925295396, guid: d340eb98474665e4aad743dd8a183cad, type: 3}
   chargeGold: 40
---- !u!114 &7163008205139051634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8002989642365521967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aea16b6fa0aba0348865fcab078ab2c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentWeaponType: 4
-  currentWeapon: {fileID: 1085939780071652645}
-  inAction: 0
---- !u!114 &5915633957716539000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8002989642365521967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3890b17220493bb45a2a0fb297dea72f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6725351614019376741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3719,6 +3692,33 @@ MonoBehaviour:
   damageTextPrefab: {fileID: 9211949316755326926, guid: 9d0558470b8bbae48914eeb5ca8096ba, type: 3}
   fightWorldCanvas: {fileID: 1881581383049504770}
   player: {fileID: 8759698427550002359, guid: aaae8b6631773b14aae9734ef5211cd8, type: 3}
+--- !u!114 &236363477758083094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8002989642365521967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3890b17220493bb45a2a0fb297dea72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7163008205139051634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8002989642365521967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aea16b6fa0aba0348865fcab078ab2c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeaponType: 4
+  currentWeapon: {fileID: 1085939780071652645}
+  inAction: 0
 --- !u!1 &8040747797010405790
 GameObject:
   m_ObjectHideFlags: 0

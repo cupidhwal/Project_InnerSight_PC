@@ -79,6 +79,10 @@ namespace Seti
                     case Move_Run:
                         moveStrategy.Initialize(actor);
                         break;
+
+                    case Move_Nav:
+                        moveStrategy.Initialize(actor);
+                        break;
                 }
             }
 
@@ -136,7 +140,7 @@ namespace Seti
                     break;
 
                 case Enemy_State_BackOff:
-                    ChangeStrategy(typeof(Move_Run));
+                    ChangeStrategy(typeof(Move_Nav));
                     break;
 
                 default:

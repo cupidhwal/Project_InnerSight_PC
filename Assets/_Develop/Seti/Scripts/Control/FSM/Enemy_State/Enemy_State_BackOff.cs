@@ -34,6 +34,7 @@ namespace Seti
             base.OnExit();
 
             enemy.Agent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
+            enemy.Agent.ResetPath();
 
             if (damagable)
             {
@@ -64,13 +65,14 @@ namespace Seti
             if (enemy.Agent.remainingDistance < enemy.Agent.stoppingDistance)
             {
                 enemy.Agent.ResetPath();
-                if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
-                    if (moveBehaviour is Move move)
-                    {
-                        Input_BackHome();
-                        move.FSM_MoveInput(moveInput, true);
-                    }
             }
+
+            if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
+                if (moveBehaviour is Move move)
+                {
+                    Input_BackHome();
+                    move.FSM_MoveInput(moveInput, true);
+                }
         }
         #endregion
 
