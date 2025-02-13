@@ -161,6 +161,29 @@ namespace Noah
                     ChangeSkill(3);
                 }
             }
+
+            if (Input.GetMouseButton(0))
+            {
+                isReadySkill = false;
+                isChange = false;
+
+                if (effectGo != null)
+                {
+                    effectGo.SetActive(false);
+                    effectGo = null;
+                }
+
+                if (transform.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+                {
+                    if (attackBehaviour is Attack attack)
+                    {
+                        attack.isSkillAttack = false;
+                    }
+                }
+
+                return;
+
+            }
         }
 
         void SetSkill(int _index)
