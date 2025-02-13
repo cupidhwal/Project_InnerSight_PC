@@ -60,13 +60,13 @@ namespace Seti
                 if (moveBehaviour is Move move)
                 {
                     if (move.HasStrategy<Move_Normal>() || move.HasStrategy<Move_Walk>())
-                    {
                         stateMachine.AddState(new Enemy_State_Patrol());
-                        stateMachine.AddState(new Enemy_State_BackOff());
-                    }
 
                     if (move.HasStrategy<Move_Run>())
                         stateMachine.AddState(new Enemy_State_Chase());
+
+                    if (move.HasStrategy<Move_Nav>())
+                        stateMachine.AddState(new Enemy_State_BackOff());
                 }
             }
 

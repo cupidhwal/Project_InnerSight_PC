@@ -14,6 +14,10 @@ namespace Seti
         public override void OnEnter()
         {
             base.OnEnter();
+
+            enemy.Agent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+            enemy.Agent.SetDestination(enemy.HomePosition);
+
             context.Actor.Condition.IsMove = true;
             enemy.SwitchState(Enemy.State.BackHome);
 
@@ -28,6 +32,8 @@ namespace Seti
         public override void OnExit()
         {
             base.OnExit();
+
+            enemy.Agent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
 
             if (damagable)
             {
@@ -55,12 +61,16 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             // Move 행동 AI Input
-            if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
-                if (moveBehaviour is Move move)
-                {
-                    Input_BackHome();
-                    move.FSM_MoveInput(moveInput, true);
-                }
+            if (enemy.Agent.remainingDistance < enemy.Agent.stoppingDistance)
+            {
+                enemy.Agent.ResetPath();
+                if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
+                    if (moveBehaviour is Move move)
+                    {
+                        Input_BackHome();
+                        move.FSM_MoveInput(moveInput, true);
+                    }
+            }
         }
         #endregion
 
@@ -75,6 +85,7 @@ namespace Seti
 
         private void ReturnToChase()
         {
+            enemy.Agent.SetDestination(enemy.transform.position);
             context.StateMachine.ChangeState<Enemy_State_Chase>();
         }
         #endregion

@@ -2,11 +2,11 @@ using System.Collections;
 using UnityEngine;
 using Noah;
 using Yoon;
+using UnityEngine.AI;
 
 namespace Seti
 {
     [RequireComponent(typeof(Condition_Enemy))]
-    [RequireComponent(typeof(Controller_FSM))]
     [RequireComponent(typeof(Damagable))]
     [RequireComponent(typeof(WorldSpaceHealthBar))]
     [RequireComponent(typeof(DamageText))]
@@ -27,10 +27,12 @@ namespace Seti
 
         // 필드
         #region Variables
+        // 기본
         [SerializeField]
         [HideInInspector]
         protected Player player;
         protected IEnumerator chaseCor;     // 피격 시 실행할 코루틴
+        protected NavMeshAgent agent;
 
         [Header("Calculator : AI Behaviour")]
         [SerializeField]
@@ -69,12 +71,18 @@ namespace Seti
 
         // 속성
         #region Properties
+        // 로직 기준
         public Player Player => player;
+        public NavMeshAgent Agent => agent;
+        public State CurrentState => currentState;
         public Vector3 HomePosition { get; private set; }
-        public Vector3 AttackDirection { get; private set; }
-        public bool Detected => Player && (distancePlayer <= range_Detect);
-        public bool CanMagic => Player && (distancePlayer <= range_Magic);
-        public bool CanAttack => Player && (distancePlayer <= range_Attack);
+        //public Vector3 AttackDirection { get; private set; }
+        //public bool SamePosition { get; private set; }
+
+        // 상태 조건
+        public bool Detected => player && (distancePlayer <= range_Detect);
+        public bool CanMagic => player && magicObject && (distancePlayer <= range_Magic);
+        public bool CanAttack => player && (distancePlayer <= range_Attack);
         public bool GoBackHome => distancePlace >= range_BackOff;
         public bool TooFarFromHome => distancePlace >= range_BackOff * 2f;
         public bool ImHome => distancePlace <= 1f;
@@ -94,6 +102,9 @@ namespace Seti
         protected override void Start()
         {
             base.Start();
+
+            // 참조
+            agent = GetComponent<NavMeshAgent>();
 
             // 초기화
             HomePosition = transform.position;

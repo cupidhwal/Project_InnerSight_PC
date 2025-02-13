@@ -836,6 +836,10 @@ GameObject:
   - component: {fileID: 6532519519953168620}
   - component: {fileID: 7552008357249084897}
   - component: {fileID: -8746304351977541504}
+  - component: {fileID: 8646309617134432076}
+  - component: {fileID: 9064055210543196754}
+  - component: {fileID: 7531599943564601207}
+  - component: {fileID: 8893166670630055004}
   m_Layer: 6
   m_Name: Enemy_Golem
   m_TagString: Enemy
@@ -928,7 +932,7 @@ NavMeshAgent:
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 0
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 0
   m_Height: 2
   m_BaseOffset: 0
@@ -948,6 +952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blueprint: {fileID: 0}
   condition: {fileID: 0}
+  controller: {fileID: 0}
   behaviours: []
   health: 100
   attack: 10
@@ -956,15 +961,20 @@ MonoBehaviour:
   rate_Movement: 4
   stagger: 1
   mag_WalkToRun: 1.5
-  player: {fileID: 0}
+  attackProgressive: 2.5
   currentState: 0
-  range_Detect: 7.5
-  range_Attack: 1
-  range_BackOff: 10
   distancePlayer: 0
   distancePlace: 0
+  range_Detect: 7.5
+  range_Attack: 1
+  range_Magic: 0
+  range_BackOff: 10
+  searchDuration: 3
   patrolInterval: 3
   attackInterval: 3
+  magicInterval: 5
+  magicObject: {fileID: 0}
+  magicDamage: 0
   references:
     version: 2
     RefIds: []
@@ -980,6 +990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289bfb1f47fad5745a55b3ba7e9ccbc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDashInvulnerable: 0
   maxHitPoints: 100
   currentHitPoints: 0
   invulnerablityTime: 0.1
@@ -1013,6 +1024,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gold: {fileID: 1786689574925295396, guid: d340eb98474665e4aad743dd8a183cad, type: 3}
+  chargeGold: 0
+--- !u!114 &8646309617134432076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8309244615677021322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aea16b6fa0aba0348865fcab078ab2c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeaponType: 0
+  currentWeapon: {fileID: 0}
+  inAction: 0
+--- !u!114 &9064055210543196754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8309244615677021322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3890b17220493bb45a2a0fb297dea72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7531599943564601207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8309244615677021322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 594554100cce3084eb2305801ed46266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarPivot: {fileID: 0}
+  EnemyHealthBarSlider: {fileID: 0}
+  hideFullHealthBar: 1
+--- !u!114 &8893166670630055004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8309244615677021322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57281ac90e1b7da4b8acb476f01d8c7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageTextPrefab: {fileID: 0}
+  fightWorldCanvas: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1001 &558649448288530947
 PrefabInstance:
   m_ObjectHideFlags: 0

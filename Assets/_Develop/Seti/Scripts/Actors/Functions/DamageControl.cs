@@ -104,29 +104,11 @@ namespace Seti
                 damageText.OnTakeDamage(damageMessage);
             }
 
-            // 콜라이더 제거
+            // 더 이상 플레이어와 충돌하지 않도록 처리
             if (actor is Enemy)
             {
-                Rigidbody rb = GetComponent<Rigidbody>();
                 Collider collider = GetComponent<Collider>();
-                if (rb != null)
-                {
-                    rb.useGravity = false;
-                    collider.enabled = false;
-                }
-            }
-
-            // 이동 속도를 확실하게 제거
-            if (actor)
-            {
-                Controller_Base controller = GetComponent<Controller_Base>();
-                if (controller.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
-                {
-                    if (moveBehaviour is Move move)
-                    {
-                        move.OnMove(Vector2.zero, false);
-                    }
-                }
+                collider.excludeLayers = LayerMask.GetMask("Actor");
             }
 
             // 플레이어 사망 시 재시작

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Seti
 {
@@ -64,9 +65,9 @@ namespace Seti
             //if (rb == null) return;
 
             Vector3 moveDirection = new(dir.x, 0, dir.y);
-            QuaterView_Move(moveDirection);
+            QuaterView_Dir(moveDirection);
         }
-        protected void QuaterView_Move(Vector3 moveDirection)
+        protected void QuaterView_Dir(Vector3 moveDirection)
         {
             float moveEff = actor.Condition.IsChase ? actor.Magnification_WalkToRun : 1;
             Vector3 move = moveEff * actor.Rate_Movement * Time.deltaTime * moveDirection.normalized;
@@ -76,11 +77,15 @@ namespace Seti
             if (!actor.Controller_Animator.Animator.applyRootMotion && actor.Condition.CanMove)
                 actor.transform.Translate(QuaterView, Space.World);
 
+            QuaterView_Rot(QuaterView);
+        }
+        protected void QuaterView_Rot(Vector3 moveDirection)
+        {
             // 이동이 발생할 때만 회전
             if (moveDirection != Vector3.zero)
             {
                 // 진행 방향으로 회전
-                Quaternion targetRotation = Quaternion.LookRotation(QuaterView, Vector3.up);
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
                 actor.transform.rotation = Quaternion.Slerp(actor.transform.rotation, targetRotation, 20f * Time.deltaTime);
             }
         }

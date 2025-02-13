@@ -18,71 +18,81 @@ MonoBehaviour:
   strategyBox: {fileID: 11400000, guid: 7dc1bb17aacb56c4e856240083fff143, type: 2}
   behaviourBox: {fileID: 11400000, guid: aa181b0e9b02247418838ed47a38fdfb, type: 2}
   behaviourStrategies:
-  - rid: 8920205090150154494
   - rid: 8920205112704500213
   - rid: 8920205112704500221
   - rid: 8920205158178881819
+  - rid: 5367875437818282188
   references:
     version: 2
     RefIds:
-    - rid: 8920205090150154494
+    - rid: 5367875437818282188
       type: {class: BehaviourStrategyMapping, ns: Seti, asm: Assembly-CSharp}
       data:
         behaviour:
-          rid: 8920205090150154495
+          rid: 5367875437818282189
         strategies:
-        - rid: 8920205090150154496
-        - rid: 8920205090150154497
-        - rid: 8920205090150154498
-        - rid: 8920205090150154499
-    - rid: 8920205090150154495
+        - rid: 5367875437818282190
+        - rid: 5367875437818282191
+        - rid: 5367875437818282192
+        - rid: 5367875437818282193
+        - rid: 5367875437818282194
+    - rid: 5367875437818282189
       type: {class: Move, ns: Seti, asm: Assembly-CSharp}
       data:
         strategies:
-        - rid: 8920205090150154500
-    - rid: 8920205090150154496
+        - rid: 5367875437818282195
+    - rid: 5367875437818282190
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 8920205090150154501
+          rid: 5367875437818282196
         isActive: 0
-    - rid: 8920205090150154497
+    - rid: 5367875437818282191
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 8920205090150154502
+          rid: 5367875437818282197
         isActive: 1
-    - rid: 8920205090150154498
+    - rid: 5367875437818282192
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 8920205090150154503
+          rid: 5367875437818282198
         isActive: 1
-    - rid: 8920205090150154499
+    - rid: 5367875437818282193
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 8920205090150154504
+          rid: 5367875437818282199
         isActive: 0
-    - rid: 8920205090150154500
+    - rid: 5367875437818282194
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 8920205090150154505
+          rid: 5367875437818282200
         isActive: 1
-    - rid: 8920205090150154501
+    - rid: 5367875437818282195
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5367875437818282201
+        isActive: 1
+    - rid: 5367875437818282196
       type: {class: Move_Normal, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 8920205090150154502
+    - rid: 5367875437818282197
       type: {class: Move_Run, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 8920205090150154503
+    - rid: 5367875437818282198
       type: {class: Move_Walk, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 8920205090150154504
+    - rid: 5367875437818282199
       type: {class: Move_Dash, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 8920205090150154505
+    - rid: 5367875437818282200
+      type: {class: Move_Nav, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875437818282201
       type: {class: Move_Normal, ns: Seti, asm: Assembly-CSharp}
       data: 
     - rid: 8920205112704500213
@@ -140,6 +150,7 @@ MonoBehaviour:
       data:
         attack: 0
         strategies: []
+        isSkillAttack: 0
     - rid: 8920205112704500223
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
