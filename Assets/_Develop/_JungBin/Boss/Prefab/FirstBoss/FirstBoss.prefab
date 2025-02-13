@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDirection: {x: 0, y: 0, z: 0}
   damageCooldown: 0.5
+  animator: {fileID: 2346786875644716508}
 --- !u!1 &1431761859981353239
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDirection: {x: 0, y: 0, z: 0}
   damageCooldown: 1
+  animator: {fileID: 0}
 --- !u!1 &2497880882555595176
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,6 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDirection: {x: 0, y: 0, z: 0}
   damageCooldown: 1
+  animator: {fileID: 0}
 --- !u!1 &2932496193762415157
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,6 +450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDirection: {x: 0, y: 0, z: 0}
   damageCooldown: 0.5
+  animator: {fileID: 0}
 --- !u!1 &6123675318104457446
 GameObject:
   m_ObjectHideFlags: 0
@@ -2553,7 +2557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 042152289fa48e64cb648e0a31ed46e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSpeed: 2000
+  turnSpeed: 3000
   detectedObj: {fileID: 6818936129997462429}
   rushAttackBox: {fileID: 913765566904639677}
   throwAttackBox: {fileID: 6284033761021959893}
@@ -2581,6 +2585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axePrefab: {fileID: 3427195348421992262, guid: 8a1040ca6063e964f9a91a2d98749702, type: 3}
+  berserkAxePrefab: {fileID: 3427195348421992262, guid: e56a6535076878c43ba26f1911c8ccb9, type: 3}
   axeSpawnPoint: {fileID: 7870569841952002375}
   currentAxe: {fileID: 7382016884318915581}
   targetPosition: {fileID: 2814763412815573342}
@@ -2599,7 +2604,7 @@ MonoBehaviour:
   bossName: "\uD0C0\uC6B0\uB85C\uC2A4"
   maxHealth: 1000
   invulnerabilityTime: 3.5
-  bossAttack: 30
+  bossAttack: 20
   relicPrefab: {fileID: 3199772393577486388, guid: 8a67d03c67dab424380aa5e4d5738792, type: 3}
   capsuleCollider: {fileID: 689229898053702461}
   fadeDuration: 5

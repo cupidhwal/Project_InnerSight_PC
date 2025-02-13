@@ -12,7 +12,7 @@ namespace JungBin
 
         [SerializeField] private float maxHealth = 500f; // 최대 체력
         [SerializeField] private float invulnerabilityTime = 3.5f; // 무적 시간
-        [SerializeField] private float bossAttack = 25f; // 보스 공격력
+        [SerializeField] private float bossAttack = 30f; // 보스 공격력
         [SerializeField] private GameObject relicPrefab; // 드랍할 유물
         [SerializeField] private CapsuleCollider capsuleCollider;
         [SerializeField] private float fadeDuration = 2f; // 서서히 사라지는 시간
@@ -86,6 +86,7 @@ namespace JungBin
             isBerserk = true;
             capsuleCollider.enabled = false;
             isInvulnerable = true; // 버서커 모드 진입 중 무적
+            bossAttack *= 2f;
             animator.SetBool("IsBerserk", true);
             animator.SetTrigger("Berserk");
             animator.SetBool("IsWall", false);
