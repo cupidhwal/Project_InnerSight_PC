@@ -15,6 +15,7 @@ namespace JungBin
 
         [Header("Attack Settings")]
         [SerializeField] private GameObject rushAttackBox;
+        private BoxCollider rushCollider;
         [SerializeField] private BoxCollider throwAttackBox;
         [SerializeField] private GameObject smashAttackBox;
         [SerializeField] private ParticleSystem slashAttack;
@@ -23,7 +24,7 @@ namespace JungBin
         [SerializeField] private float secondWarningDuration;
         [SerializeField] private float Duration;
         [SerializeField] private float warningLength = 5f;
-        private bool canTakeDamage = true; // 데미지 가능 여부
+        private bool canSpawn = true;
 
         [Header("Detection Settings")]
         [SerializeField] private float detectionRange = 8f;
@@ -50,6 +51,8 @@ namespace JungBin
             {
                 Debug.LogError("Player GameObject is null in BossStageManager!");
             }
+
+            rushCollider = rushAttackBox.GetComponent<BoxCollider>();
 
             animator = GetComponent<Animator>();
             navMeshAgent = GetComponent<NavMeshAgent>();
@@ -157,12 +160,20 @@ namespace JungBin
 
         private void ManageAttackBoxes()
         {
-            rushAttackBox.SetActive(animator.GetBool("IsAttack02"));
+            //rushAttackBox.SetActive(animator.GetBool("IsAttack02"));
+            rushAttackBox.transform.GetComponent<BoxCollider>().enabled = animator.GetBool("IsAttack02");
+            rushAttackBox.transform.GetChild(0).GetComponent<BoxCollider>().enabled = animator.GetBool("IsAttack02");
+/*            rushCollider.enabled = animator.GetBool("IsAttack02");
+            rushCollider.transform.GetChild(0).GetComponent<BoxCollider>().enabled = animator.GetBool("IsAttack02");*/
         }
 
         public void ToggleAttack(bool isActive)
         {
-            smashAttackBox.SetActive(isActive);
+            BoxCollider[] colliders = smashAttackBox.GetComponents<BoxCollider>();
+            foreach (BoxCollider col in colliders)
+            {
+                col.enabled = isActive;
+            }
             slashAttack.gameObject.SetActive(isActive);
             if (isActive) slashAttack.Play();
         }
@@ -181,7 +192,7 @@ namespace JungBin
 
         public void TriggerRushWarning()
         {
-            if (canTakeDamage)
+            if (canSpawn)
             {
                 StartCoroutine(ShowRushWarning());
             }
@@ -200,7 +211,7 @@ namespace JungBin
             GameObject warningEffect = Instantiate(warningEffectPrefab, startPosition, warningRotation, this.transform);
             warningEffect.transform.GetChild(0).localScale = new Vector3(1, 0.1f, warningLength); // 길이 조정
 
-            canTakeDamage = false;
+            canSpawn = false;
 
             // 경고 지속 시간 동안 계속 체크하여 벽이 감지되면 즉시 중단
             float elapsedTime = 0f;
@@ -248,7 +259,7 @@ namespace JungBin
         private IEnumerator ResetDamageCooldown()
         {
             yield return new WaitForSeconds(warningDuration);
-            canTakeDamage = true; // 쿨타임 후 다시 데미지 허용
+            canSpawn = true;
         }
 
         private bool DetectWall() => DetectObstacle("Wall", out _);
