@@ -53,6 +53,7 @@ namespace Seti
         public void PlayerSetActive(bool inAction)
         {
             this.inAction = inAction;
+            StopRigidBody();
 
             // 제어권 박탈 해제 시 초기화
             if (inAction)
@@ -64,12 +65,8 @@ namespace Seti
                 IsMove = false;
 
                 if (actor.Controller.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
-                {
                     if (moveBehaviour is Move move)
-                    {
                         move.OnMove(Vector2.zero, false);
-                    }
-                }
                 actor.CoroutineStopper();
             }
         }

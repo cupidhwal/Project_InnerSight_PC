@@ -19,6 +19,7 @@ namespace Seti
         // 필드
         #region Variables
         protected Actor actor;
+        protected Rigidbody rb;
 
         // 무기
         protected WeaponType primaryWeaponType;
@@ -55,11 +56,15 @@ namespace Seti
         #region Life Cycle
         protected virtual void Start()
         {
+            rb = GetComponent<Rigidbody>();
+
             // Damagable 클래스가 존재하면 상태 전환 리스너 구독
             if (TryGetComponent<Damagable>(out var damagable))
             {
                 damagable.OnDeath += Die;
+                damagable.OnDeath += StopRigidBody;
                 damagable.OnReceiveDamage += StaggerOn;
+                damagable.OnReceiveDamage += StopRigidBody;
                 damagable.OnReleaveDamage += StaggerOff;
             }
 
@@ -87,6 +92,15 @@ namespace Seti
 
         // 메서드
         #region Methods
+        // 명시적 정지
+        protected void StopRigidBody()
+        {
+            if (rb == null) return;
+
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
         // 경직
         private void StaggerOn()
         {

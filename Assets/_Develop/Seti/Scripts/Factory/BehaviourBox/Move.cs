@@ -142,10 +142,6 @@ namespace Seti
                 case Enemy_State_BackOff:
                     ChangeStrategy(typeof(Move_Nav));
                     break;
-
-                default:
-                    ChangeStrategy(null);
-                    break;
             }
         }
 
@@ -168,10 +164,6 @@ namespace Seti
 
                 case StrategyType.Run:
                     ChangeStrategy(typeof(Move_Run));
-                    break;
-
-                default:
-                    currentStrategy = null;
                     break;
             }
         }
