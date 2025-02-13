@@ -39,6 +39,7 @@ namespace Noah
         public void GetStateData()
         {
             player.GetComponent<Condition_Player>().PlayerSetActive(false);
+            player.GetComponent<PlayerUseSkill>().enabled = false;
 
             for (int i = 0; i < states.Count; i++)
             {
@@ -175,6 +176,7 @@ namespace Noah
         public void ActiveUI()
         {
             player.GetComponent<Condition_Player>().PlayerSetActive(true);
+            player.GetComponent<PlayerUseSkill>().enabled = true;
 
             UIManager.Instance.Toggle(transform.GetChild(0).gameObject);
 
