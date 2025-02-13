@@ -180,6 +180,17 @@ namespace JungBin
 
         public void OnAttackBox() => ToggleAttack(true);
         public void OffAttackBox() => ToggleAttack(false);
+
+        public void RandomAttack()
+        {
+            int attackIndex = Random.Range(1, 3); // 1 또는 2 중 랜덤 선택
+            RandomTriggerAttackAnimation(attackIndex);
+        }
+
+        private void RandomTriggerAttackAnimation(int attackIndex)
+        {
+            animator.SetTrigger($"RandomAttack0{attackIndex}");
+        }
         #endregion
 
         #region 돌진 공격

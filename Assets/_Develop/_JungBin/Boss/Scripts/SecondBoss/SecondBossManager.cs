@@ -12,7 +12,7 @@ namespace JungBin
 
         [SerializeField] private float bossFlyTime = 0.7f;
         [SerializeField] private float turnSpeed = 30;              //보스의 회전 속도
-        [SerializeField] private float detectionRange = 5f; //  최대 감지 거리
+        [SerializeField] private float detectionRange = 8f; //  최대 감지 거리
 
         private int lastAttack = -1;
         public static bool isAttack { get; set; } = false; // 공격중인지 여부
@@ -151,45 +151,15 @@ namespace JungBin
         #endregion
 
         #region 플레이어에게 이동하는게 아닌 비행 상태
-        // 비행 패턴 시작 (이동할 방향을 결정함)
+        // 비행 패턴 시작 (플레이어 기준 일정 거리 떨어진 랜덤 위치로 이동)
         public void StartFlightPattern()
         {
-            Vector3 leftTarget = CalculateLeftMovement(); // 왼쪽 이동 목표 지점 계산
-            Vector3 rightTarget = CalculateRightMovement(); // 오른쪽 이동 목표 지점 계산
+            targetPosition = GetRandomFlightPosition(); // 랜덤 비행 위치 계산
 
-            bool leftBlocked = IsObstacle(leftTarget); // 왼쪽에 장애물이 있는지 확인
-            bool rightBlocked = IsObstacle(rightTarget); // 오른쪽에 장애물이 있는지 확인
-
-            if (!leftBlocked && !rightBlocked)
+            // 장애물이 있는 경우 대체 패턴 실행
+            if (IsObstacle(targetPosition))
             {
-                // 양쪽 이동 가능할 경우, 이전 이동 방향과 반대로 이동
-                if (lastMovedLeft)
-                {
-                    targetPosition = rightTarget;
-                    lastMovedLeft = false;
-                }
-                else
-                {
-                    targetPosition = leftTarget;
-                    lastMovedLeft = true;
-                }
-            }
-            else if (!leftBlocked)
-            {
-                // 왼쪽 이동 가능하면 왼쪽으로 이동
-                targetPosition = leftTarget;
-                lastMovedLeft = true;
-            }
-            else if (!rightBlocked)
-            {
-                // 오른쪽 이동 가능하면 오른쪽으로 이동
-                targetPosition = rightTarget;
-                lastMovedLeft = false;
-            }
-            else
-            {
-                // 양쪽 다 이동 불가능할 경우, 다른 패턴 실행
-                Debug.Log("양쪽 이동 불가, 대체 패턴 실행");
+                Debug.Log("비행할 위치에 장애물이 있음, 대체 패턴 실행");
                 TriggerAlternatePattern();
                 return;
             }
@@ -197,28 +167,21 @@ namespace JungBin
             // 목표 위치로 이동 시작
             StartCoroutine(MoveToTarget(targetPosition, bossFlyTime));
             animator.SetBool(isFlyNotToPlayer, false);
+
         }
 
-        // 왼쪽 이동 위치 계산
-        private Vector3 CalculateLeftMovement()
+        // 플레이어 기준 5f 떨어진 랜덤 위치 반환
+        private Vector3 GetRandomFlightPosition()
         {
-            Vector3 directionToPlayer = player.position - transform.position; // 플레이어 방향 계산
-            Vector3 leftDirection = Quaternion.Euler(0, -45, 0) * directionToPlayer.normalized;
-            return transform.position + leftDirection * directionToPlayer.magnitude; // 왼쪽 목표 위치 반환
-        }
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            Vector3 perpendicular = Vector3.Cross(Vector3.up, directionToPlayer).normalized; // 플레이어와 수직 방향
 
-        // 오른쪽 이동 위치 계산
-        private Vector3 CalculateRightMovement()
-        {
-            Vector3 directionToPlayer =  player.position - transform.position; // 플레이어 방향 계산
-            Vector3 rightDirection = Quaternion.Euler(0, 45, 0) * directionToPlayer.normalized;
-            return transform.position + rightDirection * directionToPlayer.magnitude; // 오른쪽 목표 위치 반환
-        }
+            // 왼쪽 또는 오른쪽 랜덤 선택
+            float sign = Random.value > 0.5f ? 1f : -1f;
+            Vector3 randomOffset = perpendicular * sign * 5f; // 좌우 5f 거리
+            Vector3 targetPos = player.position + directionToPlayer * 5f + randomOffset; // 5f 앞 + 좌우 이동
 
-        // 장애물이 있는지 확인하는 함수
-        private bool IsObstacle(Vector3 target)
-        {
-            return Physics.Raycast(transform.position, (target - transform.position).normalized, stopDistance, obstacleLayer);
+            return targetPos;
         }
 
         // 목표 위치로 부드럽게 이동하는 코루틴 (Lerp 사용)
@@ -235,9 +198,65 @@ namespace JungBin
                 yield return null;
             }
 
-            transform.position = targetPosition; // 최종 위치 보정
+            //transform.position = targetPosition; // 최종 위치 보정
             Debug.Log("목표 위치 도착, 공격 준비 시작");
-            animator.SetBool("PrepareAttack", true); // 공격 애니메이션 실행
+
+            // 이동 후 플레이어가 왼쪽/오른쪽에 있는지 판단 후 애니메이션 설정
+            DetermineAttackDirection();
+        }
+
+        // 이동 후 플레이어의 위치에 따라 공격 방향 결정 & 보스 회전
+        private void DetermineAttackDirection()
+        {
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+
+            // 1️⃣ 보스가 플레이어를 바라보는 회전 값 계산 (기준 회전 값)
+            Quaternion lookAtRotation = Quaternion.LookRotation(directionToPlayer, Vector3.up);
+
+            // 2️⃣ 현재 보스가 바라보는 방향과 비교하여 좌/우 판단
+            Vector3 bossForward = transform.forward;
+            float angle = Vector3.SignedAngle(bossForward, directionToPlayer, Vector3.up);
+
+            // 3️⃣ 보스가 플레이어를 바라보는 상태에서 90도 회전한 값 계산
+            if (angle < 0)
+            {
+                animator.SetFloat("AttackDirection", -1f); // 왼쪽 공격
+                StartCoroutine(SmoothRotateBoss(lookAtRotation, 90f)); // 왼쪽으로 회전
+                Debug.Log("왼쪽 공격 (기준 회전 값에서 +90도 회전)");
+            }
+            else
+            {
+                animator.SetFloat("AttackDirection", 1f); // 오른쪽 공격
+                StartCoroutine(SmoothRotateBoss(lookAtRotation, -90f)); // 오른쪽으로 회전
+                Debug.Log("오른쪽 공격 (기준 회전 값에서 -90도 회전)");
+            }
+
+            animator.SetTrigger("PrepareAttack"); // 공격 애니메이션 실행
+        }
+
+        // ✅ 보스가 플레이어를 바라보는 상태에서 90도 회전하는 코루틴
+        private IEnumerator SmoothRotateBoss(Quaternion lookAtRotation, float angleOffset)
+        {
+            Quaternion targetRotation = lookAtRotation * Quaternion.Euler(0, angleOffset, 0); // 기준 회전 값에서 90도 회전 적용
+            Quaternion startRotation = transform.rotation;
+            float rotationDuration = 0.5f; // 회전 속도 조절 가능
+            float elapsedTime = 0f;
+
+            while (elapsedTime < rotationDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                transform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime / rotationDuration);
+                yield return null;
+            }
+
+            transform.rotation = targetRotation; // 최종 보정
+        }
+
+
+        // 장애물이 있는지 확인하는 함수
+        private bool IsObstacle(Vector3 target)
+        {
+            return Physics.Raycast(transform.position, (target - transform.position).normalized, stopDistance, obstacleLayer);
         }
 
         // 양쪽이 막혀 있을 때 대체 패턴 실행
@@ -246,6 +265,7 @@ namespace JungBin
             Debug.Log("양쪽이 막혀 있어 대체 패턴 실행");
             animator.SetBool("HiddenAttack", true); // 대체 패턴 애니메이션 실행
         }
+
 
         #endregion
 
