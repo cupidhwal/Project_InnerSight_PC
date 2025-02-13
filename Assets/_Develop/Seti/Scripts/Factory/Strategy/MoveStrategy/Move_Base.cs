@@ -61,7 +61,7 @@ namespace Seti
 
         protected virtual void QuaterView_Move(Vector2 moveInput)
         {
-            //if (rb == null) return;
+            if (actor.Condition.IsAttack || actor.Condition.IsMagic) return;
 
             Vector3 moveDirection = new(dir.x, 0, dir.y);
             QuaterView_Dir(moveDirection);

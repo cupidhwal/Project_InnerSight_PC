@@ -35,10 +35,6 @@ namespace Seti
         #region Methods
         private IEnumerator Dash_Cor(Vector2 moveInput)
         {
-            // 임시
-            /*bool canDash = (StageManager.Instance.CurrentStage.name != "Stage00");
-            if (!canDash) yield break;*/
-
             if (!isDash)    // 대시 중이 아닐 때에만 방향 갱신
             {
                 dir = MoveDirection(moveInput);
@@ -48,10 +44,6 @@ namespace Seti
                 isDash = true;
             }
             Vector3 QuaterView = Quaternion.Euler(0f, 45f, 0f) * moveDirection.normalized;
-
-            // 임시
-            /*float dashSpeed = (StageManager.Instance.CurrentStage.name == "Stage00") ? 3 : 1;
-            player.DashSpeed(dashSpeed);*/
 
             // 초기 속도 설정
             float elapsedTime = 0f;
@@ -64,7 +56,6 @@ namespace Seti
                 // Ease In-Out 적용
                 currentSpeed = elapsedTime > (player.Dash_Duration / 2.5f) ? Mathf.Lerp(currentSpeed, player.Dash_Speed, Mathf.SmoothStep(0f, 1f, t)) : 0f;
                 player.transform.Translate(currentSpeed * Time.deltaTime * QuaterView, Space.World);
-
                 yield return null;
             }
             yield break;

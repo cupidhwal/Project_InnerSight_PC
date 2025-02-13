@@ -128,6 +128,7 @@ namespace Seti
 
         // 유틸리티
         #region Utilities
+        //bool switchMove = false;
         public void MeleeAttackStart(int throwing = 0)
         {
             Actor.Condition.CurrentWeapon.BeginAttack(throwing != 0);
@@ -137,11 +138,23 @@ namespace Seti
             if (Actor.Controller.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
                 if (attackBehaviour is Attack attack)
                     attack.OnAttackEnter();
+
+            /*if (Actor.Condition.IsMove)
+            {
+                switchMove = true;
+                Actor.Condition.IsMove = false;
+            }*/
         }
         public void MeleeAttackEnd()
         {
             Actor.Condition.CurrentWeapon.EndAttack();
             Actor.Condition.IsAttack = false;
+
+            /*if (switchMove)
+            {
+                switchMove = false;
+                Actor.Condition.IsMove = true;
+            }*/
         }
         public void MagicAttackEnd() => Actor.Condition.IsMagic = false;
         public void CantMoveDurAtk() => Actor.Condition.CanMove = false;
