@@ -53,6 +53,7 @@ namespace Seti
         public void PlayerSetActive(bool inAction)
         {
             this.inAction = inAction;
+            CanMove = inAction;
             StopRigidBody();
 
             // 제어권 박탈 해제 시 초기화
