@@ -60,38 +60,30 @@ namespace Seti
             // Look 행동 이벤트 바인딩
             if (behaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
             {
-                // 전략을 포함하고 있는지 확인
-                if (lookBehaviour is Look look)
+                Look look = lookBehaviour as Look;
+                if (look.HasStrategy<Look_Normal>())
                 {
-                    if (look.HasStrategy<Look_Normal>())
-                    {
-                        control.Player.Look.performed += look.OnLookPerformed;
-                        control.Player.Look.canceled += look.OnLookCanceled;
-                    }
+                    control.Player.Look.performed += look.OnLookPerformed;
+                    control.Player.Look.canceled += look.OnLookCanceled;
                 }
             }
 
             // Move 행동 이벤트 바인딩
             if (behaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
             {
-                // 전략을 포함하고 있는지 확인
-                if (moveBehaviour is Move move)
+                Move move = moveBehaviour as Move;
+                if (move.HasStrategy<Move_Normal>())
                 {
-                    if (move.HasStrategy<Move_Normal>())
-                    {
-                        control.Player.Move.performed += move.OnMovePerformed;
-                        control.Player.Move.canceled += move.OnMoveCanceled;
-                    }
-                    if (move.HasStrategy<Move_Dash>())
-                    {
-                        control.Player.Dash.started += move.OnDashStarted;
-                    }
-                    if (move.HasStrategy<Move_Run>())
-                    {
-                        //control.Player.Run.started += move.OnRunStarted;
-                        //control.Player.Run.canceled += move.OnRunCanceled;
-                    }
+                    control.Player.Move.performed += move.OnMovePerformed;
+                    control.Player.Move.canceled += move.OnMoveCanceled;
                 }
+            }
+
+            // Dash 행동 이벤트 바인딩
+            if (behaviourMap.TryGetValue(typeof(Dash), out var dashBehaviour))
+            {
+                Dash dash = dashBehaviour as Dash;
+                control.Player.Dash.started += dash.OnDashStarted;
             }
 
             // Jump 행동 이벤트 바인딩
@@ -104,30 +96,30 @@ namespace Seti
             // Attack 행동 이벤트 바인딩
             if (behaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
             {
-                if (attackBehaviour is Attack attack)
+                Attack attack = attackBehaviour as Attack;
+                if (attack.HasStrategy<Attack_Normal>())
                 {
-                    if (attack.HasStrategy<Attack_Normal>())
-                    {
-                        control.Player.Attack.started += attack.OnAttackStarted;
-                        control.Player.Attack.canceled += attack.OnAttackCanceled;
-                    }
-                    if (attack.HasStrategy<Attack_Weapon>())
-                    {
-                        control.Player.Weapon.started += attack.OnWeaponStarted;
-                        control.Player.Weapon.canceled += attack.OnWeaponCanceled;
-                    }
-                    if (attack.HasStrategy<Attack_Magic>())
-                    {
-                        control.Player.Magic.started += attack.OnMagicStarted;
-                        control.Player.Magic.canceled += attack.OnMagicCanceled;
-                    }
+                    control.Player.Attack.started += attack.OnAttackStarted;
+                    control.Player.Attack.canceled += attack.OnAttackCanceled;
+                }
+                if (attack.HasStrategy<Attack_Weapon>())
+                {
+                    control.Player.Weapon.started += attack.OnWeaponStarted;
+                    control.Player.Weapon.canceled += attack.OnWeaponCanceled;
+                }
+                if (attack.HasStrategy<Attack_Magic>())
+                {
+                    control.Player.Magic.started += attack.OnMagicStarted;
+                    control.Player.Magic.canceled += attack.OnMagicCanceled;
                 }
             }
 
             // Interact 행동 이벤트 바인딩
             if (behaviourMap.TryGetValue(typeof(Interact), out var interactBehaviour))
-                if (interactBehaviour is Interact interact)
-                    control.Player.Interact.started += interact.OnInteractStarted;
+            {
+                Interact interact = interactBehaviour as Interact;
+                control.Player.Interact.started += interact.OnInteractStarted;
+            }
         }
 
         private void UnbindInputEvents()
@@ -136,19 +128,29 @@ namespace Seti
             if (behaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
             {
                 Look look = lookBehaviour as Look;
-                control.Player.Look.performed -= look.OnLookPerformed;
-                control.Player.Look.canceled -= look.OnLookCanceled;
+                if (look.HasStrategy<Look_Normal>())
+                {
+                    control.Player.Look.performed -= look.OnLookPerformed;
+                    control.Player.Look.canceled -= look.OnLookCanceled;
+                }
             }
 
             // Move 행동 이벤트 해제
             if (behaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
             {
                 Move move = moveBehaviour as Move;
-                control.Player.Move.performed -= move.OnMovePerformed;
-                control.Player.Move.canceled -= move.OnMoveCanceled;
-                control.Player.Dash.started -= move.OnDashStarted;
-                //control.Player.Run.started -= move.OnRunStarted;
-                //control.Player.Run.canceled -= move.OnRunCanceled;
+                if (move.HasStrategy<Move_Normal>())
+                {
+                    control.Player.Move.performed -= move.OnMovePerformed;
+                    control.Player.Move.canceled -= move.OnMoveCanceled;
+                }
+            }
+
+            // Dash 행동 이벤트 해제
+            if (behaviourMap.TryGetValue(typeof(Dash), out var dashBehaviour))
+            {
+                Dash dash = dashBehaviour as Dash;
+                control.Player.Dash.started -= dash.OnDashStarted;
             }
 
             // Jump 행동 이벤트 해제
@@ -162,18 +164,29 @@ namespace Seti
             if (behaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
             {
                 Attack attack = attackBehaviour as Attack;
-                control.Player.Attack.started -= attack.OnAttackStarted;
-                control.Player.Attack.canceled -= attack.OnAttackCanceled;
-                control.Player.Weapon.started -= attack.OnWeaponStarted;
-                control.Player.Weapon.canceled -= attack.OnWeaponCanceled;
-                control.Player.Magic.started -= attack.OnMagicStarted;
-                control.Player.Magic.canceled -= attack.OnMagicCanceled;
+                if (attack.HasStrategy<Attack_Normal>())
+                {
+                    control.Player.Attack.started -= attack.OnAttackStarted;
+                    control.Player.Attack.canceled -= attack.OnAttackCanceled;
+                }
+                if (attack.HasStrategy<Attack_Weapon>())
+                {
+                    control.Player.Weapon.started -= attack.OnWeaponStarted;
+                    control.Player.Weapon.canceled -= attack.OnWeaponCanceled;
+                }
+                if (attack.HasStrategy<Attack_Magic>())
+                {
+                    control.Player.Magic.started -= attack.OnMagicStarted;
+                    control.Player.Magic.canceled -= attack.OnMagicCanceled;
+                }
             }
 
             // Interact 행동 이벤트 해제
             if (behaviourMap.TryGetValue(typeof(Interact), out var interactBehaviour))
-                if (interactBehaviour is Interact interact)
-                    control.Player.Interact.started -= interact.OnInteractStarted;
+            {
+                Interact interact = interactBehaviour as Interact;
+                control.Player.Interact.started -= interact.OnInteractStarted;
+            }
         }
         #endregion
     }

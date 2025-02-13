@@ -19,16 +19,6 @@ namespace Seti
 
         // 인터페이스
         #region Interface
-        // 업그레이드
-        public void Upgrade(float increment)
-        {
-            if (actor is not Player) return;
-
-            health = actor.Health;
-            health += increment * actor.Health_Default / 100;
-            actor.Update_Health(health);
-        }
-
         // 초기화
         public void Initialize(Actor actor)
         {

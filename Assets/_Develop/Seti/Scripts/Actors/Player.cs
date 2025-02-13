@@ -20,11 +20,9 @@ namespace Seti
         [SerializeField]
         private float dashSpeed = 2f;
         [SerializeField]
-        private float dashDuration = 0.2f;
-        [SerializeField]
         private float dashCooldown = 1f;
         [SerializeField]
-        private float dashInvulnerablityTime = 0.4f;
+        private float dashDuration = 0.2f;
 
         [Header("View Type")]
         [SerializeField]
@@ -38,7 +36,6 @@ namespace Seti
         public float Dash_Speed => dashSpeed;
         public float Dash_Cooldown => dashCooldown;
         public float Dash_Duration => dashDuration;
-        public float Dash_InvulnerablityTime => dashInvulnerablityTime;
         #endregion
 
         // 상호작용

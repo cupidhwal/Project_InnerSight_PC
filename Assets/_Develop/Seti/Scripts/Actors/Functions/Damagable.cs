@@ -137,7 +137,7 @@ namespace Seti
             {
                 Player player = actor as Player;
                 m_timeSinceDash += Time.deltaTime;
-                if (m_timeSinceDash > player.Dash_InvulnerablityTime)
+                if (m_timeSinceDash > player.Dash_Duration)
                 {
                     isDashInvulnerable = false;
                     m_timeSinceDash = 0f;

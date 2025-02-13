@@ -19,14 +19,6 @@ namespace Seti
 
         // 인터페이스
         #region Interface
-        // 업그레이드
-        public void Upgrade(float increment)
-        {
-            // 방어력 업그레이드와 함께 경직 시간 감소 기능도 함께 넣을 수 있는 가능성
-            stagger_Interval -= increment * actor.Stagger_Default / 100;
-            actor.Update_Stagger(stagger_Interval);
-        }
-
         // 초기화
         public void Initialize(Actor actor)
         {

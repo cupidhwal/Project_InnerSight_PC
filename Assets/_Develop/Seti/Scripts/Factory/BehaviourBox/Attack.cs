@@ -33,17 +33,6 @@ namespace Seti
 
         // 인터페이스
         #region Interface
-        // 업그레이드
-        public void Upgrade(float increment)
-        {
-            if (actor is not Player) return;
-
-            attack = actor.Attack;
-            attack += increment * actor.Attack_Default / 100;
-            actor.Update_Attack(attack);
-            Initialize(actor);
-        }
-
         // 초기화
         public void Initialize(Actor actor)
         {

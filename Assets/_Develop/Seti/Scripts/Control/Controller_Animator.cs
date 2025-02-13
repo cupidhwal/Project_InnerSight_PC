@@ -96,32 +96,31 @@ namespace Seti
 
             if (controller.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
             {
-                if (moveBehaviour is Move move)
-                {
-                    if (move.HasStrategy<Move_Normal>() || move.HasStrategy<Move_Walk>() || move.HasStrategy<Move_Run>())
-                        AniMachine.AddState(new AniState_Move());
+                Move move = moveBehaviour as Move;
+                if (move.HasStrategy<Move_Normal>() || move.HasStrategy<Move_Walk>() || move.HasStrategy<Move_Run>())
+                    AniMachine.AddState(new AniState_Move());
+            }
 
-                    if (move.HasStrategy<Move_Dash>())
-                        AniMachine.AddState(new AniState_Dash());
-                }
+            if (controller.BehaviourMap.TryGetValue(typeof(Dash), out var dashBehaviour))
+            {
+                Dash dash = dashBehaviour as Dash;
+                AniMachine.AddState(new AniState_Dash());
             }
 
             if (controller.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
             {
-                if (attackBehaviour is Attack attack)
-                {
-                    if (attack.HasStrategy<Attack_Normal>() || attack.HasStrategy<Attack_Tackle>())
-                        AniMachine.AddState(new AniState_Attack_Melee());
+                Attack attack = attackBehaviour as Attack;
+                if (attack.HasStrategy<Attack_Normal>() || attack.HasStrategy<Attack_Tackle>())
+                    AniMachine.AddState(new AniState_Attack_Melee());
 
-                    if (attack.HasStrategy<Attack_Magic>())
-                        AniMachine.AddState(new AniState_Attack_Magic());
-                }
+                if (attack.HasStrategy<Attack_Magic>())
+                    AniMachine.AddState(new AniState_Attack_Magic());
             }
 
             if (controller.BehaviourMap.TryGetValue(typeof(Stagger), out var staggerBehaviour))
             {
-                if (staggerBehaviour is Stagger)
-                    AniMachine.AddState(new AniState_Stagger());
+                Stagger stagger = staggerBehaviour as Stagger;
+                AniMachine.AddState(new AniState_Stagger());
             }
         }
         #endregion

@@ -63,8 +63,8 @@ namespace Seti
         // 속성
         #region Properties
         public Blueprint_Actor Origin => blueprint;
-        public Condition_Actor Condition => condition;
         public List<Behaviour> Behaviours => behaviours;
+        public Condition_Actor Condition => condition;
         public Controller_Base Controller => controller;
         public Controller_Animator Controller_Animator => animator;
 

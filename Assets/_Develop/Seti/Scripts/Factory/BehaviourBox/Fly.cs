@@ -9,12 +9,6 @@ namespace Seti
     [System.Serializable]
     public class Fly : IBehaviour
     {
-        // 업그레이드
-        public void Upgrade(float increment)
-        {
-
-        }
-
         public void Initialize(Actor actor)
         {
             

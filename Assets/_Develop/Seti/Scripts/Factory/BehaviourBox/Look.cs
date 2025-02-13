@@ -27,12 +27,6 @@ namespace Seti
 
         // 인터페이스
         #region Interface
-        // 업그레이드
-        public void Upgrade(float increment)
-        {
-
-        }
-
         // 초기화
         public void Initialize(Actor actor)
         {

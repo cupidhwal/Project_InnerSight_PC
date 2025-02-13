@@ -8,7 +8,6 @@ namespace Seti
     /// </summary>
     public interface IBehaviour
     {
-        void Upgrade(float increment);
         void Initialize(Actor actor);
         Type GetBehaviourType();
     }

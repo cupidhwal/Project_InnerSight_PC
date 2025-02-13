@@ -45,7 +45,7 @@ namespace Seti
 
         // 메서드
         #region Methods
-        // 행동 강화
+        /*// 행동 강화
         public void EnhanceBehaviour<T>(float increment) where T : class, IBehaviour
         {
             if (player == null) return;
@@ -83,7 +83,7 @@ namespace Seti
             (behaviour as T)?.Upgrade(increment);
 
             OnEnhance?.Invoke();
-        }
+        }*/
 
         // 행동 매핑
         private void InitializeBehaviourMap()
