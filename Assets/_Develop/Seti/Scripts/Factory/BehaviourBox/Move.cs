@@ -214,7 +214,7 @@ namespace Seti
             // 체공 중일 경우 착지까지 전략 변경 불가
             Condition_Player condition_Player = player.Condition as Condition_Player;
 
-            if (!condition_Player.CanDash || !actor.Condition.IsGrounded) return;
+            if (!condition_Player.CanDash || !actor.Condition.IsGrounded || !actor.Condition.InAction) return;
             actor.CoroutineExecutor(Dash_Cor());
         }
 
