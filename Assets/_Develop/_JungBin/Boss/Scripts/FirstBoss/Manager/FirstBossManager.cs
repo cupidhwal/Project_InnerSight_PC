@@ -217,7 +217,7 @@ namespace JungBin
             float elapsedTime = 0f;
             while (elapsedTime < warningDuration)
             {
-                if (animator.GetBool("IsWall"))
+                if (animator.GetBool("IsWall") || animator.GetBool("IsBerserk"))
                 {
                     Destroy(warningEffect); // 기존 경고 이펙트 제거
                     yield break; // 즉시 종료 (return 역할)
@@ -243,7 +243,7 @@ namespace JungBin
             elapsedTime = 0f;
             while (elapsedTime < secondWarningDuration)
             {
-                if (animator.GetBool("IsWall"))
+                if (animator.GetBool("IsWall") || animator.GetBool("IsBerserk"))
                 {
                     Destroy(secondWarningEffect); // 두 번째 경고 이펙트 제거
                     yield break; // 즉시 종료
