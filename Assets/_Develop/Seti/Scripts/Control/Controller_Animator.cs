@@ -133,6 +133,10 @@ namespace Seti
             Actor.Condition.CurrentWeapon.BeginAttack(throwing != 0);
             Actor.Condition.IsAttack = true;
             Actor.Condition.AttackPoint = RayManager.Instance.RayToScreen();
+
+            if (Actor.Controller.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+                if (attackBehaviour is Attack attack)
+                    attack.OnAttackEnter();
         }
         public void MeleeAttackEnd()
         {

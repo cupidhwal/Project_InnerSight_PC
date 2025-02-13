@@ -153,11 +153,7 @@ namespace Seti
         #region Controller_Input
         public void OnAttackStarted(InputAction.CallbackContext _) => OnAttack(true);
         public void OnAttackCanceled(InputAction.CallbackContext _) => OnAttack(false);
-        public void OnWeaponStarted(InputAction.CallbackContext _)
-        {
-            ChangeStrategy(typeof(Attack_Magic));
-            OnMagic(true);
-        }
+        public void OnWeaponStarted(InputAction.CallbackContext _) => OnMagic(true);
         public void OnWeaponCanceled(InputAction.CallbackContext _)
         {
             //OnMagic(false);
@@ -205,35 +201,32 @@ namespace Seti
             if (!condition.InAction) return;
 
             ChangeStrategy(typeof(Attack_Normal));
-            actor.Condition.IsAttack = isAttack;
+            condition.IsAttack = isAttack;
 
             if (isSkillAttack)
                 isSkillAttack = false;
         }
+        public void OnAttackEnter() => currentStrategy?.Attack();
 
         public void OnMagic(bool isMagic = true)
         {
             if (!condition.InAction) return;
 
-            if (actor is Player)
+            if (isMagic)
             {
-                if (isSkillAttack)
-                {
-                    if (isMagic)
-                    {
-                        condition.IsMagic = true;
+                ChangeStrategy(typeof(Attack_Magic));
+                currentStrategy?.Attack();
 
+                if (actor is Player)
+                {
+                    if (isSkillAttack)
+                    {
                         condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
                         ChangeStrategy(typeof(Attack_Normal));
+
+                        isSkillAttack = false;
                     }
-
-                    isSkillAttack = false;
                 }
-            }
-
-            else if (isMagic)
-            {
-                condition.IsMagic = true;
             }
         }
         #endregion
