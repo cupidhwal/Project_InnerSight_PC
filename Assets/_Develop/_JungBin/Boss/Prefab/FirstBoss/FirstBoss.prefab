@@ -51,7 +51,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.4, y: 1.4, z: 1.2}
   m_Center: {x: 0, y: 0.8, z: 0.1}
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDirection: {x: 0, y: 0, z: 0}
-  damageCooldown: 1
+  damageCooldown: 0.5
 --- !u!1 &1431761859981353239
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,7 +218,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.4, y: 1.4, z: 0.5}
   m_Center: {x: 0, y: 0.8, z: 0.35}
@@ -323,7 +323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6498946531561311706
 Transform:
   m_ObjectHideFlags: 0
@@ -408,7 +408,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -429,7 +429,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.4, y: 4, z: 6}
   m_Center: {x: -0.3, y: 0, z: 0}
@@ -446,7 +446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDirection: {x: 0, y: 0, z: 0}
-  damageCooldown: 1
+  damageCooldown: 0.5
 --- !u!1 &6123675318104457446
 GameObject:
   m_ObjectHideFlags: 0
@@ -2553,7 +2553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 042152289fa48e64cb648e0a31ed46e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSpeed: 600
+  turnSpeed: 2000
   detectedObj: {fileID: 6818936129997462429}
   rushAttackBox: {fileID: 913765566904639677}
   throwAttackBox: {fileID: 6284033761021959893}
