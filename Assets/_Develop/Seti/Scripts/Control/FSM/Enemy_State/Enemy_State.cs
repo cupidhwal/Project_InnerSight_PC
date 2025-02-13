@@ -16,6 +16,10 @@ namespace Seti
 
         // Patrol, Chase
         protected Vector2 moveInput;
+
+        protected Move move;
+        protected Look look;
+        protected Attack attack;
         #endregion
 
         // 추상
@@ -30,10 +34,24 @@ namespace Seti
             {
                 this.damagable = damagable;
             }
+
+            // 다른 행동을 참조해야 한다면 이런 양식으로 작성
+            if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
+                move = moveBehaviour as Move;
+
+            if (context.BehaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
+                look = lookBehaviour as Look;
+
+            if (context.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+                attack = attackBehaviour as Attack;
         }
 
         // 상태 전환 시 State Enter에 1회 실행
-        public override void OnEnter() => elapsedDuration = UnityEngine.Random.Range(elapsedCriteria * 0.7f, elapsedCriteria * 1.3f);
+        public override void OnEnter()
+        {
+            elapsedDuration = UnityEngine.Random.Range(elapsedCriteria * 0.7f, elapsedCriteria * 1.3f);
+            enemy.Agent.ResetPath();
+        }
 
         // 상태 전환 시 State Exit에 1회 실행
         public override void OnExit() { }

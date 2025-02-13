@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Seti
 {
@@ -17,6 +18,7 @@ namespace Seti
         public override void OnEnter()
         {
             base.OnEnter();
+
             context.Actor.Condition.IsMove = false;
             enemy.SwitchState(Enemy.State.Idle);
         }
@@ -49,11 +51,7 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             // Move 행동 AI Input
-            if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
-                if (moveBehaviour is Move move)
-                {
-                    move.FSM_MoveInput(moveInput, false);
-                }
+            move?.FSM_MoveInput(Vector2.zero, false);
         }
         #endregion
     }

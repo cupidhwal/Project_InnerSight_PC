@@ -49,12 +49,8 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             // Move 행동 AI Input
-            if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
-                if (moveBehaviour is Move move)
-                {
-                    Input_Patrol(deltaTime);
-                    move.FSM_MoveInput(moveInput, true);
-                }
+            Input_Patrol(deltaTime);
+            move?.FSM_MoveInput(moveInput, true);
         }
         #endregion
 

@@ -12,15 +12,6 @@ namespace Seti
     /// </summary>
     public class Attack : IBehaviour, IHasStrategy
     {
-        private enum StrategyType
-        {
-            Normal,
-            Weapon,
-            Magic,
-            Tackle,
-            NULL
-        }
-
         // 필드
         #region Variables
         // 공격력
@@ -34,8 +25,6 @@ namespace Seti
         private IAttackStrategy currentStrategy;
 
         // 제어 관리
-        private Condition_Actor condition;
-        //private StrategyType currentType;
         private State<Controller_FSM> currentState;
 
         // 스킬 애니메이션 관리
@@ -59,7 +48,6 @@ namespace Seti
         public void Initialize(Actor actor)
         {
             this.actor = actor;
-            condition = actor.Condition;
 
             foreach (var mapping in strategies)
             {
@@ -199,10 +187,10 @@ namespace Seti
         #region Methods
         public void OnAttack(bool isAttack = true)
         {
-            if (!condition.InAction) return;
+            if (!actor.Condition.InAction) return;
 
             ChangeStrategy(typeof(Attack_Normal));
-            condition.IsAttack = isAttack;
+            actor.Condition.IsAttack = isAttack;
 
             if (isSkillAttack)
                 isSkillAttack = false;
@@ -211,7 +199,7 @@ namespace Seti
 
         public void OnMagic(bool isMagic = true)
         {
-            if (!condition.InAction) return;
+            if (!actor.Condition.InAction) return;
 
             if (isMagic)
             {
@@ -222,7 +210,7 @@ namespace Seti
                         ChangeStrategy(typeof(Attack_Magic));
                         currentStrategy?.Attack();
 
-                        condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
+                        actor.Condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
                         ChangeStrategy(typeof(Attack_Normal));
 
                         isSkillAttack = false;

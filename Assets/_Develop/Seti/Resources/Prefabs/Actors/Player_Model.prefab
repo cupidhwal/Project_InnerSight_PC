@@ -2164,6 +2164,8 @@ GameObject:
   - component: {fileID: 8105878893080058997}
   - component: {fileID: 804687201194811556}
   - component: {fileID: 2851472363605821962}
+  - component: {fileID: 2255305696647432588}
+  - component: {fileID: 3061230618546990495}
   m_Layer: 6
   m_Name: Player_Model
   m_TagString: Player
@@ -2179,7 +2181,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1497023816619404209}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2314,9 +2316,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283cf9d3c8058884fb5407a9bc362ac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blueprint: {fileID: 0}
-  condition: {fileID: 0}
-  behaviours: []
+  blueprint: {fileID: 11400000, guid: 2ef6ce7a284c05e4dba11e7953e3fe9a, type: 2}
+  condition: {fileID: 2255305696647432588}
+  controller: {fileID: 0}
+  behaviours:
+  - behaviour:
+      rid: 5367875440153199377
+  - behaviour:
+      rid: 5367875440153199378
+  - behaviour:
+      rid: 5367875440153199379
+  - behaviour:
+      rid: 5367875440153199380
+  - behaviour:
+      rid: 5367875440153199381
+  - behaviour:
+      rid: 5367875440153199382
+  - behaviour:
+      rid: 5367875440153199383
   health: 100
   attack: 10
   defend: 1
@@ -2324,13 +2341,104 @@ MonoBehaviour:
   rate_Movement: 4
   stagger: 0.1
   mag_WalkToRun: 1.5
+  attackProgressive: 2.5
   dashSpeed: 1
   dashDuration: 0.2
   dashCooldown: 1
+  dashInvulnerablityTime: 0.4
   viewType: 0
+  currentNPC: {fileID: 0}
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 5367875440153199371
+      type: {class: Move_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875440153199372
+      type: {class: Move_Dash, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875440153199373
+      type: {class: Look_Watch, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875440153199374
+      type: {class: Attack_Magic, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875440153199375
+      type: {class: Attack_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875440153199376
+      type: {class: Attack_Weapon, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875440153199377
+      type: {class: Move, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 5367875440153199384
+        - rid: 5367875440153199385
+    - rid: 5367875440153199378
+      type: {class: Look, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 5367875440153199386
+    - rid: 5367875440153199379
+      type: {class: Attack, ns: Seti, asm: Assembly-CSharp}
+      data:
+        attack: 0
+        strategies:
+        - rid: 5367875440153199387
+        - rid: 5367875440153199388
+        - rid: 5367875440153199389
+        isSkillAttack: 0
+    - rid: 5367875440153199380
+      type: {class: Health, ns: Seti, asm: Assembly-CSharp}
+      data:
+        health: 0
+    - rid: 5367875440153199381
+      type: {class: Defend, ns: Seti, asm: Assembly-CSharp}
+      data:
+        defend: 0
+    - rid: 5367875440153199382
+      type: {class: Stagger, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875440153199383
+      type: {class: Interact, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5367875440153199384
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5367875440153199371
+        isActive: 1
+    - rid: 5367875440153199385
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5367875440153199372
+        isActive: 1
+    - rid: 5367875440153199386
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5367875440153199373
+        isActive: 1
+    - rid: 5367875440153199387
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5367875440153199374
+        isActive: 1
+    - rid: 5367875440153199388
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5367875440153199375
+        isActive: 1
+    - rid: 5367875440153199389
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5367875440153199376
+        isActive: 1
 --- !u!114 &6176833091747715969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2359,6 +2467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289bfb1f47fad5745a55b3ba7e9ccbc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDashInvulnerable: 0
   maxHitPoints: 100
   currentHitPoints: 0
   invulnerablityTime: 0.5
@@ -2378,6 +2487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b28ec21f49bd944a856b7114d784611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KnockbackCoefficient: 4
 --- !u!114 &8105878893080058997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2391,7 +2501,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  canMove: 1
   forwardSpeed: 0
 --- !u!114 &804687201194811556
 MonoBehaviour:
@@ -2424,6 +2533,33 @@ MonoBehaviour:
   skillRange_Cube: {fileID: 1592042882852891174}
   rotationSpeed: 100
   y_SkillRot: 100
+--- !u!114 &2255305696647432588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497023816619404209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b88fe0134d4ebe4d8e4a53995a461fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeaponType: 0
+  currentWeapon: {fileID: 1012053335956853138}
+  inAction: 0
+--- !u!114 &3061230618546990495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497023816619404209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 654620e29c2ffbb44ad8b6c8e8916d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1512419212301367042
 GameObject:
   m_ObjectHideFlags: 0
@@ -9995,6 +10131,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1003920128105338528, guid: f2035ea7c7b06f449ab348e5befee67d, type: 3}
+      propertyPath: m_Owner
+      value: 
+      objectReference: {fileID: 1497023816619404209}
+    - target: {fileID: 1003920128105338528, guid: f2035ea7c7b06f449ab348e5befee67d, type: 3}
       propertyPath: effects.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -10040,6 +10180,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 428062100654912669, guid: f2035ea7c7b06f449ab348e5befee67d, type: 3}
   m_PrefabInstance: {fileID: 280680218880919346}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1012053335956853138 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1003920128105338528, guid: f2035ea7c7b06f449ab348e5befee67d, type: 3}
+  m_PrefabInstance: {fileID: 280680218880919346}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aac7bcc0ce6198a48a98d5e5917f078f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2101665051144628641
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -173,6 +173,7 @@ namespace Seti
         #region Life Cycle
         public void Update()
         {
+            if (!actor.Condition.InAction) return;
             currentStrategy?.Move(moveInput);
         }
         #endregion
@@ -213,7 +214,7 @@ namespace Seti
             // 체공 중일 경우 착지까지 전략 변경 불가
             Condition_Player condition_Player = player.Condition as Condition_Player;
 
-            if (condition_Player.CanDash || !actor.Condition.IsGrounded) return;
+            if (!condition_Player.CanDash || !actor.Condition.IsGrounded) return;
             actor.CoroutineExecutor(Dash_Cor());
         }
 
@@ -239,7 +240,7 @@ namespace Seti
 
             // 대시 시작
             condition_Player.IsDash = true;
-            condition_Player.CanDash = true;
+            condition_Player.CanDash = false;
             SwitchStrategy(StrategyType.Dash);
 
             // Damagable 컴포넌트가 있다면 대시 중 무적
@@ -255,7 +256,7 @@ namespace Seti
             SwitchStrategy(StrategyType.Normal);
 
             yield return new WaitForSeconds(player.Dash_Cooldown - player.Dash_Duration);
-            condition_Player.CanDash = false;
+            condition_Player.CanDash = true;
             // 대시 사용 가능
 
             // 충돌 확인 재개

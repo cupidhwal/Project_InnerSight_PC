@@ -11,16 +11,13 @@ namespace Seti
         public override void OnInitialized()
         {
             base.OnInitialized();
-
-            // 다른 행동을 참조해야 한다면 이런 양식으로 작성
-            /*if (context.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
-                attack = attackBehaviour as Attack;*/
         }
 
         // 상태 전환 시 State Enter에 1회 실행
         public override void OnEnter()
         {
             base.OnEnter();
+
             elapsedDuration = context.Actor.Stagger;
             context.Actor.Condition.IsStagger = true;
             enemy.SwitchState(Enemy.State.Stagger);
@@ -56,12 +53,8 @@ namespace Seti
         // 상태 실행 중
         public override void Update(float deltaTime)
         {
-            // Stagger 행동 AI Input
-            /*if (Input_Attack(deltaTime))
-                attack?.FSM_AttackInput(true);
-
-            if (!enemy.ActorCondition.IsAttack)
-                look?.FSM_LookInput();*/
+            // Move 행동 AI Input
+            move?.FSM_MoveInput(Vector2.zero, false);
         }
         #endregion
     }

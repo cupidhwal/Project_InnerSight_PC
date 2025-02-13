@@ -1,27 +1,16 @@
 using System;
+using UnityEngine;
 
 namespace Seti
 {
     public class Enemy_State_Attack_Normal : Enemy_State
     {
-        // 필드
-        #region Variables
-        private Look look;
-        private Attack attack;
-        #endregion
-
         // 오버라이드
         #region Override
         // 초기화 메서드 - 생성 후 1회 실행
         public override void OnInitialized()
         {
             base.OnInitialized();
-
-            if (context.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
-                attack = attackBehaviour as Attack;
-
-            if (context.BehaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
-                look = lookBehaviour as Look;
 
             steeringInterval = enemy.AttackInterval;
         }
@@ -30,6 +19,7 @@ namespace Seti
         public override void OnEnter()
         {
             base.OnEnter();
+
             attack?.FSM_AttackInput(true);
             enemy.SwitchState(Enemy.State.Attack);
         }
@@ -65,17 +55,16 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             // Move 행동 AI Input
-            if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
-                if (moveBehaviour is Move move)
-                    move.FSM_MoveInput(moveInput, false);
+            move?.FSM_MoveInput(Vector2.zero, false);
+
+            // Look 행동 AI Input
+            if (!enemy.Condition.IsAttack)
+                look?.FSM_LookInput();
 
             // Attack 행동 AI Input
             if (Input_Attack(deltaTime))
                 attack?.FSM_AttackInput(true);
             else attack?.FSM_AttackInput(false);
-
-            if (!enemy.Condition.IsAttack)
-                look?.FSM_LookInput();
         }
         #endregion
 

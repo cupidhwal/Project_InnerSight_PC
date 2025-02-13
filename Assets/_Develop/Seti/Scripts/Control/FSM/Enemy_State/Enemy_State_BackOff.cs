@@ -67,12 +67,8 @@ namespace Seti
                 enemy.Agent.ResetPath();
             }
 
-            if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
-                if (moveBehaviour is Move move)
-                {
-                    Input_BackHome();
-                    move.FSM_MoveInput(moveInput, true);
-                }
+            Input_BackHome();
+            move?.FSM_MoveInput(moveInput, true);
         }
         #endregion
 

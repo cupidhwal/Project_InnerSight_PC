@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Seti
 {
     public class Enemy_State_Dead : Enemy_State
@@ -11,10 +13,9 @@ namespace Seti
         public override void OnEnter()
         {
             base.OnEnter();
+
             elapsedDuration = 100;
             enemy.SwitchState(Enemy.State.Dead);
-
-
         }
 
         // 상태 전환 시 State Exit에 1회 실행
@@ -24,11 +25,7 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             // Move 행동 AI Input
-            if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
-                if (moveBehaviour is Move move)
-                {
-                    move.FSM_MoveInput(moveInput, false);
-                }
+            move?.FSM_MoveInput(Vector2.zero, false);
         }
         #endregion
     }

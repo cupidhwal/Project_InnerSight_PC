@@ -12,13 +12,6 @@ namespace Seti
     [System.Serializable]
     public class Look : IBehaviour, IHasStrategy
     {
-        private enum StrategyType
-        {
-            Normal,
-            Watch,
-            NULL
-        }
-
         // 필드
         #region Variables
         // 전략 관리
@@ -29,7 +22,6 @@ namespace Seti
         private Vector2 lookInput;
 
         // 제어 관리
-        private StrategyType currentType;
         private State<Controller_FSM> currentState;
         #endregion
 
@@ -124,6 +116,7 @@ namespace Seti
         #region Life Cycle
         public void Update()
         {
+            if (!actor.Condition.InAction) return;
             currentStrategy?.Look();
         }
         #endregion

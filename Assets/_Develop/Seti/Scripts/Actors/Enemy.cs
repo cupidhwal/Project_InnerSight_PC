@@ -103,9 +103,6 @@ namespace Seti
         {
             base.Start();
 
-            // 참조
-            agent = GetComponent<NavMeshAgent>();
-
             // 초기화
             HomePosition = transform.position;
 
@@ -127,6 +124,7 @@ namespace Seti
         {
             // 참조
             player = FindAnyObjectByType<Player>();
+            agent = GetComponent<NavMeshAgent>();
         }
         #endregion
 
