@@ -160,6 +160,10 @@ namespace Seti
                 Destroy(go, 1f);
             }
         }
+        public void MagicFailed()
+        {
+
+        }
         #endregion
     }
 }

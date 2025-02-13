@@ -134,6 +134,9 @@ namespace Seti
         {
             m_Owner = owner;
             m_Owner_Actor = m_Owner.GetComponent<Actor>();
+
+            Damagable damagable = m_Owner_Actor.GetComponent<Damagable>();
+            damagable.OnDeath += EndAttack;
         }
 
         public void BeginAttack(bool throwingAttack)

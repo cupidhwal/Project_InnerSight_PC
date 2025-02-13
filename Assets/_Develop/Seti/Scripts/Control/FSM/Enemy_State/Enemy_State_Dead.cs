@@ -12,15 +12,24 @@ namespace Seti
         {
             base.OnEnter();
             elapsedDuration = 100;
-            context.Actor.Condition.IsDead = true;
             enemy.SwitchState(Enemy.State.Dead);
+
+
         }
 
         // 상태 전환 시 State Exit에 1회 실행
         public override void OnExit() => base.OnExit();
 
         // 상태 실행 중
-        public override void Update(float deltaTime) { }
+        public override void Update(float deltaTime)
+        {
+            // Move 행동 AI Input
+            if (context.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
+                if (moveBehaviour is Move move)
+                {
+                    move.FSM_MoveInput(moveInput, false);
+                }
+        }
         #endregion
     }
 }

@@ -123,6 +123,7 @@ namespace Seti
             }
         }
 
+        // 행동 전략 제어
         public void SwitchStrategy(State<Controller_FSM> state)
         {
             // FSM 상태에 따라 동작 제어
@@ -214,18 +215,23 @@ namespace Seti
 
             if (isMagic)
             {
-                ChangeStrategy(typeof(Attack_Magic));
-                currentStrategy?.Attack();
-
                 if (actor is Player)
                 {
                     if (isSkillAttack)
                     {
+                        ChangeStrategy(typeof(Attack_Magic));
+                        currentStrategy?.Attack();
+
                         condition.AttackPoint = Noah.RayManager.Instance.RayToScreen();
                         ChangeStrategy(typeof(Attack_Normal));
 
                         isSkillAttack = false;
                     }
+                }
+                else
+                {
+                    ChangeStrategy(typeof(Attack_Magic));
+                    currentStrategy?.Attack();
                 }
             }
         }

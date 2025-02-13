@@ -53,7 +53,10 @@ namespace Seti
                         QuaterView_Move(moveInput);
                         break;
                 }
-            else QuaterView_Move(moveInput);
+            else
+            {
+                QuaterView_Move(moveInput);
+            }
         }
 
         protected virtual void QuaterView_Move(Vector2 moveInput)
