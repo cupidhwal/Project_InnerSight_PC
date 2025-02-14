@@ -17,6 +17,8 @@ namespace Noah
 
         private bool isTracking = false;
 
+        public float stopRange = 3.5f;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -58,8 +60,12 @@ namespace Noah
                 // 플레이어 방향 계산
                 Vector3 direction = (player.position - transform.position).normalized;
 
+                // 감속 비율을 제곱하여 더욱 빠르게 감소
+                float speedFactor = Mathf.Clamp01((distance / stopRange) * (distance / stopRange)); // (distance / 1f)^2
+                float currentSpeed = attractionSpeed * speedFactor;
+
                 // 플레이어 방향으로 이동
-                transform.position += new Vector3(direction.x, 0f, direction.z) * attractionSpeed * Time.deltaTime;
+                transform.position += new Vector3(direction.x, 0f, direction.z) * currentSpeed * Time.deltaTime;
             }
 
         }
