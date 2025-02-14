@@ -3,6 +3,7 @@ using UnityEngine;
 using Noah;
 using Yoon;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 namespace Seti
 {
@@ -33,6 +34,10 @@ namespace Seti
         protected Player player;
         protected IEnumerator chaseCor;     // 피격 시 실행할 코루틴
         protected NavMeshAgent agent;
+
+        protected Vector3 previousTargetPos;
+        protected Vector3 currentTargetPos;
+        protected UnityAction OnTargetMove;
 
         [Header("Calculator : AI Behaviour")]
         [SerializeField]
@@ -80,6 +85,13 @@ namespace Seti
         //public bool SamePosition { get; private set; }
 
         // 상태 조건
+        public bool IsThere
+        {
+            get
+            {
+                return player;
+            }
+        }
         public bool Detected => player && (distancePlayer <= range_Detect);
         public bool CanMagic => player && magicObject && (distancePlayer <= range_Magic);
         public bool CanAttack => player && (distancePlayer <= range_Attack);
@@ -118,6 +130,12 @@ namespace Seti
             if (!player) return;
 
             distancePlayer = Vector3.Distance(player.transform.position, transform.position);
+
+            currentTargetPos = player.transform.position;
+            /*if ()
+            {
+
+            }*/
         }
 
         protected virtual void Awake()
@@ -125,6 +143,9 @@ namespace Seti
             // 참조
             player = FindAnyObjectByType<Player>();
             agent = GetComponent<NavMeshAgent>();
+
+            previousTargetPos = player.transform.position;
+            currentTargetPos = player.transform.position;
         }
         #endregion
 

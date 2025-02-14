@@ -113,7 +113,7 @@ namespace Seti
                     break;
 
                 case Enemy_State_Chase:
-                    ChangeStrategy(typeof(Move_Run));
+                    ChangeStrategy(typeof(Move_Nav));
                     break;
 
                 case Enemy_State_BackOff:
@@ -127,7 +127,8 @@ namespace Seti
         #region Life Cycle
         public void Update()
         {
-            if (!actor.Condition.InAction || condition_Player.IsDash) return;
+            if (!actor.Condition.InAction) return;
+            if (actor is Player && condition_Player.IsDash) return;
             currentStrategy?.Move(moveInput);
         }
         #endregion
