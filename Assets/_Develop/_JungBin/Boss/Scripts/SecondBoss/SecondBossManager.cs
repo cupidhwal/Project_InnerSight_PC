@@ -14,6 +14,9 @@ namespace JungBin
         [SerializeField] private float turnSpeed = 30;              //보스의 회전 속도
         [SerializeField] private float detectionRange = 8f; //  최대 감지 거리
 
+        [SerializeField] private Transform slashSpawnPoint;
+        [SerializeField] private GameObject slashAttack;
+
         private int lastAttack = -1;
         public static bool isAttack { get; set; } = false; // 공격중인지 여부
 
@@ -34,6 +37,7 @@ namespace JungBin
         private string isFlyNotToPlayer = "IsFlyNTP";
         private string isFar = "IsFar";
         private string isRun = "IsRun";
+        private string isArrived = "IsArrived";
         #endregion
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -129,6 +133,16 @@ namespace JungBin
 
         #endregion
 
+        #region 공격 상태
+        public void ToggleAttack()
+        {
+            GameObject slashParticle = Instantiate(slashAttack, slashSpawnPoint.position, Quaternion.identity);
+
+            Destroy(slashParticle, 2f );
+        }
+
+        #endregion
+
         #region 플레이어에게 이동하는 비행 상태
         private IEnumerator FlyToTarget(Vector3 targetPosition, float duration)
         {
@@ -142,7 +156,18 @@ namespace JungBin
                 t = Mathf.Sin(t * Mathf.PI * 0.5f); // 출발 빠르고, 도착할수록 느려짐    
 
                 transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+
+                // 💡 도착 직전이면 애니메이션을 미리 전환
+                if (Vector3.Distance(transform.position, targetPosition) < 1f) // 1f 이하일 때
+                {
+                    Debug.Log("거의 도착 → 패턴 즉시 실행");
+                    animator.SetBool(isArrived, true); // 즉시 공격 패턴 실행
+                    yield break;
+                }
+
                 yield return null;
+
+
             }
 
             //transform.position = targetPosition; // 최종적으로 정확한 위치로 이동
@@ -184,61 +209,109 @@ namespace JungBin
             return targetPos;
         }
 
-        // 목표 위치로 부드럽게 이동하는 코루틴 (Lerp 사용)
+        // 목표 위치로 부드럽게 이동하는 코루틴
         private IEnumerator MoveToTarget(Vector3 targetPosition, float duration)
         {
             Vector3 startPosition = transform.position;
+            float distance = Vector3.Distance(startPosition, targetPosition);
+
+            // 💡 처음부터 이동 거리가 너무 짧다면 즉시 패턴 전환
+            if (distance < 2f) // 2f 기준 (조정 가능)
+            {
+                transform.position = targetPosition;
+                Debug.Log("이동 거리 짧음 → 즉시 애니메이션 전환");
+
+                animator.SetBool(isArrived, true); // 짧은 거리 이동 시 즉시 전환
+                DetermineAttackDirection(); // 도착 후 공격 실행
+                yield break; // 코루틴 종료
+            }
+
             float elapsedTime = 0f;
 
             while (elapsedTime < duration)
             {
                 elapsedTime += Time.deltaTime;
-                float t = Mathf.Sin((elapsedTime / duration) * Mathf.PI * 0.5f); // 처음 빠르고 끝에서 느려지는 이동
+                float t = Mathf.Sin((elapsedTime / duration) * Mathf.PI * 0.5f); // 처음 빠르고 끝에서 느려짐
                 transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+
+                // 💡 도착 직전이면 애니메이션을 미리 전환
+                if (Vector3.Distance(transform.position, targetPosition) < 1f) // 1f 이하일 때
+                {
+                    Debug.Log("거의 도착 → 패턴 즉시 실행");
+                    animator.SetBool(isArrived, true); // 즉시 공격 패턴 실행
+                    DetermineAttackDirection(); // 도착 후 공격 실행
+                    yield break;
+                }
+
                 yield return null;
             }
 
             //transform.position = targetPosition; // 최종 위치 보정
             Debug.Log("목표 위치 도착, 공격 준비 시작");
 
-            // 이동 후 플레이어가 왼쪽/오른쪽에 있는지 판단 후 애니메이션 설정
-            DetermineAttackDirection();
+            animator.SetBool(isArrived, false); // 일반적인 이동 후 패턴 전환
+            DetermineAttackDirection(); // 도착 후 공격 실행
         }
+
+
 
         // 이동 후 플레이어의 위치에 따라 공격 방향 결정 & 보스 회전
         private void DetermineAttackDirection()
         {
+            // 🔹 플레이어 방향 계산
             Vector3 directionToPlayer = (player.position - transform.position).normalized;
 
-            // 1️⃣ 보스가 플레이어를 바라보는 회전 값 계산 (기준 회전 값)
-            Quaternion lookAtRotation = Quaternion.LookRotation(directionToPlayer, Vector3.up);
-
-            // 2️⃣ 현재 보스가 바라보는 방향과 비교하여 좌/우 판단
+            // 🔹 현재 보스가 바라보는 방향
             Vector3 bossForward = transform.forward;
+
+            // 🔹 예외 처리: bossForward 또는 directionToPlayer가 0이면 기본값으로 설정
+            if (bossForward == Vector3.zero || directionToPlayer == Vector3.zero)
+            {
+                Debug.LogWarning("보스 방향 또는 플레이어 방향이 0! 기본 값 설정");
+                directionToPlayer = Vector3.forward;
+            }
+
+            // 🔹 보스가 현재 바라보는 방향과 플레이어 방향 간의 각도 계산
             float angle = Vector3.SignedAngle(bossForward, directionToPlayer, Vector3.up);
 
-            // 3️⃣ 보스가 플레이어를 바라보는 상태에서 90도 회전한 값 계산
+            Debug.Log($"현재 보스 방향: {bossForward}, 플레이어 방향: {directionToPlayer}, angle: {angle}");
+
+            // 🔹 0도일 경우 기본 방향 보정
+            if (Mathf.Abs(angle) < 0.1f)
+            {
+                angle = Random.value > 0.5f ? -90f : 90f; // 랜덤으로 왼쪽 또는 오른쪽으로 회전
+                Debug.Log("각도가 너무 작음 → 랜덤 방향 보정");
+            }
+
+            // 🔹 공격 방향 결정
             if (angle < 0)
             {
                 animator.SetFloat("AttackDirection", -1f); // 왼쪽 공격
-                StartCoroutine(SmoothRotateBoss(lookAtRotation, 90f)); // 왼쪽으로 회전
-                Debug.Log("왼쪽 공격 (기준 회전 값에서 +90도 회전)");
+                StartCoroutine(SmoothRotateBoss(90f));
+                Debug.Log("왼쪽 공격 실행");
             }
             else
             {
                 animator.SetFloat("AttackDirection", 1f); // 오른쪽 공격
-                StartCoroutine(SmoothRotateBoss(lookAtRotation, -90f)); // 오른쪽으로 회전
-                Debug.Log("오른쪽 공격 (기준 회전 값에서 -90도 회전)");
+                StartCoroutine(SmoothRotateBoss(-90f));
+                Debug.Log("오른쪽 공격 실행");
             }
 
             animator.SetTrigger("PrepareAttack"); // 공격 애니메이션 실행
         }
 
-        // ✅ 보스가 플레이어를 바라보는 상태에서 90도 회전하는 코루틴
-        private IEnumerator SmoothRotateBoss(Quaternion lookAtRotation, float angleOffset)
+
+        // ✅ 보스의 현재 방향을 기준으로 보정된 90도 회전 적용
+        private IEnumerator SmoothRotateBoss(float angleOffset)
         {
-            Quaternion targetRotation = lookAtRotation * Quaternion.Euler(0, angleOffset, 0); // 기준 회전 값에서 90도 회전 적용
+            // 현재 보스의 방향을 기준으로 보스가 플레이어를 바라보는 상태를 계산
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            Quaternion lookAtRotation = Quaternion.LookRotation(directionToPlayer, Vector3.up);
+
+            // 🔹 "보스가 현재 바라보는 방향"을 기준으로 보정된 회전 적용
+            Quaternion targetRotation = Quaternion.Euler(0, lookAtRotation.eulerAngles.y + angleOffset, 0);
             Quaternion startRotation = transform.rotation;
+
             float rotationDuration = 0.5f; // 회전 속도 조절 가능
             float elapsedTime = 0f;
 
@@ -253,11 +326,23 @@ namespace JungBin
         }
 
 
-        // 장애물이 있는지 확인하는 함수
+
+        // ✅ 이동 경로에 장애물이 있는 경우 true 반환
         private bool IsObstacle(Vector3 target)
         {
-            return Physics.Raycast(transform.position, (target - transform.position).normalized, stopDistance, obstacleLayer);
+            Vector3 directionToTarget = (target - transform.position).normalized; // 이동 방향
+            float distanceToTarget = Vector3.Distance(transform.position, target); // 거리 계산
+
+            // 이동 경로에 장애물이 있는지 체크
+            if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hit, distanceToTarget, obstacleLayer))
+            {
+                Debug.Log($"이동 경로에 장애물 감지! 장애물: {hit.collider.name}");
+                return true; // 장애물이 있음
+            }
+
+            return false; // 이동 가능
         }
+
 
         // 양쪽이 막혀 있을 때 대체 패턴 실행
         private void TriggerAlternatePattern()
