@@ -188,6 +188,13 @@ namespace Noah
 
         void SetSkill(int _index)
         {
+
+            if (setSkill.skillSlots.Count < (_index + 1))
+            {
+                isReadySkill = false;
+                return;
+            }
+
             if (setSkill.skillSlots[_index].isSkillOn)
             {
                 isReadySkill = true;
