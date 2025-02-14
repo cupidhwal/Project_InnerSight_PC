@@ -14,12 +14,11 @@ namespace Seti
         protected float elapsedCriteria = 10f;  // 상태 전이 시간 경과 기준
         protected float steeringInterval;       // 상태 조작 주기
 
-        // Patrol, Chase
-        protected Vector2 moveInput;
-
         protected Move move;
         protected Look look;
         protected Attack attack;
+
+        protected Vector2 moveInput;
         #endregion
 
         // 추상
@@ -50,7 +49,9 @@ namespace Seti
         public override void OnEnter()
         {
             elapsedDuration = UnityEngine.Random.Range(elapsedCriteria * 0.7f, elapsedCriteria * 1.3f);
-            enemy.Agent.ResetPath();
+
+            if (enemy && enemy.Agent)
+                enemy.Agent.ResetPath();
         }
 
         // 상태 전환 시 State Exit에 1회 실행

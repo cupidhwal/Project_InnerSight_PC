@@ -17,7 +17,6 @@ namespace Seti
         #region Variables
         // 전략 관리
         private Actor actor;
-        private Player player;
         private Condition_Player condition_Player;
         [SerializeReference]
         private List<Strategy> strategies;
@@ -37,7 +36,6 @@ namespace Seti
             this.actor = actor;
             if (actor is Player)
             {
-                player = actor as Player;
                 condition_Player = actor.Condition as Condition_Player;
             }
             foreach (var mapping in strategies)
@@ -113,6 +111,14 @@ namespace Seti
                     break;
 
                 case Enemy_State_Chase:
+                    ChangeStrategy(typeof(Move_Nav));
+                    break;
+
+                case Enemy_State_Encounter:
+                    ChangeStrategy(typeof(Move_Run));
+                    break;
+
+                case Enemy_State_Positioning:
                     ChangeStrategy(typeof(Move_Nav));
                     break;
 

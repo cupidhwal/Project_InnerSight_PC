@@ -15,7 +15,6 @@ namespace Seti
             base.OnEnter();
 
             elapsedDuration = 100;
-            enemy.SwitchState(Enemy.State.Dead);
         }
 
         // 상태 전환 시 State Exit에 1회 실행

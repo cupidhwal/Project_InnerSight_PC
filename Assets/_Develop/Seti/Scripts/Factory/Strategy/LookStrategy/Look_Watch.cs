@@ -14,10 +14,15 @@ namespace Seti
             //if (!actor.Condition.IsAttack) return;
 
             if (actor is Enemy enemy && enemy.Player)
-                if (!enemy.Condition.IsAttack)
+            {
+                Condition_Enemy enemyCondition = enemy.Condition as Condition_Enemy;
+                if (!enemyCondition.IsChase &&
+                    !enemyCondition.IsAttack &&
+                    !enemyCondition.IsPositioning)
                 {
                     enemy.transform.LookAt(enemy.Player.transform.position);
                 }
+            }
 
             if (actor is Player player)
             {

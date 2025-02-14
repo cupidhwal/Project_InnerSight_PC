@@ -5,6 +5,8 @@ namespace Seti
 {
     public class Enemy_State_Attack_Magic : Enemy_State
     {
+        bool isPlayer = false;
+
         // 오버라이드
         #region Override
         // 초기화 메서드 - 생성 후 1회 실행
@@ -20,8 +22,10 @@ namespace Seti
         {
             base.OnEnter();
 
+            // 마법 공격 경로에 플레이어가 있는지 확인
+            if (!CheckPlayer()) return;
+
             attack?.FSM_MagicInput(true);
-            enemy.SwitchState(Enemy.State.Attack);
         }
 
         // 상태 전환 시 State Exit에 1회 실행
@@ -45,7 +49,10 @@ namespace Seti
             if (enemy.Detected && enemy.Condition.CanMove)
                 return typeof(Enemy_State_Chase);
 
-            if ((!enemy.Condition.IsMagic && !enemy.CanMagic) || enemy.Player.Condition.IsDead)
+            if (!isPlayer)
+                return typeof(Enemy_State_Positioning);
+
+            if (!enemy.Condition.IsMagic && !enemy.CanMagic)
                 return typeof(Enemy_State_Idle);
 
             return null;
@@ -62,7 +69,11 @@ namespace Seti
 
             // Attack 행동 AI Input
             if (Input_Attack(deltaTime))
+            {
+                if (!CheckPlayer()) return;
+
                 attack?.FSM_MagicInput(true);
+            }
             else attack?.FSM_MagicInput(false);
         }
         #endregion
@@ -82,6 +93,18 @@ namespace Seti
                 return true;
             }
             return false;
+        }
+        private bool CheckPlayer()
+        {
+
+
+            // 마법 공격 경로에 플레이어가 있는지 확인
+            return isPlayer = Physics.SphereCast(enemy.transform.position,
+                                                 0.5f,
+                                                 enemy.transform.forward,
+                                                 out var hit,
+                                                 enemy.MagicRange) &&
+                                                 hit.transform.GetComponent<Player>();
         }
         #endregion
     }

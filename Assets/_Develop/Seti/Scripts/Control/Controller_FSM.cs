@@ -5,14 +5,31 @@ namespace Seti
 {
     public class Controller_FSM : Controller_Base, IController
     {
+        public enum EnemyState
+        {
+            Idle,
+            Chase,
+            Patrol,
+            Stagger,
+            BackOff,
+            Encounter,
+            Positioning,
+            Attack_Magic,
+            Attack_Normal,
+            Dead
+        }
+        
         // 필드
         #region Variables
         private StateMachine<Controller_FSM> stateMachine;  // FSM 인스턴스
+        [SerializeField]
+        private EnemyState currentState;
         #endregion
 
         // 속성
         #region Properties
         public StateMachine<Controller_FSM> StateMachine => stateMachine;
+        public EnemyState CurrentState => currentState;
         #endregion
 
         // 인터페이스
@@ -31,6 +48,7 @@ namespace Seti
                 this,
                 new Enemy_State_Idle()
             );
+            stateMachine.OnStateChanged += SwitchState;
 
             // 상태 추가
             AddStates();
@@ -50,6 +68,52 @@ namespace Seti
 
         // 메서드
         #region Methods
+        public void SwitchState(State<Controller_FSM> state)
+        {
+            // FSM 상태에 따라 동작 제어
+            switch (state)
+            {
+                case Enemy_State_Idle:
+                    currentState = EnemyState.Idle;
+                    break;
+
+                case Enemy_State_Chase:
+                    currentState = EnemyState.Chase;
+                    break;
+
+                case Enemy_State_Patrol:
+                    currentState = EnemyState.Patrol;
+                    break;
+
+                case Enemy_State_Stagger:
+                    currentState = EnemyState.Stagger;
+                    break;
+
+                case Enemy_State_BackOff:
+                    currentState = EnemyState.BackOff;
+                    break;
+
+                case Enemy_State_Encounter:
+                    currentState = EnemyState.Encounter;
+                    break;
+
+                case Enemy_State_Positioning:
+                    currentState = EnemyState.Positioning;
+                    break;
+
+                case Enemy_State_Attack_Magic:
+                    currentState = EnemyState.Attack_Magic;
+                    break;
+
+                case Enemy_State_Attack_Normal:
+                    currentState = EnemyState.Attack_Normal;
+                    break;
+
+                case Enemy_State_Dead:
+                    currentState = EnemyState.Dead;
+                    break;
+            }
+        }
         private void AddStates()
         {
             // 누구나 죽는다
@@ -63,10 +127,13 @@ namespace Seti
                         stateMachine.AddState(new Enemy_State_Patrol());
 
                     if (move.HasStrategy<Move_Run>())
-                        stateMachine.AddState(new Enemy_State_Chase());
+                        stateMachine.AddState(new Enemy_State_Encounter());
 
                     if (move.HasStrategy<Move_Nav>())
+                    {
+                        stateMachine.AddState(new Enemy_State_Chase());
                         stateMachine.AddState(new Enemy_State_BackOff());
+                    }
                 }
             }
 
@@ -78,7 +145,10 @@ namespace Seti
                         stateMachine.AddState(new Enemy_State_Attack_Normal());
 
                     if (attack.HasStrategy<Attack_Magic>())
+                    {
                         stateMachine.AddState(new Enemy_State_Attack_Magic());
+                        stateMachine.AddState(new Enemy_State_Positioning());
+                    }
                 }
             }
 

@@ -92,15 +92,6 @@ namespace Seti
 
         // 메서드
         #region Methods
-        // 명시적 정지
-        protected void StopRigidBody()
-        {
-            if (rb == null) return;
-
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
-
         // 경직
         private void StaggerOn()
         {
@@ -118,6 +109,15 @@ namespace Seti
         {
             IsDead = true;
             inAction = false;
+        }
+
+        // 명시적 정지
+        protected void StopRigidBody()
+        {
+            if (rb == null) return;
+
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
         #endregion
 

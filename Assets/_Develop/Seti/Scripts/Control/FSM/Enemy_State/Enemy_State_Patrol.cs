@@ -15,7 +15,6 @@ namespace Seti
         {
             base.OnEnter();
             context.Actor.Condition.IsMove = true;
-            enemy.SwitchState(Enemy.State.Patrol);
         }
 
         // 상태 전환 시 State Exit에 1회 실행

@@ -3382,14 +3382,14 @@ GameObject:
   - component: {fileID: 138099586168310381}
   - component: {fileID: 3771348642112189285}
   - component: {fileID: 2091744511929326818}
+  - component: {fileID: 3000161630384749042}
+  - component: {fileID: 7163008205139051634}
   - component: {fileID: 1338054427713574085}
   - component: {fileID: 132088449897813482}
   - component: {fileID: 5787943078838920931}
-  - component: {fileID: 5876252634406523773}
-  - component: {fileID: 6725351614019376741}
   - component: {fileID: 97535866348285823}
-  - component: {fileID: 7163008205139051634}
-  - component: {fileID: 3000161630384749042}
+  - component: {fileID: 6725351614019376741}
+  - component: {fileID: 5876252634406523773}
   m_Layer: 6
   m_Name: Enemy_Demon_Fixed
   m_TagString: Enemy
@@ -3478,9 +3478,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 6
-  m_Acceleration: 7
+  m_Acceleration: 100
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 1000
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -3489,6 +3489,34 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 0
+--- !u!114 &3000161630384749042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8002989642365521967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3890b17220493bb45a2a0fb297dea72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
+--- !u!114 &7163008205139051634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8002989642365521967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aea16b6fa0aba0348865fcab078ab2c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeaponType: 4
+  currentWeapon: {fileID: 1085939780071652645}
+  inAction: 0
 --- !u!114 &1338054427713574085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3522,12 +3550,11 @@ MonoBehaviour:
   mag_WalkToRun: 2
   attackProgressive: 1
   player: {fileID: 0}
-  currentState: 0
   distancePlayer: 0
   distancePlace: 0
-  range_Detect: 8
+  range_Detect: 6
   range_Attack: 1
-  range_Magic: 12
+  range_Magic: 11
   range_BackOff: 20
   searchDuration: 5
   patrolInterval: 3
@@ -3648,35 +3675,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KnockbackCoefficient: 3.5
---- !u!114 &5876252634406523773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8002989642365521967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab2702aee3864dd4b9519efc778a897f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gold: {fileID: 1786689574925295396, guid: d340eb98474665e4aad743dd8a183cad, type: 3}
-  chargeGold: 40
---- !u!114 &6725351614019376741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8002989642365521967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 594554100cce3084eb2305801ed46266, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBarPivot: {fileID: 7771112771696073327}
-  EnemyHealthBarSlider: {fileID: 4336234803829383549}
-  hideFullHealthBar: 1
 --- !u!114 &97535866348285823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3692,7 +3690,7 @@ MonoBehaviour:
   damageTextPrefab: {fileID: 9211949316755326926, guid: 9d0558470b8bbae48914eeb5ca8096ba, type: 3}
   fightWorldCanvas: {fileID: 1881581383049504770}
   player: {fileID: 8759698427550002359, guid: aaae8b6631773b14aae9734ef5211cd8, type: 3}
---- !u!114 &7163008205139051634
+--- !u!114 &6725351614019376741
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3701,13 +3699,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8002989642365521967}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aea16b6fa0aba0348865fcab078ab2c9, type: 3}
+  m_Script: {fileID: 11500000, guid: 594554100cce3084eb2305801ed46266, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeaponType: 4
-  currentWeapon: {fileID: 1085939780071652645}
-  inAction: 0
---- !u!114 &3000161630384749042
+  healthBarPivot: {fileID: 7771112771696073327}
+  EnemyHealthBarSlider: {fileID: 4336234803829383549}
+  hideFullHealthBar: 1
+--- !u!114 &5876252634406523773
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3716,9 +3714,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8002989642365521967}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3890b17220493bb45a2a0fb297dea72f, type: 3}
+  m_Script: {fileID: 11500000, guid: ab2702aee3864dd4b9519efc778a897f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gold: {fileID: 1786689574925295396, guid: d340eb98474665e4aad743dd8a183cad, type: 3}
+  chargeGold: 40
 --- !u!1 &8040747797010405790
 GameObject:
   m_ObjectHideFlags: 0

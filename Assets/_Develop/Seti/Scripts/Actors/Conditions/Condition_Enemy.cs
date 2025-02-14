@@ -1,7 +1,12 @@
+using UnityEngine;
+
 namespace Seti
 {
     public class Condition_Enemy : Condition_Actor
     {
+        // 속성
+        public bool IsPositioning { get; set; } = false;
+
         // 라이프 사이클
         #region Life Cycle
         protected override void Start()

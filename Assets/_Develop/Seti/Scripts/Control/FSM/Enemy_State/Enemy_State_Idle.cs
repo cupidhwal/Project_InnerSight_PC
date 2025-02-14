@@ -20,7 +20,6 @@ namespace Seti
             base.OnEnter();
 
             context.Actor.Condition.IsMove = false;
-            enemy.SwitchState(Enemy.State.Idle);
         }
 
         // 상태 전환 시 State Exit에 1회 실행

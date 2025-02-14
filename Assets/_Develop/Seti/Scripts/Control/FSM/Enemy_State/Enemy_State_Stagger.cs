@@ -20,7 +20,6 @@ namespace Seti
 
             elapsedDuration = context.Actor.Stagger;
             context.Actor.Condition.IsStagger = true;
-            enemy.SwitchState(Enemy.State.Stagger);
         }
 
         // 상태 전환 시 State Exit에 1회 실행

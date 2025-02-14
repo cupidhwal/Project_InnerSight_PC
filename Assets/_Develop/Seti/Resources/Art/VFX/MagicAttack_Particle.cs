@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Xml;
 using UnityEngine;
 
 namespace Seti
@@ -8,6 +10,7 @@ namespace Seti
     public class MagicAttack_Particle : MonoBehaviour
     {
         // 필드
+        private Enemy attacker;
         private ParticleSystem magic;
         public Damagable.DamageMessage DamageData { get; private set; }
 
@@ -16,7 +19,15 @@ namespace Seti
         {
             magic = GetComponent<ParticleSystem>();
 
-            Enemy attacker = GetComponentInParent<Actor>() as Enemy;
+            StartCoroutine(Timer_Col(0.6f));
+
+            if (!magic.isPlaying)
+                magic.Play();
+        }
+
+        public void SetAttacker(Enemy enemy)
+        {
+            attacker = enemy;
             Vector3 hitDirection = attacker.Player.transform.position - attacker.transform.position;
 
             // 데미지 데이터 가공
@@ -30,9 +41,15 @@ namespace Seti
                 throwing = true,
                 stopCamera = false
             };
+        }
 
-            if (!magic.isPlaying)
-                magic.Play();
+        IEnumerator Timer_Col(float t)
+        {
+            var col = magic.collision;
+            col.collidesWith |= (1 << LayerMask.GetMask("Actor"));
+
+            yield return new WaitForSeconds(t);
+            col.collidesWith &= ~(1 << LayerMask.GetMask("Actor"));
         }
     }
 }

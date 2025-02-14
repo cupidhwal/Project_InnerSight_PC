@@ -75,8 +75,9 @@ namespace Seti
             }
 
             // 대시 중 충돌 무시
-            Collider collider = player.GetComponent<Collider>();
-            collider.excludeLayers = LayerMask.GetMask("Actor");
+            player.CoroutineExecutor(GameUtility.Timer_Collision(player.transform,
+                                                                 LayerMask.NameToLayer("Actor"),
+                                                                 player.Dash_Duration));
 
             // 대시 시작
             condition.IsDash = true;
@@ -96,9 +97,6 @@ namespace Seti
             // 대시 사용 가능
             yield return new WaitForSeconds(player.Dash_Cooldown - player.Dash_Duration);
             condition.CanDash = true;
-
-            // 충돌 확인 재개
-            collider.excludeLayers = LayerMask.GetMask("Nothing");
 
             yield break;
         }

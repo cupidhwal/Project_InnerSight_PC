@@ -194,7 +194,7 @@ namespace Seti
         public void TakeDamage(DamageMessage data)
         {
             // 이미 죽으면 더 이상 데미지를 입지 않는다
-            if (currentHitPoints <= 0)
+            if (currentHitPoints <= 0 || actor.Condition.IsDead)
                 return;
 
             // 무적 상태일 경우

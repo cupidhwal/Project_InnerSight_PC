@@ -21,7 +21,6 @@ namespace Seti
             base.OnEnter();
 
             attack?.FSM_AttackInput(true);
-            enemy.SwitchState(Enemy.State.Attack);
         }
 
         // 상태 전환 시 State Exit에 1회 실행
@@ -45,7 +44,7 @@ namespace Seti
             if (enemy.Detected && !enemy.CanAttack && context.StateMachine.ElapsedTime > enemy.AttackInterval)
                 return typeof(Enemy_State_Chase);
 
-            if (!enemy.Detected || enemy.Player.Condition.IsDead)
+            if (!enemy.Detected)
                 return typeof(Enemy_State_Idle);
 
             return null;

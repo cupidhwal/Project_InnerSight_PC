@@ -9,23 +9,12 @@ namespace Seti
 {
     [RequireComponent(typeof(Condition_Enemy))]
     [RequireComponent(typeof(Damagable))]
-    [RequireComponent(typeof(WorldSpaceHealthBar))]
     [RequireComponent(typeof(DamageText))]
+    [RequireComponent(typeof(WorldSpaceHealthBar))]
     [RequireComponent(typeof(DropItem))]
 
     public class Enemy : Actor
     {
-        public enum State
-        {
-            Idle,
-            Chase,
-            Patrol,
-            Attack,
-            Stagger,
-            BackHome,
-            Dead
-        }
-
         // 필드
         #region Variables
         // 기본
@@ -37,11 +26,9 @@ namespace Seti
 
         protected Vector3 previousTargetPos;
         protected Vector3 currentTargetPos;
-        protected UnityAction OnTargetMove;
+        public UnityAction OnTargetMove;
 
         [Header("Calculator : AI Behaviour")]
-        [SerializeField]
-        protected State currentState;
         [SerializeField]
         protected float distancePlayer;     // Player와의 거리
         [SerializeField]
@@ -79,10 +66,7 @@ namespace Seti
         // 로직 기준
         public Player Player => player;
         public NavMeshAgent Agent => agent;
-        public State CurrentState => currentState;
         public Vector3 HomePosition { get; private set; }
-        //public Vector3 AttackDirection { get; private set; }
-        //public bool SamePosition { get; private set; }
 
         // 상태 조건
         public bool IsThere
@@ -92,6 +76,7 @@ namespace Seti
                 return player;
             }
         }
+        public bool LockOn => player && (distancePlayer <= range_Attack * 2f);
         public bool Detected => player && (distancePlayer <= range_Detect);
         public bool CanMagic => player && magicObject && (distancePlayer <= range_Magic);
         public bool CanAttack => player && (distancePlayer <= range_Attack);
@@ -102,6 +87,7 @@ namespace Seti
         public float AttackInterval => attackInterval;
         public float MagicInterval => magicInterval;
         public float MagicDamage => magicDamage;
+        public float MagicRange => range_Magic;
         #endregion
 
         // 오버라이드
@@ -129,13 +115,10 @@ namespace Seti
             
             if (!player) return;
 
-            distancePlayer = Vector3.Distance(player.transform.position, transform.position);
+            distancePlayer = player.Condition.IsDead ? 100f : Vector3.Distance(player.transform.position, transform.position);
 
-            currentTargetPos = player.transform.position;
-            /*if ()
-            {
-
-            }*/
+            // 표적 이동 여부 체크
+            WatchTarget();
         }
 
         protected virtual void Awake()
@@ -151,9 +134,18 @@ namespace Seti
 
         // 메서드
         #region Methods
-        public void SwitchState(State state) => currentState = state;
-
         private void SearchAndChase() => CoroutineExecutor(SearchAndChaseCor());
+
+        private void WatchTarget()
+        {
+            currentTargetPos = player.transform.position;
+            if (Vector3.Distance(currentTargetPos, previousTargetPos) > 1f)
+            {
+                previousTargetPos = currentTargetPos;
+                OnTargetMove?.Invoke();
+            }
+        }
+
         private IEnumerator SearchAndChaseCor()
         {
             // 탐지 거리를 기억하고 확 늘린다
@@ -186,13 +178,10 @@ namespace Seti
                 Quaternion rot = Quaternion.LookRotation(dir) * Quaternion.Euler(0f, -2f, 0f);
 
                 // 마법 시전
-                GameObject go = Instantiate(magicObject, hand.transform.position, rot, transform);
+                GameObject go = Instantiate(magicObject, hand.transform.position, rot);
+                go.GetComponent<MagicAttack_Particle>().SetAttacker(this);
                 Destroy(go, 1f);
             }
-        }
-        public void MagicFailed()
-        {
-
         }
         #endregion
     }

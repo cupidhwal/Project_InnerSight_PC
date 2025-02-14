@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Seti
@@ -5,6 +6,16 @@ namespace Seti
     // 게임 유틸리티
     public static class GameUtility
     {
+        // 충돌 타이머
+        public static IEnumerator Timer_Collision(Transform transform, LayerMask layer, float t)
+        {
+            Collider collider = transform.GetComponent<Collider>();
+            collider.excludeLayers |= (1 << layer);
+
+            yield return new WaitForSeconds(t);
+            collider.excludeLayers &= ~(1 << layer);
+        }
+
         // 중력 유틸리티
         public static void Gravity(Transform target, float gravityStrength = 9.81f)
         {

@@ -19,7 +19,6 @@ namespace Seti
             enemy.Agent.SetDestination(enemy.HomePosition);
 
             context.Actor.Condition.IsMove = true;
-            enemy.SwitchState(Enemy.State.BackHome);
 
             if (damagable)
             {
@@ -34,7 +33,6 @@ namespace Seti
             base.OnExit();
 
             enemy.Agent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
-            enemy.Agent.ResetPath();
 
             if (damagable)
             {

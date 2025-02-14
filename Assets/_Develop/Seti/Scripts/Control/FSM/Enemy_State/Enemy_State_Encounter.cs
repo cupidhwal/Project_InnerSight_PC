@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Seti
 {
-    public class Enemy_State_Chase : Enemy_State
+    public class Enemy_State_Encounter : Enemy_State
     {
         // 오버라이드
         #region Override
@@ -15,10 +15,6 @@ namespace Seti
         {
             base.OnEnter();
 
-            enemy.Agent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.HighQualityObstacleAvoidance;
-            enemy.OnTargetMove += PathFindToChase;
-            PathFindToChase();
-
             context.Actor.Condition.IsMove = true;
             context.Actor.Condition.IsChase = true;
         }
@@ -29,7 +25,6 @@ namespace Seti
             base.OnExit();
 
             enemy.Condition.IsChase = false;
-            enemy.OnTargetMove -= PathFindToChase;
         }
 
         // 상태 전환 조건 메서드
@@ -44,8 +39,11 @@ namespace Seti
             if (enemy.TooFarFromHome || (!enemy.Detected && enemy.GoBackHome))
                 return typeof(Enemy_State_BackOff);
 
-            if (enemy.LockOn)
-                return typeof(Enemy_State_Encounter);
+            if (enemy.CanAttack)
+                return typeof(Enemy_State_Attack_Normal);
+
+            if (enemy.Detected && !enemy.LockOn)
+                return typeof(Enemy_State_Chase);
 
             if (!enemy.Detected)
                 return typeof(Enemy_State_Idle);
@@ -57,8 +55,8 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             // Move 행동 AI Input
-            //Input_Chase();
-            //move?.FSM_MoveInput(moveInput, true);
+            Input_Chase();
+            move?.FSM_MoveInput(moveInput, true);
         }
         #endregion
 
@@ -72,7 +70,6 @@ namespace Seti
             Vector2 playerPos = Camera.main.WorldToScreenPoint(enemy.Player.transform.position);
             moveInput = playerPos - enemyPos;
         }
-        private void PathFindToChase() => enemy.Agent.SetDestination(enemy.Player.transform.position);
         #endregion
     }
 }
