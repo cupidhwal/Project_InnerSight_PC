@@ -7,6 +7,8 @@ namespace Noah
     {
         public GameObject skillSelectUI;
         public GameObject playerStateUI;
+        public GameObject skillReinforce;
+
         public TMP_Text goldText;
 
         InGameUI_PlayerStats inGameUI_PlayerState;

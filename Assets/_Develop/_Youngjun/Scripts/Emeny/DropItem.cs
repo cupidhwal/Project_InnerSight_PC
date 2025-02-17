@@ -10,8 +10,7 @@ namespace Noah
 
         Damagable e_Damagable;
 
-        [SerializeField]
-        private float dropDelay = 1f;
+        private float dropDelay = 1.5f;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()

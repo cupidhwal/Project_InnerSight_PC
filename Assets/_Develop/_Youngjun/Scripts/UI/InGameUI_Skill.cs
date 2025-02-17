@@ -25,7 +25,7 @@ namespace Noah
         public List<SkillBase> skills = new List<SkillBase>();
         private List<SkillBase> randomSkills = new List<SkillBase>(); // 랜덤으로 선택된 스킬 목록
         public List<Image> skillUIList = new List<Image>(); // UI 슬롯 리스트
-        public List<SkillBase> skillSlots = new List<SkillBase>();
+        public List<SkillBase> skillSlots = new List<SkillBase>(); // 현재 가지고 있는 스킬
 
         //public SkillBase firstSkill;
         //public SkillBase secondSkill;
@@ -209,7 +209,7 @@ namespace Noah
             }
         }
 
-        void UpgradeCheck(SkillBase _skill, int _index)
+        public void UpgradeCheck(SkillBase _skill, int _index)
         {
             _skill.skillUpgardeCount++;
 
