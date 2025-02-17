@@ -108,6 +108,13 @@ namespace Noah
             StartCoroutine(GoNextStage());
         }
 
+        public void GoHiddenStage()
+        { 
+            
+        }
+
+
+
         // Test
         public void NewStage()
         {
@@ -209,11 +216,53 @@ namespace Noah
 
             yield return new WaitForSeconds(0.5f);
 
-
-
             Destroy(currentStage);
 
             Instantiate(stageObject[curStage], currentStagePar);
+
+            yield return new WaitForSeconds(0.5f);
+
+            GetCurrentStage();
+
+            yield return new WaitForSeconds(0.5f);
+
+
+            player.GetComponent<Condition_Player>().PlayerSetActive(true);
+            player.GetComponent<PlayerUseSkill>().enabled = true;
+
+
+            if (currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>() != null)
+            {
+                currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = true;
+            }
+
+            player.GetComponent<NavMeshAgent>().enabled = false;
+
+            player.transform.position = spawnPoint.position;
+
+            player.GetComponent<Rigidbody>().useGravity = true;
+
+            yield return new WaitForSeconds(0.5f);
+
+            player.GetComponent<NavMeshAgent>().enabled = true;
+
+            SceneFade.instance.FadeIn(null);
+
+        }
+
+        IEnumerator GoHiddenStage(GameObject _hiddenStage)
+        {
+            SceneFade.instance.FadeOut(null);
+
+            yield return new WaitForSeconds(1f);
+
+            player.GetComponent<Rigidbody>().useGravity = false;
+
+            yield return new WaitForSeconds(0.5f);
+
+            Destroy(currentStage);
+
+            Instantiate(_hiddenStage, currentStagePar);
 
             yield return new WaitForSeconds(0.5f);
 
