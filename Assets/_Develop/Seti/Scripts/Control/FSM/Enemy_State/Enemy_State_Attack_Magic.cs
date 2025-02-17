@@ -101,7 +101,7 @@ namespace Seti
             // 마법 공격 경로에 플레이어가 있는지 확인
             return isPlayer = Physics.SphereCast(enemy.transform.position,
                                                  0.5f,
-                                                 enemy.transform.forward,
+                                                 enemy.Player.transform.position - enemy.transform.position,
                                                  out var hit,
                                                  enemy.MagicRange) &&
                                                  hit.transform.GetComponent<Player>();

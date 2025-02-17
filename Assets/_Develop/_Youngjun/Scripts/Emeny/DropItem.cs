@@ -10,6 +10,9 @@ namespace Noah
 
         Damagable e_Damagable;
 
+        [SerializeField]
+        private float dropDelay = 1f;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -19,7 +22,7 @@ namespace Noah
 
         void EnemyDropItem()
         {
-            Invoke("SpwanItem", 2f);
+            Invoke("SpwanItem", dropDelay);
         }
 
         void SpwanItem()
@@ -29,6 +32,8 @@ namespace Noah
             gold.GetComponent<Item_Gold>().chargeGold = chargeGold;
 
             Instantiate(gold, pos, gold.transform.rotation, transform.parent);
+
+            Debug.Log($"chargeGold: {chargeGold}");
         }
     }
 }

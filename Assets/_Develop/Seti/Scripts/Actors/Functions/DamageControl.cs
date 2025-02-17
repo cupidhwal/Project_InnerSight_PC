@@ -105,10 +105,11 @@ namespace Seti
             }
 
             // 더 이상 플레이어와 충돌하지 않도록 처리
-            if (actor is Enemy)
+            if (actor is Enemy enemy)
             {
                 Collider collider = GetComponent<Collider>();
                 collider.excludeLayers = LayerMask.GetMask("Actor");
+                enemy.Agent.enabled = false;
             }
 
             // 플레이어 사망 시 재시작

@@ -50,7 +50,7 @@ namespace Seti
         {
             elapsedDuration = UnityEngine.Random.Range(elapsedCriteria * 0.7f, elapsedCriteria * 1.3f);
 
-            if (enemy && enemy.Agent)
+            if (enemy && enemy.Agent && enemy.Agent.enabled)
                 enemy.Agent.ResetPath();
         }
 

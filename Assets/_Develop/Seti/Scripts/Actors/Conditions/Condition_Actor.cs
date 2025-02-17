@@ -64,8 +64,8 @@ namespace Seti
                 damagable.OnDeath += Die;
                 damagable.OnDeath += StopRigidBody;
                 damagable.OnReceiveDamage += StaggerOn;
-                damagable.OnReceiveDamage += StopRigidBody;
                 damagable.OnReleaveDamage += StaggerOff;
+                damagable.OnReceiveDamage += StopRigidBody;
             }
 
             IsGrounded = true;

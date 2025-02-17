@@ -69,13 +69,6 @@ namespace Seti
         public Vector3 HomePosition { get; private set; }
 
         // 상태 조건
-        public bool IsThere
-        {
-            get
-            {
-                return player;
-            }
-        }
         public bool LockOn => player && (distancePlayer <= range_Attack * 2f);
         public bool Detected => player && (distancePlayer <= range_Detect);
         public bool CanMagic => player && magicObject && (distancePlayer <= range_Magic);

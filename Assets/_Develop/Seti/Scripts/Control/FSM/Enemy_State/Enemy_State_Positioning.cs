@@ -81,8 +81,8 @@ namespace Seti
             float tempRad = Vector2.Angle(criteria, dir);
 
             // 포지셔닝은 rad +- 45도로 한다
-            float rad1 = Mathf.Deg2Rad * UnityEngine.Random.Range(tempRad - 45, tempRad - 15);
-            float rad2 = Mathf.Deg2Rad * UnityEngine.Random.Range(tempRad + 15, tempRad + 45);
+            float rad1 = Mathf.Deg2Rad * UnityEngine.Random.Range(tempRad - 30, tempRad - 10);
+            float rad2 = Mathf.Deg2Rad * UnityEngine.Random.Range(tempRad + 10, tempRad + 30);
             int rand = UnityEngine.Random.Range(0, 2);
             float rad = rand == 0 ? rad1 : rad2;
 
@@ -99,10 +99,8 @@ namespace Seti
             if (enemy.Agent.remainingDistance < 0.5f)
             {
                 condition.IsPositioning = false;
-                enemy.Agent.ResetPath();
-
-                enemy.transform.LookAt(enemy.Player.transform.position);
                 positioningCompleted = true;
+                enemy.Agent.ResetPath();
             }
         }
         #endregion
