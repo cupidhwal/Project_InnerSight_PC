@@ -685,10 +685,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -6.9650507
       objectReference: {fileID: 0}
+    - target: {fileID: 4911050516361877851, guid: 12890bf4bed4d7e4489974a2741e05b5, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
     - target: {fileID: 6717000004160855831, guid: 12890bf4bed4d7e4489974a2741e05b5, type: 3}
       propertyPath: m_LocalPosition.y
       value: -74.991
       objectReference: {fileID: 0}
+    - target: {fileID: 7439845300215137606, guid: 12890bf4bed4d7e4489974a2741e05b5, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
     - target: {fileID: 9189658293470602582, guid: 12890bf4bed4d7e4489974a2741e05b5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.7684994
@@ -3282,7 +3290,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
   m_sharedMaterial: {fileID: 1014477772045602528, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 1014477772045602528, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -3788,7 +3797,7 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
   m_sharedMaterial: {fileID: -6938255408728328280, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
   m_fontSharedMaterials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -6938255408728328280, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -4756,7 +4765,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f5b0a2f2ac5ff42a3ef67abfa50196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 0}
   stageObject:
   - {fileID: 235810088119104537, guid: 77b28abd42066e34385a8e25d6ce87b9, type: 3}
   - {fileID: 6521766886328336193, guid: 5587fb812935ad144a628c11594e04e5, type: 3}
@@ -4903,7 +4911,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
   m_sharedMaterial: {fileID: 1014477772045602528, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 1014477772045602528, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -5161,6 +5170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe35b0f456bb1d941a98345b88bc30ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reset: {fileID: 0}
   changeNewSkill_Image: {fileID: 863427150}
   changeNewSkill_Text: {fileID: 554218940}
   selectUI: {fileID: 1901173768}
@@ -5231,36 +5241,36 @@ MonoBehaviour:
     isSkillOn: 1
     skillName: "\uBE5B\uAD11\uC120"
     skillDescription: "\uBE5B\uAD11\uC120"
-  laserFire1:
-    rangeType: 1
-    skillPrefab: {fileID: 6977097203509908651, guid: 36c80152066dfd24eb7e9a280aa12a9c, type: 3}
-    cooldown: 3
-    damage: 10
-    upgradeDamage: 10
-    skillUpgardeCount: 1
-    attackRadius: 0
-    skillAtkTime: 1.5
-    skillPos: {x: 0, y: 0, z: 0}
-    skillImage: {fileID: -1180104304, guid: bd80619497c702449abab3b412a82fd2, type: 3}
-    UISprite: {fileID: -1180104304, guid: bd80619497c702449abab3b412a82fd2, type: 3}
-    isSkillOn: 1
-    skillName: "\uC218\uB958\uD0C4"
-    skillDescription: "\uC218\uB958\uD0C4"
-  laserFire2:
+  bomb:
     rangeType: 0
-    skillPrefab: {fileID: 7284282783969889160, guid: 029a9d35c35f9224daf4bcc97d219350, type: 3}
-    cooldown: 3
-    damage: 10
-    upgradeDamage: 10
+    skillPrefab: {fileID: 0}
+    cooldown: 0
+    damage: 0
+    upgradeDamage: 0
     skillUpgardeCount: 1
     attackRadius: 0
     skillAtkTime: 1.5
     skillPos: {x: 0, y: 0, z: 0}
-    skillImage: {fileID: -762610857, guid: bd80619497c702449abab3b412a82fd2, type: 3}
-    UISprite: {fileID: -762610857, guid: bd80619497c702449abab3b412a82fd2, type: 3}
+    skillImage: {fileID: 0}
+    UISprite: {fileID: 0}
     isSkillOn: 1
-    skillName: "\uB0AB"
-    skillDescription: "\uB0AB"
+    skillName: 
+    skillDescription: 
+  bloodSycthe:
+    rangeType: 0
+    skillPrefab: {fileID: 0}
+    cooldown: 0
+    damage: 0
+    upgradeDamage: 0
+    skillUpgardeCount: 1
+    attackRadius: 0
+    skillAtkTime: 1.5
+    skillPos: {x: 0, y: 0, z: 0}
+    skillImage: {fileID: 0}
+    UISprite: {fileID: 0}
+    isSkillOn: 1
+    skillName: 
+    skillDescription: 
 --- !u!114 &858173521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7603,7 +7613,7 @@ SpriteMask:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10758, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8673,7 +8683,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -10398,17 +10409,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ed9bb62c2df8f442a9ff1ef0d2829ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upGradePlayerdata:
-    hp_UpCount: 1
-    atk_UpCount: 1
-    def_UpCount: 1
-    moveSpeed_UpCount: 1
-    atkSpeed_UpCount: 1
-    hp_Up: 10
-    atk_Up: 10
-    def_Up: 1
-    moveSpeed_Up: 1.5
-    atkSpeed_Up: 1
+  upgradeData:
+    hp_Up: 0
+    atk_Up: 0
+    def_Up: 0
+    moveSpeed_Up: 0
+    atkSpeed_Up: 0
   startPlayerData:
     hp_Start: 100
     atk_Start: 10
@@ -11354,7 +11360,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
   m_sharedMaterial: {fileID: -6938255408728328280, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -6938255408728328280, guid: b73e4353d5c8b7b4fa37f6214863d01e, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -11701,7 +11708,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -12485,7 +12493,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
   m_sharedMaterial: {fileID: 1014477772045602528, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 1014477772045602528, guid: 6fcb2638a06dccc438f45a2afe19ecea, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -13850,6 +13859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold_Text: {fileID: 3321556785627060967}
   states: []
+  maxData_Speed: 13
 --- !u!114 &257641160522279894
 MonoBehaviour:
   m_ObjectHideFlags: 0
