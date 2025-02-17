@@ -24,9 +24,13 @@ namespace Seti
         protected IEnumerator chaseCor;     // 피격 시 실행할 코루틴
         protected NavMeshAgent agent;
 
+        // 플레이어 추적 (Destination 갱신 주기)
         protected Vector3 previousTargetPos;
         protected Vector3 currentTargetPos;
         public UnityAction OnTargetMove;
+
+        // 장애물 탐지
+        protected Collider[] obsColliders = new Collider[10];
 
         [Header("Calculator : AI Behaviour")]
         [SerializeField]
@@ -35,6 +39,7 @@ namespace Seti
         protected float distancePlace;      // 원래 자리와의 거리
 
         [Header("Criteria : AI Behaviour")]
+        protected float range_Obstacle = 2f;    // Fixed
         [SerializeField]
         protected float range_Detect = 7.5f;
         [SerializeField]
@@ -69,6 +74,37 @@ namespace Seti
         public Vector3 HomePosition { get; private set; }
 
         // 상태 조건
+        public bool IsObstacle
+        {
+            get
+            {
+                // Modifier 검사
+                Environment environment = StageManager.Instance.transform.GetComponentInChildren<Environment>();
+                float minMod = environment.Modifiers.Count == 0 ? 0 : float.MaxValue;
+                foreach (var obs in environment.Modifiers)
+                {
+                    float tempDis = Vector3.Distance(transform.position, obs.transform.position);
+                    if (minMod > tempDis)
+                        minMod = tempDis;
+                }
+
+                // Collider 검사
+                int count = Physics.OverlapSphereNonAlloc(transform.position, range_Obstacle, obsColliders);
+                int validCount = 0; // 유효한 충돌체 개수
+
+                for (int i = 0; i < count; i++)
+                {
+                    if (obsColliders[i].GetComponent<Actor>() == null) // Actor가 없는 경우만 카운트
+                    {
+                        obsColliders[validCount] = obsColliders[i]; // 배열 재정렬
+                        validCount++;
+                    }
+                }
+
+                // 반환
+                return minMod < range_Obstacle && validCount > 0;
+            }
+        }
         public bool LockOn => player && (distancePlayer <= range_Attack * 2f);
         public bool Detected => player && (distancePlayer <= range_Detect);
         public bool CanMagic => player && magicObject && (distancePlayer <= range_Magic);
@@ -129,13 +165,26 @@ namespace Seti
         #region Methods
         private void SearchAndChase() => CoroutineExecutor(SearchAndChaseCor());
 
+        float elapsed = 0f;
         private void WatchTarget()
         {
             currentTargetPos = player.transform.position;
-            if (Vector3.Distance(currentTargetPos, previousTargetPos) > 1f)
+            if (Vector3.Distance(currentTargetPos, previousTargetPos) > 0.5f)
             {
                 previousTargetPos = currentTargetPos;
+                elapsed = 0f;
                 OnTargetMove?.Invoke();
+            }
+
+            if (Vector3.Distance(currentTargetPos, previousTargetPos) < 0.01f)
+            {
+                elapsed += Time.deltaTime;
+                if (elapsed > 1f)
+                {
+                    previousTargetPos = Vector3.zero;
+                    elapsed = 0f;
+                    OnTargetMove?.Invoke();
+                }
             }
         }
 

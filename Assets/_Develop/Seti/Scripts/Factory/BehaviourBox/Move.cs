@@ -28,6 +28,9 @@ namespace Seti
         private State<Controller_FSM> currentState;
         #endregion
 
+        // 속성
+        public IMoveStrategy CurrentStrategy => currentStrategy;
+
         // 인터페이스
         #region Interface
         // 초기화
@@ -111,7 +114,7 @@ namespace Seti
                     break;
 
                 case Enemy_State_Chase:
-                    ChangeStrategy(typeof(Move_Nav));
+                    ChangeStrategy(typeof(Move_Run));
                     break;
 
                 case Enemy_State_Encounter:

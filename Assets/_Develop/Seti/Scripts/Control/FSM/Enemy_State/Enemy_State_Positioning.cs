@@ -59,7 +59,7 @@ namespace Seti
         // 상태 실행 중
         public override void Update(float deltaTime)
         {
-            IsPositioning(deltaTime);
+            IsPositioning();
         }
         #endregion
 
@@ -70,17 +70,17 @@ namespace Seti
             // 현재 플레이어의 위치(Vector2)
             Vector2 currentPlayerPos = new(enemy.Player.transform.position.x, enemy.Player.transform.position.z);
 
-            // 기준점 - 현재 플레이어의 위치로부터 rad = 0, dis = MagicRange - 0.5f인 점의 좌표
-            Vector2 criteria = MathUtility.GetCirclePos(currentPlayerPos, enemy.MagicRange - 1f, 0);
+            // 기준 벡터 - 현재 플레이어의 위치로부터 rad = 0, dis = MagicRange - 1f인 점의 좌표
+            Vector2 criteria = currentPlayerPos - MathUtility.GetCirclePos(currentPlayerPos, enemy.MagicRange - 1f, 0);
 
-            // 현재 Enemy로부터 플레이어의 방향
+            // 현재 Player로부터 Enemy의 방향
             Vector3 temp = enemy.transform.position - enemy.Player.transform.position;
             Vector2 dir = new(temp.x, temp.z);
 
             // 기준점과 방향의 사잇각
             float tempRad = Vector2.Angle(criteria, dir);
 
-            // 포지셔닝은 rad +- 45도로 한다
+            // 포지셔닝은 rad +- 10~30도로 한다
             float rad1 = Mathf.Deg2Rad * UnityEngine.Random.Range(tempRad - 30, tempRad - 10);
             float rad2 = Mathf.Deg2Rad * UnityEngine.Random.Range(tempRad + 10, tempRad + 30);
             int rand = UnityEngine.Random.Range(0, 2);
@@ -94,7 +94,7 @@ namespace Seti
             condition.IsPositioning = true;
             enemy.Agent.SetDestination(targetPos);
         }
-        private void IsPositioning(float deltaTime)
+        private void IsPositioning()
         {
             if (enemy.Agent.remainingDistance < 0.5f)
             {

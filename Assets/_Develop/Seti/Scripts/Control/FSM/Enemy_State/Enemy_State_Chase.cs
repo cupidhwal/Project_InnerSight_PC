@@ -57,8 +57,20 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             // Move 행동 AI Input
-            //Input_Chase();
-            //move?.FSM_MoveInput(moveInput, true);
+            if (enemy.IsObstacle)
+            {
+                if (move.CurrentStrategy is Move_Run)
+                    move.ChangeStrategy(typeof(Move_Nav));
+            }
+            else
+            {
+                enemy.Agent.ResetPath();
+                if (move.CurrentStrategy is Move_Nav)
+                    move.ChangeStrategy(typeof(Move_Run));
+            }
+
+            Input_Chase();
+            move?.FSM_MoveInput(moveInput, true);
         }
         #endregion
 
@@ -72,7 +84,11 @@ namespace Seti
             Vector2 playerPos = Camera.main.WorldToScreenPoint(enemy.Player.transform.position);
             moveInput = playerPos - enemyPos;
         }
-        private void PathFindToChase() => enemy.Agent.SetDestination(enemy.Player.transform.position);
+        private void PathFindToChase()
+        {
+            if (enemy.IsObstacle)
+                enemy.Agent.SetDestination(enemy.Player.transform.position);
+        }
         #endregion
     }
 }

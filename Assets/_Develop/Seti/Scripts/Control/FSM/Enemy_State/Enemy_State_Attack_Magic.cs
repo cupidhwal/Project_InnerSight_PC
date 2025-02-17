@@ -49,7 +49,7 @@ namespace Seti
             if (enemy.Detected && enemy.Condition.CanMove)
                 return typeof(Enemy_State_Chase);
 
-            if (!isPlayer)
+            if (!isPlayer || !enemy.IsObstacle)
                 return typeof(Enemy_State_Positioning);
 
             if (!enemy.Condition.IsMagic && !enemy.CanMagic)
@@ -96,15 +96,17 @@ namespace Seti
         }
         private bool CheckPlayer()
         {
-
+            isPlayer = false;
 
             // 마법 공격 경로에 플레이어가 있는지 확인
-            return isPlayer = Physics.SphereCast(enemy.transform.position,
-                                                 0.5f,
-                                                 enemy.Player.transform.position - enemy.transform.position,
-                                                 out var hit,
-                                                 enemy.MagicRange) &&
-                                                 hit.transform.GetComponent<Player>();
+            isPlayer = Physics.SphereCast(enemy.transform.position,
+                                          0.5f,
+                                          enemy.Player.transform.position - enemy.transform.position,
+                                          out var hit,
+                                          enemy.MagicRange) &&
+                                          hit.transform.GetComponent<Player>();
+
+            return isPlayer;
         }
         #endregion
     }
