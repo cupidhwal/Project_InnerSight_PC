@@ -52,64 +52,6 @@ namespace Noah
         public float moveSpeed;
         public float atkSpeed;
 
-        public float Health
-        {
-            get
-            {
-                return hp;
-            }
-            set
-            {
-                hp = value;
-            }
-        }
-
-        public float Attack
-        {
-            get
-            {
-                return atk;
-            }
-            set
-            {
-                atk = value;
-            }
-        }
-
-        public float Defend
-        {
-            get
-            {
-                return def;
-            }
-            set
-            {
-                def = value;
-            }
-        }
-        public float MoveSpeed
-        {
-            get
-            {
-                return moveSpeed;
-            }
-            set
-            {
-                moveSpeed = value;
-            }
-        }
-        public float AttackSpeed
-        {
-            get
-            {
-                return atkSpeed;
-            }
-            set
-            {
-                atkSpeed = value;
-            }
-        }
-
         //public PlayerData(float _hp, float _atk, float _def, float _moveSpeed, float _atkSpeed)
         //{
         //    hp = _hp;
