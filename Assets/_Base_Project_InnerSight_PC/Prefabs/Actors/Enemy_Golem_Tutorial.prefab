@@ -1424,7 +1424,7 @@ GameObject:
   - component: {fileID: 2082635410144380935}
   - component: {fileID: 9118154308318002457}
   - component: {fileID: 3364466483215636433}
-  - component: {fileID: 6981887468928913707}
+  - component: {fileID: 8483810885290245301}
   - component: {fileID: 6678731094175085228}
   - component: {fileID: 8785395257725108577}
   - component: {fileID: 3846494019382873228}
@@ -1433,7 +1433,7 @@ GameObject:
   - component: {fileID: 6511279441557689298}
   - component: {fileID: 658566218423419064}
   m_Layer: 6
-  m_Name: Enemy_Golem_Fixed
+  m_Name: Enemy_Golem_Tutorial
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1531,7 +1531,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 0
---- !u!114 &6981887468928913707
+--- !u!114 &8483810885290245301
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1571,31 +1571,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aa79e21702e58240bd37662cca776a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blueprint: {fileID: 11400000, guid: a531f6c57b89b7548b9b435f7cb19cea, type: 2}
+  blueprint: {fileID: 11400000, guid: 2aa50056d2c71e441ad8c1278d43ac19, type: 2}
   condition: {fileID: 6678731094175085228}
   controller: {fileID: 0}
   behaviours:
   - behaviour:
-      rid: 5367875440153199441
+      rid: 5990299186441748659
   - behaviour:
-      rid: 5367875440153199442
+      rid: 5990299186441748660
   - behaviour:
-      rid: 5367875440153199443
+      rid: 5990299186441748661
   - behaviour:
-      rid: 5367875440153199444
+      rid: 5990299186441748662
   health: 50
   attack: 10
   defend: 0
   rate_Attack: 1
-  rate_Movement: 3
+  rate_Movement: 4
   stagger: 1
   mag_WalkToRun: 1.5
   attackProgressive: 1
   player: {fileID: 0}
   distancePlayer: 0
   distancePlace: 0
-  range_Detect: 7.5
-  range_Attack: 1
+  range_Detect: 10
+  range_Attack: 1.1
   range_Magic: 0
   range_BackOff: 15
   searchDuration: 5
@@ -1607,72 +1607,62 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 5367875440153199353
+    - rid: 5990299186441748654
       type: {class: Look_Watch, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 5367875440153199354
+    - rid: 5990299186441748655
       type: {class: Attack_Normal, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 5367875440153199355
+    - rid: 5990299186441748656
       type: {class: Move_Run, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 5367875440153199356
-      type: {class: Move_Walk, ns: Seti, asm: Assembly-CSharp}
-      data: 
-    - rid: 5367875440153199357
+    - rid: 5990299186441748658
       type: {class: Move_Nav, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 5367875440153199441
+    - rid: 5990299186441748659
       type: {class: Look, ns: Seti, asm: Assembly-CSharp}
       data:
         strategies:
-        - rid: 5367875440153199445
-    - rid: 5367875440153199442
+        - rid: 5990299186441748663
+    - rid: 5990299186441748660
       type: {class: Attack, ns: Seti, asm: Assembly-CSharp}
       data:
         attack: 0
         strategies:
-        - rid: 5367875440153199446
+        - rid: 5990299186441748664
         isSkillAttack: 0
-    - rid: 5367875440153199443
-      type: {class: Stagger, ns: Seti, asm: Assembly-CSharp}
-      data: 
-    - rid: 5367875440153199444
+    - rid: 5990299186441748661
       type: {class: Move, ns: Seti, asm: Assembly-CSharp}
       data:
         strategies:
-        - rid: 5367875440153199447
-        - rid: 5367875440153199448
-        - rid: 5367875440153199449
-    - rid: 5367875440153199445
+        - rid: 5990299186441748665
+        - rid: 5990299186441748666
+    - rid: 5990299186441748662
+      type: {class: Stagger, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299186441748663
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 5367875440153199353
+          rid: 5990299186441748654
         isActive: 1
-    - rid: 5367875440153199446
+    - rid: 5990299186441748664
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 5367875440153199354
+          rid: 5990299186441748655
         isActive: 1
-    - rid: 5367875440153199447
+    - rid: 5990299186441748665
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 5367875440153199355
+          rid: 5990299186441748656
         isActive: 1
-    - rid: 5367875440153199448
+    - rid: 5990299186441748666
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
         strategy:
-          rid: 5367875440153199356
-        isActive: 1
-    - rid: 5367875440153199449
-      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategy:
-          rid: 5367875440153199357
+          rid: 5990299186441748658
         isActive: 1
 --- !u!114 &3846494019382873228
 MonoBehaviour:
@@ -1749,8 +1739,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2702aee3864dd4b9519efc778a897f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: {fileID: 1786689574925295396, guid: d340eb98474665e4aad743dd8a183cad, type: 3}
-  chargeGold: 20
+  gold: {fileID: 0}
+  chargeGold: 0
 --- !u!1 &8576893116448942576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1856,7 +1846,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9076383531570018733}
+  - {fileID: 1133811898073343375}
   m_Father: {fileID: 5869519138321580032}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4914912829454514825
@@ -1871,7 +1861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0d376c7db0c8af4bbdc8bef17482b2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &1292474737873450360
+--- !u!1001 &7180457152685189466
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1928,8 +1918,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
---- !u!4 &9076383531570018733 stripped
+--- !u!4 &1133811898073343375 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7789538877348465877, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
-  m_PrefabInstance: {fileID: 1292474737873450360}
+  m_PrefabInstance: {fileID: 7180457152685189466}
   m_PrefabAsset: {fileID: 0}

@@ -20,7 +20,7 @@ namespace Seti
         protected override void Start()
         {
             base.Start();
-            targetUI = Noah.UIManager.Instance.playerStateUI;
+            //targetUI = Noah.UIManager.Instance.playerStateUI;
         }
         #endregion
 

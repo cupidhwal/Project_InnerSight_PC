@@ -26,6 +26,8 @@ namespace Noah
 
         void SpwanItem()
         {
+            if (gold == null) return;
+
             Vector3 pos = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
 
             gold.GetComponent<Item_Gold>().chargeGold = chargeGold;
