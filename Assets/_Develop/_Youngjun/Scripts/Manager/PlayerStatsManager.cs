@@ -23,14 +23,9 @@ namespace Noah
 
         PlayerData playerData;
         UpGradeCountData upgradeCountData;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         public InGameUI_RandomStats inGameUI_RandomStats;
-=======
->>>>>>> parent of 3ee181fd (Merge remote-tracking branch 'origin/youngjun' into develop)
-=======
-        InGameUI_RandomStats inGameUI_RandomStats;
->>>>>>> 3ee181fd1f14ad066db3d590fe1a3c0fa881e0bb
+
 
         Actor actor; 
 
@@ -59,7 +54,9 @@ namespace Noah
             SetPlayerStat();
 
             inGameUI_PlayerState.Init();
-            inGameUI_RandomStats.Init();
+
+            if (inGameUI_RandomStats)
+                inGameUI_RandomStats.Init();
 
             if (!SaveLoadManager.Instance.isLoadData)
             {

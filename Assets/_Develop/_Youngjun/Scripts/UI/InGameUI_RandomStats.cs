@@ -26,14 +26,11 @@ namespace Noah
 
         private Transform contentsPar;
 
-<<<<<<< HEAD
         [SerializeField] private Transform reinDataPar;
 
         public List<TMP_Text> statsData = new List<TMP_Text>();
         public List<TMP_Text> rein_Stats = new List<TMP_Text>();
 
-=======
->>>>>>> 3ee181fd1f14ad066db3d590fe1a3c0fa881e0bb
         SaveLoadManager loadManager;
         PlayerStatsManager playerStatsManager;
 
@@ -48,11 +45,7 @@ namespace Noah
             {
                 statsDic.Add(statsName[i], statsSprits[i]);
                 reinforceDic.Add(statsName[i], reinforceData[i]);
-<<<<<<< HEAD
                 reinforceTmpData.Add(0f);
-
-=======
->>>>>>> 3ee181fd1f14ad066db3d590fe1a3c0fa881e0bb
             }
 
             for (int i = 0; i < contentsPar.childCount; i++)
@@ -68,7 +61,6 @@ namespace Noah
 
             }
 
-<<<<<<< HEAD
             for (int i = 0; i < reinDataPar.childCount; i++)
             {
                 statsData.Add(reinDataPar.GetChild(i).GetChild(0).GetComponent<TMP_Text>());
@@ -77,13 +69,10 @@ namespace Noah
 
             SetUIData();
 
-=======
             foreach (var kvp in statsDic)
             {
                 Debug.Log($"statsDic Key: {kvp.Key}, Sprite: {kvp.Value.name}");
             }
-
->>>>>>> 3ee181fd1f14ad066db3d590fe1a3c0fa881e0bb
         }
 
         public void RandomStatsReinforce()
@@ -116,11 +105,7 @@ namespace Noah
                         if (statKey == kvp.Key)
                         {
                             btns[i].transform.GetChild(1).GetComponent<TMP_Text>().text =
-<<<<<<< HEAD
                                $"{statKey} <color=#008BFF>{kvp.Value}</color> 증가";
-=======
-                               $"{statKey} <color=#FF0000>{kvp.Value}</color> 증가";
->>>>>>> 3ee181fd1f14ad066db3d590fe1a3c0fa881e0bb
 
                             btns[i].onClick.AddListener(() => AssignStatsToKey(kvp.Key, kvp.Value));
                         }
@@ -162,7 +147,6 @@ namespace Noah
             randomStats.Clear();
         }
 
-<<<<<<< HEAD
         public void SetUIData()
         {
             for (int i = 0; i < reinDataPar.childCount; i++)
@@ -175,10 +159,5 @@ namespace Noah
 
             }
         }
-
-=======
->>>>>>> 3ee181fd1f14ad066db3d590fe1a3c0fa881e0bb
     }
-
-
 }
