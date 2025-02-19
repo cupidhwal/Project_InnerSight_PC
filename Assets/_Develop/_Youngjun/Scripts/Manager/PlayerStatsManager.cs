@@ -1,4 +1,5 @@
 using Seti;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -173,25 +174,28 @@ namespace Noah
 
         public void PlayerStatReinforce(string _reinDic, float _reinData)
         {
-            switch (_reinDic)
+            Dictionary<string, (Action<float> statAction, int index)> reinDict = new()
             {
-                case "체력":
-                    playerData.hp += _reinData;
-                    break;
-                case "공격력":
-                    playerData.atk += _reinData;
-                    break;
-                case "방어력":
-                    playerData.def += _reinData;
-                    break;
-                case "이동속도":
-                    playerData.moveSpeed += _reinData;
-                    break;
-                case "공격속도":
-                    playerData.atkSpeed += _reinData;
-                    break;
+                { "체력",       (value => playerData.hp += value, 0) },
+                { "공격력",     (value => playerData.atk += value, 1) },
+                { "방어력",     (value => playerData.def += value, 2) },
+                { "이동속도",   (value => playerData.moveSpeed += value, 3) },
+                { "공격속도",   (value => playerData.atkSpeed += value, 4) }
+            };
+
+            if (reinDict.TryGetValue(_reinDic, out var reinData))
+            {
+                reinData.statAction(_reinData);
+                inGameUI_RandomStats.reinforceTmpData[reinData.index] += _reinData;
+                inGameUI_RandomStats.SetUIData();
             }
         }
+
+        public void SetReinforceData()
+        {
+            inGameUI_RandomStats.SetReinforceData();
+        }
+
 
     }
 }

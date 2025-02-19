@@ -96,6 +96,7 @@ namespace Noah
                 currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = false;
             }
 
+            PlayerStatsManager.Instance.SetReinforceData();
 
         }
 
