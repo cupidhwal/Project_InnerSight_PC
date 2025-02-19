@@ -26,11 +26,6 @@ namespace Noah
 
         private Transform contentsPar;
 
-        [SerializeField] private Transform reinDataPar;
-
-        public List<TMP_Text> statsData = new List<TMP_Text>();
-        public List<TMP_Text> rein_Stats = new List<TMP_Text>();
-
         SaveLoadManager loadManager;
         PlayerStatsManager playerStatsManager;
 
@@ -45,9 +40,6 @@ namespace Noah
             {
                 statsDic.Add(statsName[i], statsSprits[i]);
                 reinforceDic.Add(statsName[i], reinforceData[i]);
-                reinforceTmpData.Add(0f);
-
-
             }
 
             for (int i = 0; i < contentsPar.childCount; i++)
@@ -62,15 +54,6 @@ namespace Noah
                 }
 
             }
-
-
-            for (int i = 0; i < reinDataPar.childCount; i++)
-            {
-                statsData.Add(reinDataPar.GetChild(i).GetChild(0).GetComponent<TMP_Text>());
-                rein_Stats.Add(reinDataPar.GetChild(i).GetChild(1).GetComponent<TMP_Text>());
-            }
-
-            SetUIData();
 
             foreach (var kvp in statsDic)
             {
@@ -109,7 +92,7 @@ namespace Noah
                         if (statKey == kvp.Key)
                         {
                             btns[i].transform.GetChild(1).GetComponent<TMP_Text>().text =
-                               $"{statKey} <color=#008BFF>{kvp.Value}</color> 증가";
+                               $"{statKey} <color=#FF0000>{kvp.Value}</color> 증가";
 
                             btns[i].onClick.AddListener(() => AssignStatsToKey(kvp.Key, kvp.Value));
                         }
@@ -151,18 +134,6 @@ namespace Noah
             randomStats.Clear();
         }
 
-        public void SetUIData()
-        {
-            for (int i = 0; i < reinDataPar.childCount; i++)
-            {
-                Transform playerStats = reinDataPar.GetChild(i).GetChild(0);
-                Transform reinStats = reinDataPar.GetChild(i).GetChild(1);
-
-                playerStats.GetComponent<TMP_Text>().text = playerStatsManager.dataList[i].ToString();
-                reinStats.GetComponent<TMP_Text>().text = reinforceTmpData[i].ToString();
-
-            }
-        }
     }
 
 

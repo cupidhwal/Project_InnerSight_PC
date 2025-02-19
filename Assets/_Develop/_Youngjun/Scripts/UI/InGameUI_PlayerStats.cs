@@ -170,7 +170,6 @@ namespace Noah
             UIManager.Instance.playerStateUI.gameObject.SetActive(false);
             player.GetComponent<Condition_Player>().PlayerSetActive(true);
             player.GetComponent<PlayerUseSkill>().enabled = true;
-            PlayerStatsManager.Instance.inGameUI_RandomStats.SetUIData();
 
             SaveLoadManager.Instance.SaveAll();
         }
