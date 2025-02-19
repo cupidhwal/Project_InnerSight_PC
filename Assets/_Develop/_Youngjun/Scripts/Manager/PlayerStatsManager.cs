@@ -23,6 +23,10 @@ namespace Noah
 
         PlayerData playerData;
         UpGradeCountData upgradeCountData;
+<<<<<<< HEAD
+        public InGameUI_RandomStats inGameUI_RandomStats;
+=======
+>>>>>>> parent of 3ee181fd (Merge remote-tracking branch 'origin/youngjun' into develop)
 
         Actor actor; 
 

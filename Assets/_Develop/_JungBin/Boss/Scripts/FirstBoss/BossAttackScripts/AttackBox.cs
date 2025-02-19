@@ -11,7 +11,6 @@ namespace JungBin
     public class AttackBox : MonoBehaviour
     {
         [SerializeField] private Vector3 attackDirection;  // 공격 방향 (옵션)
-        private BoxCollider boxCollider;
         [SerializeField] private float damageCooldown = 1f; // 데미지 입은 후 쿨타임
         private bool canTakeDamage = true; // 데미지 가능 여부
         private Coroutine cooldownCoroutine;

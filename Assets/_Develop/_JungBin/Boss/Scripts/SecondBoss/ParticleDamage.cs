@@ -11,7 +11,7 @@ namespace JungBin
         private void OnParticleCollision(GameObject other)
         {
             // 충돌한 대상이 플레이어인지 확인
-            if (other.CompareTag(targetTag))
+            if (!other.CompareTag("Player")) return; // 플레이어가 아니면 충돌 무시
             {
                 Debug.Log($"파티클이 {other.name}와 충돌!");
 
