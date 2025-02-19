@@ -158,7 +158,7 @@ namespace Noah
                 Transform playerStats = reinDataPar.GetChild(i).GetChild(0);
                 Transform reinStats = reinDataPar.GetChild(i).GetChild(1);
 
-                playerStats.GetComponent<TMP_Text>().text = playerStatsManager.dataList[i].ToString();
+                playerStats.GetComponent<TMP_Text>().text = playerStatsManager.dataList[i + 1].ToString();
                 reinStats.GetComponent<TMP_Text>().text = reinforceTmpData[i].ToString();
 
             }

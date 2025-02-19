@@ -54,8 +54,10 @@ namespace Noah
 
             inGameUI_PlayerState.Init();
 
-            if (inGameUI_RandomStats)
+            if (inGameUI_RandomStats != null)
+            {
                 inGameUI_RandomStats.Init();
+            }
 
             if (!SaveLoadManager.Instance.isLoadData)
             {
