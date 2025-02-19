@@ -7,6 +7,8 @@ namespace Noah
 {
     public class InGameUI_RandomStats : MonoBehaviour
     {
+        [SerializeField] private Transform reinDataPar;
+
         private Dictionary<string, Sprite> statsDic = new Dictionary<string, Sprite>();
         private Dictionary<string, float> reinforceDic = new Dictionary<string, float>();
 
@@ -17,16 +19,14 @@ namespace Noah
         // 랜덤으로 뽑힌 3가지 스탯 저장
         private List<string> randomStats = new List<string>();
         // 버튼 리스트
-        public List<Button> btns = new List<Button>();
+        private List<Button> btns = new List<Button>();
 
         // 강화 스텟 임시 보관
-        public List<float> reinforceTmpData = new List<float>();
+        private List<float> reinforceTmpData = new List<float>();
 
         private Transform contentsPar;
 
-        [SerializeField] private Transform reinDataPar;
-
-        public List<TMP_Text> statsData = new List<TMP_Text>();
+        private List<TMP_Text> statsData = new List<TMP_Text>();
         public List<TMP_Text> rein_Stats = new List<TMP_Text>();
 
         SaveLoadManager loadManager;
@@ -125,6 +125,9 @@ namespace Noah
 
             playerStatsManager.SetPlayerStat();
 
+            reinforceDic.Clear();
+
+
             UIBack();
         }
 
@@ -169,8 +172,17 @@ namespace Noah
                 {
                     reinforceDic.Add(statsName[i], randomStats.reinforceData[i]);
                 }
+
+
+                Debug.Log(reinforceDic.Count);
             }
         }
+
+        public List<float> ReinforceTmpData()
+        {
+            return reinforceTmpData;
+        }
+
     }
 
 

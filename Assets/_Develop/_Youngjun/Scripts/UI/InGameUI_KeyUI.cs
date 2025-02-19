@@ -28,7 +28,7 @@ namespace Noah
 
             index = 0;
 
-            defaultBtn = buttons[0].GetChild(0).GetComponent<Button>();
+            //defaultBtn = buttons[0].GetChild(0).GetComponent<Button>();
 
             //EventSystem.current.SetSelectedGameObject(defaultBtn.gameObject);
         }

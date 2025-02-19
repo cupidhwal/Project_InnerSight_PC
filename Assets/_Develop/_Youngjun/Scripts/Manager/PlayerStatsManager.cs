@@ -186,7 +186,7 @@ namespace Noah
             if (reinDict.TryGetValue(_reinDic, out var reinData))
             {
                 reinData.statAction(_reinData);
-                inGameUI_RandomStats.reinforceTmpData[reinData.index] += _reinData;
+                inGameUI_RandomStats.ReinforceTmpData()[reinData.index] += _reinData;
                 inGameUI_RandomStats.SetUIData();
             }
         }

@@ -27,11 +27,6 @@ namespace Noah
         public List<Image> skillUIList = new List<Image>(); // UI 슬롯 리스트
         public List<SkillBase> skillSlots = new List<SkillBase>(); // 현재 가지고 있는 스킬
 
-        //public SkillBase firstSkill;
-        //public SkillBase secondSkill;
-        //public SkillBase thirdSkill;
-        //public SkillBase fourthSkill;
-
         public List<Button> btns = new List<Button> ();
         public List<Button> changeBtns = new List<Button> ();
 
@@ -124,45 +119,6 @@ namespace Noah
                 btns[i].transform.GetChild(2).GetComponent<TMP_Text>().text = randomSkills[index].skillDescription;
             }
         }
-
-        // 선택된 스킬을 X와 C 키에 할당
-        //void AssignSkillToKey(int skillIndex)
-        //{
-        //    if (firstSkill == null)
-        //    {
-        //        firstSkill = randomSkills[skillIndex];
-        //        SetSkillUI(firstSkillUI, firstSkill);
-        //        ResetBtnData();
-
-        //        Debug.Log("Skill assigned to X key: " + firstSkill.GetType().Name);
-        //    }
-        //    else if (secondSkill == null && randomSkills[skillIndex] != firstSkill)
-        //    {
-        //        secondSkill = randomSkills[skillIndex];
-        //        SetSkillUI(secondSkillUI, secondSkill);
-        //        ResetBtnData();
-
-        //        Debug.Log("Skill assigned to C key: " + secondSkill.GetType().Name);
-        //    }
-        //    else if (firstSkill != null && randomSkills[skillIndex] == firstSkill)
-        //    {
-        //        Debug.Log($"{firstSkill} + {randomSkills[skillIndex]} 업그레이드");
-        //        firstSkill.damage += firstSkill.upgradeDamage;
-        //        ResetBtnData();
-        //    }
-        //    else if (firstSkill != null && randomSkills[skillIndex] == secondSkill)
-        //    {
-        //        Debug.Log($"{secondSkill} + {randomSkills[skillIndex]} 업그레이드");
-        //        secondSkill.damage += secondSkill.upgradeDamage;
-        //        ResetBtnData();
-        //    }
-        //    else if (firstSkill != null && secondSkill != null
-        //            && randomSkills[skillIndex] != firstSkill && randomSkills[skillIndex] != secondSkill)
-        //    {
-        //        selectSkillNum = skillIndex;
-        //        SetSelectUI();
-        //    }
-        //}
 
         void AssignSkillToKey(int skillIndex)
         {
