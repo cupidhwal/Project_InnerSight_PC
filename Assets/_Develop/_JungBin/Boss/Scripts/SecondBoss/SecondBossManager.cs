@@ -16,9 +16,6 @@ namespace JungBin
 
         [SerializeField] private Transform slashSpawnPoint;
         [SerializeField] private GameObject slashAttack;
-        [SerializeField] private GameObject spikeAttackPrefab;
-        [SerializeField] private Transform spikeSpawnPoint;
-
 
         private int lastAttack = -1;
         public static bool isAttack { get; set; } = false; // 공격중인지 여부
@@ -139,23 +136,10 @@ namespace JungBin
         #region 공격 상태
         public void ToggleAttack()
         {
-            GameObject slashParticle = Instantiate(slashAttack, slashSpawnPoint.position, Quaternion.identity, slashSpawnPoint);
+            GameObject slashParticle = Instantiate(slashAttack, slashSpawnPoint.position, Quaternion.identity);
 
             Destroy(slashParticle, 2f );
         }
-
-        public void SpikeSpawn()
-        {
-            // `spikeSpawnPoint`의 정면 방향을 그대로 반영하여 회전값 적용
-            Quaternion rotation = spikeSpawnPoint.rotation;
-
-            // `spikeSpawnPoint`의 위치에서 스파이크 프리팹 생성
-            GameObject spikePrefab = Instantiate(spikeAttackPrefab, spikeSpawnPoint.position, rotation);
-
-            // 4초 후 오브젝트 삭제
-            Destroy(spikePrefab, 2f);
-        }
-
 
         #endregion
 

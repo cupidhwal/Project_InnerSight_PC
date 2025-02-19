@@ -46,6 +46,8 @@ namespace Noah
                 statsDic.Add(statsName[i], statsSprits[i]);
                 reinforceDic.Add(statsName[i], reinforceData[i]);
                 reinforceTmpData.Add(0f);
+
+
             }
 
             for (int i = 0; i < contentsPar.childCount; i++)
@@ -61,6 +63,7 @@ namespace Noah
 
             }
 
+
             for (int i = 0; i < reinDataPar.childCount; i++)
             {
                 statsData.Add(reinDataPar.GetChild(i).GetChild(0).GetComponent<TMP_Text>());
@@ -73,6 +76,7 @@ namespace Noah
             {
                 Debug.Log($"statsDic Key: {kvp.Key}, Sprite: {kvp.Value.name}");
             }
+
         }
 
         public void RandomStatsReinforce()
@@ -160,4 +164,6 @@ namespace Noah
             }
         }
     }
+
+
 }

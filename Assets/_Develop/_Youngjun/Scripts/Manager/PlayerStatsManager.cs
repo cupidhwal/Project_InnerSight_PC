@@ -26,7 +26,6 @@ namespace Noah
 
         public InGameUI_RandomStats inGameUI_RandomStats;
 
-
         Actor actor; 
 
         private void Start()
@@ -54,9 +53,7 @@ namespace Noah
             SetPlayerStat();
 
             inGameUI_PlayerState.Init();
-
-            if (inGameUI_RandomStats)
-                inGameUI_RandomStats.Init();
+            inGameUI_RandomStats.Init();
 
             if (!SaveLoadManager.Instance.isLoadData)
             {
