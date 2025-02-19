@@ -26,19 +26,36 @@ namespace Seti
         public TextMeshProUGUI sentenceText;
         public GameObject npcImage;
         public GameObject nextButton;
+
+        private Storyteller storyteller;
         #endregion
 
-        private void Start()
+        public void SetDialogue(Storyteller storyteller, string path, int dialogueIndex)
         {
-            //xml 데이터 파일 읽기
-            LoadDialogXml(xmlFile);
+            // 화자 세팅
+            this.storyteller = storyteller;
 
+            // xml 데이터 파일 읽기
+            LoadDialogXml(path);
+
+            // 초기화
             dialogs = new Queue<Dialog>();
             InitDialog();
-
-            //
-            StartDialog(0);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //Xml 데이터 읽어 들이기
         private void LoadDialogXml(string path)
@@ -83,9 +100,6 @@ namespace Seti
                 }
             }
 
-            Debug.Log(DataManager.GetDialogData());
-            Debug.Log(DataManager.GetDialogData().Dialogs);
-            Debug.Log(DataManager.GetDialogData().Dialogs.dialogs);
             foreach (var dialog in DataManager.GetDialogData().Dialogs.dialogs)
             {
                 if (dialog.number == dialogIndex)
@@ -111,7 +125,7 @@ namespace Seti
             //dialogs에서 하나 꺼내온다
             Dialog dialog = dialogs.Dequeue();
 
-            /*if(dialog.character > 0)
+            if (dialog.character == 1)
             {
                 npcImage.SetActive(true);
                 npcImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(
@@ -120,7 +134,7 @@ namespace Seti
             else //dialog.character <= 0
             {
                 npcImage.SetActive(false);
-            }*/
+            }
 
             nextButton.SetActive(false);
 
@@ -148,7 +162,7 @@ namespace Seti
             InitDialog();
 
             //대화 종료시 이벤트 처리
-            //...
+            storyteller.StoryEnd();
         }
     }
 }
