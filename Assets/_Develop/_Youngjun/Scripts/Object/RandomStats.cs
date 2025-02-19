@@ -1,9 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Noah
 {
     public class RandomStats : MonoBehaviour
     {
+        // 강화 수치 데이터 리스트
+        public List<float> reinforceData = new List<float>();
+
         InGameUI_RandomStats inGameUI_RandomStats;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created

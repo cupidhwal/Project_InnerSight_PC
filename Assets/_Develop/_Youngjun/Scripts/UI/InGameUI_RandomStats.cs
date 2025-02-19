@@ -10,8 +10,6 @@ namespace Noah
         private Dictionary<string, Sprite> statsDic = new Dictionary<string, Sprite>();
         private Dictionary<string, float> reinforceDic = new Dictionary<string, float>();
 
-        // 강화 수치 데이터 리스트
-        public List<float> reinforceData = new List<float>();
         // 스탯 이름
         public List<string> statsName = new List<string>();
         // stat 스프라이트 저장
@@ -22,7 +20,7 @@ namespace Noah
         public List<Button> btns = new List<Button>();
 
         // 강화 스텟 임시 보관
-        private List<float> reinforceTmpData = new List<float>();
+        public List<float> reinforceTmpData = new List<float>();
 
         private Transform contentsPar;
 
@@ -44,10 +42,7 @@ namespace Noah
             for (int i = 0; i < playerStatsManager.dataList.Count; i++)
             {
                 statsDic.Add(statsName[i], statsSprits[i]);
-                reinforceDic.Add(statsName[i], reinforceData[i]);
                 reinforceTmpData.Add(0f);
-
-
             }
 
             for (int i = 0; i < contentsPar.childCount; i++)
@@ -153,14 +148,27 @@ namespace Noah
 
         public void SetUIData()
         {
-            for (int i = 0; i < reinDataPar.childCount; i++)
+            for (int i = 0; i < rein_Stats.Count; i++)
             {
-                Transform playerStats = reinDataPar.GetChild(i).GetChild(0);
-                Transform reinStats = reinDataPar.GetChild(i).GetChild(1);
+                rein_Stats[i].text = "+ " + reinforceTmpData[i].ToString();
+            }
 
-                playerStats.GetComponent<TMP_Text>().text = playerStatsManager.dataList[i + 1].ToString();
-                reinStats.GetComponent<TMP_Text>().text = reinforceTmpData[i].ToString();
+            for (int i = 0; i < rein_Stats.Count - 1; i++)
+            {
+                statsData[i].text = playerStatsManager.dataList[i + 1].ToString();
+            }
+        }
 
+        public void SetReinforceData()
+        {
+            RandomStats randomStats = FindAnyObjectByType<RandomStats>();
+
+            if (randomStats != null)
+            {
+                for (int i = 0; i < playerStatsManager.dataList.Count; i++)
+                {
+                    reinforceDic.Add(statsName[i], randomStats.reinforceData[i]);
+                }
             }
         }
     }
