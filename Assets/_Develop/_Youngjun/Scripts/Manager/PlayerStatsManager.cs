@@ -23,7 +23,11 @@ namespace Noah
 
         PlayerData playerData;
         UpGradeCountData upgradeCountData;
-        InGameUI_RandomStats inGameUI_RandomStats;
+<<<<<<< HEAD
+
+        public InGameUI_RandomStats inGameUI_RandomStats;
+=======
+>>>>>>> parent of 3ee181fd (Merge remote-tracking branch 'origin/youngjun' into develop)
 
         Actor actor; 
 
@@ -36,7 +40,6 @@ namespace Noah
         {
             playerData = SaveLoadManager.Instance.playerStats;
             upgradeCountData = SaveLoadManager.Instance.upgradeCount;
-            inGameUI_RandomStats = FindAnyObjectByType<InGameUI_RandomStats>();
 
             player = GameObject.FindWithTag("Player");
             actor = player.GetComponent<Actor>();
@@ -49,25 +52,27 @@ namespace Noah
             inGameUI_PlayerState = FindAnyObjectByType<InGameUI_PlayerStats>();
 
             ResetData();
-            SetPlayerStat();
+
+            actor.SetStats(playerData.Health, playerData.Attack, playerData.Defend,
+                playerData.AttackSpeed, playerData.MoveSpeed);
 
             inGameUI_PlayerState.Init();
-            inGameUI_RandomStats.Init();
 
             if (!SaveLoadManager.Instance.isLoadData)
             {
                 SaveLoadManager.Instance.SaveAll();
-            }        
+            }
+            
         }
 
         #region ResetData
         void ResetData()
         {
-            dataList.Add(playerData.hp);
-            dataList.Add(playerData.atk);
-            dataList.Add(playerData.def);
-            dataList.Add(playerData.moveSpeed);
-            dataList.Add(playerData.atkSpeed);
+            dataList.Add(playerData.Health);
+            dataList.Add(playerData.Attack);
+            dataList.Add(playerData.Defend);
+            dataList.Add(playerData.MoveSpeed);
+            dataList.Add(playerData.AttackSpeed);
 
             updateDataList.Add(upgradeData.hp_Up);
             updateDataList.Add(upgradeData.atk_Up);
@@ -110,11 +115,11 @@ namespace Noah
                 upgradeCount[i] = _upgradeCount[i];
             }
 
-            playerData.hp = dataList[0];
-            playerData.atk = dataList[1];
-            playerData.def = dataList[2];
-            playerData.moveSpeed = dataList[3];
-            playerData.atkSpeed = dataList[4];
+            playerData.Health = dataList[0];
+            playerData.Attack = dataList[1];
+            playerData.Defend = dataList[2];
+            playerData.MoveSpeed = dataList[3];
+            playerData.AttackSpeed = dataList[4];
 
             upgradeCountData.hp_UpCount = upgradeCount[0];
             upgradeCountData.atk_UpCount = upgradeCount[1];
@@ -122,8 +127,8 @@ namespace Noah
             upgradeCountData.moveSpeed_UpCount = upgradeCount[3];
             upgradeCountData.atkSpeed_UpCount = upgradeCount[4];
 
-            actor.SetStats(playerData.hp, playerData.atk, playerData.def,
-                playerData.atkSpeed, playerData.moveSpeed);
+            actor.SetStats(playerData.Health, playerData.Attack, playerData.Defend,
+                playerData.AttackSpeed, playerData.MoveSpeed);
         }
         #endregion
 
@@ -158,35 +163,6 @@ namespace Noah
             return upgradeCount;
         }
 
-
-        public void SetPlayerStat()
-        {
-            actor.SetStats(playerData.hp, playerData.atk, playerData.def,
-                playerData.atkSpeed, playerData.moveSpeed);
-
-        }
-
-        public void PlayerStatReinforce(string _reinDic, float _reinData)
-        {
-            switch (_reinDic)
-            {
-                case "체력":
-                    playerData.hp += _reinData;
-                    break;
-                case "공격력":
-                    playerData.atk += _reinData;
-                    break;
-                case "방어력":
-                    playerData.def += _reinData;
-                    break;
-                case "이동속도":
-                    playerData.moveSpeed += _reinData;
-                    break;
-                case "공격속도":
-                    playerData.atkSpeed += _reinData;
-                    break;
-            }
-        }
-
+      
     }
 }

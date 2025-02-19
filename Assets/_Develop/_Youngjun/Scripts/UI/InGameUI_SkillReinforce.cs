@@ -70,7 +70,7 @@ namespace Noah
             inGameUI_Skill.skillSlots[_skillIndex].damage += inGameUI_Skill.skillSlots[_skillIndex].upgradeDamage;
             inGameUI_Skill.UpgradeCheck(inGameUI_Skill.skillSlots[_skillIndex], _skillIndex);
 
-            ResetBtnData();
+            ResetBtnData();   
         }
 
         void ResetBtnData()

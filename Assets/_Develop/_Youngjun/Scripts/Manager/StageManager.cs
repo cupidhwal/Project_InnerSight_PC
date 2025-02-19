@@ -250,7 +250,6 @@ namespace Noah
 
         }
 
-        // 히든 던전 가는 코루틴
         IEnumerator GoHiddenStage(GameObject _hiddenStage)
         {
             SceneFade.instance.FadeOut(null);
