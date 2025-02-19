@@ -20,6 +20,8 @@ namespace Noah
         {
             if (other.CompareTag("Player"))
             {
+                PlayerStatsManager.Instance.SetReinforceData();
+
                 transform.GetComponent<Collider>().enabled = false;
 
                 UIManager.Instance.statsReinforce.SetActive(true);

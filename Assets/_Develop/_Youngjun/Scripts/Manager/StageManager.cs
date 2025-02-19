@@ -7,6 +7,7 @@ using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using Unity.Cinemachine;
 using UnityEngine.Playables;
+using Unity.VisualScripting;
 
 namespace Noah
 {
@@ -23,11 +24,25 @@ namespace Noah
 
         private GameObject nextStageObject;
         private GameObject randomSkillObject;
+        private GameObject skillReinObject;
+        private GameObject statsReinObject;
 
         private Transform enemyPar;
         [SerializeField] private List<GameObject> enemys = new List<GameObject>();
 
         public int testStageChange;
+
+        // 히든 스테이지
+        public GameObject hiddenStage;
+        private GameObject hiddenPotal;
+
+        private bool isHidden = false;
+
+        public bool IsHidden
+        {
+            get { return isHidden; }
+            set { isHidden = value; }
+        }
 
         public GameObject CurrentStage => currentStage;
 
@@ -81,8 +96,18 @@ namespace Noah
 
             spawnPoint = currentStage.transform.Find("SpawnPoint");
 
-            nextStageObject = currentStage.transform.GetChild(0).GetChild(0).gameObject;
-            randomSkillObject = currentStage.transform.GetChild(0).GetChild(1).gameObject;
+            if (!isHidden)
+            {
+                nextStageObject = currentStage.transform.GetChild(0).GetChild(0).gameObject;
+                randomSkillObject = currentStage.transform.GetChild(0).GetChild(1).gameObject;
+                hiddenPotal = currentStage.transform.GetChild(0).GetChild(2).gameObject;
+            }
+            else
+            {
+                nextStageObject = currentStage.transform.GetChild(0).GetChild(0).gameObject;
+                skillReinObject = currentStage.transform.GetChild(0).GetChild(1).gameObject;
+                statsReinObject = currentStage.transform.GetChild(0).GetChild(2).gameObject;
+            }
 
             enemyPar = currentStage.transform.GetChild(1);
 
@@ -95,9 +120,6 @@ namespace Noah
             {
                 currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = false;
             }
-
-            PlayerStatsManager.Instance.SetReinforceData();
-
         }
 
         public void NextStage()
@@ -107,12 +129,17 @@ namespace Noah
             enemys.Clear();
 
             StartCoroutine(GoNextStage());
+               
         }
 
-        public void GoHiddenStage()
-        { 
+        //public void GoHiddenStage()
+        //{
+        //    player.GetComponent<Condition_Player>().PlayerSetActive(false);
+        //    player.GetComponent<PlayerUseSkill>().enabled = false;
+        //    enemys.Clear();
+
             
-        }
+        //}
 
 
 
@@ -149,7 +176,7 @@ namespace Noah
 
         }
 
-        // Test
+        #region Test
         IEnumerator ReStart()
         {
             SceneFade.instance.FadeOut(null);
@@ -197,6 +224,7 @@ namespace Noah
             SceneFade.instance.FadeIn(null);
 
         }
+        #endregion
 
         IEnumerator GoNextStage()
         {
@@ -206,20 +234,30 @@ namespace Noah
 
             player.GetComponent<Rigidbody>().useGravity = false;
 
-            if (stageObject.Count == curStage + 1)
+            if (!isHidden)
             {
-                curStage = 0;
-            }
-            else
-            {
-                curStage += 1;
+                if (stageObject.Count == curStage + 1)
+                {
+                    curStage = 0;
+                }
+                else
+                {
+                    curStage += 1;
+                }
             }
 
             yield return new WaitForSeconds(0.5f);
 
             Destroy(currentStage);
 
-            Instantiate(stageObject[curStage], currentStagePar);
+            if (!isHidden)
+            {
+                Instantiate(stageObject[curStage], currentStagePar);
+            }
+            else
+            {
+                Instantiate(hiddenStage, currentStagePar);
+            }
 
             yield return new WaitForSeconds(0.5f);
 
@@ -304,8 +342,25 @@ namespace Noah
             {
                 nextStageObject.SetActive(true);
 
-                if (randomSkillObject != null)
-                    randomSkillObject.SetActive(true);
+                if (!isHidden)
+                {
+                    if (randomSkillObject != null)
+                    {
+                        randomSkillObject.SetActive(true);
+                    }
+                    if (hiddenPotal != null)
+                    {
+                        hiddenPotal.SetActive(true);
+                    }
+                }
+                else
+                {
+                    skillReinObject.SetActive(true);
+                    statsReinObject.GetComponent<Collider>().enabled = true;
+                    statsReinObject.transform.GetChild(0).gameObject.SetActive(true);
+                }
+
+
             }
         }
 

@@ -31,7 +31,6 @@ namespace Noah
 
                 contentsGroup.GetChild(0).GetComponent<Image>().sprite = skill.UISprite;
                 contentsGroup.GetChild(1).GetComponent<TMP_Text>().text = skill.skillName;
-                contentsGroup.GetChild(2).GetComponent<TMP_Text>().text = skill.skillDescription;
 
                 m_SkillList.Add(contentsGroup);    
             }
@@ -70,6 +69,12 @@ namespace Noah
             inGameUI_Skill.skillSlots[_skillIndex].damage += inGameUI_Skill.skillSlots[_skillIndex].upgradeDamage;
             inGameUI_Skill.UpgradeCheck(inGameUI_Skill.skillSlots[_skillIndex], _skillIndex);
 
+            ResetBtnData();
+        }
+
+        public void UIBack()
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
             ResetBtnData();
         }
 
