@@ -38,14 +38,14 @@ namespace Seti
         }
 
         // 대화
-        public void OpenDialogue(int index)
-        {
-            uiManager.OpenDialogueUI(index);
-        }
         private void SetDialogue(int index)
         {
             currentIndex = index;
             DataManager.GetDialogData();
+        }
+        public void OpenDialogue(int index)
+        {
+            uiManager.OpenDialogueUI(index);
         }
 
         // 기타 메서드

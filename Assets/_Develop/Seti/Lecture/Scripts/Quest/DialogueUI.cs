@@ -61,10 +61,6 @@ namespace Seti
         public void StartDialogue(int dialogIndex)
         {
             //현재 대화씬(dialogIndex) 내용을 큐에 입력
-            Debug.Log(dialogues);
-            Debug.Log(DataManager.GetDialogData());
-            Debug.Log(DataManager.GetDialogData().Dialogues);
-            Debug.Log(DataManager.GetDialogData().Dialogues.dialogues);
             foreach (var dialogue in DataManager.GetDialogData().Dialogues.dialogues)
             {
                 if (dialogue.number == dialogIndex)
