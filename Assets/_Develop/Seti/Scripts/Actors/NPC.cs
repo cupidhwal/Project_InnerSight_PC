@@ -1,3 +1,4 @@
+using JungBin;
 using UnityEngine;
 
 namespace Seti
@@ -53,7 +54,10 @@ namespace Seti
             switch (type)
             {
                 case NPC_Type.Trinkets:
-                    targetUI.SetActive(isOpenUI = !isOpenUI);
+                    if (RelicManager.Instance.GetRelics().Count > 0)
+                    {
+                        targetUI.SetActive(isOpenUI = !isOpenUI);
+                    }
                     break;
 
                 case NPC_Type.Enhance:
