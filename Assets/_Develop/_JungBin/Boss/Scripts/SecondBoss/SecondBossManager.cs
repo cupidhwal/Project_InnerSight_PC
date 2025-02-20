@@ -16,6 +16,16 @@ namespace JungBin
 
         [SerializeField] private Transform slashSpawnPoint;
         [SerializeField] private GameObject slashAttack;
+        [SerializeField] private GameObject spikeAttackPrefab;
+        [SerializeField] private Transform spikeSpawnPoint;
+
+        [Header("투사체 설정")]
+        [SerializeField] private GameObject projectilePrefab; // 투사체 프리팹
+        [SerializeField] private Transform leftHandSpawnPoint; // 왼손 투사체 생성 위치
+        [SerializeField] private Transform rightHandSpawnPoint; // 오른손 투사체 생성 위치
+        [SerializeField] private float fireSpeed = 15f; // 투사체 속도
+        [SerializeField] private int defaultProjectileCount = 3; // 기본 투사체 개수
+        [SerializeField] private float defaultFireRate = 0.3f; // 기본 발사 간격 (초)
 
         private int lastAttack = -1;
         public static bool isAttack { get; set; } = false; // 공격중인지 여부
@@ -138,13 +148,80 @@ namespace JungBin
         {
             GameObject slashParticle = Instantiate(slashAttack, slashSpawnPoint.position, Quaternion.identity);
 
-            Destroy(slashParticle, 2f );
+            Destroy(slashParticle, 1.5f );
         }
 
-        #endregion
+        public void SpikeSpawn()
+        {
+            // `spikeSpawnPoint`의 정면 방향을 그대로 반영하여 회전값 적용
+            Quaternion rotation = spikeSpawnPoint.rotation;
+
+            // `spikeSpawnPoint`의 위치에서 스파이크 프리팹 생성
+            GameObject spikePrefab = Instantiate(spikeAttackPrefab, spikeSpawnPoint.position, rotation);
+
+            // 4초 후 오브젝트 삭제
+            Destroy(spikePrefab, 4f);
+        }
+
+        // 🔥 왼손에서 투사체 발사 (애니메이션 이벤트에서 호출)
+        public void FireLeftHandProjectile()
+        {
+            FireProjectile(leftHandSpawnPoint);
+        }
+
+        // 🔥 오른손에서 투사체 발사 (애니메이션 이벤트에서 호출)
+        public void FireRightHandProjectile()
+        {
+            FireProjectile(rightHandSpawnPoint);
+        }
+
+        // ❗ 여러 개의 투사체를 왼손에서 발사 (애니메이션 이벤트에서 호출)
+        public void FireMultipleLeftHandProjectiles()
+        {
+            StartCoroutine(FireProjectiles(leftHandSpawnPoint));
+        }
+
+        // ❗ 여러 개의 투사체를 오른손에서 발사 (애니메이션 이벤트에서 호출)
+        public void FireMultipleRightHandProjectiles()
+        {
+            StartCoroutine(FireProjectiles(rightHandSpawnPoint));
+        }
+
+        private IEnumerator FireProjectiles(Transform spawnPoint)
+        {
+            for (int i = 0; i < defaultProjectileCount; i++)
+            {
+                FireProjectile(spawnPoint);
+                yield return new WaitForSeconds(defaultFireRate); // 일정한 간격으로 발사
+            }
+        }
+
+        private void FireProjectile(Transform spawnPoint)
+        {
+            if (projectilePrefab == null || spawnPoint == null)
+            {
+                Debug.LogError("Projectile Prefab 또는 Spawn Point가 설정되지 않음!");
+                return;
+            }
+
+            // 투사체 생성
+            GameObject projectileInstance = Instantiate(projectilePrefab, spawnPoint.position, spawnPoint.rotation);
+
+            // 방향 설정 및 이동 시작
+            Projectile projectileScript = projectileInstance.GetComponent<Projectile>();
+            if (projectileScript != null)
+            {
+                projectileScript.Initialize(spawnPoint.forward * fireSpeed);
+            }
+        }
+    
+
+    #endregion
+
+
 
         #region 플레이어에게 이동하는 비행 상태
-        private IEnumerator FlyToTarget(Vector3 targetPosition, float duration)
+    private IEnumerator FlyToTarget(Vector3 targetPosition, float duration)
         {
             Vector3 startPosition = transform.position;
             float elapsedTime = 0f;
