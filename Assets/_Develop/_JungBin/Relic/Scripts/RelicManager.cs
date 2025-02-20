@@ -18,20 +18,48 @@ namespace JungBin
         [SerializeField] private GameObject relicSelectUI;
         [SerializeField] private Image applyImage;
 
+        public GameObject trinketUIParent; // 모든 버튼이 포함된 부모 오브젝트
+        private Dictionary<string, GameObject> trinketButtons = new Dictionary<string, GameObject>();
+
         private Sprite sourceImage;
+
+        public static RelicManager Instance { get; private set; }
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         private void Start()
         {
             // 🔹 `LoadAll()`이 실행된 후 유물 목록을 `RelicManager`에 적용
-            foreach (string relicName in SaveLoadManager.Instance.relicSaveData.relicNames)
+            foreach (var relicEntry in SaveLoadManager.Instance.relicSaveData.relics)
             {
-                IRelic relic = RelicFactory.CreateRelic(relicName);
+                IRelic relic = RelicFactory.CreateRelic(relicEntry.relicID); // 🔹 영어 ID를 사용하여 유물 생성
                 if (relic != null)
                 {
                     relics.Add(relic);
                     relic.ApplyEffect(GameManager.Instance.Player);
                 }
             }
+
+            // 🔹 모든 자식 오브젝트를 찾아 Dictionary에 저장
+            foreach (Transform child in trinketUIParent.transform)
+            {
+                trinketButtons[child.name] = child.gameObject;
+                child.gameObject.SetActive(false); // 시작 시 모든 버튼 비활성화
+            }
+
+            // 🔹 저장된 유물 UI 자동 활성화
+            LoadRelicUI();
+
         }
 
         // 유물 추가
@@ -40,6 +68,17 @@ namespace JungBin
             relics.Add(relic);
             relic.ApplyEffect(player);
             Debug.Log($"{relic.RelicName} 유물의 효과 : {relic.Description}");
+
+            // 🔹 이미 저장된 유물이 아니라면 추가
+            if (!SaveLoadManager.Instance.relicSaveData.relics.Exists(r => r.relicID == relic.RelicID))
+            {
+                SaveLoadManager.Instance.relicSaveData.relics.Add(new RelicDataEntry(relic.RelicID, relic.RelicName));
+            }
+
+            ActivateTrinketButton(relic.RelicID);
+
+            // 🔹 유물 획득 시 즉시 저장하도록 추가
+            SaveLoadManager.Instance.SaveRelics();
         }
 
         // 현재 유물 목록 반환
@@ -71,10 +110,6 @@ namespace JungBin
         public void SelectRelicButton()
         {
             ApplyRelicEffect(selectedRelic, GameManager.Instance.Player);
-
-            Time.timeScale = 1f; // 게임 시간 정상화
-            TestUI testUI = new TestUI();
-            testUI.CloseUI();
         }
 
         public IRelic ShowRelicDescription(string name)
@@ -118,13 +153,34 @@ namespace JungBin
             relicSelectUI.SetActive(false);
         }
 
+        // 🔹 게임 시작 시 저장된 유물 UI 버튼 활성화
+        private void LoadRelicUI()
+        {
+            foreach (var relicEntry in SaveLoadManager.Instance.relicSaveData.relics)
+            {
+                ActivateTrinketButton(relicEntry.relicID); // 🔹 영어 ID 사용하여 UI 버튼 활성화
+            }
+        }
+
+        // 🔹 유물 획득 시 해당하는 버튼 활성화
+        public void ActivateTrinketButton(string relicID)
+        {
+            if (trinketButtons.ContainsKey(relicID))
+            {
+                trinketButtons[relicID].SetActive(true);
+                Debug.Log($"{relicID} 버튼이 활성화되었습니다!");
+            }
+            else
+            {
+                Debug.LogWarning($"UI 버튼을 찾을 수 없습니다: {relicID}");
+            }
+        }
+
         public void CloseRelicUI()
         {
             relicSelectUI.SetActive(false);
-
-            Time.timeScale = 1f; // 게임 시간 정상화
-            TestUI testUI = new TestUI();
-            testUI.CloseUI();
         }
+
+
     }
 }

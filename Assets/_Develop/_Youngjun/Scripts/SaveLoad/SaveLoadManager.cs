@@ -63,7 +63,6 @@ namespace Noah
             Save(playerStatsSavePath, playerStats);
             Save(upgradeCountSavePath, upgradeCount);
             Save(playerItemSavePath, playerItem);
-            Save(relicSavePath, relicSaveData);
             // Save(upgradeGoldSavePath, upgradeGold);
         }
 
@@ -121,6 +120,17 @@ namespace Noah
                 Debug.LogWarning("Save directory not found!");
             }
         }
+
+        public void SaveRelics()
+        {
+            relicSaveData.relics.Clear();
+            foreach (var relic in RelicManager.Instance.GetRelics())
+            {
+                relicSaveData.relics.Add(new RelicDataEntry(relic.RelicID, relic.RelicName));
+            }
+            Save(relicSavePath, relicSaveData);
+        }
+
 
     }
 }

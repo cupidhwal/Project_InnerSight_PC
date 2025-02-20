@@ -5,8 +5,21 @@ namespace JungBin
 {
 
     [Serializable]
+    public class RelicDataEntry
+    {
+        public string relicID;   // 영어 ID
+        public string relicName; // 한글 이름
+
+        public RelicDataEntry(string id, string name)
+        {
+            relicID = id;
+            relicName = name;
+        }
+    }
+
+    [Serializable]
     public class RelicSaveData
     {
-        public List<string> relicNames = new List<string>(); // 획득한 유물 이름 목록 저장
+        public List<RelicDataEntry> relics = new List<RelicDataEntry>(); // 🔹 유물 리스트 (ID + Name)
     }
 }

@@ -5,10 +5,12 @@ namespace JungBin
 
     public interface IRelic
     {
-         string RelicName { get; }    // 유물 이름
-         string Description { get; } // 유물 설명
+        string RelicName { get; }  // 한글 이름
+        string RelicID { get; }    // UI 버튼과 매칭할 영어 ID
+        string Description { get; } // 설명
 
-        void ApplyEffect(Player player); // 유물 효과 적용
-        void RemoveEffect(Player player); // 유물 효과 제거
+        void ApplyEffect(Player player);
+        void RemoveEffect(Player player);
     }
+
 }
