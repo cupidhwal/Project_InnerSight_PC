@@ -2,12 +2,21 @@ using UnityEngine;
 
 namespace Seti
 {
+    public enum NPC_Type
+    {
+        Storyteller,
+        Enhance,
+        Trinkets,
+    }
+
     public class NPC : Actor
     {
         // 필드
         #region Variables
         [SerializeField]
+        private NPC_Type type;
         private GameObject targetUI;
+        private bool isOpenUI = false;
         #endregion
 
         // 오버라이드
@@ -20,13 +29,38 @@ namespace Seti
         protected override void Start()
         {
             base.Start();
-            targetUI = Noah.UIManager.Instance.playerStateUI;
+            SetUI();
         }
         #endregion
 
         // 메서드
         #region Methods
-        public void Switch_TradeUI() => Noah.UIManager.Instance.ActivePlayerStateUI();
+        public void SetUI()
+        {
+            switch(type)
+            {
+                case NPC_Type.Trinkets:
+                    targetUI = Noah.UIManager.Instance.trinketsUI;
+                    break;
+
+                case NPC_Type.Enhance:
+                    targetUI = Noah.UIManager.Instance.playerStateUI;
+                    break;
+            }
+        }
+        public void Switch_TradeUI()
+        {
+            switch (type)
+            {
+                case NPC_Type.Trinkets:
+                    targetUI.SetActive(isOpenUI = !isOpenUI);
+                    break;
+
+                case NPC_Type.Enhance:
+                    Noah.UIManager.Instance.ActivePlayerStateUI();
+                    break;
+            }
+        }
         #endregion
 
         // 이벤트 메서드

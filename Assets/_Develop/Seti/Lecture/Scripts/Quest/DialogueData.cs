@@ -14,7 +14,7 @@ namespace Seti
         #region Variables
         public Dialogues Dialogues;     // 대화 데이터베이스
         private string xmlFilePath = string.Empty;
-        private string dataPath = "Dialogue/Tutorial";
+        private string dataPath = "";
         #endregion
 
         // 생성자

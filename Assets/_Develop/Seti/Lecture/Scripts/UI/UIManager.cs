@@ -76,6 +76,7 @@ namespace Seti
 
         public void OpenDialogueUI(int dialogIndex)
         {
+            Debug.Log($"UIManager.OpenDialogueUI");
             Toggle(dialogueUI.gameObject);
             dialogueUI.StartDialogue(dialogIndex);
         }

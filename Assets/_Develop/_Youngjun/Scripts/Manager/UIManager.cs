@@ -7,6 +7,7 @@ namespace Noah
     {
         public GameObject skillSelectUI;
         public GameObject playerStateUI;
+        public GameObject trinketsUI;
         public GameObject skillReinforce;
         public GameObject statsReinforce;
 

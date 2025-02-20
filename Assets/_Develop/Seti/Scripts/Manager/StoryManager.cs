@@ -34,11 +34,6 @@ namespace Seti
         private void Start()
         {
             CurrentDialogue = dialogueList[currentIndex];
-        }
-
-        protected override void Awake()
-        {
-            base.Awake();
 
             // 초기화
             Initialize();
@@ -47,6 +42,7 @@ namespace Seti
         // 대화
         public void OpenDialogue(int index)
         {
+            Debug.Log($"StoryManager.OpenDialogue");
             uiManager.OpenDialogueUI(index);
         }
         private void SetDialogue(int index)
@@ -61,8 +57,9 @@ namespace Seti
 
         private void CheckCurrentStage()
         {
+            Debug.Log($"CheckCurrentStage");
+
             string stageName = StageManager.Instance.gameObject.GetComponentInChildren<GameObject>().name.Replace("Stage", "");
-            
             switch (stageName)
             {
                 case "_T":
@@ -76,6 +73,11 @@ namespace Seti
         // 필수 요소
         #region Require
         public Player Player { get; private set; }
+        protected override void Awake()
+        {
+            base.Awake();
+            control = new();
+        }
         protected void OnEnable()
         {
             control.Player.Interact.started += OnNextDialogueStarted;
@@ -95,6 +97,8 @@ namespace Seti
 
         private void Initialize()
         {
+            Debug.Log($"StoryManager.Initialize");
+
             Player = FindAnyObjectByType<Player>();
             if (!Player)
             {
@@ -102,13 +106,13 @@ namespace Seti
                 return;
             }
 
-            control = new();
-
             uiManager = FindAnyObjectByType<UIManager>();
             uiManager.dialogueUI.OnDialogueEnter += OnDisablePlayer;
             uiManager.dialogueUI.OnDialogueEnd += OnEnablePlayer;
 
             StageManager.Instance.stageStartEvent += CheckCurrentStage;
+
+            Debug.Log($"StoryManager.Initialize.Clear");
         }
 
         private void OnEnablePlayer()
