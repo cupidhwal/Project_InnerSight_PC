@@ -25,7 +25,8 @@ namespace Noah
 
         public float damage;
 
-        private float ctime = 0.5f;
+        [SerializeField] private float ctime = 0.5f;
+        [SerializeField] private float attackDur = 0.5f;
 
         void HitSkill(Transform enemy)
         {
@@ -73,7 +74,7 @@ namespace Noah
                         {
                             ctime += Time.deltaTime;
 
-                            while (ctime > 0.5f)
+                            while (ctime > attackDur)
                             {
                                 // 데미지 데이터 가공 후 데미지 주기
                                 Damagable.DamageMessage data = new();
