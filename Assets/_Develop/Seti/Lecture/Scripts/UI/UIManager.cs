@@ -14,7 +14,7 @@ namespace Seti
         public PlayerStatusUI playerStatusUI;
         public PlayerEquipmentUI playerEquipmentUI;
         public PlayerInventoryUI playerInventoryUI;
-        public DialogUI dialogUI;
+        public DialogueUI dialogueUI;
 
         public int itemID = 0;
         #endregion
@@ -29,7 +29,7 @@ namespace Seti
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.I))
+            /*if (Input.GetKeyDown(KeyCode.I))
             {
                 Toggle(playerInventoryUI.gameObject);
             }
@@ -63,7 +63,7 @@ namespace Seti
             if (Input.GetKeyDown(KeyCode.Alpha5))
             {
                 AddNewItem(4);
-            }
+            }*/
         }
         #endregion
 
@@ -76,13 +76,13 @@ namespace Seti
 
         public void OpenDialogueUI(int dialogIndex)
         {
-            Toggle(dialogUI.gameObject);
-            dialogUI.StartDialog(dialogIndex);
+            Toggle(dialogueUI.gameObject);
+            dialogueUI.StartDialogue(dialogIndex);
         }
 
         public void CloseDialogueUI()
         {
-            Toggle(dialogUI.gameObject);
+            Toggle(dialogueUI.gameObject);
         }
 
         public void AddNewItem(int index)

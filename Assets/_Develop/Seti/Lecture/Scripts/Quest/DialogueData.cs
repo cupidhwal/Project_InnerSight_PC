@@ -8,18 +8,18 @@ namespace Seti
     /// <summary>
     /// 
     /// </summary>
-    public class DialogData : ScriptableObject
+    public class DialogueData : ScriptableObject
     {
         // 필드
         #region Variables
-        public Dialogs Dialogs;     // 대화 데이터베이스
+        public Dialogues Dialogues;     // 대화 데이터베이스
         private string xmlFilePath = string.Empty;
-        private string dataPath = "Data/DialogData";
+        private string dataPath = "Dialogue/Tutorial";
         #endregion
 
         // 생성자
         #region Constructor
-        public DialogData() { }
+        public DialogueData() { }
         #endregion
 
         // 메서드
@@ -33,8 +33,8 @@ namespace Seti
                 return;
             }
             using XmlTextReader reader = new(new StringReader(asset.text));
-            var xs = new XmlSerializer(typeof(Dialogs));
-            Dialogs = (Dialogs)xs.Deserialize(reader);
+            var xs = new XmlSerializer(typeof(Dialogues));
+            Dialogues = (Dialogues)xs.Deserialize(reader);
         }
         #endregion
     }

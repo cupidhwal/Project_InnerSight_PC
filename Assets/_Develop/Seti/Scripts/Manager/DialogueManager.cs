@@ -7,14 +7,14 @@ namespace Seti
     /// </summary>
     public class DialogueManager : MonoBehaviour
     {
-        private static DialogData dialogData = null;
+        private static DialogueData dialogData = null;
 
         private void Start()
         {
             //이펙트 데이터 가져오기
             if (dialogData == null)
             {
-                dialogData = ScriptableObject.CreateInstance<DialogData>();
+                dialogData = ScriptableObject.CreateInstance<DialogueData>();
                 dialogData.LoadData();
 
                 Debug.Log($"{dialogData} 로드 완료");
@@ -22,11 +22,11 @@ namespace Seti
         }
 
         //이펙트 데이터 가져오기
-        public static DialogData GetDialogData()
+        public static DialogueData GetDialogData()
         {
             if (dialogData == null)
             {
-                dialogData = ScriptableObject.CreateInstance<DialogData>();
+                dialogData = ScriptableObject.CreateInstance<DialogueData>();
                 dialogData.LoadData();
             }
             return dialogData;

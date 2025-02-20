@@ -13,7 +13,7 @@ namespace Seti
         // 이벤트
         public UnityAction OnStoryEnter;
         public UnityAction OnStoryEnd;
-        protected DialogUI dialogUI;
+        protected DialogueUI dialogUI;
 
         [Header("Story : Path")]
         [SerializeField]
@@ -41,18 +41,18 @@ namespace Seti
         protected virtual void Initialize()
         {
             // 참조
-            dialogUI = Manager_Game.Instance.DialogUI;
+            //dialogUI = DataManager.DialogUI;
 
             // 이벤트 구독
-            OnStoryEnter += Dialogue;
-            OnStoryEnter += DialogueSwitch;
+            //OnStoryEnter += Dialogue;
+            //OnStoryEnter += DialogueSwitch;
         }
 
         // 이벤트
         public abstract void StoryEnter();
         public void StoryEnd() => OnStoryEnd?.Invoke();
-        void Dialogue() => Manager_Game.Instance.DialogUI.SetDialogue(this, dialogue.xmlPath, dialogue.dialogueIndex);
-        void DialogueSwitch() => dialogue.isRead = true;
+        //void Dialogue() => Manager_Game.Instance.DialogUI.SetDialogue(this, dialogue.xmlPath, dialogue.dialogueIndex);
+        //void DialogueSwitch() => dialogue.isRead = true;
         #endregion
     }
 }

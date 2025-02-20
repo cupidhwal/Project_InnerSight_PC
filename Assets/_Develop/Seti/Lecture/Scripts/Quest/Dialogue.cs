@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Seti
 {
@@ -7,21 +8,32 @@ namespace Seti
     /// Dialog 데이터 리스트
     /// </summary>
     [Serializable]
-    public class Dialogs
+    [XmlRoot("Dialogues")]
+    public class Dialogues
     {
-        public List<Dialog> dialogs;
+        [XmlElement("Dialogue")]
+        public List<Dialogue> dialogues;
     }
 
     /// <summary>
     /// Dialog 데이터 모델 클래스
     /// </summary>
     [Serializable]
-    public class Dialog
+    public class Dialogue
     {
+        [XmlElement("number")]
         public int number;
+
+        [XmlElement("character")]
         public int character;
+
+        [XmlElement("name")]
         public string name;
+
+        [XmlElement("sentence")]
         public string sentence;
+
+        [XmlElement("nextType")]
         public NextType nextType;
     }
 

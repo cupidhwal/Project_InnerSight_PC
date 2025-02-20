@@ -20,7 +20,7 @@ namespace Seti
         protected override void Initialize()
         {
             base.Initialize();
-            player = Manager_Game.Instance.Player;
+            player = StoryManager.Instance.Player;
         }
 
         // 이벤트
@@ -29,10 +29,10 @@ namespace Seti
             // 거리 계산
             distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
-            if (!dialogue.isRead && distanceToPlayer < range_Event)
+            /*if (!dialogue.isRead && distanceToPlayer < range_Event)
             {
                 OnStoryEnter?.Invoke();
-            }
+            }*/
         }
     }
 }
