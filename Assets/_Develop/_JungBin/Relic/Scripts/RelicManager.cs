@@ -1,3 +1,4 @@
+using Noah;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -17,13 +18,27 @@ namespace JungBin
         [SerializeField] private GameObject relicSelectUI;
         [SerializeField] private Image applyImage;
 
-
-
         private Sprite sourceImage;
+
+        private void Start()
+        {
+            // 🔹 `LoadAll()`이 실행된 후 유물 목록을 `RelicManager`에 적용
+            foreach (string relicName in SaveLoadManager.Instance.relicSaveData.relicNames)
+            {
+                IRelic relic = RelicFactory.CreateRelic(relicName);
+                if (relic != null)
+                {
+                    relics.Add(relic);
+                    relic.ApplyEffect(GameManager.Instance.Player);
+                }
+            }
+        }
+
         // 유물 추가
         public void AddRelic(IRelic relic, Player player)
         {
             relics.Add(relic);
+            relic.ApplyEffect(player);
             Debug.Log($"{relic.RelicName} 유물의 효과 : {relic.Description}");
         }
 
@@ -90,23 +105,17 @@ namespace JungBin
             // 이전 유물 효과 제거
             if (selectedRelic != null)
             {
-                RemoveRelicEffect(selectedRelic, player);
+                selectedRelic.RemoveEffect(player);
             }
 
             // 새 유물 효과 적용
             selectedRelic = newRelic;
             selectedRelic.ApplyEffect(player);
             applyImage.sprite = sourceImage;
+
             Debug.Log($"{selectedRelic.RelicName} 유물 효과가 적용되었습니다.");
 
             relicSelectUI.SetActive(false);
-        }
-
-        // 이전 유물 효과 제거
-        private void RemoveRelicEffect(IRelic relic, Player player)
-        {
-            relic.RemoveEffect(player);
-            Debug.Log($"{relic.RelicName} 유물 효과가 제거되었습니다.");
         }
 
         public void CloseRelicUI()

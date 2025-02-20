@@ -7,8 +7,8 @@ namespace JungBin
     public class SpikeController : MonoBehaviour
     {
         [Header("Attack Settings")]
-        [SerializeField] private Vector3 attackDirection = Vector3.up; // 공격 방향 (기본값)
-        [SerializeField] private float damageCooldown = 1f; // 데미지 쿨타임
+        private Vector3 attackDirection = Vector3.up; // 공격 방향 (기본값)
+        private float damageCooldown = 1f; // 데미지 쿨타임
         private bool canTakeDamage = true; // 데미지 가능 여부
         private Coroutine cooldownCoroutine;
 
