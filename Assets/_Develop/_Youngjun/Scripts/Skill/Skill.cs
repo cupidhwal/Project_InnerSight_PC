@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 namespace Noah
 {
@@ -132,4 +133,30 @@ namespace Noah
             ReturnToPool();
         }
     }
+
+    [Serializable]
+    public class DoubleSlash : Skill<DoubleSlash>
+    {
+        public override void Activate()
+        {
+            isSkillOn = false;
+            Debug.Log(damage + " / " + cooldown);
+
+            ReturnToPool();
+        }
+    }
+
+    [Serializable]
+    public class MultipleSlash : Skill<MultipleSlash>
+    {
+        public override void Activate()
+        {
+            isSkillOn = false;
+            Debug.Log(damage + " / " + cooldown);
+
+            ReturnToPool();
+        }
+    }
+
+
 }

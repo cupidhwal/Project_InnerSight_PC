@@ -41,6 +41,8 @@ namespace Noah
         public LaserFire laserFire;
         public Bomb bomb;
         public BloodSycthe bloodSycthe;
+        public DoubleSlash doubleSlash;
+        public MultipleSlash multipleSlash;
 
         private void Awake()
         {
@@ -59,12 +61,7 @@ namespace Noah
             selectBtnPar = selectUI.transform.GetChild(0);
 
             // 스킬 종류 추가
-            skills.Add(fireSkill);
-            skills.Add(kunai);
-            skills.Add(meteorRain);
-            skills.Add(laserFire);
-            skills.Add(bomb);
-            skills.Add(bloodSycthe);
+
 
             for(int i = 0; i < skillBtnsPar.childCount; i++)
             {
@@ -84,6 +81,19 @@ namespace Noah
                 changeBtns.Add(selectBtnPar.GetChild(i).GetChild(0).GetComponent<Button>());
             }
 
+        }
+
+        void AddSkills()
+        {
+            // 스킬 종류 추가
+            skills.Add(fireSkill);
+            skills.Add(kunai);
+            skills.Add(meteorRain);
+            skills.Add(laserFire);
+            skills.Add(bomb);
+            skills.Add(bloodSycthe);
+            skills.Add(doubleSlash);
+            skills.Add(multipleSlash);
         }
 
         // 만약 x 키에 데이터가 있으면 c 키에 스킬 넣기
