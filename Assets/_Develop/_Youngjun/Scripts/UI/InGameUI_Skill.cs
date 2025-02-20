@@ -61,9 +61,9 @@ namespace Noah
             selectBtnPar = selectUI.transform.GetChild(0);
 
             // 스킬 종류 추가
+            AddSkills();
 
-
-            for(int i = 0; i < skillBtnsPar.childCount; i++)
+            for (int i = 0; i < skillBtnsPar.childCount; i++)
             {
                 if (skillBtnsPar.GetChild(i).GetChild(0).GetComponent<Button>() == null)
                 {

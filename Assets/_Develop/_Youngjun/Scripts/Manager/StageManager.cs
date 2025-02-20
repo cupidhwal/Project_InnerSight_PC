@@ -79,7 +79,15 @@ namespace Noah
 
         void SetCurrentStage(int _stage = 0)
         {
-            curStage = _stage;
+            if (!SaveLoadManager.Instance.isLoadData)
+            {
+                curStage = _stage;
+            }
+            else
+            {
+                curStage = 1;
+            }
+
 
             if (currentStagePar.GetChild(0).gameObject != null)
             {

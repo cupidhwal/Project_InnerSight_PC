@@ -270,7 +270,7 @@ namespace Noah
             if (setSkill.skillSlots[index].rangeType == SkillRangeType.Circle)
             {
                 skillPos = new Vector3(RayManager.Instance.RayToScreen().x, RayManager.Instance.RayToScreen().y + setSkill.skillSlots[index].skillPos.y, RayManager.Instance.RayToScreen().z);
-      
+
             }
             else if (setSkill.skillSlots[index].rangeType == SkillRangeType.Cube)
             {
@@ -278,7 +278,6 @@ namespace Noah
 
                 yRot = transform.position.z + setSkill.skillSlots[index].skillPos.z;
                 skillPos = new Vector3(transform.position.x + setSkill.skillSlots[index].skillPos.x, RayManager.Instance.RayToScreen().y + setSkill.skillSlots[index].skillPos.y, yRot);
-
             }
         }
 
@@ -300,21 +299,31 @@ namespace Noah
                     }
                     else if (skill.rangeType == SkillRangeType.Cube)
                     {
-                        float yRot;
+                        //float yRot;
 
-                        yRot = transform.position.z + skill.skillPos.z;
+                        //yRot = transform.position.z + skill.skillPos.z;
 
-                        skillPos = new Vector3(transform.position.x + skill.skillPos.x, RayManager.Instance.RayToScreen().y + skill.skillPos.y, yRot);
+                        //skillPos = new Vector3(transform.position.x + skill.skillPos.x, RayManager.Instance.RayToScreen().y + skill.skillPos.y, yRot);
 
                         skillef = Instantiate(skill.skillPrefab, skillPos, yOnlyRotation);
                     }
                     else if(skill.rangeType == SkillRangeType.Nomal)
                     {
-                        skillef = Instantiate(skill.skillPrefab, transform.position, Quaternion.identity, transform);
-                    
+                        // 플레이어가 보는 방향으로 스킬 위치 설정
+                        skillPos = transform.position + transform.forward * skill.skillPos.z
+                                   + transform.right * skill.skillPos.x
+                                   + transform.up * skill.skillPos.y;
+
+                        skillef = Instantiate(skill.skillPrefab, skillPos, Quaternion.identity);
+            
                     }
 
-                    skillef.transform.GetChild(0).GetComponent<SkillAttack>().damage = skill.damage;
+                    if (skillef.transform.GetChild(0).GetComponent<SkillAttack>() != null)
+                    {
+                        skillef.transform.GetChild(0).GetComponent<SkillAttack>().damage = skill.damage;
+                    }
+
+           
 
                     StartCoroutine(skill.SkillCoolTime());
                     Destroy(skillef, skill.skillAtkTime);
