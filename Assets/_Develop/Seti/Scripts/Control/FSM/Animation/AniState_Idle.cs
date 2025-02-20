@@ -66,6 +66,8 @@ namespace Seti
         const float idleCriteria = 5f;
         void TimoutToIdle()
         {
+            if (!context.Actor) return;
+
             //입력값 체크(이동, 공격)
             bool inputDetected = context.Actor.Condition.IsMove || context.Actor.Condition.IsMagic || context.Actor.Condition.IsAttack;
 

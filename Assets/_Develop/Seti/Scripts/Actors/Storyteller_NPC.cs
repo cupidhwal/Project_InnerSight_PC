@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 namespace Seti
 {
     /// <summary>
@@ -10,39 +8,63 @@ namespace Seti
     {
         // 필드
         #region Variables
-        private InputSystem_Actions control;
+        protected Player player;
 
         [Header("Criteria : AI Behaviour")]
-        protected Player player;
+        [SerializeField]
+        protected float distanceToPlayer = 0f;
         [SerializeField]
         protected int dialogueNumber = 1;
         [SerializeField]
-        protected float range_Event = 2f;
-        [SerializeField]
-        protected float distanceToPlayer = 0f;
+        protected float range_Event = 3f;
         [SerializeField]
         protected bool canDialogue = false;
         #endregion
 
-        // 초기화
-        protected override void Initialize()
-        {
-            base.Initialize();
-            player = StoryManager.Instance.Player;
-        }
+        // 속성
+        public bool CanDialogue => canDialogue;
 
-        // 이벤트 - Update
+        // 오버라이드
         public override void StoryEnter()
         {
-            // 거리 계산
-            distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+            if (StoryManager.Instance.IsDialogue)
+            {
+                StoryManager.Instance.NextDialogue();
+            }
+            else
+            {
+                StoryManager.Instance.OpenDialogue(dialogueNumber);
+            }
+        }
 
-            if (distanceToPlayer < range_Event)
+        // 라이프 사이클
+        #region Life Cycle
+        protected virtual void Start()
+        {
+            // 초기화
+            player = StoryManager.Instance.Player;
+        }
+        #endregion
+
+        // 이벤트 메서드
+        #region Event Methods
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
             {
                 canDialogue = true;
+                player.SetTeller(this);
             }
-            else canDialogue = false;
         }
-        public override int DialogueNumber() => dialogueNumber;
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                canDialogue = false;
+                player.SetTeller(null);
+            }
+        }
+        #endregion
     }
 }

@@ -14,7 +14,6 @@ namespace Seti
         // 필드
         #region Variables
         // 스토리
-        public bool isDialogue = false;
         [SerializeField]
         private int currentIndex;
         [SerializeField]
@@ -22,19 +21,18 @@ namespace Seti
 
         // 참조
         private UIManager uiManager;
+        private Condition_Player condition_Player;
         #endregion
 
         // 속성
         public int CurrentIndex => currentIndex;
         public string CurrentDialogue { get; private set; }
+        public bool IsDialogue { get; private set; } = false;
 
         // 라이프 사이클
         private void Start()
         {
-            CurrentDialogue = dialogueList[currentIndex];
-
-            // 초기화
-            Initialize();
+            StageManager.Instance.stageEndEvent += CheckCurrentStage;
         }
 
         // 대화
@@ -46,6 +44,10 @@ namespace Seti
         public void OpenDialogue(int index)
         {
             uiManager.OpenDialogueUI(index);
+        }
+        public void NextDialogue()
+        {
+            uiManager.NextDialogueUI();
         }
 
         // 기타 메서드
@@ -68,8 +70,15 @@ namespace Seti
         // 필수 요소
         #region Require
         public Player Player { get; private set; }
+        protected override void Awake()
+        {
+            base.Awake();
 
-        private void Initialize()
+            // 초기화
+            InitializeOnAwake();
+        }
+
+        private void InitializeOnAwake()
         {
             Player = FindAnyObjectByType<Player>();
             if (!Player)
@@ -77,26 +86,25 @@ namespace Seti
                 Debug.LogWarning("No Player, No Game.");
                 return;
             }
+            condition_Player = Player.Condition as Condition_Player;
 
             uiManager = FindAnyObjectByType<UIManager>();
             uiManager.dialogueUI.OnDialogueEnter += OnDisablePlayer;
             uiManager.dialogueUI.OnDialogueEnd += OnEnablePlayer;
 
-            StageManager.Instance.stageEndEvent += CheckCurrentStage;
+            CurrentDialogue = dialogueList[currentIndex];
         }
 
         private void OnEnablePlayer()
         {
-            Condition_Player condition_Player = Player.Condition as Condition_Player;
             condition_Player.PlayerSetActive(true);
-            isDialogue = true;
+            IsDialogue = false;
         }
 
         private void OnDisablePlayer()
         {
-            Condition_Player condition_Player = Player.Condition as Condition_Player;
             condition_Player.PlayerSetActive(false);
-            isDialogue = false;
+            IsDialogue = true;
         }
         #endregion
     }

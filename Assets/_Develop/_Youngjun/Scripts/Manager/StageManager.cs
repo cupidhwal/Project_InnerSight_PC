@@ -196,7 +196,7 @@ namespace Noah
         // 테스트용
         void TestStageChage()
         {
-            player.GetComponent<Condition_Player>().PlayerSetActive(true);
+            //player.GetComponent<Condition_Player>().PlayerSetActive(true);
             player.GetComponent<NavMeshAgent>().enabled = true;
             player.GetComponent<PlayerUseSkill>().enabled = true;
             player.GetComponent<Rigidbody>().useGravity = true;

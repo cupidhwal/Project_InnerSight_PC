@@ -163,7 +163,7 @@ namespace Seti
         protected float forwardSpeed;
         protected float CurrentSpeed()
         {
-            if (Actor.Condition.InAction)
+            if (Actor && Actor.Condition.InAction)
             {
                 if (Actor.Condition.IsMove && Actor.Condition.CanMove)
                     forwardSpeed = Mathf.Lerp(forwardSpeed, Actor.Rate_Movement, 20f * Time.deltaTime);

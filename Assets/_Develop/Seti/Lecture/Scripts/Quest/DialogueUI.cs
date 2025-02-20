@@ -27,7 +27,7 @@ namespace Seti
         public GameObject npcImage;
         public Button nextButton;
 
-        // 대화 종료시 실행된 이벤트
+        // 대화 관련
         public UnityAction OnDialogueEnter;
         public UnityAction OnDialogueEnd;
         #endregion
@@ -42,7 +42,6 @@ namespace Seti
         {
             Initialize();
             dialogues = null;
-            OnDialogueEnd = null;
         }
 
         //초기화
@@ -100,6 +99,8 @@ namespace Seti
             nextButton.gameObject.SetActive(false);
 
             nameText.text = dialogue.name;
+
+            StopAllCoroutines();
             StartCoroutine(TypingSentence(dialogue.sentence));
         }
 
@@ -115,6 +116,8 @@ namespace Seti
             }
 
             nextButton.gameObject.SetActive(true);
+
+            yield break;
         }
 
         //대화 종료

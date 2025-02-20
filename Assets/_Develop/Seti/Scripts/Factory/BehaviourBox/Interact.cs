@@ -37,20 +37,23 @@ namespace Seti
         #region Methods
         void OnInteraction()
         {
-            if (player.CurrentNPC != null)
+            if (StoryManager.Instance.IsDialogue)
             {
-                player.CurrentNPC.Switch_TradeUI();
+                StoryManager.Instance.NextDialogue();
                 return;
             }
 
-            if (player.CurrentTeller != null)
+            if (player.CurrentTeller != null && player.CurrentTeller.CanDialogue)
             {
                 player.CurrentTeller.StoryEnter();
                 return;
             }
 
-            /*if (StoryManager.Instance.isDialogue)
-                StoryManager.Instance.*/
+            if (player.CurrentNPC != null)
+            {
+                player.CurrentNPC.Switch_TradeUI();
+                return;
+            }
         }
         #endregion
     }

@@ -80,6 +80,11 @@ namespace Seti
             dialogueUI.StartDialogue(dialogIndex);
         }
 
+        public void NextDialogueUI()
+        {
+            dialogueUI.DrawNextDialogue();
+        }
+
         public void CloseDialogueUI()
         {
             Toggle(dialogueUI.gameObject);

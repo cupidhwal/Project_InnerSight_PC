@@ -2480,12 +2480,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8962978740015551571}
   - component: {fileID: 4641470772622133745}
+  - component: {fileID: 4241251856355885589}
   - component: {fileID: 4666131609303932621}
   - component: {fileID: 3274184399602210835}
+  - component: {fileID: 4613047507819941460}
   - component: {fileID: 4426285132630832037}
   - component: {fileID: 3137153973983207957}
   - component: {fileID: 7553160726999756634}
-  - component: {fileID: 4613047507819941460}
   m_Layer: 6
   m_Name: NPC_A_Fixed
   m_TagString: Untagged
@@ -2533,6 +2534,27 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!135 &4241251856355885589
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4891930711745136675}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4666131609303932621
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2582,6 +2604,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 0
+--- !u!114 &4613047507819941460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4891930711745136675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a1e0497c13c9914cb4454174655da7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceToPlayer: 0
+  dialogueNumber: 1
+  range_Event: 3
+  canDialogue: 0
 --- !u!114 &4426285132630832037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2637,27 +2675,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654620e29c2ffbb44ad8b6c8e8916d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4613047507819941460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4891930711745136675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a1e0497c13c9914cb4454174655da7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue:
-    number: 0
-    character: 0
-    name: 
-    sentence: 
-    nextType: 0
-  player: {fileID: 0}
-  range_Event: 2
-  distanceToPlayer: 0
 --- !u!1 &5006500332977023171
 GameObject:
   m_ObjectHideFlags: 0
