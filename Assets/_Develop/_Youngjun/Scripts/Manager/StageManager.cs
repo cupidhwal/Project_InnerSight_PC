@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using Unity.Cinemachine;
 using UnityEngine.Playables;
 using Unity.VisualScripting;
+using UnityEngine.Events;
 
 namespace Noah
 {
@@ -35,6 +36,7 @@ namespace Noah
         // 히든 스테이지
         public GameObject hiddenStage;
         private GameObject hiddenPotal;
+        public Vector3 playerPos;
 
         private bool isHidden = false;
 
@@ -43,6 +45,9 @@ namespace Noah
             get { return isHidden; }
             set { isHidden = value; }
         }
+
+        public UnityAction stageStartEvent;
+        public UnityAction stageEndEvent;
 
         public GameObject CurrentStage => currentStage;
 
@@ -92,29 +97,46 @@ namespace Noah
 
         void GetCurrentStage()
         {
-            currentStage = currentStagePar.GetChild(0).gameObject;
-
-            spawnPoint = currentStage.transform.Find("SpawnPoint");
-
             if (!isHidden)
             {
+                currentStage = currentStagePar.GetChild(0).gameObject;
+
                 nextStageObject = currentStage.transform.GetChild(0).GetChild(0).gameObject;
                 randomSkillObject = currentStage.transform.GetChild(0).GetChild(1).gameObject;
-                hiddenPotal = currentStage.transform.GetChild(0).GetChild(2).gameObject;
+
+                if (currentStage.transform.GetChild(0).childCount >= 3)
+                {
+                    hiddenPotal = currentStage.transform.GetChild(0).GetChild(2).gameObject;
+                }
             }
             else
             {
+                currentStage = currentStagePar.GetChild(1).gameObject;
+
                 nextStageObject = currentStage.transform.GetChild(0).GetChild(0).gameObject;
                 skillReinObject = currentStage.transform.GetChild(0).GetChild(1).gameObject;
                 statsReinObject = currentStage.transform.GetChild(0).GetChild(2).gameObject;
+
+                HiddenStageManager.Instance.SetObject();
             }
 
+            spawnPoint = currentStage.transform.Find("SpawnPoint");
             enemyPar = currentStage.transform.GetChild(1);
 
             for (int i = 0; i < enemyPar.childCount; i++)
             {
                 enemys.Add(enemyPar.GetChild(i).gameObject);
             }
+
+            if (currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>() != null)
+            {
+                currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = false;
+            }
+        }
+
+        void EscapeHiddenStage()
+        {
+            currentStage = currentStagePar.GetChild(0).gameObject;
 
             if (currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>() != null)
             {
@@ -132,16 +154,14 @@ namespace Noah
                
         }
 
-        //public void GoHiddenStage()
-        //{
-        //    player.GetComponent<Condition_Player>().PlayerSetActive(false);
-        //    player.GetComponent<PlayerUseSkill>().enabled = false;
-        //    enemys.Clear();
+        public void ReturnCurrentStage()
+        {
+            player.GetComponent<Condition_Player>().PlayerSetActive(false);
+            player.GetComponent<PlayerUseSkill>().enabled = false;
+            enemys.Clear();
 
-            
-        //}
-
-
+            StartCoroutine(GoCurrentStage());
+        }
 
         // Test
         public void NewStage()
@@ -226,9 +246,12 @@ namespace Noah
         }
         #endregion
 
+        // 일반 스테이지 전환 및 히든 스테이지
         IEnumerator GoNextStage()
         {
             SceneFade.instance.FadeOut(null);
+
+            stageStartEvent?.Invoke();
 
             yield return new WaitForSeconds(1f);
 
@@ -248,14 +271,16 @@ namespace Noah
 
             yield return new WaitForSeconds(0.5f);
 
-            Destroy(currentStage);
-
             if (!isHidden)
             {
+                Destroy(currentStage);
+
                 Instantiate(stageObject[curStage], currentStagePar);
             }
             else
             {
+                currentStage.SetActive(false);
+
                 Instantiate(hiddenStage, currentStagePar);
             }
 
@@ -264,7 +289,6 @@ namespace Noah
             GetCurrentStage();
 
             yield return new WaitForSeconds(0.5f);
-
 
             player.GetComponent<Condition_Player>().PlayerSetActive(true);
             player.GetComponent<PlayerUseSkill>().enabled = true;
@@ -285,12 +309,14 @@ namespace Noah
 
             player.GetComponent<NavMeshAgent>().enabled = true;
 
+            stageEndEvent?.Invoke();
+
             SceneFade.instance.FadeIn(null);
 
         }
 
-        // 히든 던전 가는 코루틴
-        IEnumerator GoHiddenStage(GameObject _hiddenStage)
+        // 히든 던전 빠져나가는 코루틴
+        IEnumerator GoCurrentStage()
         {
             SceneFade.instance.FadeOut(null);
 
@@ -300,20 +326,18 @@ namespace Noah
 
             yield return new WaitForSeconds(0.5f);
 
-            Destroy(currentStage);
+            Destroy(currentStagePar.GetChild(1).gameObject);
 
-            Instantiate(_hiddenStage, currentStagePar);
-
-            yield return new WaitForSeconds(0.5f);
-
-            GetCurrentStage();
+            currentStagePar.GetChild(0).gameObject.SetActive(true);
 
             yield return new WaitForSeconds(0.5f);
 
+            EscapeHiddenStage();
+
+            yield return new WaitForSeconds(0.5f);
 
             player.GetComponent<Condition_Player>().PlayerSetActive(true);
             player.GetComponent<PlayerUseSkill>().enabled = true;
-
 
             if (currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>() != null)
             {
@@ -322,7 +346,7 @@ namespace Noah
 
             player.GetComponent<NavMeshAgent>().enabled = false;
 
-            player.transform.position = spawnPoint.position;
+            player.transform.position = playerPos;
 
             player.GetComponent<Rigidbody>().useGravity = true;
 

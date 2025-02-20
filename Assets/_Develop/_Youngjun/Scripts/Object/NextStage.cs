@@ -1,26 +1,42 @@
-using Noah;
 using UnityEngine;
 
-public class NextStage : MonoBehaviour
-{
-    public bool isHidden = false;
-
-    private void OnTriggerEnter(Collider other)
+namespace Noah
+{ 
+    public class NextStage : MonoBehaviour
     {
-        if (other.CompareTag("Player"))
+        public bool escapeHidden = false;
+        public bool isHidden = false;
+
+        private void OnTriggerEnter(Collider other)
         {
-            transform.GetComponent<Collider>().enabled = false;
-
-            if (isHidden)
+            if (other.CompareTag("Player"))
             {
-                StageManager.Instance.IsHidden = true;
-            }
-            else
-            {
-                StageManager.Instance.IsHidden = false;
-            }
+                transform.GetComponent<Collider>().enabled = false;
 
-            StageManager.Instance.NextStage();
+                if (isHidden)
+                {
+                    StageManager.Instance.IsHidden = true;
+
+                    StageManager.Instance.playerPos = other.transform.position;
+
+                    Destroy(gameObject);
+                }
+                else if (escapeHidden)
+                {
+                    HiddenStageManager.Instance.wasHidden = true;
+
+                    StageManager.Instance.ReturnCurrentStage();
+
+                    return;
+                }
+                else
+                {
+                    StageManager.Instance.IsHidden = false;
+                }
+
+                StageManager.Instance.NextStage();
+            }
         }
     }
+    
 }

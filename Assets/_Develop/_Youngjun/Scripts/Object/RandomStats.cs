@@ -28,7 +28,15 @@ namespace Noah
                 inGameUI_RandomStats.RandomStatsReinforce();
                 Time.timeScale = 0f;
 
-                Destroy(gameObject);
+                if (HiddenStageManager.Instance != null)
+                {
+                    HiddenStageManager.Instance.SelectReinforce();
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+
             }
         }
     }
