@@ -1,5 +1,8 @@
+using System.Xml;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Noah;
 
 namespace Seti
 {
@@ -9,17 +12,30 @@ namespace Seti
     public class StoryManager : Singleton<StoryManager>
     {
         // 필드
+        #region Variables
+        // 스토리
+        [SerializeField]
+        private int currentIndex;
+        [SerializeField]
+        private List<string> dialogueList = new();
+
+        // 참조
+        private UIManager uiManager;
+
         // Input Action
         private InputSystem_Actions control;
-        private DialogueUI dialogueUI;
+        #endregion
 
         // 속성
+        public int CurrentIndex => currentIndex;
+        public string CurrentDialogue { get; private set; }
 
-        // 메서드
+        // 라이프 사이클
+        private void Start()
+        {
+            CurrentDialogue = dialogueList[currentIndex];
+        }
 
-        // 필수 요소
-        #region Require
-        public Player Player { get; private set; }
         protected override void Awake()
         {
             base.Awake();
@@ -28,6 +44,38 @@ namespace Seti
             Initialize();
         }
 
+        // 대화
+        public void OpenDialogue(int index)
+        {
+            uiManager.OpenDialogueUI(index);
+        }
+        private void SetDialogue(int index)
+        {
+            currentIndex = index;
+            DataManager.GetDialogData();
+        }
+
+        // 기타 메서드
+        #region Methods
+        public void LoadDialogue(int index) => currentIndex = index;
+
+        private void CheckCurrentStage()
+        {
+            string stageName = StageManager.Instance.gameObject.GetComponentInChildren<GameObject>().name.Replace("Stage", "");
+            
+            switch (stageName)
+            {
+                case "_T":
+                    SetDialogue(0);
+                    OpenDialogue(0);
+                    break;
+            }
+        }
+        #endregion
+
+        // 필수 요소
+        #region Require
+        public Player Player { get; private set; }
         protected void OnEnable()
         {
             control.Player.Interact.started += OnNextDialogueStarted;
@@ -41,14 +89,12 @@ namespace Seti
         // 이벤트 핸들러
         private void OnNextDialogueStarted(InputAction.CallbackContext _)
         {
-            if (dialogueUI.nextButton.gameObject.activeSelf)
-                dialogueUI.nextButton.onClick.Invoke();
+            if (uiManager.dialogueUI.nextButton.gameObject.activeSelf)
+                uiManager.dialogueUI.nextButton.onClick.Invoke();
         }
 
         private void Initialize()
         {
-            control = new();
-
             Player = FindAnyObjectByType<Player>();
             if (!Player)
             {
@@ -56,9 +102,13 @@ namespace Seti
                 return;
             }
 
-            dialogueUI = FindAnyObjectByType<UIManager>().dialogueUI;
-            dialogueUI.OnDialogueEnter += OnDisablePlayer;
-            dialogueUI.OnDialogueEnd += OnEnablePlayer;
+            control = new();
+
+            uiManager = FindAnyObjectByType<UIManager>();
+            uiManager.dialogueUI.OnDialogueEnter += OnDisablePlayer;
+            uiManager.dialogueUI.OnDialogueEnd += OnEnablePlayer;
+
+            StageManager.Instance.stageStartEvent += CheckCurrentStage;
         }
 
         private void OnEnablePlayer()

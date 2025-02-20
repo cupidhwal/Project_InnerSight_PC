@@ -27,6 +27,7 @@ namespace Seti
         //데이터 읽기
         public void LoadData()
         {
+            dataPath = StoryManager.Instance.CurrentDialogue;
             TextAsset asset = (TextAsset)ResourcesManager.Load(dataPath);
             if (asset == null || asset.text == null)
             {

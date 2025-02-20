@@ -10,7 +10,9 @@ namespace Seti
     public class MagicAttack_Particle : MonoBehaviour
     {
         // 필드
-        private Enemy attacker;
+        [SerializeField]
+        private float magicDamage = 10f;
+        private Actor attacker;
         private ParticleSystem magic;
         public Damagable.DamageMessage DamageData { get; private set; }
 
@@ -25,17 +27,17 @@ namespace Seti
                 magic.Play();
         }
 
-        public void SetAttacker(Enemy enemy)
+        public void SetAttacker(Actor actor)
         {
-            attacker = enemy;
-            Vector3 hitDirection = attacker.Player.transform.position - attacker.transform.position;
+            attacker = actor;
+            Vector3 hitDirection = attacker.transform.forward;
 
             // 데미지 데이터 가공
             DamageData = new()
             {
                 damager = this,
                 owner = attacker,
-                amount = (int)attacker.MagicDamage,
+                amount = (int)magicDamage,
                 direction = hitDirection.normalized,
                 damageSource = attacker.transform.position,
                 throwing = true,

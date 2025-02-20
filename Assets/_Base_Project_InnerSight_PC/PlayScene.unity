@@ -2085,7 +2085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4437365812876499586, guid: f03ff26750305d0419bb85a264425c78, type: 3}
       propertyPath: startGold
-      value: 0
+      value: 99999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2263,6 +2263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageObject:
+  - {fileID: 1389252411443906826, guid: 85a94be231398794d91a53e120dbd84b, type: 3}
   - {fileID: 3203969655250950944, guid: e5d0ca6ff2eec5f48b35f89baaabafc3, type: 3}
   - {fileID: 1109194272584283807, guid: 6eadf49b4f3aac340be840525b7554fc, type: 3}
   - {fileID: 5297717256532951313, guid: 3a5f0e41353f34f4d9abd722f3afa9e3, type: 3}
@@ -2270,8 +2271,9 @@ MonoBehaviour:
   - {fileID: 402329373083397749, guid: 259899dd6cd70504da1d3e0dddbcd924, type: 3}
   - {fileID: 448779039700857998, guid: fb6c537762b00c54b9c73ed535d01f5d, type: 3}
   enemys: []
-  testStageChange: 0
+  testStageChange: 1
   hiddenStage: {fileID: 0}
+  playerPos: {x: 0, y: 0, z: 0}
 --- !u!4 &818013815
 Transform:
   m_ObjectHideFlags: 0
@@ -6976,6 +6978,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2636288830159141138, guid: 96b37082ba20e7d498b2b1b656977036, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 97606628}
+    - target: {fileID: 2636288830159141138, guid: 96b37082ba20e7d498b2b1b656977036, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteAllSaveFiles
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636288830159141138, guid: 96b37082ba20e7d498b2b1b656977036, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Noah.SaveLoadManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 2949879102031314683, guid: 96b37082ba20e7d498b2b1b656977036, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -7714,9 +7728,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3239821061018164671, guid: 38d88a2171b745d4c966354a8f8b08a4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3377444468643372085, guid: 38d88a2171b745d4c966354a8f8b08a4, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3391068289301683134, guid: 38d88a2171b745d4c966354a8f8b08a4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3767997082178166462, guid: 38d88a2171b745d4c966354a8f8b08a4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4052725885584267290, guid: 38d88a2171b745d4c966354a8f8b08a4, type: 3}
       propertyPath: m_IsActive
@@ -7733,6 +7759,10 @@ PrefabInstance:
     - target: {fileID: 5670262721388833417, guid: 38d88a2171b745d4c966354a8f8b08a4, type: 3}
       propertyPath: m_Color.a
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6249194469168752555, guid: 38d88a2171b745d4c966354a8f8b08a4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9079976465716144964, guid: 38d88a2171b745d4c966354a8f8b08a4, type: 3}
       propertyPath: dialogueUI
@@ -7790,6 +7820,14 @@ PrefabInstance:
     - target: {fileID: 414806415880316281, guid: 8f83cbd1da2982f4e9bed6563fcfe56a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2321794485730255428, guid: 8f83cbd1da2982f4e9bed6563fcfe56a, type: 3}
+      propertyPath: dialogueList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2321794485730255428, guid: 8f83cbd1da2982f4e9bed6563fcfe56a, type: 3}
+      propertyPath: 'dialogueList.Array.data[0]'
+      value: Dialogue/Tutorial
       objectReference: {fileID: 0}
     - target: {fileID: 7768941942632941548, guid: 8f83cbd1da2982f4e9bed6563fcfe56a, type: 3}
       propertyPath: m_Name
