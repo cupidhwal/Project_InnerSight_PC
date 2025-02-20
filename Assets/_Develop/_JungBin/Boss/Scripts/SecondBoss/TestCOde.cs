@@ -27,6 +27,7 @@ namespace JungBin
         }
 
         // ❗ 여러 개의 투사체를 왼손에서 발사 (애니메이션 이벤트에서 호출)
+<<<<<<< HEAD
         public void FireMultipleLeftHandProjectiles()
         {
             StartCoroutine(FireProjectiles(leftHandSpawnPoint));
@@ -44,6 +45,25 @@ namespace JungBin
             {
                 FireProjectile(spawnPoint);
                 yield return new WaitForSeconds(defaultFireRate); // 일정한 간격으로 발사
+=======
+        public void FireMultipleLeftHandProjectiles(int projectileCount, float fireRate)
+        {
+            StartCoroutine(FireProjectiles(leftHandSpawnPoint, projectileCount, fireRate));
+        }
+
+        // ❗ 여러 개의 투사체를 오른손에서 발사 (애니메이션 이벤트에서 호출)
+        public void FireMultipleRightHandProjectiles(int projectileCount, float fireRate)
+        {
+            StartCoroutine(FireProjectiles(rightHandSpawnPoint, projectileCount, fireRate));
+        }
+
+        private IEnumerator FireProjectiles(Transform spawnPoint, int projectileCount, float fireRate)
+        {
+            for (int i = 0; i < projectileCount; i++)
+            {
+                FireProjectile(spawnPoint);
+                yield return new WaitForSeconds(fireRate); // 일정한 간격으로 발사
+>>>>>>> 615dc2ed54789badbf1dc92640418007740a6e5d
             }
         }
 
