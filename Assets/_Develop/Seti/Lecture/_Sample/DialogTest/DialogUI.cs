@@ -125,7 +125,7 @@ namespace MySampleEx
             foreach (char latter in typingText)
             {
                 sentenceText.text += latter;
-                yield return new WaitForSeconds(0.03f);
+                yield return new WaitForSeconds(0.02f);
             }
 
             nextButton.SetActive(true);

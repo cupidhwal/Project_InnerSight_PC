@@ -108,7 +108,7 @@ namespace Seti
             if (actor is Enemy enemy)
             {
                 Collider collider = GetComponent<Collider>();
-                collider.excludeLayers = LayerMask.GetMask("Actor");
+                collider.excludeLayers = LayerMask.GetMask("Player");
                 enemy.Agent.enabled = false;
             }
 

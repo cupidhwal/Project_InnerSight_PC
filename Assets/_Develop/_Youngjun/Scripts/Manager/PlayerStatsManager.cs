@@ -1,4 +1,5 @@
 using Seti;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -24,6 +25,8 @@ namespace Noah
         PlayerData playerData;
         UpGradeCountData upgradeCountData;
 
+        public InGameUI_RandomStats inGameUI_RandomStats;
+
         Actor actor; 
 
         private void Start()
@@ -35,6 +38,7 @@ namespace Noah
         {
             playerData = SaveLoadManager.Instance.playerStats;
             upgradeCountData = SaveLoadManager.Instance.upgradeCount;
+            inGameUI_RandomStats = FindAnyObjectByType<InGameUI_RandomStats>();
 
             player = GameObject.FindWithTag("Player");
             actor = player.GetComponent<Actor>();
@@ -47,27 +51,29 @@ namespace Noah
             inGameUI_PlayerState = FindAnyObjectByType<InGameUI_PlayerStats>();
 
             ResetData();
-
-            actor.SetStats(playerData.Health, playerData.Attack, playerData.Defend,
-                playerData.AttackSpeed, playerData.MoveSpeed);
+            SetPlayerStat();
 
             inGameUI_PlayerState.Init();
+
+            if (inGameUI_RandomStats != null)
+            {
+                inGameUI_RandomStats.Init();
+            }
 
             if (!SaveLoadManager.Instance.isLoadData)
             {
                 SaveLoadManager.Instance.SaveAll();
-            }
-            
+            }        
         }
 
         #region ResetData
         void ResetData()
         {
-            dataList.Add(playerData.Health);
-            dataList.Add(playerData.Attack);
-            dataList.Add(playerData.Defend);
-            dataList.Add(playerData.MoveSpeed);
-            dataList.Add(playerData.AttackSpeed);
+            dataList.Add(playerData.hp);
+            dataList.Add(playerData.atk);
+            dataList.Add(playerData.def);
+            dataList.Add(playerData.moveSpeed);
+            dataList.Add(playerData.atkSpeed);
 
             updateDataList.Add(upgradeData.hp_Up);
             updateDataList.Add(upgradeData.atk_Up);
@@ -110,11 +116,11 @@ namespace Noah
                 upgradeCount[i] = _upgradeCount[i];
             }
 
-            playerData.Health = dataList[0];
-            playerData.Attack = dataList[1];
-            playerData.Defend = dataList[2];
-            playerData.MoveSpeed = dataList[3];
-            playerData.AttackSpeed = dataList[4];
+            playerData.hp = dataList[0];
+            playerData.atk = dataList[1];
+            playerData.def = dataList[2];
+            playerData.moveSpeed = dataList[3];
+            playerData.atkSpeed = dataList[4];
 
             upgradeCountData.hp_UpCount = upgradeCount[0];
             upgradeCountData.atk_UpCount = upgradeCount[1];
@@ -122,8 +128,8 @@ namespace Noah
             upgradeCountData.moveSpeed_UpCount = upgradeCount[3];
             upgradeCountData.atkSpeed_UpCount = upgradeCount[4];
 
-            actor.SetStats(playerData.Health, playerData.Attack, playerData.Defend,
-                playerData.AttackSpeed, playerData.MoveSpeed);
+            actor.SetStats(playerData.hp, playerData.atk, playerData.def,
+                playerData.atkSpeed, playerData.moveSpeed);
         }
         #endregion
 
@@ -158,6 +164,38 @@ namespace Noah
             return upgradeCount;
         }
 
-      
+
+        public void SetPlayerStat()
+        {
+            actor.SetStats(playerData.hp, playerData.atk, playerData.def,
+                playerData.atkSpeed, playerData.moveSpeed);
+
+        }
+
+        public void PlayerStatReinforce(string _reinDic, float _reinData)
+        {
+            Dictionary<string, (Action<float> statAction, int index)> reinDict = new()
+            {
+                { "체력",       (value => playerData.hp += value, 0) },
+                { "공격력",     (value => playerData.atk += value, 1) },
+                { "방어력",     (value => playerData.def += value, 2) },
+                { "이동속도",   (value => playerData.moveSpeed += value, 3) },
+                { "공격속도",   (value => playerData.atkSpeed += value, 4) }
+            };
+
+            if (reinDict.TryGetValue(_reinDic, out var reinData))
+            {
+                reinData.statAction(_reinData);
+                inGameUI_RandomStats.reinforceTmpData[reinData.index] += _reinData;
+                inGameUI_RandomStats.SetUIData();
+            }
+        }
+
+        public void SetReinforceData()
+        {
+            inGameUI_RandomStats.SetReinforceData();
+        }
+
+
     }
 }

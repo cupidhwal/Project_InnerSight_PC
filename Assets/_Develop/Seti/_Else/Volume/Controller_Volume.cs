@@ -30,6 +30,11 @@ namespace Seti
         // 라이프 사이클
         private void Start()
         {
+            // 카메라 확인
+            var cameraData = Camera.main.GetComponent<UniversalAdditionalCameraData>();
+            if (cameraData != null)
+                cameraData.renderPostProcessing = true;
+
             // 참조
             volume = GetComponent<Volume>();
             player = FindAnyObjectByType<Player>();

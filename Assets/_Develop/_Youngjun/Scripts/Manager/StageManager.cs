@@ -25,7 +25,7 @@ namespace Noah
         private GameObject randomSkillObject;
 
         private Transform enemyPar;
-        private List<GameObject> enemys = new List<GameObject>();
+        [SerializeField] private List<GameObject> enemys = new List<GameObject>();
 
         public int testStageChange;
 
@@ -96,6 +96,7 @@ namespace Noah
                 currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = false;
             }
 
+            PlayerStatsManager.Instance.SetReinforceData();
 
         }
 
@@ -250,6 +251,7 @@ namespace Noah
 
         }
 
+        // 히든 던전 가는 코루틴
         IEnumerator GoHiddenStage(GameObject _hiddenStage)
         {
             SceneFade.instance.FadeOut(null);
@@ -301,8 +303,12 @@ namespace Noah
             if(enemys.Count <= 0)
             {
                 nextStageObject.SetActive(true);
-                randomSkillObject.SetActive(true);
+
+                if (randomSkillObject != null)
+                    randomSkillObject.SetActive(true);
             }
         }
+
+        public void AddEnemy(GameObject enemy) => enemys.Add(enemy);
     }
 }

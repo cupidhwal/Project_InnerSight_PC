@@ -592,6 +592,7 @@ MonoBehaviour:
   - {fileID: 8044662757036274584, guid: 100998f7f8156404d80d2bb998829784, type: 3}
   - {fileID: 402329373083397749, guid: 105b777cc9cbf9240b0efef4f6b0ce9b, type: 3}
   - {fileID: 448779039700857998, guid: 4da15779b056e3f4d8ea064d95613c18, type: 3}
+  enemys: []
   testStageChange: 5
 --- !u!4 &818013815
 Transform:
@@ -963,14 +964,13 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7339618178782629336, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1955641338251336672, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 2029741202}
   m_SourcePrefab: {fileID: 100100000, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
 --- !u!1 &1263596030
 GameObject:
@@ -1125,6 +1125,7 @@ MonoBehaviour:
   skillSelectUI: {fileID: 2723404574191319663}
   playerStateUI: {fileID: 4386372287501261691}
   skillReinforce: {fileID: 0}
+  statsReinforce: {fileID: 0}
   goldText: {fileID: 7131897407661784619}
 --- !u!4 &1346952501
 Transform:
@@ -1734,6 +1735,29 @@ Transform:
   - {fileID: 1027430773}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2029741193 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1955641338251336672, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
+  m_PrefabInstance: {fileID: 1199264243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2029741202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2029741193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 157bd757a7f122a479e253f628759f8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 0}
+  leftHandSpawnPoint: {fileID: 0}
+  rightHandSpawnPoint: {fileID: 0}
+  fireSpeed: 15
+  defaultProjectileCount: 3
+  defaultFireRate: 0.3
 --- !u!1001 &611909153184244477
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2005,19 +2029,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2155795494676924531, guid: 7ee7316697578ef45ada6a69d8221c74, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2155795494676924531, guid: 7ee7316697578ef45ada6a69d8221c74, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2155795494676924531, guid: 7ee7316697578ef45ada6a69d8221c74, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2155795494676924531, guid: 7ee7316697578ef45ada6a69d8221c74, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 305
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3463681467356155956, guid: 7ee7316697578ef45ada6a69d8221c74, type: 3}
       propertyPath: m_AnchorMax.y
