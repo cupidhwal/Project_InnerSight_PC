@@ -34,7 +34,7 @@ namespace JungBin
                     {
                         damager = this,
                         owner = null, // 보스가 필요하면 보스 객체 추가
-                        amount = 10, // 데미지량 설정
+                        amount = BossStageManager.Instance.Bosses[0].AttackDamage/2, // 데미지량 설정
                         direction = direction,
                         damageSource = transform.position,
                         throwing = true,

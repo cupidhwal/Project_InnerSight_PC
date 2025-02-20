@@ -1,3 +1,4 @@
+using JungBin;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -14,6 +15,9 @@ namespace Noah
 
         public string playerItemSavePath = "/PlayerItem.json";
         public PlayerItem playerItem = new PlayerItem();
+
+        public string relicSavePath = "/RelicData.json";
+        public RelicSaveData relicSaveData = new RelicSaveData();
 
         //public string upgradeGoldSavePath = "/UpgradeGold.json";
         //public Gold upgradeGold = new Gold();
@@ -59,7 +63,8 @@ namespace Noah
             Save(playerStatsSavePath, playerStats);
             Save(upgradeCountSavePath, upgradeCount);
             Save(playerItemSavePath, playerItem);
-           // Save(upgradeGoldSavePath, upgradeGold);
+            Save(relicSavePath, relicSaveData);
+            // Save(upgradeGoldSavePath, upgradeGold);
         }
 
         [ContextMenu("Load")]
@@ -91,6 +96,7 @@ namespace Noah
             LoadData(playerStatsSavePath, ref playerStats);
             LoadData(upgradeCountSavePath, ref upgradeCount);
             LoadData(playerItemSavePath, ref playerItem);
+            LoadData(relicSavePath, ref relicSaveData);
             //LoadData(upgradeGoldSavePath, ref upgradeGold);
         }
 
