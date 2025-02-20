@@ -38,7 +38,19 @@ namespace Seti
         void OnInteraction()
         {
             if (player.CurrentNPC != null)
+            {
                 player.CurrentNPC.Switch_TradeUI();
+                return;
+            }
+
+            if (player.CurrentTeller != null)
+            {
+                player.CurrentTeller.StoryEnter();
+                return;
+            }
+
+            /*if (StoryManager.Instance.isDialogue)
+                StoryManager.Instance.*/
         }
         #endregion
     }

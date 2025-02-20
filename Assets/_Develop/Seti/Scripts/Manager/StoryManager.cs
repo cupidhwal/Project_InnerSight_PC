@@ -14,6 +14,7 @@ namespace Seti
         // 필드
         #region Variables
         // 스토리
+        public bool isDialogue = false;
         [SerializeField]
         private int currentIndex;
         [SerializeField]
@@ -21,9 +22,6 @@ namespace Seti
 
         // 참조
         private UIManager uiManager;
-
-        // Input Action
-        private InputSystem_Actions control;
         #endregion
 
         // 속성
@@ -42,7 +40,6 @@ namespace Seti
         // 대화
         public void OpenDialogue(int index)
         {
-            Debug.Log($"StoryManager.OpenDialogue");
             uiManager.OpenDialogueUI(index);
         }
         private void SetDialogue(int index)
@@ -57,9 +54,7 @@ namespace Seti
 
         private void CheckCurrentStage()
         {
-            Debug.Log($"CheckCurrentStage");
-
-            string stageName = StageManager.Instance.gameObject.GetComponentInChildren<GameObject>().name.Replace("Stage", "");
+            string stageName = StageManager.Instance.CurrentStage.name.Replace("Stage", "").Replace("(Clone)", "").Trim();
             switch (stageName)
             {
                 case "_T":
@@ -73,32 +68,9 @@ namespace Seti
         // 필수 요소
         #region Require
         public Player Player { get; private set; }
-        protected override void Awake()
-        {
-            base.Awake();
-            control = new();
-        }
-        protected void OnEnable()
-        {
-            control.Player.Interact.started += OnNextDialogueStarted;
-        }
-
-        protected void OnDisable()
-        {
-            control.Player.Interact.started -= OnNextDialogueStarted;
-        }
-
-        // 이벤트 핸들러
-        private void OnNextDialogueStarted(InputAction.CallbackContext _)
-        {
-            if (uiManager.dialogueUI.nextButton.gameObject.activeSelf)
-                uiManager.dialogueUI.nextButton.onClick.Invoke();
-        }
 
         private void Initialize()
         {
-            Debug.Log($"StoryManager.Initialize");
-
             Player = FindAnyObjectByType<Player>();
             if (!Player)
             {
@@ -110,21 +82,21 @@ namespace Seti
             uiManager.dialogueUI.OnDialogueEnter += OnDisablePlayer;
             uiManager.dialogueUI.OnDialogueEnd += OnEnablePlayer;
 
-            StageManager.Instance.stageStartEvent += CheckCurrentStage;
-
-            Debug.Log($"StoryManager.Initialize.Clear");
+            StageManager.Instance.stageEndEvent += CheckCurrentStage;
         }
 
         private void OnEnablePlayer()
         {
             Condition_Player condition_Player = Player.Condition as Condition_Player;
             condition_Player.PlayerSetActive(true);
+            isDialogue = true;
         }
 
         private void OnDisablePlayer()
         {
             Condition_Player condition_Player = Player.Condition as Condition_Player;
             condition_Player.PlayerSetActive(false);
+            isDialogue = false;
         }
         #endregion
     }

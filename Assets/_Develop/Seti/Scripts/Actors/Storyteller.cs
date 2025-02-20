@@ -13,11 +13,6 @@ namespace Seti
         // 이벤트
         public UnityAction OnStoryEnter;
         public UnityAction OnStoryEnd;
-        protected DialogueUI dialogUI;
-
-        [Header("Story : Path")]
-        [SerializeField]
-        protected Dialogue dialogue;
         #endregion
 
         // 라이프 사이클
@@ -40,19 +35,12 @@ namespace Seti
         // 초기화
         protected virtual void Initialize()
         {
-            // 참조
-            //dialogUI = DataManager.DialogUI;
 
-            // 이벤트 구독
-            //OnStoryEnter += Dialogue;
-            //OnStoryEnter += DialogueSwitch;
         }
 
-        // 이벤트
+        // 추상화
         public abstract void StoryEnter();
-        public void StoryEnd() => OnStoryEnd?.Invoke();
-        //void Dialogue() => Manager_Game.Instance.DialogUI.SetDialogue(this, dialogue.xmlPath, dialogue.dialogueIndex);
-        //void DialogueSwitch() => dialogue.isRead = true;
+        public abstract int DialogueNumber();
         #endregion
     }
 }

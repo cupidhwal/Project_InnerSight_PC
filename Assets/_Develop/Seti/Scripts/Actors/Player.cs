@@ -44,6 +44,10 @@ namespace Seti
         private NPC currentNPC;
         public NPC CurrentNPC => currentNPC;
         public void SetNPC(NPC npc) => currentNPC = npc;
+        [SerializeField]
+        private Storyteller storyteller;
+        public Storyteller CurrentTeller => storyteller;
+        public void SetTeller(Storyteller teller) => storyteller = teller;
         #endregion
 
         // 오버라이드

@@ -79,14 +79,14 @@ namespace Noah
 
         void SetCurrentStage(int _stage = 0)
         {
-            if (!SaveLoadManager.Instance.isLoadData)
+            /*if (!SaveLoadManager.Instance.isLoadData)
             {
                 curStage = _stage;
             }
             else
             {
                 curStage = 1;
-            }
+            }*/
 
 
             if (currentStagePar.GetChild(0).gameObject != null)
@@ -105,6 +105,8 @@ namespace Noah
 
         void GetCurrentStage()
         {
+            stageStartEvent?.Invoke();
+
             if (!isHidden)
             {
                 currentStage = currentStagePar.GetChild(0).gameObject;
@@ -140,6 +142,8 @@ namespace Noah
             {
                 currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = false;
             }
+
+            stageEndEvent?.Invoke();
         }
 
         void EscapeHiddenStage()
@@ -259,8 +263,6 @@ namespace Noah
         {
             SceneFade.instance.FadeOut(null);
 
-            stageStartEvent?.Invoke();
-
             yield return new WaitForSeconds(1f);
 
             player.GetComponent<Rigidbody>().useGravity = false;
@@ -317,8 +319,6 @@ namespace Noah
 
             player.GetComponent<NavMeshAgent>().enabled = true;
 
-            stageEndEvent?.Invoke();
-
             SceneFade.instance.FadeIn(null);
 
         }
@@ -363,7 +363,6 @@ namespace Noah
             player.GetComponent<NavMeshAgent>().enabled = true;
 
             SceneFade.instance.FadeIn(null);
-
         }
 
         public void EnemyCount(GameObject _enemy)

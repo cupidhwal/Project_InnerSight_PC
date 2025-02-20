@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Seti
 {
@@ -8,13 +9,20 @@ namespace Seti
     public class Storyteller_NPC : Storyteller
     {
         // 필드
+        #region Variables
+        private InputSystem_Actions control;
+
         [Header("Criteria : AI Behaviour")]
-        [SerializeField]
         protected Player player;
+        [SerializeField]
+        protected int dialogueNumber = 1;
         [SerializeField]
         protected float range_Event = 2f;
         [SerializeField]
         protected float distanceToPlayer = 0f;
+        [SerializeField]
+        protected bool canDialogue = false;
+        #endregion
 
         // 초기화
         protected override void Initialize()
@@ -23,16 +31,18 @@ namespace Seti
             player = StoryManager.Instance.Player;
         }
 
-        // 이벤트
+        // 이벤트 - Update
         public override void StoryEnter()
         {
             // 거리 계산
             distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
-            /*if (!dialogue.isRead && distanceToPlayer < range_Event)
+            if (distanceToPlayer < range_Event)
             {
-                OnStoryEnter?.Invoke();
-            }*/
+                canDialogue = true;
+            }
+            else canDialogue = false;
         }
+        public override int DialogueNumber() => dialogueNumber;
     }
 }
