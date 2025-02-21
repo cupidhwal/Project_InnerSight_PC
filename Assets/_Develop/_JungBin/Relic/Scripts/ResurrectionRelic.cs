@@ -5,23 +5,23 @@ namespace JungBin
 
     public class ResurrectionRelic : MonoBehaviour, IRelic
     {
-        public string RelicName => "생명의 고리";       //유물의 이름
-        public string RelicID => "ResurrectionRing";  // UI 버튼과 매칭될 영어 ID
-        public string Description => "죽음을 맞이하는 순간, 단 한 번 생명력을 되찾아 다시 일어섭니다.";       //유물 설명
+        public virtual string RelicName => "생명의 고리";       //유물의 이름
+        public virtual string RelicID => "ResurrectionRing";  // UI 버튼과 매칭될 영어 ID
+        public virtual string Description => "죽음을 맞이하는 순간, 단 한 번 생명력을 되찾아 다시 일어섭니다.";       //유물 설명
         private bool isCollected = false; // 중복 수집 방지 플래그
 
-        public void ApplyEffect(Player player)
+        public virtual void ApplyEffect(Player player)
         {
             player.AddLife(1);  // 플레이어 Life 1 증가
         }
 
-        public void RemoveEffect(Player player)
+        public virtual void RemoveEffect(Player player)
         {
             player.RemoveLife(1);
         }
 
         // 플레이어 감지시 습득
-        private void OnTriggerEnter(Collider other)
+        private  void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.GetComponent<Player>())
             {

@@ -79,14 +79,14 @@ namespace Noah
 
         void SetCurrentStage(int _stage = 0)
         {
-            /*if (!SaveLoadManager.Instance.isLoadData)
+            if (!SaveLoadManager.Instance.isLoadData)
             {
                 curStage = _stage;
             }
             else
             {
                 curStage = 1;
-            }*/
+            }
 
 
             if (currentStagePar.GetChild(0).gameObject != null)
@@ -196,7 +196,7 @@ namespace Noah
         // 테스트용
         void TestStageChage()
         {
-            //player.GetComponent<Condition_Player>().PlayerSetActive(true);
+            player.GetComponent<Condition_Player>().PlayerSetActive(true);
             player.GetComponent<NavMeshAgent>().enabled = true;
             player.GetComponent<PlayerUseSkill>().enabled = true;
             player.GetComponent<Rigidbody>().useGravity = true;
