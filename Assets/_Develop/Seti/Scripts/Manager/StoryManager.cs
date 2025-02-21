@@ -85,6 +85,12 @@ namespace Seti
                     break;
 
                 case 1:
+                    switch (number_order)
+                    {
+                        case "01":
+                            composition.Composition_Switch(miniMap);
+                            break;
+                    }
                     break;
             }
         }
