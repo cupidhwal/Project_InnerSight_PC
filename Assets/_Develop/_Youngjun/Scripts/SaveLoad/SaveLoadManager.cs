@@ -40,6 +40,7 @@ namespace Noah
 
             playerStats.ResetData();
             playerItem.ResetData();
+            relicSaveData.ResetData();
         }
 
         [ContextMenu("Save")]
