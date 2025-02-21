@@ -1,9 +1,44 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Unity.Cinemachine;
 using Noah;
 
 namespace Seti
 {
+    [Serializable]
+    public class Composition
+    {
+        // 필드
+        [SerializeField]
+        private string iD;
+        [SerializeField]
+        private GameObject target;
+        [SerializeField]
+        private CompositionObject action;
+
+        // 속성
+        public string ID => iD;
+        public GameObject Target => target;
+        public CompositionObject Action => action;
+    }
+
+    [Serializable]
+    public class CompositionsPerScene
+    {
+        // 필드
+        public int sceneIndex;
+        public List<Composition> compositions;
+
+        // 인스펙터에서 값이 변경될 때 자동 실행
+        public void UpdateIndex(int index)
+        {
+            sceneIndex = index;
+        }
+    }
+
     /// <summary>
     /// 게임 스토리 총괄 디렉터
     /// </summary>
@@ -22,25 +57,24 @@ namespace Seti
         private Condition_Player condition_Player;
 
         // 연출
-        private Composition composition;
-        [Header("Composition : Elements")]
+        [Header("Composition")]
         [SerializeField]
-        private GameObject teller_A;
-        [SerializeField]
-        private GameObject miniMap;
+        private List<CompositionsPerScene> compositionList;
         #endregion
 
         // 속성
+        #region Properties
+        public Player Player { get; private set; }
+        public CinemachineCamera Cinemachine { get; private set; }
         public string CurrentDialogue { get; private set; }
         public string StageName { get; private set; }
         public bool IsDialogue { get; private set; } = false;
+        #endregion
 
         // 라이프 사이클
         private void Start()
         {
             // 참조
-            composition = GetComponent<Composition>();
-
             StageManager.Instance.stageEndEvent += CheckCurrentStage;
         }
 
@@ -61,38 +95,14 @@ namespace Seti
         }
 
         // 연출
+        public void CorStopper() => StopAllCoroutines();
+        public void CorExcutor(IEnumerator cor) => StartCoroutine(cor);
         public void SelectComposition(int number, int order)
         {
             string number_order = number.ToString() + order.ToString();
-            switch (currentIndex)
-            {
-                case 0:
-                    switch (number_order)
-                    {
-                        case "01":
-                            composition.Composition_Camera(teller_A.transform, 1);
-                            break;
+            var composition = compositionList[currentIndex].compositions.FirstOrDefault(com => com.ID == number_order);
 
-                        case "11":
-                            break;
-
-                        case "20":
-                            break;
-
-                        case "33":
-                            break;
-                    }
-                    break;
-
-                case 1:
-                    switch (number_order)
-                    {
-                        case "01":
-                            composition.Composition_Switch(miniMap);
-                            break;
-                    }
-                    break;
-            }
+            composition.Action.Execute(composition.Target);
         }
 
         // 기타 메서드
@@ -119,7 +129,6 @@ namespace Seti
 
         // 필수 요소
         #region Require
-        public Player Player { get; private set; }
         protected override void Awake()
         {
             base.Awake();
@@ -137,6 +146,7 @@ namespace Seti
                 return;
             }
             condition_Player = Player.Condition as Condition_Player;
+            Cinemachine = FindAnyObjectByType<CinemachineCamera>();
 
             uiManager = FindAnyObjectByType<UIManager>();
             uiManager.dialogueUI.OnDialogueEnter += OnDisablePlayer;
@@ -155,6 +165,14 @@ namespace Seti
         {
             condition_Player.PlayerSetActive(false);
             IsDialogue = true;
+        }
+
+        private void OnValidate()
+        {
+            for (int i = 0; i < compositionList.Count; i++)
+            {
+                compositionList[i].UpdateIndex(i);
+            }
         }
         #endregion
     }
