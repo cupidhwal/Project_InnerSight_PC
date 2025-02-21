@@ -4,7 +4,9 @@ using UnityEngine;
 
 namespace JungBin
 {
-
+    /// <summary>
+    /// 게임의 주요 시스템을 관리하는 클래스 (싱글톤)
+    /// </summary>
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; } // 싱글톤 인스턴스
@@ -21,13 +23,18 @@ namespace JungBin
             else Destroy(gameObject);
         }
 
-        // 유물을 등록하고 효과를 적용
+        /// <summary>
+        /// 유물을 등록하고 효과를 적용
+        /// </summary>
         public void RegisterRelic(IRelic relic)
         {
             if (relic != null)
             {
                 relicManager.AddRelic(relic, player);
-                
+            }
+            else
+            {
+                Debug.LogWarning("유물 등록 실패: null 값이 전달됨.");
             }
         }
     }

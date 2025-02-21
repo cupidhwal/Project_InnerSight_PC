@@ -27,6 +27,17 @@ namespace JungBin
         [SerializeField] private int defaultProjectileCount = 3; // 기본 투사체 개수
         [SerializeField] private float defaultFireRate = 0.3f; // 기본 발사 간격 (초)
 
+        [Header("Falling Attack 설정")]
+        [SerializeField] private GameObject warningEffectPrefab; // 경고 이펙트 프리팹
+        [SerializeField] private GameObject fallingObjectPrefab; // 낙하물 프리팹
+        [SerializeField] private float spawnHeight = 20f; // 낙하물 스폰 높이
+        [SerializeField] private float spawnRadius = 5f; // 플레이어 주변 랜덤 범위
+        [SerializeField] private float warningDuration = 0.5f; // 경고 이펙트 지속 시간
+        [SerializeField] private float fallSpeed = 10f; // 낙하 속도
+        [SerializeField] private int totalDrops = 20; // 한 번의 패턴에서 생성할 낙하물 개수
+        [SerializeField] private float dropInterval = 0.3f; // 낙하물 사이 시간 간격
+
+
         private int lastAttack = -1;
         public static bool isAttack { get; set; } = false; // 공격중인지 여부
 
@@ -214,14 +225,63 @@ namespace JungBin
                 projectileScript.Initialize(spawnPoint.forward * fireSpeed);
             }
         }
-    
 
-    #endregion
+        public void StartFallingAttack()
+        {
+            StartCoroutine(FallingAttackSequence());
+        }
+
+        private IEnumerator FallingAttackSequence()
+        {
+            for (int i = 0; i < totalDrops; i++)
+            {
+                Vector3 spawnPosition = GetRandomSpawnPositionNearPlayer();
+                StartCoroutine(SpawnFallingObject(spawnPosition));
+
+                yield return new WaitForSeconds(dropInterval); // 다음 낙하물 생성까지 대기
+            }
+        }
+
+        private Vector3 GetRandomSpawnPositionNearPlayer()
+        {
+            Vector3 randomOffset = new Vector3(
+                Random.Range(-spawnRadius, spawnRadius),
+                0,
+                Random.Range(-spawnRadius, spawnRadius)
+            );
+
+            Vector3 spawnPosition = player.position + randomOffset;
+            spawnPosition.y = spawnHeight;
+
+            return spawnPosition;
+        }
+
+        private IEnumerator SpawnFallingObject(Vector3 spawnPosition)
+        {
+            // 🔥 1. 경고 이펙트 생성
+            GameObject warningEffect = Instantiate(warningEffectPrefab, spawnPosition, Quaternion.identity);
+            Destroy(warningEffect, warningDuration); // 일정 시간 후 경고 제거
+
+            yield return new WaitForSeconds(warningDuration); // 경고 지속 시간 대기
+
+            // 💥 2. 실제 낙하물 생성
+            GameObject fallingObject = Instantiate(fallingObjectPrefab, spawnPosition, Quaternion.identity);
+
+            // 낙하 애니메이션 (중력으로 떨어지도록 함)
+            Rigidbody rb = fallingObject.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector3.down * fallSpeed;
+            }
+        }
+
+
+        #endregion
 
 
 
         #region 플레이어에게 이동하는 비행 상태
-    private IEnumerator FlyToTarget(Vector3 targetPosition, float duration)
+        private IEnumerator FlyToTarget(Vector3 targetPosition, float duration)
         {
             Vector3 startPosition = transform.position;
             float elapsedTime = 0f;

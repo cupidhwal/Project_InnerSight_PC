@@ -6,7 +6,7 @@ namespace JungBin
 
     public class Player : MonoBehaviour
     {
-        public static int Lives { get; private set; } = 1; // 기본 생명 수
+        public static int Lives { get; set; } = 1; // 기본 생명 수
 
         public static float Health { get; private set; } = 100; // 기본 생명 수
 
@@ -20,18 +20,12 @@ namespace JungBin
             }
         }
 
-        // 생명 추가 메서드
-        public void AddLife(int amount)
+        public static void SetLives(int value)
         {
-            Lives += amount;
-            Debug.Log($"생명 추가됨: 현재 생명 수 {Lives}");
+            Lives = value;
+            Debug.Log($"생명 변경됨: 현재 생명 수 {Lives}");
         }
 
-        public void RemoveLife(int amount)
-        {
-            Lives -= amount;
-            Debug.Log($"생명 제거됨: 현재 생명 수 {Lives}");
-        }
 
         // 사망 메서드
         public void Die()
