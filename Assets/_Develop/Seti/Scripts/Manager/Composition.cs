@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using Unity.Cinemachine;
-using NUnit.Framework.Constraints;
 
 namespace Seti
 {
@@ -34,9 +33,9 @@ namespace Seti
         }
 
         // 메서드
-        public void Composition_Switch()
+        public void Composition_Switch(GameObject target)
         {
-
+            target.SetActive(!target.activeSelf);
         }
 
         public void Composition_Camera(Transform target, float excuteDuration, float stayDuration = 1f, float comebackDuration = 1f)
