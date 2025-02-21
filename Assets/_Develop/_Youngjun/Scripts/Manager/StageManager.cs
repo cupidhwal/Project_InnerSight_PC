@@ -331,6 +331,7 @@ namespace Noah
             yield return new WaitForSeconds(1f);
 
             player.GetComponent<Rigidbody>().useGravity = false;
+            player.GetComponent<Collider>().enabled = false;
 
             yield return new WaitForSeconds(0.5f);
 
@@ -356,6 +357,7 @@ namespace Noah
 
             player.transform.position = playerPos;
 
+            player.GetComponent<Collider>().enabled = true;
             player.GetComponent<Rigidbody>().useGravity = true;
 
             yield return new WaitForSeconds(0.5f);

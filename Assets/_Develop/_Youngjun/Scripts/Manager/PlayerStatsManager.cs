@@ -63,8 +63,25 @@ namespace Noah
             if (!SaveLoadManager.Instance.isLoadData)
             {
                 SaveLoadManager.Instance.SaveAll();
-            }        
+            }
+
+            //Invoke("Test", 2f);
         }
+
+        void Test()
+        {
+            Damagable ec = player.GetComponent<Damagable>();
+
+            if (ec != null)
+            {
+                // 데미지 데이터 가공 후 데미지 주기
+                Damagable.DamageMessage data = new();
+                data.amount = 90f;
+
+                ec.TakeDamage(data);
+            }
+        }
+             
 
         #region ResetData
         void ResetData()
@@ -188,6 +205,28 @@ namespace Noah
                 reinData.statAction(_reinData);
                 inGameUI_RandomStats.ReinforceTmpData()[reinData.index] += _reinData;
                 inGameUI_RandomStats.SetUIData();
+            }
+        }
+
+        public void PlayerSetStat(string _reinDic, float _reinData)
+        {
+            switch (_reinDic)
+            {
+                case "체력":
+                    player.GetComponent<Damagable>().HealCurrentHitPoint(_reinData);
+                    break;
+                case "공격력":
+                    actor.Update_Attack(actor.Attack += _reinData);
+                    break;
+                case "방어력":
+                    actor.Update_Defend(actor.Defend += _reinData);
+                    break;
+                case "이동속도":
+                    actor.Update_Rate_Movement(actor.Rate_Movement += _reinData);
+                    break;
+                case "공격속도":
+                    actor.Update_Rate_Attack(actor.Rate_Attack += _reinData);
+                    break;
             }
         }
 

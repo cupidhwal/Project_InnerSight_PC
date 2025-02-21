@@ -236,6 +236,14 @@ namespace Seti
                 receiver.OnReceiveMessage(messageType, this, data);
             }
         }
+
+        // 플레이어 버프형 MaxHp / CurrentHp 올려주는 메서드
+        public void HealCurrentHitPoint(float _healAmount)
+        {
+            maxHitPoints += _healAmount;
+            currentHitPoints += _healAmount;
+            OnResetDamage?.Invoke();
+        }
         #endregion
 
         // 유틸리티

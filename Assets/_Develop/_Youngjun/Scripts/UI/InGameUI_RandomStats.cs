@@ -123,10 +123,8 @@ namespace Noah
         {
             playerStatsManager.PlayerStatReinforce(_dicKey, _reinData);
 
-            playerStatsManager.SetPlayerStat();
-
-            reinforceDic.Clear();
-
+            playerStatsManager.PlayerSetStat(_dicKey, _reinData);
+            //playerStatsManager.SetPlayerStat();
 
             UIBack();
         }
@@ -135,6 +133,8 @@ namespace Noah
         {
             transform.GetChild(0).gameObject.SetActive(false);
             RemoveChangeListener();
+
+            reinforceDic.Clear();
 
             Time.timeScale = 1f;
         }
