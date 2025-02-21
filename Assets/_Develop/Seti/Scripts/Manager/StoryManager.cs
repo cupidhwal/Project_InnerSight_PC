@@ -1,7 +1,5 @@
-using System.Xml;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Noah;
 
 namespace Seti
@@ -22,16 +20,27 @@ namespace Seti
         // 참조
         private UIManager uiManager;
         private Condition_Player condition_Player;
+
+        // 연출
+        private Composition composition;
+        [Header("Composition : Elements")]
+        [SerializeField]
+        private GameObject teller_A;
+        [SerializeField]
+        private GameObject miniMap;
         #endregion
 
         // 속성
-        public int CurrentIndex => currentIndex;
         public string CurrentDialogue { get; private set; }
+        public string StageName { get; private set; }
         public bool IsDialogue { get; private set; } = false;
 
         // 라이프 사이클
         private void Start()
         {
+            // 참조
+            composition = GetComponent<Composition>();
+
             StageManager.Instance.stageEndEvent += CheckCurrentStage;
         }
 
@@ -39,7 +48,8 @@ namespace Seti
         private void SetDialogue(int index)
         {
             currentIndex = index;
-            DataManager.GetDialogData();
+            CurrentDialogue = dialogueList[currentIndex];
+            DataManager.Instance.GetDialogData();
         }
         public void OpenDialogue(int index)
         {
@@ -50,17 +60,51 @@ namespace Seti
             uiManager.NextDialogueUI();
         }
 
+        // 연출
+        public void SelectComposition(int number, int order)
+        {
+            string number_order = number.ToString() + order.ToString();
+            switch (currentIndex)
+            {
+                case 0:
+                    switch (number_order)
+                    {
+                        case "01":
+                            composition.Composition_Camera(teller_A.transform, 1);
+                            break;
+
+                        case "11":
+                            break;
+
+                        case "20":
+                            break;
+
+                        case "33":
+                            break;
+                    }
+                    break;
+
+                case 1:
+                    break;
+            }
+        }
+
         // 기타 메서드
         #region Methods
         public void LoadDialogue(int index) => currentIndex = index;
 
         private void CheckCurrentStage()
         {
-            string stageName = StageManager.Instance.CurrentStage.name.Replace("Stage", "").Replace("(Clone)", "").Trim();
-            switch (stageName)
+            StageName = StageManager.Instance.CurrentStage.name.Replace("Stage", "").Replace("(Clone)", "").Trim();
+            switch (StageName)
             {
                 case "_T":
                     SetDialogue(0);
+                    OpenDialogue(0);
+                    break;
+
+                case "01":
+                    SetDialogue(1);
                     OpenDialogue(0);
                     break;
             }

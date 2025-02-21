@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Seti
@@ -5,15 +6,21 @@ namespace Seti
     /// <summary>
     /// 게임에서 사용하는 데이터들을 관리하는 클래스
     /// </summary>
-    public class DataManager : MonoBehaviour
+    public class DataManager : Singleton<DataManager>
     {
-        private static DialogueData dialogueData = null;
-        private static EffectData effectData = null;
-        private static QuestData questData = null;
+        // 필드
+        #region Variables
+        [Header("Data : Dialogue")]
+        public List<DialogueData> dialogueDatas = new();
+
+        private DialogueData dialogueData = null;
+        private EffectData effectData = null;
+        private QuestData questData = null;
+        #endregion
 
         private void Start()
         {
-            //대화 데이터 가져오기
+            /*//대화 데이터 가져오기
             if (dialogueData == null)
             {
                 dialogueData = ScriptableObject.CreateInstance<DialogueData>();
@@ -32,22 +39,45 @@ namespace Seti
             {
                 questData = ScriptableObject.CreateInstance<QuestData>();
                 questData.LoadData();
-            }
+            }*/
         }
 
         //이펙트 데이터 가져오기
-        public static DialogueData GetDialogData()
+        public DialogueData GetDialogData()
         {
-            if (dialogueData == null)
+            string dataName = string.Empty;
+            switch (StoryManager.Instance.StageName)
             {
-                dialogueData = ScriptableObject.CreateInstance<DialogueData>();
-                dialogueData.LoadData();
+                case "_T":
+                    dataName = "_T";
+                    break;
+
+                case "00":
+                    dataName = "00";
+                    break;
+
+                case "01":
+                    dataName = "01";
+                    break;
             }
+            dataName = "Stage" + dataName;
+
+            for (int i = 0; i < dialogueDatas.Count; i++)
+            {
+                if (dialogueDatas[i].name == dataName)
+                    return dialogueDatas[i];
+            }
+
+            dialogueData = ScriptableObject.CreateInstance<DialogueData>();
+            dialogueData.LoadData();
+            dialogueData.name = dataName;
+            dialogueDatas.Add(dialogueData);
+
             return dialogueData;
         }
 
         // 이펙트 데이터 가져오기
-        public static EffectData GetEffectData()
+        public EffectData GetEffectData()
         {
             if (effectData == null)
             {
@@ -58,7 +88,7 @@ namespace Seti
         }
 
         // 퀘스트 데이터 가져오기
-        public static QuestData GetQuestData()
+        public QuestData GetQuestData()
         {
             if (questData == null)
             {

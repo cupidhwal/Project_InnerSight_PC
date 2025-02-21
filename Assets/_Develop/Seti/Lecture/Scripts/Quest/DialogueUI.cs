@@ -60,7 +60,7 @@ namespace Seti
         public void StartDialogue(int dialogIndex)
         {
             //현재 대화씬(dialogIndex) 내용을 큐에 입력
-            foreach (var dialogue in DataManager.GetDialogData().Dialogues.dialogues)
+            foreach (var dialogue in DataManager.Instance.GetDialogData().Dialogues.dialogues)
             {
                 if (dialogue.number == dialogIndex)
                 {
@@ -102,6 +102,9 @@ namespace Seti
 
             StopAllCoroutines();
             StartCoroutine(TypingSentence(dialogue.sentence));
+
+            if (dialogue.nextType == NextType.Composition)
+                StoryManager.Instance.SelectComposition(dialogue.number, dialogue.order);
         }
 
         //텍스트 타이핑 연출
@@ -112,7 +115,7 @@ namespace Seti
             foreach (char latter in typingText)
             {
                 sentenceText.text += latter;
-                yield return new WaitForSeconds(0.02f);
+                yield return new WaitForSeconds(0.01f);
             }
 
             nextButton.gameObject.SetActive(true);

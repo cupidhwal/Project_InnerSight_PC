@@ -24,6 +24,9 @@ namespace Seti
         [XmlElement("number")]
         public int number;
 
+        [XmlElement("order")]
+        public int order;
+
         [XmlElement("character")]
         public int character;
 
@@ -41,6 +44,7 @@ namespace Seti
     {
         None = -1,
         Quest,
+        Composition,
         Shop,
     }
 }

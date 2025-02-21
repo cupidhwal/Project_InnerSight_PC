@@ -4051,6 +4051,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9136027670711572217, guid: 7ee7316697578ef45ada6a69d8221c74, type: 3}
   m_PrefabInstance: {fileID: 3376370529175284767}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1377302914 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6057659627545406352, guid: 77191b1a1fe931844a4b521f42708275, type: 3}
+  m_PrefabInstance: {fileID: 5401883100271227026}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1422535653 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4003189614244146056, guid: 7ee7316697578ef45ada6a69d8221c74, type: 3}
@@ -4073,6 +4078,10 @@ PrefabInstance:
     - target: {fileID: 1282898546690132978, guid: bee135ebdf761c84eb60d9847daf5110, type: 3}
       propertyPath: m_Name
       value: Camera_MiniMap
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282898546690132978, guid: bee135ebdf761c84eb60d9847daf5110, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2028204022014603027, guid: bee135ebdf761c84eb60d9847daf5110, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7381,6 +7390,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1986317585 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5458001757402354037, guid: 85a94be231398794d91a53e120dbd84b, type: 3}
+  m_PrefabInstance: {fileID: 418339755}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2007132115
 GameObject:
   m_ObjectHideFlags: 1
@@ -8270,6 +8284,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mini_Map
       objectReference: {fileID: 0}
+    - target: {fileID: 6057659627545406352, guid: 77191b1a1fe931844a4b521f42708275, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7389754393228891386, guid: 77191b1a1fe931844a4b521f42708275, type: 3}
       propertyPath: m_SizeDelta.x
       value: 300
@@ -8507,13 +8525,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2321794485730255428, guid: 8f83cbd1da2982f4e9bed6563fcfe56a, type: 3}
-      propertyPath: dialogueList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: miniMap
+      value: 
+      objectReference: {fileID: 1377302914}
     - target: {fileID: 2321794485730255428, guid: 8f83cbd1da2982f4e9bed6563fcfe56a, type: 3}
-      propertyPath: 'dialogueList.Array.data[0]'
-      value: Dialogue/Tutorial
-      objectReference: {fileID: 0}
+      propertyPath: teller_A
+      value: 
+      objectReference: {fileID: 1986317585}
+    - target: {fileID: 3149729401594735491, guid: 8f83cbd1da2982f4e9bed6563fcfe56a, type: 3}
+      propertyPath: miniMap
+      value: 
+      objectReference: {fileID: 1377302914}
+    - target: {fileID: 3149729401594735491, guid: 8f83cbd1da2982f4e9bed6563fcfe56a, type: 3}
+      propertyPath: cinemachine
+      value: 
+      objectReference: {fileID: 1595441100}
     - target: {fileID: 7768941942632941548, guid: 8f83cbd1da2982f4e9bed6563fcfe56a, type: 3}
       propertyPath: m_Name
       value: StoryManager
