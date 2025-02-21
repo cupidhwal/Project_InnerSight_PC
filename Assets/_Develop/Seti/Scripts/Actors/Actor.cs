@@ -77,11 +77,31 @@ namespace Seti
         public float Stagger_Default => 0.5f;
 
         // 스탯 외부 참조
-        public float Health => health;
-        public float Attack => attack;
-        public float Defend => defend;
-        public float Rate_Attack => rate_Attack;
-        public float Rate_Movement => rate_Movement;
+        public float Health
+        {
+            get { return health; }
+            set { value = health; }
+        }
+        public float Attack
+        {
+            get { return attack; }
+            set { value = attack; }
+        }
+        public float Defend
+        {
+            get { return defend; }
+            set { value = defend; }
+        }
+        public float Rate_Attack
+        {
+            get { return rate_Attack; }
+            set { value = rate_Attack; }
+        }
+        public float Rate_Movement
+        {
+            get { return rate_Movement; }
+            set { value = rate_Movement; }
+        }
         public float Stagger => stagger;
 
         // 기타 속성
