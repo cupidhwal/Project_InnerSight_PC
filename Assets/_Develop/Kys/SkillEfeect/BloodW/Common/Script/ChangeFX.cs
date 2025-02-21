@@ -8,7 +8,7 @@ namespace VFXTools
 	{
 		public List<GameObject> FX;
 		float time;
-		public float waitTime = 5f;
+		float waitTime = 8;
 		void Start()
 		{
 			FX.ForEach(obj => obj.SetActive(false));
