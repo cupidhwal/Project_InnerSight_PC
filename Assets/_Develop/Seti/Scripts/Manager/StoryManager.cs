@@ -99,7 +99,7 @@ namespace Seti
         public void CorExcutor(IEnumerator cor) => StartCoroutine(cor);
         public void SelectComposition(int number, int order)
         {
-            string number_order = number.ToString() + order.ToString();
+            string number_order = number.ToString() + "/" + order.ToString();
             var composition = compositionList[currentIndex].compositions.FirstOrDefault(com => com.ID == number_order);
 
             composition.Action.Execute(composition.Target);
