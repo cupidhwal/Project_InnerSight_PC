@@ -4,6 +4,11 @@ namespace Noah
 {
     public class SkillReinforce : MonoBehaviour
     {
+        private void Start()
+        {
+            ObjectFadeSystem.Instance.ObjectFadeIn_Paritcle(transform);
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))

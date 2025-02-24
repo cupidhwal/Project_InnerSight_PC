@@ -14,6 +14,8 @@ namespace Noah
         void Start()
         {
             inGameUI_RandomStats = FindAnyObjectByType<InGameUI_RandomStats>();
+
+            ObjectFadeSystem.Instance.ObjectFadeIn_Paritcle(transform);
         }
 
         private void OnTriggerEnter(Collider other)
