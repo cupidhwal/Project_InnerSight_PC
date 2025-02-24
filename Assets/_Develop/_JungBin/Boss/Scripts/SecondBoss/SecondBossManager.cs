@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -33,9 +34,14 @@ namespace JungBin
         [SerializeField] private float spawnHeight = 20f; // 낙하물 스폰 높이
         [SerializeField] private float spawnRadius = 5f; // 플레이어 주변 랜덤 범위
         [SerializeField] private float warningDuration = 0.5f; // 경고 이펙트 지속 시간
-        [SerializeField] private float fallSpeed = 10f; // 낙하 속도
+        [SerializeField] private float fallSpeed = 5f; // 낙하 속도
         [SerializeField] private int totalDrops = 20; // 한 번의 패턴에서 생성할 낙하물 개수
         [SerializeField] private float dropInterval = 0.3f; // 낙하물 사이 시간 간격
+
+        [Header("회피형 공격 설정")]
+        [SerializeField] private BoxCollider footAttackBox;
+        [SerializeField] private float dodgeDistance = 5f;
+
 
 
         private int lastAttack = -1;
@@ -59,6 +65,7 @@ namespace JungBin
         private string isFar = "IsFar";
         private string isRun = "IsRun";
         private string isArrived = "IsArrived";
+        private string retreatAndShoot = "RetreatAndShoot";
         #endregion
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -87,6 +94,9 @@ namespace JungBin
         {
             Vector3 direction = player.position - transform.position;
             float distance = direction.magnitude;
+
+            animator.SetFloat("PlayerDistance", distance);
+
             if (!isAttack)
             {
                 RotateTowardsPlayer(direction);
@@ -136,6 +146,8 @@ namespace JungBin
 
         public void SelectNextAttack()  //보스의 공격 패턴 결정(연속으로 같은 공격이 나오지는 않음)
         {
+            
+
             int attackIndex;
             do
             {
@@ -144,6 +156,12 @@ namespace JungBin
 
             TriggerAttackAnimation(attackIndex);
             lastAttack = attackIndex;
+
+            if (Random.value < 0.2f) // ✅ 30% 확률로 회피 후 공격
+            {
+                animator.SetBool(retreatAndShoot, true);
+                return;
+            }
         }
 
         private void TriggerAttackAnimation(int attackIndex)    // 결정된 공격 패턴을 애니메이션에게 전달
@@ -251,7 +269,6 @@ namespace JungBin
             );
 
             Vector3 spawnPosition = player.position + randomOffset;
-            spawnPosition.y = spawnHeight;
 
             return spawnPosition;
         }
@@ -265,15 +282,56 @@ namespace JungBin
             yield return new WaitForSeconds(warningDuration); // 경고 지속 시간 대기
 
             // 💥 2. 실제 낙하물 생성
-            GameObject fallingObject = Instantiate(fallingObjectPrefab, spawnPosition, Quaternion.identity);
+            spawnPosition.y = spawnHeight;
+            Quaternion spawnRotation = Quaternion.LookRotation(Vector3.down);
+            GameObject fallingObject = Instantiate(fallingObjectPrefab, spawnPosition, spawnRotation);
 
             // 낙하 애니메이션 (중력으로 떨어지도록 함)
             Rigidbody rb = fallingObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
+                rb.useGravity = true;
                 rb.linearVelocity = Vector3.down * fallSpeed;
             }
         }
+
+        public void RetreatAndShoot()
+        {
+            StartCoroutine(PerformRetreatAndShoot());
+        }
+
+        private IEnumerator PerformRetreatAndShoot()
+        {
+            footAttackBox.enabled = true;
+
+            yield return new WaitForSeconds(0.2f);
+
+            footAttackBox.enabled = false;
+
+            Vector3 startPosition = transform.position; // 시작 위치 저장
+            Vector3 dodgeDirection = -transform.forward * dodgeDistance;
+            Vector3 targetPosition = startPosition + dodgeDirection;
+
+            float elapsedTime = 0f;
+            float dodgeDuration = 0.4f; // 회피 속도 (0.4초)
+
+            while (elapsedTime < dodgeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = elapsedTime / dodgeDuration;
+                t = Mathf.Sin(t * Mathf.PI * 0.5f); // ✅ 처음 빠르고 끝에서 부드럽게 착지
+
+                transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+                yield return null;
+            }
+
+            transform.position = targetPosition; // ✅ 최종 위치 보정
+
+            yield return new WaitForSeconds(0.2f); // ✅ 잠깐의 딜레이 후 반격 공격
+
+            animator.SetTrigger("Attack04");
+        }
+
 
 
         #endregion
