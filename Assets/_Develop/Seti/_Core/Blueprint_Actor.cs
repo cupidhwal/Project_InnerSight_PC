@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -8,8 +9,16 @@ namespace Seti
     public enum ControlType
     {
         Input,
-        FSM,
-        Stuff
+        AI
+    }
+
+    [Serializable]
+    public class BehaviourStrategyMapping
+    {
+        [SerializeReference]
+        public IBehaviour behaviour;
+        [SerializeReference]
+        public List<Strategy> strategies;
     }
 
     /// <summary>
@@ -18,21 +27,24 @@ namespace Seti
     [CreateAssetMenu(fileName = "New Actor", menuName = "Blueprint/Actor")]
     public class Blueprint_Actor : ScriptableObject
     {
+        // 필드
+        #region Variables
         [SerializeField]
-        private string actorName; // 액터 이름
-        public GameObject actorPrefab; // 액터 오브젝트
-        public ControlType controlType; // Actor 타입(enum)
-        public Box_Strategy strategyBox; // Box_Strategy 참조
-        public Box_Behaviour behaviourBox; // Box_Behaviour 참조
+        private string actorName;           // 액터 이름
+        public GameObject actorPrefab;      // 액터 오브젝트
+        public ControlType controlType;     // Actor 타입(enum)
+        public Box_Strategy strategyBox;    // Box_Strategy 참조
+        public Box_Behaviour behaviourBox;  // Box_Behaviour 참조
 
         [HideInInspector]
         [SerializeReference]
         public List<BehaviourStrategyMapping> behaviourStrategies = new();
 
         public string ActorName => actorName;
+        #endregion
 
         // 특정 행동에 대한 전략 가져오기
-        public List<Strategy> GetStrategiesForBehaviour(IBehaviour behaviour)
+        public List<Strategy> GetStrategies(IBehaviour behaviour)
         {
             return behaviourStrategies
                 .FirstOrDefault(mapping => mapping.behaviour == behaviour)?
@@ -55,14 +67,5 @@ namespace Seti
                 }
             }
         }
-    }
-
-    [System.Serializable]
-    public class BehaviourStrategyMapping
-    {
-        [SerializeReference]
-        public IBehaviour behaviour;
-        [SerializeReference]
-        public List<Strategy> strategies;
     }
 }

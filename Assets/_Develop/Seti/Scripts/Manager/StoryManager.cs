@@ -8,37 +8,6 @@ using Noah;
 
 namespace Seti
 {
-    [Serializable]
-    public class Composition
-    {
-        // 필드
-        [SerializeField]
-        private string iD;
-        [SerializeField]
-        private GameObject target;
-        [SerializeField]
-        private CompositionObject action;
-
-        // 속성
-        public string ID => iD;
-        public GameObject Target => target;
-        public CompositionObject Action => action;
-    }
-
-    [Serializable]
-    public class CompositionsPerScene
-    {
-        // 필드
-        public int sceneIndex;
-        public List<Composition> compositions;
-
-        // 인스펙터에서 값이 변경될 때 자동 실행
-        public void UpdateIndex(int index)
-        {
-            sceneIndex = index;
-        }
-    }
-
     /// <summary>
     /// 게임 스토리 총괄 디렉터
     /// </summary>
@@ -47,6 +16,7 @@ namespace Seti
         // 필드
         #region Variables
         // 스토리
+        [Header("Dialogue")]
         [SerializeField]
         private int currentIndex;
         [SerializeField]
@@ -66,6 +36,7 @@ namespace Seti
         #region Properties
         public Player Player { get; private set; }
         public CinemachineCamera Cinemachine { get; private set; }
+        public GameObject TempTarget { get; private set; }
         public string CurrentDialogue { get; private set; }
         public string StageName { get; private set; }
         public bool IsDialogue { get; private set; } = false;
@@ -95,6 +66,7 @@ namespace Seti
         }
 
         // 연출
+        public void SetTempTarget(GameObject tempTarget) => TempTarget = tempTarget;
         public void CorStopper() => StopAllCoroutines();
         public void CorExcutor(IEnumerator cor) => StartCoroutine(cor);
         public void SelectComposition(int number, int order)
@@ -102,7 +74,10 @@ namespace Seti
             string number_order = number.ToString() + "/" + order.ToString();
             var composition = compositionList[currentIndex].compositions.FirstOrDefault(com => com.ID == number_order);
 
-            composition.Action.Execute(composition.Target);
+            foreach (var act in composition.Actions)
+            {
+                act.Execute(composition.Target);
+            }
         }
 
         // 기타 메서드

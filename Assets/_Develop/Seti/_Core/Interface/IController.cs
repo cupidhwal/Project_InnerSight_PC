@@ -6,6 +6,6 @@ namespace Seti
     {
         Type GetControlType();
         void Initialize();
-        void SetActorBehaviours(Actor actor);
+        void SetBehaviours(Actor actor);
     }
 }

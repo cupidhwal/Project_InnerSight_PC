@@ -4,6 +4,10 @@ namespace Seti
 {
     public class Condition_Enemy : Condition_Actor
     {
+        // 필드
+        [SerializeField]
+        private float destroyDelay = 2f;
+
         // 속성
         public bool IsPositioning { get; set; } = false;
 
@@ -35,7 +39,7 @@ namespace Seti
         protected override void Die()
         {
             base.Die();
-            Destroy(gameObject, 2);
+            Destroy(gameObject, destroyDelay);
         }
         #endregion
     }

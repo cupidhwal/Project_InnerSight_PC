@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Seti
 {
-    public class Controller_FSM : Controller_Base, IController
+    public class Controller_FSM : Controller_Base
     {
         public enum EnemyState
         {
@@ -34,7 +34,7 @@ namespace Seti
 
         // 인터페이스
         #region Interface
-        public Type GetControlType() => typeof(Control_FSM);
+        public override Type GetControlType() => typeof(Control_FSM);
         #endregion
 
         // 라이프 사이클

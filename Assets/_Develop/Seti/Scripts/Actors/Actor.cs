@@ -159,6 +159,7 @@ namespace Seti
             this.blueprint = blueprint;
 
             // Check Actor State
+            condition = GetComponent<Condition_Actor>();
             if (!condition)
                 condition = CreateState();
             condition.Initialize();
@@ -187,12 +188,8 @@ namespace Seti
                     SwitchControlType(new Control_Input());
                     break;
 
-                case ControlType.FSM:
+                case ControlType.AI:
                     SwitchControlType(new Control_FSM());
-                    break;
-
-                case ControlType.Stuff:
-                    SwitchControlType(new Control_Stuff());
                     break;
             }
         }

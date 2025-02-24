@@ -14,8 +14,8 @@ namespace Seti
                 controller = actor.gameObject.AddComponent<Controller_Input>();
             }
 
-            // ¸í½ÃÀûÀ¸·Î ÃÊ±âÈ­ È£Ãâ
-            controller.SetActorBehaviours(actor);
+            // ëª…ì‹œì ìœ¼ë¡œ ì´ˆê¸°í™” í˜¸ì¶œ
+            controller.SetBehaviours(actor);
         }
 
         public void OnExit(Actor actor)

@@ -6,7 +6,7 @@ namespace Seti
     /// <summary>
     /// ControlType.Input Controller
     /// </summary>
-    public class Controller_Input : Controller_Base, IController
+    public class Controller_Input : Controller_Base
     {
         // 필드
         #region Variables
@@ -15,7 +15,7 @@ namespace Seti
 
         // 인터페이스
         #region Interface
-        public Type GetControlType() => typeof(Control_Input);
+        public override Type GetControlType() => typeof(Control_Input);
         #endregion
 
         // 라이프 사이클

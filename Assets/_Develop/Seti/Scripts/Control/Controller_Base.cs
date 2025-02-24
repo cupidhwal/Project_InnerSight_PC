@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Seti
 {
-    public abstract class Controller_Base : MonoBehaviour
+    public abstract class Controller_Base : MonoBehaviour, IController
     {
         // 필드
         #region Variables
@@ -25,9 +25,9 @@ namespace Seti
             Actor = GetComponent<Actor>();
 
             // Actor의 behaviours 리스트에서 동적으로 매핑
-            SetActorBehaviours(Actor);
+            SetBehaviours(Actor);
         }
-        public void SetActorBehaviours(Actor actor)
+        public void SetBehaviours(Actor actor)
         {
             behaviourMap = new();
 
@@ -45,6 +45,8 @@ namespace Seti
                 }
             }
         }
+
+        public abstract Type GetControlType();
         #endregion
 
         // 라이프 사이클
