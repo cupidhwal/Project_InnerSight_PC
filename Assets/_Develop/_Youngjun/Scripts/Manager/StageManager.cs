@@ -79,7 +79,7 @@ namespace Noah
 
         void SetCurrentStage(int _stage = 0)
         {
-            if (!SaveLoadManager.Instance.isLoadData)
+            if (!SaveLoadManager.Instance.isTutorial)
             {
                 curStage = _stage;
             }
