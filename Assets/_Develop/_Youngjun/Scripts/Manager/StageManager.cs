@@ -269,14 +269,22 @@ namespace Noah
 
             if (!isHidden)
             {
-                if (stageObject.Count == curStage + 1)
+                if (curStage == 0)
                 {
-                    curStage = 0;
+                    curStage = 2;
                 }
                 else
                 {
-                    curStage += 1;
+                    if (stageObject.Count == curStage + 1)
+                    {
+                        curStage = 0;
+                    }
+                    else
+                    {
+                        curStage += 1;
+                    }
                 }
+            
             }
 
             yield return new WaitForSeconds(0.5f);

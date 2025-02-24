@@ -87,8 +87,11 @@ namespace Noah
             }
             else
             {
-                isLoadData = false;
-                Debug.Log("세이브 데이터가 없습니다");
+                if (_path != relicSavePath)
+                {
+                    isLoadData = false;
+                    Debug.Log("세이브 데이터가 없습니다");
+                }
             }
         }
         public void LoadAll()
