@@ -1,43 +1,49 @@
-using Seti;
+using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New SetActive Action", menuName = "Scenario/Composition/Object/SetActive")]
-public class Composition_SetActive : CompositionObject
+namespace Seti
 {
-    private enum ActiveFlag
+    [CreateAssetMenu(fileName = "New SetActive Action", menuName = "Scenario/Composition/Object/SetActive")]
+    public class Composition_SetActive : CompositionObject
     {
-        True,
-        False
-    }
-
-    // 연출
-    [Header("Variables")]
-    [SerializeField]
-    ActiveFlag activeFlag;
-    [SerializeField]
-    float delayExcute = 1f;
-
-    public bool Flag
-    {
-        get
+        private enum ActiveFlag
         {
-            bool flag = false;
-            switch (activeFlag)
-            {
-                case ActiveFlag.True:
-                    flag = true;
-                    break;
-
-                case ActiveFlag.False:
-                    flag = false;
-                    break;
-            }
-            return flag;
+            True,
+            False
         }
-    }
 
-    public override void Execute(GameObject obj)
-    {
-        obj.SetActive(Flag);
+        // 연출
+        [Header("Variables")]
+        [SerializeField]
+        ActiveFlag activeFlag;
+        [SerializeField]
+        float delayExcute = 1f;
+
+        public bool Flag
+        {
+            get
+            {
+                bool flag = false;
+                switch (activeFlag)
+                {
+                    case ActiveFlag.True:
+                        flag = true;
+                        break;
+
+                    case ActiveFlag.False:
+                        flag = false;
+                        break;
+                }
+                return flag;
+            }
+        }
+
+        public override void Execute(GameObject obj) => StoryManager.Instance.CorExcutor(Delay(obj));
+
+        IEnumerator Delay(GameObject obj)
+        {
+            yield return new WaitForSeconds(delayExcute);
+            obj.SetActive(Flag);
+        }
     }
 }

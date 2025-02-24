@@ -393,6 +393,10 @@ namespace Noah
                     {
                         hiddenPotal.SetActive(true);
                     }
+                    if (ComponentUtility.TryGetComponentInChildren<Trigger_Stage>(transform, out var stageTrigger))
+                    {
+                        stageTrigger.OpenDialogue();
+                    }
                 }
                 else
                 {
