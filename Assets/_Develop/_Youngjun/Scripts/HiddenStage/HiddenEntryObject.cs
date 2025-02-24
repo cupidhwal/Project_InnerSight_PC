@@ -12,13 +12,14 @@ namespace Noah
 
         void Start()
         {
-            StartCoroutine(RiseToZero());
-            
+            StartCoroutine(RiseToZero());        
         }
 
         IEnumerator RiseToZero()
         {
             GameObject paritcle = Instantiate(hiddenParitcle, new Vector3(transform.position.x, 0f, transform.position.z), Quaternion.identity);
+
+            //ObjectFadeSystem.Instance.ObjectFadeIn_Paritcle(paritcle.transform);
 
             while (transform.position.y < 0)
             {
