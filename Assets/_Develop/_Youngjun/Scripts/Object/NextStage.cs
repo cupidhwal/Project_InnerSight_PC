@@ -7,6 +7,11 @@ namespace Noah
         public bool escapeHidden = false;
         public bool isHidden = false;
 
+        private void Start()
+        {
+            //ObjectFadeSystem.Instance.ObjectFadeIn_Paritcle(transform);
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
