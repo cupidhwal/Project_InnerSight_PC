@@ -1,4 +1,6 @@
 using MySampleEx;
+using Noah;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Seti
@@ -13,7 +15,12 @@ namespace Seti
         {
             base.Start();
 
+            award = StageManager.Instance.transform.GetChild(0).GetChild(0).gameObject;
+        }
 
+        private void OnDestroy()
+        {
+            ClearTutorial();
         }
 
         // 오버라이드
