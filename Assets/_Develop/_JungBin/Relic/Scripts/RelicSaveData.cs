@@ -35,20 +35,22 @@ namespace JungBin
         {
             if (!SaveLoadManager.Instance.isLoadData)
             {
-
+                relics.Clear(); // 🔹 저장된 데이터가 없으면 리스트를 비워서 오류 방지
             }
             else
             {
-                // 저장된 데이터가 있으면 적용
+                // 저장된 데이터를 불러옴
                 RelicSaveData loadedRelic = SaveLoadManager.Instance.relicSaveData;
+                relics.Clear(); // 🔹 기존 데이터를 초기화하여 중복 저장 방지
 
+                // 🔹 오류 방지를 위해 Add()를 사용하여 리스트에 새 데이터 추가
                 for (int i = 0; i < loadedRelic.relics.Count; i++)
                 {
-                    relics[i].relicID = loadedRelic.relics[i].relicID;
-                    relics[i].relicName = loadedRelic.relics[i].relicName;
+                    relics.Add(new RelicDataEntry(loadedRelic.relics[i].relicID, loadedRelic.relics[i].relicName));
                 }
             }
         }
+
     }
 
 

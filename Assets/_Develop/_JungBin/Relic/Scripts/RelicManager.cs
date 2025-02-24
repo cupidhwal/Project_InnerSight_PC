@@ -69,8 +69,33 @@ namespace JungBin
             if (clickedObject != null)
             {
                 Image image = clickedObject.transform.GetChild(0).GetComponent<Image>();
-                if (image != null) sourceImage = image.sprite;
+                if (image != null)
+                {
+                    sourceImage = image.sprite;
+                }
             }
+            ShowRelicDescription(name);
+        }
+        public IRelic ShowRelicDescription(string name)
+        {
+            Debug.Log("클릭");
+            if (relicDescription != null)
+            {
+                foreach (var relic in GetRelics())
+                {
+                    if (name == relic.RelicName)
+                    {
+                        relicDescription.gameObject.SetActive(true);
+                        relicName.text = relic.RelicName;
+                        relicDescription.text = relic.Description;
+
+                        selectedRelic = relic; // 선택된 유물 저장
+                        return relic;
+                    }
+                }
+            }
+            Debug.LogWarning("선택한 유물이 없습니다.");
+            return null;
         }
 
         public void SelectRelicButton()
