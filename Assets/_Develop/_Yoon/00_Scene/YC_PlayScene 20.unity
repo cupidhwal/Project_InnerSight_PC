@@ -288,6 +288,9 @@ MonoBehaviour:
   playerItemSavePath: /PlayerItem.json
   playerItem:
     gold: 0
+  relicSavePath: /RelicData.json
+  relicSaveData:
+    relics: []
   isLoadData: 0
 --- !u!4 &97606629
 Transform:
@@ -716,6 +719,8 @@ MonoBehaviour:
   - {fileID: 448779039700857998, guid: 8698cbae97c89c34aadfe08f847456a3, type: 3}
   enemys: []
   testStageChange: 0
+  hiddenStage: {fileID: 0}
+  playerPos: {x: 0, y: 0, z: 0}
 --- !u!4 &818013815
 Transform:
   m_ObjectHideFlags: 0
@@ -1265,6 +1270,7 @@ MonoBehaviour:
   relicDescription: {fileID: 0}
   relicSelectUI: {fileID: 0}
   applyImage: {fileID: 0}
+  trinketUIParent: {fileID: 0}
 --- !u!4 &998809483
 Transform:
   m_ObjectHideFlags: 0
@@ -1688,6 +1694,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillSelectUI: {fileID: 6393041034698383418}
   playerStateUI: {fileID: 4386372287501261691}
+  trinketsUI: {fileID: 0}
   skillReinforce: {fileID: 0}
   statsReinforce: {fileID: 0}
   goldText: {fileID: 7131897407661784619}
@@ -8515,6 +8522,36 @@ MonoBehaviour:
     skillDescription: "\uC0AC\uC6A9\uC2DC \uD50C\uB808\uC774\uC5B4 \uC8FC\uBCC0\uC73C\uB85C
       \uB0AB\uC774 1.5\uCD08\uB3D9\uC548 \uD68C\uC804\uD55C\uB2E4.\r\n\uB370\uBBF8\uC9C0
       : 4 (\uBA40\uD2F0\uD788\uD2B8)\n\uCFE8\uD0C0\uC784 : 6"
+  doubleSlash:
+    rangeType: 0
+    skillPrefab: {fileID: 0}
+    cooldown: 0
+    damage: 0
+    upgradeDamage: 0
+    skillUpgardeCount: 1
+    attackRadius: 0
+    skillAtkTime: 1.5
+    skillPos: {x: 0, y: 0, z: 0}
+    skillImage: {fileID: 0}
+    UISprite: {fileID: 0}
+    isSkillOn: 1
+    skillName: 
+    skillDescription: 
+  multipleSlash:
+    rangeType: 0
+    skillPrefab: {fileID: 0}
+    cooldown: 0
+    damage: 0
+    upgradeDamage: 0
+    skillUpgardeCount: 1
+    attackRadius: 0
+    skillAtkTime: 1.5
+    skillPos: {x: 0, y: 0, z: 0}
+    skillImage: {fileID: 0}
+    UISprite: {fileID: 0}
+    isSkillOn: 1
+    skillName: 
+    skillDescription: 
 --- !u!114 &7805751463132773016
 MonoBehaviour:
   m_ObjectHideFlags: 0
