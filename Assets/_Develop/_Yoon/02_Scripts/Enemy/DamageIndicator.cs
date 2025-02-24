@@ -9,8 +9,8 @@ namespace Yoon
     {
         public TextMeshProUGUI damageText; // 데미지 텍스트 UI
         public float fadeSpeed = 2f;       // 텍스트가 사라지는 속도
-        public float moveSpeed = 1f;       // 텍스트가 위로 이동하는 속도
-        public float lifetime = 1.5f;      // 텍스트가 유지되는 시간
+        public float moveSpeed = 0.5f;       // 텍스트가 위로 이동하는 속도
+        public float lifetime = 0.5f;      // 텍스트가 유지되는 시간
 
         private Color textColor;            // 텍스트 색상 정보
 
