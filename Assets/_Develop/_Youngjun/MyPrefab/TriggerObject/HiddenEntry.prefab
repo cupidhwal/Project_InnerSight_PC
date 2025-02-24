@@ -69,6 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   riseSpeed: 2
+  hiddenParitcle: {fileID: 4691322821190905076, guid: 13ff5bcb7de2abd4ba0576071813556f, type: 3}
 --- !u!1 &1034830119992590417
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,6 +1202,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1744057789403826181}
     m_Modifications:
+    - target: {fileID: 1388872648758930467, guid: 98bb9fe4562b7eb4eadfb003d9882c0b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1892288986890319860, guid: 98bb9fe4562b7eb4eadfb003d9882c0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.74
@@ -1240,6 +1245,14 @@ PrefabInstance:
     - target: {fileID: 1892288986890319860, guid: 98bb9fe4562b7eb4eadfb003d9882c0b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5057599183626434168, guid: 98bb9fe4562b7eb4eadfb003d9882c0b, type: 3}
+      propertyPath: isHidden
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6492581199564549247, guid: 98bb9fe4562b7eb4eadfb003d9882c0b, type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 1.1e-44
       objectReference: {fileID: 0}
     - target: {fileID: 8274444252407515941, guid: 98bb9fe4562b7eb4eadfb003d9882c0b, type: 3}
       propertyPath: m_Name
