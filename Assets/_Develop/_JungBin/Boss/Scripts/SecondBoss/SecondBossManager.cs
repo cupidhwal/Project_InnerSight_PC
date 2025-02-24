@@ -3,6 +3,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace JungBin
 {
@@ -29,14 +30,12 @@ namespace JungBin
         [SerializeField] private float defaultFireRate = 0.3f; // 기본 발사 간격 (초)
 
         [Header("Falling Attack 설정")]
-        [SerializeField] private GameObject warningEffectPrefab; // 경고 이펙트 프리팹
-        [SerializeField] private GameObject fallingObjectPrefab; // 낙하물 프리팹
-        [SerializeField] private float spawnHeight = 20f; // 낙하물 스폰 높이
+        //[SerializeField] private GameObject warningEffectPrefab; // 경고 이펙트 프리팹
+        [SerializeField] private GameObject spikeClusterPrefab; // 낙하물 프리팹
         [SerializeField] private float spawnRadius = 5f; // 플레이어 주변 랜덤 범위
         [SerializeField] private float warningDuration = 0.5f; // 경고 이펙트 지속 시간
-        [SerializeField] private float fallSpeed = 5f; // 낙하 속도
-        [SerializeField] private int totalDrops = 20; // 한 번의 패턴에서 생성할 낙하물 개수
-        [SerializeField] private float dropInterval = 0.3f; // 낙하물 사이 시간 간격
+        [SerializeField] private int totalspawn = 20; // 한 번의 패턴에서 생성할 낙하물 개수
+        [SerializeField] private float spawnInterval = 0.3f; // 낙하물 사이 시간 간격
 
         [Header("회피형 공격 설정")]
         [SerializeField] private BoxCollider footAttackBox;
@@ -251,12 +250,12 @@ namespace JungBin
 
         private IEnumerator FallingAttackSequence()
         {
-            for (int i = 0; i < totalDrops; i++)
+            for (int i = 0; i < totalspawn; i++)
             {
                 Vector3 spawnPosition = GetRandomSpawnPositionNearPlayer();
                 StartCoroutine(SpawnFallingObject(spawnPosition));
 
-                yield return new WaitForSeconds(dropInterval); // 다음 낙하물 생성까지 대기
+                yield return new WaitForSeconds(spawnInterval); // 다음 낙하물 생성까지 대기
             }
         }
 
@@ -275,24 +274,19 @@ namespace JungBin
 
         private IEnumerator SpawnFallingObject(Vector3 spawnPosition)
         {
-            // 🔥 1. 경고 이펙트 생성
+            /*// 🔥 1. 경고 이펙트 생성
             GameObject warningEffect = Instantiate(warningEffectPrefab, spawnPosition, Quaternion.identity);
             Destroy(warningEffect, warningDuration); // 일정 시간 후 경고 제거
 
-            yield return new WaitForSeconds(warningDuration); // 경고 지속 시간 대기
+            yield return new WaitForSeconds(warningDuration); // 경고 지속 시간 대기*/
 
             // 💥 2. 실제 낙하물 생성
-            spawnPosition.y = spawnHeight;
-            Quaternion spawnRotation = Quaternion.LookRotation(Vector3.down);
-            GameObject fallingObject = Instantiate(fallingObjectPrefab, spawnPosition, spawnRotation);
+            GameObject spikeCluster = Instantiate(spikeClusterPrefab, spawnPosition, Quaternion.identity);
 
-            // 낙하 애니메이션 (중력으로 떨어지도록 함)
-            Rigidbody rb = fallingObject.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.useGravity = true;
-                rb.linearVelocity = Vector3.down * fallSpeed;
-            }
+            yield return new WaitForSeconds(2f);
+
+
+            Destroy(spikeCluster);
         }
 
         public void RetreatAndShoot()
