@@ -37,23 +37,27 @@ namespace Noah
         IEnumerator FadeIn_Paritcle(ParticleSystem[] _particleSystems)
         {
             float elapsedTime = 0f;
-            SetAlpha_Paritcle(0f, _particleSystems); // 처음에는 완전히 투명
+            //SetAlpha_Paritcle(0f, _particleSystems); // 처음에는 완전히 투명
 
             while (elapsedTime < fadeDuration)
             {
                 elapsedTime += Time.deltaTime;
                 float alpha = Mathf.Clamp01(elapsedTime / fadeDuration);
-                SetAlpha_Paritcle(alpha, _particleSystems);
+                //SetAlpha_Paritcle(alpha, _particleSystems);
                 yield return null;
             }
 
             // 마지막 보정 (완전히 보이게 설정)
-            SetAlpha_Paritcle(1f, _particleSystems);
+            //SetAlpha_Paritcle(1f, _particleSystems);
 
             // 페이드 완료 후 파티클 다시 재생
             foreach (ParticleSystem ps in _particleSystems)
             {
-                ps.Play();
+                if (ps != null)
+                { 
+                    ps.Play();    
+                }
+                
             }
         }
 
@@ -99,9 +103,9 @@ namespace Noah
             {
                 var colorModule = ps.colorOverLifetime;
 
-                if (!colorModule.enabled)
+                if (!colorModule.enabled && ps != null)
                     // colorOverLifetime 활성화
-                    colorModule.enabled = true; 
+                    colorModule.enabled = true;
 
                 // 기존 colorOverLifetime 값을 유지하면서 알파 값만 변경
                 Gradient grad = new Gradient();
@@ -110,7 +114,10 @@ namespace Noah
                     new GradientAlphaKey[] { new GradientAlphaKey(0.0f, 0.0f), new GradientAlphaKey(_alpha, 1.0f) } // 처음은 투명, 나중에는 alpha
                 );
 
-                colorModule.color = new ParticleSystem.MinMaxGradient(grad);
+                if (ps != null)
+                {
+                    colorModule.color = new ParticleSystem.MinMaxGradient(grad);
+                }
             }
         }
 

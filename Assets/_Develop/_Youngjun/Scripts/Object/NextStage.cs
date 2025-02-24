@@ -9,7 +9,7 @@ namespace Noah
 
         private void Start()
         {
-            //ObjectFadeSystem.Instance.ObjectFadeIn_Paritcle(transform);
+            ObjectFadeSystem.Instance.ObjectFadeIn_Paritcle(transform);
         }
 
         private void OnTriggerEnter(Collider other)
