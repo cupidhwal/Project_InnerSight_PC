@@ -35,8 +35,7 @@ namespace JungBin
         {
             if (!SaveLoadManager.Instance.isLoadData)
             {
-                relics[0].relicID = "";
-                relics[0].relicName = "";
+
             }
             else
             {
