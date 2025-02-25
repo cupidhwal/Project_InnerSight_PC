@@ -1,9 +1,7 @@
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace JungBin
 {
@@ -12,6 +10,7 @@ namespace JungBin
     {
         #region Variables
 
+        [SerializeField] private int bossAttackNumber = 0;
         [SerializeField] private float bossFlyTime = 0.7f;
         [SerializeField] private float turnSpeed = 30;              //보스의 회전 속도
         [SerializeField] private float detectionRange = 8f; //  최대 감지 거리
@@ -41,6 +40,12 @@ namespace JungBin
         [SerializeField] private BoxCollider footAttackBox;
         [SerializeField] private float dodgeDistance = 5f;
 
+        [Header("2페이즈 공격 패턴")]
+        [SerializeField] private GameObject spikeAttackPhase2Prefab;
+        [SerializeField] private GameObject spikeWallPrefab;
+        [SerializeField] private GameObject lazerPrefab;
+        [SerializeField] private Transform lazerSpawnPoint;
+
 
 
         private int lastAttack = -1;
@@ -57,7 +62,7 @@ namespace JungBin
 
         private Vector3 targetPosition; // 목표 위치 저장
         private bool lastMovedLeft = false; // 이전 이동 방향 저장 (true = 왼쪽, false = 오른쪽)
-
+        private bool isPhase2 = false;
         private string Idle = "Idle";
         private string isFlyToPlayer = "IsFlyTP";
         private string isFlyNotToPlayer = "IsFlyNTP";
@@ -65,6 +70,8 @@ namespace JungBin
         private string isRun = "IsRun";
         private string isArrived = "IsArrived";
         private string retreatAndShoot = "RetreatAndShoot";
+
+
         #endregion
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -150,16 +157,19 @@ namespace JungBin
             int attackIndex;
             do
             {
-                attackIndex = Random.Range(1, 4);
+                attackIndex = Random.Range(1, bossAttackNumber);
             } while (attackIndex == lastAttack);
 
             TriggerAttackAnimation(attackIndex);
             lastAttack = attackIndex;
 
-            if (Random.value < 0.2f) // ✅ 30% 확률로 회피 후 공격
+            if (isPhase2)
             {
-                animator.SetBool(retreatAndShoot, true);
-                return;
+                if (Random.value < 0.2f) // ✅ 30% 확률로 회피 후 공격
+                {
+                    animator.SetBool(retreatAndShoot, true);
+                    return;
+                }
             }
         }
 
@@ -330,6 +340,48 @@ namespace JungBin
 
         #endregion
 
+        #region Phase 2 공격 패턴
+        public void Phase2SpawnSpike()
+        {
+            // `spikeSpawnPoint`의 정면 방향을 그대로 반영하여 회전값 적용
+            Quaternion rotation = spikeSpawnPoint.rotation;
+
+            // `spikeSpawnPoint`의 위치에서 스파이크 프리팹 생성
+            GameObject spikePrefab = Instantiate(spikeAttackPhase2Prefab, spikeSpawnPoint.position, rotation);
+
+            // 4초 후 오브젝트 삭제
+            Destroy(spikePrefab, 4f);
+        }
+
+        public void SpawnSpikeWall()
+        {
+            // `spikeSpawnPoint`의 위치에서 스파이크 프리팹 생성
+            GameObject spikePrefab = Instantiate(spikeWallPrefab, spikeSpawnPoint.position, Quaternion.identity);
+
+            // 4초 후 오브젝트 삭제
+            Destroy(spikePrefab, 15f);
+        }
+
+        public void LazerAttack()
+        {
+            StartCoroutine(LazerRotate());
+            
+        }
+
+        private IEnumerator LazerRotate()
+        {
+            GameObject lazerAttack = Instantiate(lazerPrefab, lazerSpawnPoint.position, lazerSpawnPoint.rotation, lazerSpawnPoint);
+
+            float temp = turnSpeed;
+            turnSpeed = 3f;
+
+            yield return new WaitForSeconds(3f);
+
+            turnSpeed = temp;
+            Destroy(lazerAttack);
+        }
+
+        #endregion
 
 
         #region 플레이어에게 이동하는 비행 상태

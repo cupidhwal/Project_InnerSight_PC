@@ -7,6 +7,7 @@ namespace JungBin
     public class ParticleDamage : MonoBehaviour
     {
         [SerializeField] private string targetTag = "Player"; // 타겟 태그 설정
+        [SerializeField] private int bossNumber = 0;
 
         private void OnParticleCollision(GameObject other)
         {
@@ -25,7 +26,7 @@ namespace JungBin
                     {
                         damager = this, // 공격 주체 = 파티클 시스템 오브젝트
                         owner = actor, // 피해 대상 = 충돌한 플레이어
-                        amount = BossStageManager.Instance.Bosses[0].AttackDamage, // 데미지 값
+                        amount = BossStageManager.Instance.Bosses[bossNumber].AttackDamage, // 데미지 값
                         direction = (other.transform.position - transform.position).normalized, // 공격 방향
                         damageSource = transform.position, // 파티클 위치
                         throwing = false, // 넉백 여부

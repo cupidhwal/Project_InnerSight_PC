@@ -10,6 +10,7 @@ namespace JungBin
         private Vector3 attackDirection = Vector3.up; // 공격 방향 (기본값)
         private float damageCooldown = 1f; // 데미지 쿨타임
         private bool canTakeDamage = true; // 데미지 가능 여부
+        [SerializeField] private int bossNumber = 0;
         private Coroutine cooldownCoroutine;
 
         // **자식이 충돌을 감지하면 실행될 메서드**
@@ -28,7 +29,7 @@ namespace JungBin
                 {
                     damager = this,
                     owner = actor,
-                    amount = BossStageManager.Instance.Bosses[0].AttackDamage,
+                    amount = BossStageManager.Instance.Bosses[bossNumber].AttackDamage,
                     direction = attackDirection.normalized,
                     damageSource = transform.position,
                     throwing = true,
