@@ -24,12 +24,15 @@ namespace Seti
         private StateMachine<Controller_FSM> stateMachine;  // FSM 인스턴스
         [SerializeField]
         private EnemyState currentState;
+        //[SerializeField]
+        private Actor actor;
         #endregion
 
         // 속성
         #region Properties
         public StateMachine<Controller_FSM> StateMachine => stateMachine;
         public EnemyState CurrentState => currentState;
+        public Actor Actor => actor;
         #endregion
 
         // 인터페이스
@@ -42,6 +45,8 @@ namespace Seti
         protected override void Awake()
         {
             base.Awake();
+
+            actor = GetComponent<Actor>();
 
             // FSM 초기화
             stateMachine = new StateMachine<Controller_FSM>(

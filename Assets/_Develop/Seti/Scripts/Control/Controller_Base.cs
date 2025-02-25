@@ -8,8 +8,7 @@ namespace Seti
     {
         // 필드
         #region Variables
-        public Actor Actor { get; protected set; }
-        protected Dictionary<Type, IBehaviour> behaviourMap;    // 행동 매핑 (타입에 따른 행동 인스턴스)
+        protected Dictionary<Type, IBehaviour> behaviourMap;            // 행동 매핑 (타입에 따른 행동 인스턴스)
         #endregion
 
         // 속성
@@ -19,43 +18,37 @@ namespace Seti
 
         // 인터페이스
         #region Interface
-        public void Initialize()
+        public abstract Type GetControlType();
+        public virtual void Initialize()
         {
-            // Actor 참조
-            Actor = GetComponent<Actor>();
-
             // Actor의 behaviours 리스트에서 동적으로 매핑
-            SetBehaviours(Actor);
+            SetBehaviours(GetComponent<Actor>());
         }
-        public void SetBehaviours(Actor actor)
+        public virtual void SetBehaviours(Actor actor)
         {
-            behaviourMap = new();
+            // 행동 매핑 초기화
+            if (behaviourMap == null)
+                behaviourMap = new();
+            else behaviourMap.Clear();
 
-            foreach (var behaviour in actor.Behaviours)
+            foreach (var mapping in actor.Blueprint.behaviourStrategies)
             {
-                if (behaviour.behaviour == null) continue;
+                if (mapping.behaviour == null) continue;
 
                 // 명시적으로 Initialize 호출
-                behaviour.behaviour.Initialize(actor);
+                mapping.behaviour.Initialize(actor);
 
-                var behaviourType = behaviour.behaviour.GetType();
+                var behaviourType = mapping.behaviour.GetType();
                 if (!behaviourMap.ContainsKey(behaviourType))
                 {
-                    behaviourMap.Add(behaviourType, behaviour.behaviour);
+                    behaviourMap.Add(behaviourType, mapping.behaviour);
                 }
             }
         }
-
-        public abstract Type GetControlType();
         #endregion
 
         // 라이프 사이클
         #region Life Cycle
-        protected virtual void Awake()
-        {
-            Initialize();
-        }
-
         protected virtual void Start()
         {
             //Cursor.lockState = CursorLockMode.Locked;
@@ -68,6 +61,11 @@ namespace Seti
             {
                 (moveBehaviour as Move)?.Update();
             }
+        }
+
+        protected virtual void Awake()
+        {
+            Initialize();
         }
 
         protected virtual void OnDestroy()

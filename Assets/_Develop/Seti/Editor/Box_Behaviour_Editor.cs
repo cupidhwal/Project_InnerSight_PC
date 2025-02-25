@@ -17,26 +17,33 @@ namespace Seti
         {
             behaviourBox = (Box_Behaviour)target;
 
-            EditUtility.SubjectLine(2, "±â´É ÄÁÅ×ÀÌ³Ê");
+            EditUtility.SubjectLine(2, "ê¸°ëŠ¥ ì»¨í…Œì´ë„ˆ");
 
-            // ±âº» Inspector ±×¸®±â
+            // ê¸°ë³¸ Inspector ê·¸ë¦¬ê¸°
             DrawDefaultInspector();
 
-            // ¸®ÇÁ·¹½Ã ¹öÆ°
-            if (GUILayout.Button("Behaviour List °»½Å"))
+            // ë¦¬í”„ë ˆì‹œ ë²„íŠ¼
+            if (GUILayout.Button("Behaviour List ê°±ì‹ "))
             {
                 RefreshBehaviourList();
             }
 
-            // Behaviour ¸®½ºÆ® Ç¥½Ã
+            // Behaviour ë¦¬ìŠ¤íŠ¸ í‘œì‹œ
             DrawBehaviourList();
 
             EditUtility.DrawLine(2);
+
+            // ì‚­ì œ ê²½ê³  ë©”ì‹œì§€ ì¶”ê°€
+            EditorGUILayout.HelpBox("Behaviour í´ë˜ìŠ¤ë¥¼ ì‚­ì œí•˜ë ¤ë©´ ë¨¼ì € ìƒë‹¨ì˜ Remove ë²„íŠ¼ì„ ëˆŒëŸ¬ ì§ë ¬í™” ì •ë³´ë¥¼ ìš°ì„ ì ìœ¼ë¡œ ì œê±°í•˜ê¸¸ ê¶Œì¥í•©ë‹ˆë‹¤.", MessageType.Warning);
+
         }
 
         private void RefreshBehaviourList()
         {
-            // IBehaviour¸¦ ±¸ÇöÇÑ ¸ğµç Å¬·¡½º Å½»ö
+            // ì‚­ì œëœ í´ë˜ìŠ¤ê°€ ìˆëŠ”ì§€ í™•ì¸í•˜ê³  ì •ë¦¬
+            behaviourBox.behaviours.RemoveAll(behaviour => behaviour == null);
+
+            // IBehaviourë¥¼ êµ¬í˜„í•œ ëª¨ë“  í´ë˜ìŠ¤ íƒìƒ‰
             var allBehaviours = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(assembly => assembly.GetTypes())
                 .Where(t => typeof(IBehaviour).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
@@ -46,7 +53,7 @@ namespace Seti
 
             foreach (var behaviourType in allBehaviours)
             {
-                // Áßº¹ °Ë»ç
+                // ì¤‘ë³µ ê²€ì‚¬
                 if (!behaviourBox.behaviours.Any(f => f.GetType() == behaviourType))
                 {
                     var newBehaviour = Activator.CreateInstance(behaviourType) as IBehaviour;
@@ -55,8 +62,8 @@ namespace Seti
                 }
             }
 
-            EditorUtility.SetDirty(behaviourBox); // º¯°æ »çÇ× ÀúÀå
-            Debug.Log($"Box_Behaviour °»½Å: »õ Behaviour°¡ {addedCount}°³ Ãß°¡µÇ¾ú½À´Ï´Ù.");
+            EditorUtility.SetDirty(behaviourBox); // ë³€ê²½ ì‚¬í•­ ì €ì¥
+            Debug.Log($"Box_Behaviour ê°±ì‹ : ìƒˆ Behaviourê°€ {addedCount}ê°œ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤.");
         }
 
         private void DrawBehaviourList()

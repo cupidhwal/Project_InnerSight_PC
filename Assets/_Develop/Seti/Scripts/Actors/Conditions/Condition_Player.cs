@@ -68,7 +68,7 @@ namespace Seti
                 if (actor == null)
                 {
                     Initialize();
-                    actor.Initialize(actor.Origin);
+                    actor.Initialize();
                 }
 
                 if (actor.Controller.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))

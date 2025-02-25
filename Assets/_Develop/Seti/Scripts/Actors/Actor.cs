@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -20,8 +19,8 @@ namespace Seti
         // 필드
         #region Variables
         protected IControl control;
+        [Header("Self Definition")]
         [SerializeField]
-        [HideInInspector]
         protected Blueprint_Actor blueprint;
         [SerializeField]
         [HideInInspector]
@@ -29,11 +28,9 @@ namespace Seti
         [SerializeField]
         [HideInInspector]
         protected Controller_Base controller;
-        [SerializeField]
-        [HideInInspector]
-        protected List<Behaviour> behaviours = new();         // [직렬화 된 필드 - 읽기 전용 속성] 구조가 아니면 작동하지 않는다
 
         // 일반
+        //[SerializeField]
         protected Controller_Animator animator;
 
         // 스탯
@@ -63,8 +60,7 @@ namespace Seti
 
         // 속성
         #region Properties
-        public Blueprint_Actor Origin => blueprint;
-        public List<Behaviour> Behaviours => behaviours;
+        public Blueprint_Actor Blueprint => blueprint;
         public Condition_Actor Condition => condition;
         public Controller_Base Controller => controller;
         public Controller_Animator Controller_Animator => animator;
@@ -134,6 +130,25 @@ namespace Seti
         public void Update_Stagger(float stag) => stagger = stag;
         #endregion
 
+        // 초기화
+        public void Initialize()
+        {
+            // Check Controller
+            controller = GetComponent<Controller_Base>();
+
+            // Check Actor Condition
+            condition = GetComponent<Condition_Actor>();
+            condition.Initialize();
+
+            // Check Animator Controller
+            if (ComponentUtility.TryGetComponentInChildren<Animator>(transform, out var anim))
+            {
+                animator = anim.transform.GetComponent<Controller_Animator>();
+                if (!animator)
+                    animator = anim.transform.gameObject.AddComponent<Controller_Animator>();
+            }
+        }
+
         // 추상화
         #region Abstract
         protected abstract Condition_Actor CreateState();
@@ -141,46 +156,14 @@ namespace Seti
 
         // 라이프 사이클
         #region Life Cycle
-        protected virtual void Start()
+        protected virtual void Awake()
         {
-            // 참조
-            if (!TryGetComponent<Controller_Animator>(out var animator))
-                animator = GetComponentInChildren<Controller_Animator>();
-            this.animator = animator;
-
-            controller = GetComponent<Controller_Base>();
+            Initialize();
         }
         #endregion
 
         // 메서드
         #region Methods
-        public void Initialize(Blueprint_Actor blueprint)
-        {
-            // Define Self
-            this.blueprint = blueprint;
-
-            // Check Actor State
-            condition = GetComponent<Condition_Actor>();
-            if (!condition)
-                condition = CreateState();
-            condition.Initialize();
-
-            // Check Animator Controller
-            Animator animator = GetComponentInChildren<Animator>();
-            var controller = animator.transform.GetComponent<Controller_Animator>()
-                ?? animator.transform.gameObject.AddComponent<Controller_Animator>();
-
-            // Define Control
-            SwitchController();
-        }
-
-        public void AddBehaviour(IBehaviour be)
-        {
-            Behaviour behaviour = new(be);
-            behaviour.behaviour.Initialize(this);
-            Behaviours.Add(behaviour);
-        }
-
         private void SwitchController()
         {
             switch (blueprint.controlType)

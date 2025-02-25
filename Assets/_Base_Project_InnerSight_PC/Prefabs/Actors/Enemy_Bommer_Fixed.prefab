@@ -920,6 +920,7 @@ MonoBehaviour:
   currentWeaponType: 4
   currentWeapon: {fileID: 0}
   inAction: 0
+  destroyDelay: 2
 --- !u!114 &1249396391850830513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -935,15 +936,6 @@ MonoBehaviour:
   blueprint: {fileID: 11400000, guid: ccb6a81a0dbdfd049b18e073b0c92536, type: 2}
   condition: {fileID: 6754219420394870450}
   controller: {fileID: 0}
-  behaviours:
-  - behaviour:
-      rid: 5367875458817589645
-  - behaviour:
-      rid: 5367875458817589646
-  - behaviour:
-      rid: 5367875458817589647
-  - behaviour:
-      rid: 5367875458817589648
   health: 150
   attack: 15
   defend: 0
@@ -965,76 +957,6 @@ MonoBehaviour:
   magicInterval: 5
   magicObject: {fileID: 0}
   magicDamage: 0
-  references:
-    version: 2
-    RefIds:
-    - rid: 5367875458817589645
-      type: {class: Look, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategies:
-        - rid: 5367875458817589649
-    - rid: 5367875458817589646
-      type: {class: Attack, ns: Seti, asm: Assembly-CSharp}
-      data:
-        attack: 0
-        strategies:
-        - rid: 5367875458817589650
-        isSkillAttack: 0
-    - rid: 5367875458817589647
-      type: {class: Move, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategies:
-        - rid: 5367875458817589651
-        - rid: 5367875458817589652
-        - rid: 5367875458817589653
-    - rid: 5367875458817589648
-      type: {class: Stagger, ns: Seti, asm: Assembly-CSharp}
-      data: 
-    - rid: 5367875458817589649
-      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategy:
-          rid: 5367875458817589654
-        isActive: 1
-    - rid: 5367875458817589650
-      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategy:
-          rid: 5367875458817589655
-        isActive: 1
-    - rid: 5367875458817589651
-      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategy:
-          rid: 5367875458817589656
-        isActive: 1
-    - rid: 5367875458817589652
-      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategy:
-          rid: 5367875458817589657
-        isActive: 1
-    - rid: 5367875458817589653
-      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategy:
-          rid: 5367875458817589658
-        isActive: 1
-    - rid: 5367875458817589654
-      type: {class: Look_Watch, ns: Seti, asm: Assembly-CSharp}
-      data: 
-    - rid: 5367875458817589655
-      type: {class: Attack_Normal, ns: Seti, asm: Assembly-CSharp}
-      data: 
-    - rid: 5367875458817589656
-      type: {class: Move_Run, ns: Seti, asm: Assembly-CSharp}
-      data: 
-    - rid: 5367875458817589657
-      type: {class: Move_Walk, ns: Seti, asm: Assembly-CSharp}
-      data: 
-    - rid: 5367875458817589658
-      type: {class: Move_Nav, ns: Seti, asm: Assembly-CSharp}
-      data: 
 --- !u!114 &1486842627109985437
 MonoBehaviour:
   m_ObjectHideFlags: 0

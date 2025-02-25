@@ -40,7 +40,7 @@ Transform:
   - {fileID: 8694551316733706710}
   - {fileID: 730684352570684634}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!136 &8268303034562667144
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -149,7 +149,6 @@ MonoBehaviour:
   blueprint: {fileID: 11400000, guid: cf6e939a7ce562948a6de4910a436070, type: 2}
   condition: {fileID: 7244941646821111713}
   controller: {fileID: 0}
-  behaviours: []
   health: 100
   attack: 10
   defend: 1
@@ -159,9 +158,6 @@ MonoBehaviour:
   mag_WalkToRun: 1.5
   attackProgressive: 2.5
   type: 2
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &7244941646821111713
 MonoBehaviour:
   m_ObjectHideFlags: 0

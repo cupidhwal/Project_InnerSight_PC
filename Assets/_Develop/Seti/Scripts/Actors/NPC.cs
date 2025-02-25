@@ -27,9 +27,8 @@ namespace Seti
 
         // 라이프 사이클
         #region Life Cycle
-        protected override void Start()
+        private void Start()
         {
-            base.Start();
             SetUI();
         }
         #endregion

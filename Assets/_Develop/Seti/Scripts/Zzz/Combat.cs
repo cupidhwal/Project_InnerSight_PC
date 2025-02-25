@@ -26,14 +26,6 @@ namespace Seti
             enemySummonPoint = transform.GetChild(0);
         }
 
-        private void Update()
-        {
-            if (tutorialEnemy)
-            {
-                enemySummonPoint.transform.position = tutorialEnemy.transform.position;
-            }
-        }
-
         // 메서드
         // Enemy 소환
         private void GenEnemy()

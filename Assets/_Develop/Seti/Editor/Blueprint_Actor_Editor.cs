@@ -19,9 +19,15 @@ namespace Seti
         #region Methods
         public override void OnInspectorGUI()
         {
-            //if (Application.isPlaying) return;
-
             blueprint = target as Blueprint_Actor;
+
+            // 행동 목록을 알파벳 순으로 정렬
+            blueprint.behaviourStrategies = blueprint.behaviourStrategies
+                .OrderByDescending(mapping => mapping.behaviour is IHasStrategy)    // 전략이 있으면 1, 없으면 0
+                .ThenBy(mapping => mapping.behaviour != null ? mapping.behaviour.GetType().Name : "")   // 알파벳 순 정렬
+                .ToList();
+
+            EditorUtility.SetDirty(blueprint);
 
             GUILayout.Space(10);
             EditorGUILayout.LabelField($"{blueprint.ActorName} 설계도", EditorStyles.boldLabel);
@@ -93,7 +99,7 @@ namespace Seti
                                     .Select(strategy => new Strategy
                                     {
                                         strategy = strategy,
-                                        isActive = true
+                                        isActive = false
                                     })
                                     .ToList();
                             }
@@ -117,12 +123,7 @@ namespace Seti
 
         private void DrawBehavioursList()
         {
-            EditUtility.SubjectLine(Color.gray, 2, "이 Actor의 Behaviours");
-
-            // 행동 정렬: 이름 기준
-            /*var sortedBehaviours = blueprint.behaviourStrategies
-                .OrderBy(mapping => mapping.behaviour.GetType().Name)
-                .ToList();*/
+            EditUtility.SubjectLine(Color.gray, 2, $"{blueprint.ActorName}의 Behaviours");
 
             foreach (var mapping in blueprint.behaviourStrategies)
             {

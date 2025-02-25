@@ -46,9 +46,20 @@ namespace Seti
         // 특정 행동에 대한 전략 가져오기
         public List<Strategy> GetStrategies(IBehaviour behaviour)
         {
-            return behaviourStrategies
-                .FirstOrDefault(mapping => mapping.behaviour == behaviour)?
-                .strategies ?? new List<Strategy>();
+            var mapping = behaviourStrategies.FirstOrDefault(mapping => mapping.behaviour == behaviour);
+
+            if (behaviour is IHasStrategy behaviourWithStrategy)
+            {
+                // 활성화된 전략만 새로 생성
+                return mapping.strategies
+                    .Where(s => s.isActive)
+                    .Select(s => new Strategy
+                    {
+                        strategy = s.strategy,
+                        isActive = s.isActive
+                    }).ToList();
+            }
+            return null;
         }
 
         // 특정 전략의 활성 상태 업데이트

@@ -9,8 +9,6 @@ namespace Seti
     /// <summary>
     /// Strategy Box Custom Editor
     /// </summary>
-
-    // 수동 검색 버전
     [CustomEditor(typeof(Box_Strategy))]
     public class Box_Strategy_Editor : Editor
     {
@@ -41,47 +39,6 @@ namespace Seti
             DrawStrategyList();
 
             EditUtility.DrawLine(2);
-        }
-
-        private void RefreshAllStrategies()
-        {
-            // 모든 전략 리스트를 갱신
-            RefreshStrategyList(strategyBox.lookStrategies);
-            RefreshStrategyList(strategyBox.moveStrategies);
-            RefreshStrategyList(strategyBox.jumpStrategies);
-            RefreshStrategyList(strategyBox.attackStrategies);
-            RefreshStrategyList(strategyBox.defendStrategies);
-
-            // 새로운 전략 리스트가 있다면 여기에 추가
-            // RefreshStrategyList(strategyBox.attackStrategies);
-
-            // 변경 사항 저장
-            EditorUtility.SetDirty(strategyBox);
-            //Debug.Log("모든 전략 리스트가 갱신되었습니다.");
-        }
-
-        private void RefreshStrategyList<T>(List<T> strategyList) where T : class, IStrategy
-        {
-            var allStrategies = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(assembly => assembly.GetTypes())
-                .Where(t => typeof(T).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
-                .ToList();
-
-            int addedCount = 0;
-
-            foreach (var strategyType in allStrategies)
-            {
-                if (!strategyList.Any(s => s != null && s.GetType() == strategyType))
-                {
-                    if (Activator.CreateInstance(strategyType) is T newStrategy)
-                    {
-                        strategyList.Add(newStrategy);
-                        addedCount++;
-                    }
-                }
-            }
-
-            Debug.Log($"{typeof(T).Name} 전략 갱신: 새 {typeof(T).Name}가 {addedCount}개 추가되었습니다.");
         }
 
         private void DrawStrategyList()
@@ -115,6 +72,46 @@ namespace Seti
             // 추가 전략 리스트 예시
             // EditorGUILayout.LabelField("Attack Strategies", EditorStyles.boldLabel);
             // DrawStrategySubList(strategyBox.attackStrategies);
+        }
+
+        private void RefreshAllStrategies()
+        {
+            // 모든 전략 리스트를 갱신
+            RefreshStrategyList(strategyBox.lookStrategies);
+            RefreshStrategyList(strategyBox.moveStrategies);
+            RefreshStrategyList(strategyBox.jumpStrategies);
+            RefreshStrategyList(strategyBox.attackStrategies);
+            RefreshStrategyList(strategyBox.defendStrategies);
+
+            // 새로운 전략 리스트가 있다면 여기에 추가
+            // RefreshStrategyList(strategyBox.attackStrategies);
+
+            // 변경 사항 저장
+            EditorUtility.SetDirty(strategyBox);
+        }
+
+        private void RefreshStrategyList<T>(List<T> strategyList) where T : class, IStrategy
+        {
+            var allStrategies = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(assembly => assembly.GetTypes())
+                .Where(t => typeof(T).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
+                .ToList();
+
+            int addedCount = 0;
+
+            foreach (var strategyType in allStrategies)
+            {
+                if (!strategyList.Any(s => s != null && s.GetType() == strategyType))
+                {
+                    if (Activator.CreateInstance(strategyType) is T newStrategy)
+                    {
+                        strategyList.Add(newStrategy);
+                        addedCount++;
+                    }
+                }
+            }
+
+            Debug.Log($"{typeof(T).Name} 전략 갱신: 새 {typeof(T).Name}가 {addedCount}개 추가되었습니다.");
         }
 
         private void DrawStrategySubList<T>(List<T> strategyList) where T : class, IStrategy
