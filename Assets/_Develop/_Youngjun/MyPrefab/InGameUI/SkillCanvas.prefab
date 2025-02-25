@@ -1918,7 +1918,7 @@ Animator:
   m_GameObject: {fileID: 2553882557817589143}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: dcf25547e0d8238448144f281177833a, type: 2}
+  m_Controller: {fileID: 22100000, guid: c41fdcecc1444ff4f9a414326defa271, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 2
   m_ApplyRootMotion: 0
@@ -5418,6 +5418,7 @@ GameObject:
   - component: {fileID: 237472775302006915}
   - component: {fileID: 6332311406652602590}
   - component: {fileID: 9104856249713613340}
+  - component: {fileID: 8426767627740168386}
   m_Layer: 5
   m_Name: SkillForgetUI
   m_TagString: Untagged
@@ -5486,6 +5487,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &8426767627740168386
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7711398319200327782}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: c41fdcecc1444ff4f9a414326defa271, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7828208651981486957
 GameObject:
   m_ObjectHideFlags: 0
@@ -6647,6 +6670,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -242
       objectReference: {fileID: 0}
+    - target: {fileID: 7706472372427626528, guid: dff855ae3e4783748bb06d34793841e5, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: c41fdcecc1444ff4f9a414326defa271, type: 2}
     - target: {fileID: 8785781235843147466, guid: dff855ae3e4783748bb06d34793841e5, type: 3}
       propertyPath: m_Name
       value: SkillReinforce
