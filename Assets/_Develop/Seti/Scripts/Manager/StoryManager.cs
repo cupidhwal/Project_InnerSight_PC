@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using Unity.Cinemachine;
 using Noah;
+using Unity.VisualScripting;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Seti
 {
@@ -75,8 +77,6 @@ namespace Seti
 
         // 기타 메서드
         #region Methods
-        public void LoadDialogue(int index) => currentIndex = index;
-
         private void SwitchCurrentStage()
         {
             StageName = StageManager.Instance.CurrentStage.name.Replace("(Clone)", "").Trim();
@@ -118,10 +118,10 @@ namespace Seti
                 Debug.LogWarning("No Player, No Game.");
                 return;
             }
-            condition_Player = Player.Condition as Condition_Player;
+            condition_Player = Player.GetComponent<Condition_Player>();
 
             Cinemachine = FindAnyObjectByType<CinemachineCamera>();
-            uiManager = FindAnyObjectByType<UIManager>();
+            uiManager = DataManager.Instance.UIManager;
             uiManager.dialogueUI.OnDialogueEnter += OnDisablePlayer;
             uiManager.dialogueUI.OnDialogueEnd += OnEnablePlayer;
 
@@ -130,12 +130,14 @@ namespace Seti
 
         private void OnEnablePlayer()
         {
+            if (condition_Player == null) return;
             condition_Player.PlayerSetActive(true);
             IsDialogue = false;
         }
 
         private void OnDisablePlayer()
         {
+            if (condition_Player == null) return;
             condition_Player.PlayerSetActive(false);
             IsDialogue = true;
         }

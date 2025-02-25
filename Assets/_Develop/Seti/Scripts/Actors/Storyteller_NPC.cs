@@ -16,8 +16,6 @@ namespace Seti
         [SerializeField]
         protected int dialogueNumber = 1;
         [SerializeField]
-        protected float range_Event = 3f;
-        [SerializeField]
         protected bool canDialogue = false;
         #endregion
 

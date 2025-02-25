@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
-using System.Linq;
-using Noah;
 
 namespace Seti
 {
@@ -24,6 +22,7 @@ namespace Seti
         private Queue<Dialogue> dialogues;
 
         // UI
+        public GameObject dialogueSwitch;
         public TextMeshProUGUI nameText;
         public TextMeshProUGUI sentenceText;
         public GameObject npcImage;

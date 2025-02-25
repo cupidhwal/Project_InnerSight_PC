@@ -56,6 +56,9 @@ namespace Seti
         #region Life Cycle
         protected virtual void Start()
         {
+            // 초기화
+            Initialize();
+
             rb = GetComponent<Rigidbody>();
 
             // Damagable 클래스가 존재하면 상태 전환 리스너 구독
@@ -70,12 +73,6 @@ namespace Seti
 
             IsGrounded = true;
             inAction = true;
-        }
-
-        protected virtual void Awake()
-        {
-            // 초기화
-            Initialize();
         }
         #endregion
 

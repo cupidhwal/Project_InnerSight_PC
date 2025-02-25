@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Seti
 {
+    [RequireComponent(typeof(Condition_Player))]
     /// <summary>
     /// Player
     /// </summary>

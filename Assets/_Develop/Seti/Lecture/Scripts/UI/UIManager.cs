@@ -16,7 +16,7 @@ namespace Seti
         public PlayerEquipmentUI playerEquipmentUI;
         public PlayerInventoryUI playerInventoryUI;
         public DialogueUI dialogueUI;
-
+        
         public int itemID = 0;
         #endregion
 
@@ -25,9 +25,7 @@ namespace Seti
         private void Start()
         {
             // 마우스 커서가 플레이 화면 밖으로 나가지 않도록 고정
-            Cursor.lockState = CursorLockMode.Confined;
-
-            DontDestroyOnLoad(gameObject);
+            //Cursor.lockState = CursorLockMode.Confined;
         }
 
         private void Update()
@@ -82,7 +80,7 @@ namespace Seti
             //if (DataManager.Instance.DialogueData.CheckSeens.All(f => f)) return;
             if (DataManager.Instance.DialogueData.CheckSeens[dialogIndex]) return;
 
-            Toggle(dialogueUI.gameObject);
+            Toggle(dialogueUI.dialogueSwitch.gameObject);
             dialogueUI.StartDialogue(dialogIndex);
         }
 
@@ -93,7 +91,7 @@ namespace Seti
 
         public void CloseDialogueUI()
         {
-            Toggle(dialogueUI.gameObject);
+            Toggle(dialogueUI.dialogueSwitch.gameObject);
         }
 
         public void AddNewItem(int index)

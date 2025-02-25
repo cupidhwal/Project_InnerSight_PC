@@ -20,6 +20,13 @@ namespace Seti
 
         // 속성
         public DialogueData DialogueData => dialogueData;
+        public UIManager UIManager
+        {
+            get
+            {
+                return GetComponent<UIManager>();
+            }
+        }
 
         private void Start()
         {
