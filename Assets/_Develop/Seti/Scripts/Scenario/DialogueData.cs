@@ -16,6 +16,7 @@ namespace Seti
         private string dataPath = "";
 
         public bool[] CheckSeens;
+        public bool SeenCompleted = false;
         #endregion
 
         // 생성자

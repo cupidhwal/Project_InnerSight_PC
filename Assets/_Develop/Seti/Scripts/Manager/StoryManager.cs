@@ -119,8 +119,8 @@ namespace Seti
                 return;
             }
             condition_Player = Player.Condition as Condition_Player;
-            Cinemachine = FindAnyObjectByType<CinemachineCamera>();
 
+            Cinemachine = FindAnyObjectByType<CinemachineCamera>();
             uiManager = FindAnyObjectByType<UIManager>();
             uiManager.dialogueUI.OnDialogueEnter += OnDisablePlayer;
             uiManager.dialogueUI.OnDialogueEnd += OnEnablePlayer;

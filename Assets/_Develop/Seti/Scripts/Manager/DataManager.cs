@@ -1,3 +1,4 @@
+using Noah;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,12 +7,12 @@ namespace Seti
     /// <summary>
     /// 게임에서 사용하는 데이터들을 관리하는 클래스
     /// </summary>
-    public class DataManager : Singleton<DataManager>
+    public class DataManager : PersistentSingleton<DataManager>
     {
         // 필드
         #region Variables
         [Header("Data : Dialogue")]
-        public static List<DialogueData> dialogueDatas = new();
+        public List<DialogueData> dialogueDatas;
 
         private DialogueData dialogueData = null;
         private EffectData effectData = null;
@@ -45,10 +46,17 @@ namespace Seti
             }*/
         }
 
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+
         // 대화 데이터 가져오기
         public DialogueData GetDialogData()
         {
             string dataName = StoryManager.Instance.StageName;
+
+            dialogueDatas ??= new();
 
             // 기존 대화 데이터 검색
             for (int i = 0; i < dialogueDatas.Count; i++)

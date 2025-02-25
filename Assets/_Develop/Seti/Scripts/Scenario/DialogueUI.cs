@@ -149,7 +149,7 @@ namespace Seti
 
             if (StoryManager.Instance.StageName == "Stage_T" &&
                 DataManager.Instance.DialogueData.CheckSeens[^1])
-                SaveLoadManager.Instance.isTutorial = true;
+                DataManager.Instance.DialogueData.SeenCompleted = true;
         }
     }
 }

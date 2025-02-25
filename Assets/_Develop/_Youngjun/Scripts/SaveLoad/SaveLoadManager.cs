@@ -1,4 +1,5 @@
 using JungBin;
+using Seti;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -42,6 +43,9 @@ namespace Noah
             playerStats.ResetData();
             playerItem.ResetData();
             relicSaveData.ResetData();
+
+            if (DataManager.Instance.dialogueDatas.Count > 0)
+                isTutorial = DataManager.Instance.dialogueDatas[0].SeenCompleted;
         }
 
         [ContextMenu("Save")]

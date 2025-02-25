@@ -5,9 +5,6 @@ using Seti;
 using Unity.AI.Navigation;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
-using Unity.Cinemachine;
-using UnityEngine.Playables;
-using Unity.VisualScripting;
 using UnityEngine.Events;
 
 namespace Noah
