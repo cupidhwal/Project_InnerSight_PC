@@ -48,7 +48,7 @@ namespace Noah
             }
 
             // 마지막 보정 (완전히 보이게 설정)
-            //SetAlpha_Paritcle(1f, _particleSystems);
+            SetAlpha_Paritcle(1f, _particleSystems);
 
             // 페이드 완료 후 파티클 다시 재생
             foreach (ParticleSystem ps in _particleSystems)

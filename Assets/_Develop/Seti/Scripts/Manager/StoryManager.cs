@@ -34,6 +34,7 @@ namespace Seti
 
         // 속성
         #region Properties
+        public List<string> SeenDialogueList { get; private set; } = new();
         public Player Player { get; private set; }
         public CinemachineCamera Cinemachine { get; private set; }
         public GameObject TempTarget { get; private set; }

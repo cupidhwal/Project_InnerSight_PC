@@ -16,7 +16,7 @@ namespace Seti
     }
 
     /// <summary>
-    /// Dialog 데이터 모델 클래스
+    /// Dialogue 데이터 모델 클래스
     /// </summary>
     [Serializable]
     public class Dialogue

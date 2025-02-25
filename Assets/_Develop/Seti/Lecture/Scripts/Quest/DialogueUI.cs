@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Linq;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 namespace Seti
 {
@@ -18,6 +20,9 @@ namespace Seti
     public class DialogueUI : MonoBehaviour
     {
         #region Variables
+        // Current
+        private int currentNumber;
+
         // 대사 콜렉션
         private Queue<Dialogue> dialogues;
 
@@ -54,6 +59,8 @@ namespace Seti
             sentenceText.text = "";
 
             nextButton.gameObject.SetActive(false);
+
+            OnDialogueEnd += SeenHandle;
         }
 
         //대화 시작하기
@@ -62,6 +69,9 @@ namespace Seti
             //현재 대화씬(dialogIndex) 내용을 큐에 입력
             foreach (var dialogue in DataManager.Instance.GetDialogData().Dialogues.dialogues)
             {
+                string seenID = StoryManager.Instance.SeenDialogueList.FirstOrDefault(seen => seen == (StoryManager.Instance.StageName + "/" + dialogue.number.ToString()))?? null;
+                if (seenID != null) continue;
+
                 if (dialogue.number == dialogIndex)
                 {
                     dialogues.Enqueue(dialogue);
@@ -85,6 +95,7 @@ namespace Seti
 
             //dialogs에서 하나 꺼내온다
             Dialogue dialogue = dialogues.Dequeue();
+            currentNumber = dialogue.number;
 
             if (dialogue.character == 1)
             {
@@ -131,6 +142,11 @@ namespace Seti
 
             if (ComponentUtility.TryGetComponentInParent<UIManager>(transform, out var uiManager))
                 uiManager.CloseDialogueUI();
+        }
+
+        private void SeenHandle()
+        {
+            StoryManager.Instance.SeenDialogueList.Add(StoryManager.Instance.StageName + "/" + currentNumber.ToString());
         }
     }
 }

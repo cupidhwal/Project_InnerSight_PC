@@ -79,7 +79,7 @@ namespace Noah
 
         void SetCurrentStage(int _stage = 0)
         {
-            if (!SaveLoadManager.Instance.isLoadData)
+            if (!SaveLoadManager.Instance.isTutorial)
             {
                 curStage = _stage;
             }
@@ -392,6 +392,10 @@ namespace Noah
                     if (hiddenPotal != null)
                     {
                         hiddenPotal.SetActive(true);
+                    }
+                    if (ComponentUtility.TryGetComponentInChildren<Trigger_Stage>(transform, out var stageTrigger))
+                    {
+                        stageTrigger.OpenDialogue();
                     }
                 }
                 else

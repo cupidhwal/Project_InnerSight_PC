@@ -22,6 +22,7 @@ namespace Noah
         //public string upgradeGoldSavePath = "/UpgradeGold.json";
         //public Gold upgradeGold = new Gold();
 
+        public bool isTutorial;
         public bool isLoadData;
 
         protected override void Awake()
