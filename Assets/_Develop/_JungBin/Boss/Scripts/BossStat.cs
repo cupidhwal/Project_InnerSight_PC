@@ -19,6 +19,7 @@ namespace JungBin
         [SerializeField] private GameObject bossHealthBarUI;
         [SerializeField] private Material bossMaterial;
         private Color originalColor;
+        [SerializeField] private GameObject berserkEffect;
 
         private Animator animator; // 보스 애니메이션
         private bool isBerserk = false; // 버서커 모드 여부
@@ -92,6 +93,7 @@ namespace JungBin
             animator.SetBool("IsWall", false);
             animator.SetBool("IsPlayer", false);
             Debug.Log("버서커 모드로 전환됨: 무적 상태 활성화");
+            berserkEffect.SetActive(true);
         }
 
         // 보스 사망 처리

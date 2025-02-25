@@ -220,7 +220,7 @@ namespace JungBin
 
             // 경고 이펙트 생성
             GameObject warningEffect = Instantiate(warningEffectPrefab, startPosition, warningRotation, this.transform);
-            warningEffect.transform.GetChild(0).localScale = new Vector3(1, 0.1f, warningLength); // 길이 조정
+            //warningEffect.transform.GetChild(0).localScale = new Vector3(1, 0.1f, warningLength); // 길이 조정
 
             canSpawn = false;
 
@@ -231,13 +231,17 @@ namespace JungBin
                 if (animator.GetBool("IsWall") || animator.GetBool("IsBerserk"))
                 {
                     Destroy(warningEffect); // 기존 경고 이펙트 제거
+
+                    Debug.Log("111");
                     yield break; // 즉시 종료 (return 역할)
                 }
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
 
+            
             Destroy(warningEffect); // 경고 표시 제거 후 돌진 시작 
+            Debug.Log("222");
 
             yield return new WaitForSeconds(Duration);
 
@@ -245,9 +249,9 @@ namespace JungBin
             rushDirection = transform.forward; // 돌진 방향 (현재 보스의 정면 방향)
 
             warningRotation = Quaternion.LookRotation(rushDirection);
-
+            
             GameObject secondWarningEffect = Instantiate(warningEffectPrefab, startPosition, warningRotation, this.transform);
-            secondWarningEffect.transform.GetChild(0).localScale = new Vector3(1, 0.1f, warningLength); // 길이 조정
+            //secondWarningEffect.transform.GetChild(0).localScale = new Vector3(1, 0.1f, warningLength); // 길이 조정
 
             StartCoroutine(ResetDamageCooldown());
 
