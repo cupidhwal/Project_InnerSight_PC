@@ -7,7 +7,7 @@ namespace Noah
     {
         public float fadeDuration = 2f; // 페이드 지속 시간
 
-        public void ObjectFadeIn_Paritcle(Transform _object/*, ParticleSystem[] _particleSystems*/)
+        public void ObjectFadeIn_Particle(Transform _object/*, ParticleSystem[] _particleSystems*/)
         {
             ParticleSystem[] _particleSystems = _object.GetComponentsInChildren<ParticleSystem>(true);
 
@@ -17,7 +17,13 @@ namespace Noah
                 ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             }
 
-            StartCoroutine(FadeIn_Paritcle(_particleSystems));
+            StartCoroutine(FadeIn_Particle(_particleSystems));
+        }
+
+        public void ObjectFadeOut_Particle(Transform _object)
+        {
+            ParticleSystem[] _particleSystems = _object.GetComponentsInChildren<ParticleSystem>(true);
+            StartCoroutine(FadeOut_Particle(_particleSystems));
         }
 
         public void ObjectFadeIn_Object(Transform _object)
@@ -34,21 +40,21 @@ namespace Noah
             StartCoroutine(FadeIn_Canvas(_canvasGroups));
         }
 
-        IEnumerator FadeIn_Paritcle(ParticleSystem[] _particleSystems)
+        IEnumerator FadeIn_Particle(ParticleSystem[] _particleSystems)
         {
             float elapsedTime = 0f;
-            //SetAlpha_Paritcle(0f, _particleSystems); // 처음에는 완전히 투명
+            //SetAlpha_Particle(0f, _particleSystems); // 처음에는 완전히 투명
 
             while (elapsedTime < fadeDuration)
             {
                 elapsedTime += Time.deltaTime;
                 float alpha = Mathf.Clamp01(elapsedTime / fadeDuration);
-                //SetAlpha_Paritcle(alpha, _particleSystems);
+                //SetAlpha_Particle(alpha, _particleSystems);
                 yield return null;
             }
 
             // 마지막 보정 (완전히 보이게 설정)
-            SetAlpha_Paritcle(1f, _particleSystems);
+            //SetAlpha_Particle(1f, _particleSystems);
 
             // 페이드 완료 후 파티클 다시 재생
             foreach (ParticleSystem ps in _particleSystems)
@@ -58,6 +64,31 @@ namespace Noah
                     ps.Play();    
                 }
                 
+            }
+        }
+
+        IEnumerator FadeOut_Particle(ParticleSystem[] _particleSystems)
+        {
+            float elapsedTime = 0f;
+
+            while (elapsedTime < fadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float alpha = Mathf.Clamp01(1f - (elapsedTime / fadeDuration));
+                SetAlpha_Particle(alpha, _particleSystems);
+                yield return null;
+            }
+
+            // 마지막 보정 (완전히 사라지게 설정)
+            SetAlpha_Particle(0f, _particleSystems);
+
+            // 페이드 완료 후 파티클 정지
+            foreach (ParticleSystem ps in _particleSystems)
+            {
+                if (ps != null)
+                {
+                    ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                }
             }
         }
 
@@ -96,7 +127,7 @@ namespace Noah
         }
 
 
-        void SetAlpha_Paritcle(float _alpha, ParticleSystem[] _particleSystems)
+        void SetAlpha_Particle(float _alpha, ParticleSystem[] _particleSystems)
         {
             // 모든 ParticleSystem 투명도 변경 (colorOverLifetime 사용)
             foreach (ParticleSystem ps in _particleSystems)
