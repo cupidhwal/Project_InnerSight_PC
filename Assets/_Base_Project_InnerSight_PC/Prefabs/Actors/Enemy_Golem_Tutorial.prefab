@@ -1425,13 +1425,13 @@ GameObject:
   - component: {fileID: 9118154308318002457}
   - component: {fileID: 3364466483215636433}
   - component: {fileID: 3511435886345394626}
+  - component: {fileID: 4292751661068214576}
   - component: {fileID: 7496203609271835747}
   - component: {fileID: 3846494019382873228}
   - component: {fileID: 8162035992737556349}
   - component: {fileID: 7613408047795084551}
   - component: {fileID: 6511279441557689298}
   - component: {fileID: 658566218423419064}
-  - component: {fileID: 4292751661068214576}
   m_Layer: 6
   m_Name: Enemy_Golem_Tutorial
   m_TagString: Enemy
@@ -1547,6 +1547,19 @@ MonoBehaviour:
   currentWeapon: {fileID: 2060960671895744437}
   inAction: 0
   destroyDelay: 2
+--- !u!114 &4292751661068214576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8367765423597452721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3890b17220493bb45a2a0fb297dea72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
 --- !u!114 &7496203609271835747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1661,19 +1674,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold: {fileID: 0}
   chargeGold: 0
---- !u!114 &4292751661068214576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8367765423597452721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3890b17220493bb45a2a0fb297dea72f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: 0
 --- !u!1 &8576893116448942576
 GameObject:
   m_ObjectHideFlags: 0

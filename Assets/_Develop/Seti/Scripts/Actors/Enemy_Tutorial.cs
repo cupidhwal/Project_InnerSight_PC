@@ -9,8 +9,10 @@ namespace Seti
         [SerializeField]
         private GameObject award;
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
+
             award = StageManager.Instance.transform.GetChild(0).GetChild(0).gameObject;
         }
 

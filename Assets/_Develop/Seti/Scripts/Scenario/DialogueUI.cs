@@ -36,6 +36,11 @@ namespace Seti
 
         public int CurrentNumber => currentNumber;
 
+        private void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
         private void OnEnable()
         {
             dialogues = new Queue<Dialogue>();

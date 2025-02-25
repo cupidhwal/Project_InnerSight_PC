@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,12 +87,12 @@ namespace Seti
                     OpenDialogue(0);
                     break;
 
-                case "Stage00":
+                case "Stage000":
                     SetDialogue(1);
                     OpenDialogue(0);
                     break;
 
-                case "Stage01":
+                case "Stage001":
                     SetDialogue(2);
                     OpenDialogue(0);
                     break;

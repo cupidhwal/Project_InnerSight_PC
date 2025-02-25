@@ -18,8 +18,8 @@ MonoBehaviour:
   strategyBox: {fileID: 11400000, guid: 7dc1bb17aacb56c4e856240083fff143, type: 2}
   behaviourBox: {fileID: 11400000, guid: aa181b0e9b02247418838ed47a38fdfb, type: 2}
   behaviourStrategies:
-  - rid: 8920205112704500213
   - rid: 8920205112704500221
+  - rid: 8920205112704500213
   - rid: 5694582135091626056
   - rid: 5694582135091626068
   references:
@@ -39,7 +39,9 @@ MonoBehaviour:
       type: {class: Move, ns: Seti, asm: Assembly-CSharp}
       data:
         strategies:
-        - rid: 5694582135091626062
+        - rid: 5694582401205797359
+        - rid: 5694582401205797360
+        - rid: 5694582401205797361
     - rid: 5694582135091626058
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
@@ -64,12 +66,6 @@ MonoBehaviour:
         strategy:
           rid: 5694582135091626066
         isActive: 1
-    - rid: 5694582135091626062
-      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategy:
-          rid: 5694582135091626067
-        isActive: 1
     - rid: 5694582135091626063
       type: {class: Move_Normal, ns: Seti, asm: Assembly-CSharp}
       data: 
@@ -82,9 +78,6 @@ MonoBehaviour:
     - rid: 5694582135091626066
       type: {class: Move_Nav, ns: Seti, asm: Assembly-CSharp}
       data: 
-    - rid: 5694582135091626067
-      type: {class: Move_Normal, ns: Seti, asm: Assembly-CSharp}
-      data: 
     - rid: 5694582135091626068
       type: {class: BehaviourStrategyMapping, ns: Seti, asm: Assembly-CSharp}
       data:
@@ -94,6 +87,36 @@ MonoBehaviour:
     - rid: 5694582135091626069
       type: {class: Stagger, ns: Seti, asm: Assembly-CSharp}
       data: 
+    - rid: 5694582401205797357
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 8920205112704500228
+        isActive: 1
+    - rid: 5694582401205797358
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 8920205112704500219
+        isActive: 1
+    - rid: 5694582401205797359
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5694582135091626064
+        isActive: 1
+    - rid: 5694582401205797360
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5694582135091626065
+        isActive: 1
+    - rid: 5694582401205797361
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5694582135091626066
+        isActive: 1
     - rid: 8920205112704500213
       type: {class: BehaviourStrategyMapping, ns: Seti, asm: Assembly-CSharp}
       data:
@@ -106,7 +129,7 @@ MonoBehaviour:
       type: {class: Look, ns: Seti, asm: Assembly-CSharp}
       data:
         strategies:
-        - rid: 8920205112704500217
+        - rid: 5694582401205797358
     - rid: 8920205112704500215
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
       data:
@@ -119,20 +142,11 @@ MonoBehaviour:
         strategy:
           rid: 8920205112704500219
         isActive: 1
-    - rid: 8920205112704500217
-      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
-      data:
-        strategy:
-          rid: 8920205112704500220
-        isActive: 1
     - rid: 8920205112704500218
       type: {class: Look_Normal, ns: Seti, asm: Assembly-CSharp}
       data: 
     - rid: 8920205112704500219
       type: {class: Look_Watch, ns: Seti, asm: Assembly-CSharp}
-      data: 
-    - rid: 8920205112704500220
-      type: {class: Look_Normal, ns: Seti, asm: Assembly-CSharp}
       data: 
     - rid: 8920205112704500221
       type: {class: BehaviourStrategyMapping, ns: Seti, asm: Assembly-CSharp}
@@ -148,7 +162,8 @@ MonoBehaviour:
       type: {class: Attack, ns: Seti, asm: Assembly-CSharp}
       data:
         attack: 0
-        strategies: []
+        strategies:
+        - rid: 5694582401205797357
         isSkillAttack: 0
     - rid: 8920205112704500223
       type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}

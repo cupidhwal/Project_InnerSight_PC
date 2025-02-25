@@ -109,6 +109,7 @@ namespace Seti
             {
                 Collider collider = GetComponent<Collider>();
                 collider.excludeLayers = LayerMask.GetMask("Player");
+                enemy.Agent.ResetPath();
                 enemy.Agent.enabled = false;
             }
 

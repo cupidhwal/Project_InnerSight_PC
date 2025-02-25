@@ -128,7 +128,7 @@ namespace Seti
 
         // 라이프 사이클
         #region Life Cycle
-        private void Start()
+        protected virtual void Start()
         {
             // 초기화
             HomePosition = transform.position;

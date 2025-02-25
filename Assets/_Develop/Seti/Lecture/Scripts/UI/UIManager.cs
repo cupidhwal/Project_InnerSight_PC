@@ -26,6 +26,8 @@ namespace Seti
         {
             // 마우스 커서가 플레이 화면 밖으로 나가지 않도록 고정
             Cursor.lockState = CursorLockMode.Confined;
+
+            DontDestroyOnLoad(gameObject);
         }
 
         private void Update()
