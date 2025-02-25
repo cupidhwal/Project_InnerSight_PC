@@ -21,8 +21,6 @@ namespace Seti
         private int currentIndex;
         [SerializeField]
         private List<string> dialogueList = new();
-        [SerializeField]
-        private List<string> seenDialogueList = new();
 
         // 참조
         private UIManager uiManager;
@@ -36,7 +34,6 @@ namespace Seti
 
         // 속성
         #region Properties
-        public List<string> SeenDialogueList => seenDialogueList;
         public Player Player { get; private set; }
         public CinemachineCamera Cinemachine { get; private set; }
         public GameObject TempTarget { get; private set; }
@@ -61,7 +58,6 @@ namespace Seti
         }
         public void OpenDialogue(int index) => uiManager.OpenDialogueUI(index);
         public void NextDialogue() => uiManager.NextDialogueUI();
-        public bool CheckSeenDialogue(int index) => seenDialogueList.FirstOrDefault(seen => seen == (StageName + "/" + index.ToString())) != null;
 
         // 연출
         public void SetTempTarget(GameObject tempTarget) => TempTarget = tempTarget;
@@ -92,8 +88,13 @@ namespace Seti
                     OpenDialogue(0);
                     break;
 
-                case "Stage01":
+                case "Stage00":
                     SetDialogue(1);
+                    OpenDialogue(0);
+                    break;
+
+                case "Stage01":
+                    SetDialogue(2);
                     OpenDialogue(0);
                     break;
             }

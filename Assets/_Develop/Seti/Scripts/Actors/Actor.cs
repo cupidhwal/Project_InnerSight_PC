@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -185,24 +186,31 @@ namespace Seti
             switch (blueprint.controlType)
             {
                 case ControlType.Input:
-                    SwitchControlType(new Control_Input());
+                    SwitchControlType(typeof(Control_Input));
                     break;
 
                 case ControlType.AI:
-                    SwitchControlType(new Control_FSM());
+                    SwitchControlType(typeof(Control_FSM));
                     break;
             }
         }
 
-        private void SwitchControlType(IControl newControl)
+        private void SwitchControlType(Type controlType)
         {
             // 현재 Actor에 부착된 컨트롤러 탐색
-            if (TryGetComponent<IController>(out var _))
+            if (TryGetComponent<IController>(out var icon))
             {
+                if (icon.GetControlType() == controlType)
+                    return;
+
                 control?.OnExit(this);
             }
-            control = newControl;
-            control.OnEnter(this);
+
+            if (typeof(IControl).IsAssignableFrom(controlType)) // IControl을 구현한 타입인지 확인
+            {
+                control = Activator.CreateInstance(controlType) as IControl;
+                control.OnEnter(this);
+            }
         }
         #endregion
 

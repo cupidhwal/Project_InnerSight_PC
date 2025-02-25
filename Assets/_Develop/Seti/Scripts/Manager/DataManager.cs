@@ -1,4 +1,3 @@
-using Noah;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -97,6 +96,11 @@ namespace Seti
                 questData.LoadData();
             }
             return questData;
+        }
+
+        private void OnValidate()
+        {
+            dialogueDatas.Sort();
         }
     }
 }
