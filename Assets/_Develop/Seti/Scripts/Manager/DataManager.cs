@@ -11,12 +11,15 @@ namespace Seti
         // 필드
         #region Variables
         [Header("Data : Dialogue")]
-        public List<DialogueData> dialogueDatas = new();
+        public static List<DialogueData> dialogueDatas = new();
 
         private DialogueData dialogueData = null;
         private EffectData effectData = null;
         private QuestData questData = null;
         #endregion
+
+        // 속성
+        public DialogueData DialogueData => dialogueData;
 
         private void Start()
         {
@@ -42,32 +45,22 @@ namespace Seti
             }*/
         }
 
-        //이펙트 데이터 가져오기
+        // 대화 데이터 가져오기
         public DialogueData GetDialogData()
         {
-            string dataName = string.Empty;
-            switch (StoryManager.Instance.StageName)
-            {
-                case "_T":
-                    dataName = "_T";
-                    break;
+            string dataName = StoryManager.Instance.StageName;
 
-                case "00":
-                    dataName = "00";
-                    break;
-
-                case "01":
-                    dataName = "01";
-                    break;
-            }
-            dataName = "Stage" + dataName;
-
+            // 기존 대화 데이터 검색
             for (int i = 0; i < dialogueDatas.Count; i++)
             {
                 if (dialogueDatas[i].name == dataName)
-                    return dialogueDatas[i];
+                {
+                    dialogueData = dialogueDatas[i];
+                    return dialogueData;
+                }
             }
 
+            // 새로운 대화 데이터 생성
             dialogueData = ScriptableObject.CreateInstance<DialogueData>();
             dialogueData.LoadData();
             dialogueData.name = dataName;

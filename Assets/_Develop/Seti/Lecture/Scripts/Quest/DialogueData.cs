@@ -13,8 +13,9 @@ namespace Seti
         // 필드
         #region Variables
         public Dialogues Dialogues;     // 대화 데이터베이스
-        private string xmlFilePath = string.Empty;
         private string dataPath = "";
+
+        public bool[] CheckSeens;
         #endregion
 
         // 생성자
@@ -36,6 +37,18 @@ namespace Seti
             using XmlTextReader reader = new(new StringReader(asset.text));
             var xs = new XmlSerializer(typeof(Dialogues));
             Dialogues = (Dialogues)xs.Deserialize(reader);
+
+            CheckSeens = GetSeenList();
+        }
+
+        private bool[] GetSeenList()
+        {
+            if (CheckSeens == null)
+            {
+                int size = Dialogues?.dialogues[^1].number + 1 ?? 1;
+                CheckSeens = new bool[size];
+            }
+            return CheckSeens;
         }
         #endregion
     }

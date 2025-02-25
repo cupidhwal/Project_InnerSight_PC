@@ -19,11 +19,6 @@ namespace Seti
         {
             base.OnEnter();
 
-            Debug.Log(context);
-            Debug.Log(context.Actor);
-            Debug.Log(context.Actor.Condition);
-            Debug.Log(context.Actor.Condition.IsMove);
-
             context.Actor.Condition.IsMove = false;
         }
 

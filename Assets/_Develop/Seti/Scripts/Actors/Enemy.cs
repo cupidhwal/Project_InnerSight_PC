@@ -80,6 +80,8 @@ namespace Seti
             {
                 // Modifier 검사
                 Environment environment = StageManager.Instance.transform.GetComponentInChildren<Environment>();
+                if (!environment) return false;
+
                 float minMod = environment.Modifiers.Count == 0 ? 0 : float.MaxValue;
                 foreach (var obs in environment.Modifiers)
                 {

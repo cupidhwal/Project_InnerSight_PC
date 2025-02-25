@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml;
-using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 using TMPro;
 using System.Linq;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using Noah;
 
 namespace Seti
 {
@@ -36,6 +33,8 @@ namespace Seti
         public UnityAction OnDialogueEnter;
         public UnityAction OnDialogueEnd;
         #endregion
+
+        public int CurrentNumber => currentNumber;
 
         private void OnEnable()
         {
@@ -69,9 +68,6 @@ namespace Seti
             //현재 대화씬(dialogIndex) 내용을 큐에 입력
             foreach (var dialogue in DataManager.Instance.GetDialogData().Dialogues.dialogues)
             {
-                string seenID = StoryManager.Instance.SeenDialogueList.FirstOrDefault(seen => seen == (StoryManager.Instance.StageName + "/" + dialogue.number.ToString()))?? null;
-                if (seenID != null) continue;
-
                 if (dialogue.number == dialogIndex)
                 {
                     dialogues.Enqueue(dialogue);
@@ -87,7 +83,7 @@ namespace Seti
         public void DrawNextDialogue()
         {
             //dialogs 체크
-            if (dialogues.Count == 0)
+            if (dialogues == null || dialogues.Count == 0)
             {
                 EndDialogue();
                 return;
@@ -146,7 +142,14 @@ namespace Seti
 
         private void SeenHandle()
         {
-            StoryManager.Instance.SeenDialogueList.Add(StoryManager.Instance.StageName + "/" + currentNumber.ToString());
+            /*if (!StoryManager.Instance.CheckSeenDialogue(currentNumber))
+                StoryManager.Instance.SeenDialogueList.Add(StoryManager.Instance.StageName + "/" + currentNumber.ToString());*/
+
+            DataManager.Instance.DialogueData.CheckSeens[currentNumber] = true;
+
+            if (StoryManager.Instance.StageName == "Stage_T" &&
+                DataManager.Instance.DialogueData.CheckSeens[^1])
+                SaveLoadManager.Instance.isTutorial = true;
         }
     }
 }

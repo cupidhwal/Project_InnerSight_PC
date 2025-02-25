@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Seti
@@ -76,6 +77,9 @@ namespace Seti
 
         public void OpenDialogueUI(int dialogIndex)
         {
+            //if (DataManager.Instance.DialogueData.CheckSeens.All(f => f)) return;
+            if (DataManager.Instance.DialogueData.CheckSeens[dialogIndex]) return;
+
             Toggle(dialogueUI.gameObject);
             dialogueUI.StartDialogue(dialogIndex);
         }

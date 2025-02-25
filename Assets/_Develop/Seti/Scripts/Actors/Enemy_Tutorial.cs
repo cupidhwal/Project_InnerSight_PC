@@ -1,6 +1,4 @@
-using MySampleEx;
 using Noah;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Seti
