@@ -44,7 +44,6 @@ namespace Seti
         // 라이프 사이클
         private void Start()
         {
-            // 참조
             StageManager.Instance.stageEndEvent += SwitchCurrentStage;
         }
 
@@ -70,6 +69,28 @@ namespace Seti
             foreach (var act in composition.Actions)
             {
                 act.Execute(composition.Target);
+            }
+        }
+        public void ReadyComposition()
+        {
+            // 마을 포탈
+            GameObject portals = StageManager.Instance.CurrentStage.transform.GetChild(0).GetChild(0).gameObject;
+            Debug.Log($"portals: {portals}");
+            DisableComposition("Stage000", 1, portals);
+
+            // 미니맵
+            GameObject miniMap = FindAnyObjectByType<Mini_Map>().gameObject;
+            DisableComposition("Stage001", 0, miniMap);
+        }
+        private void DisableComposition(string stageName, int dialogueIndex, GameObject target)
+        {
+            ScenarioData data = SaveLoadManager.Instance.scenarioSaveData;
+            if (data == null) return;
+
+            ScenarioProgress progress = data.dialogueDatas.FirstOrDefault(d => d.ScenarioName == stageName);
+            if (!data.dialogueDatas.Contains(progress) || !progress.CheckSeens[dialogueIndex])
+            {
+                target.SetActive(false);
             }
         }
 
@@ -119,14 +140,6 @@ namespace Seti
             }
             condition_Player = Player.GetComponent<Condition_Player>();
             Cinemachine = FindAnyObjectByType<CinemachineCamera>();
-
-            // 연출 이벤트 관리
-            // 미니맵
-            DialogueData dialogueData = DataManager.Instance.dialogueDatas.FirstOrDefault(data => data.name == "Stage001");
-            //if (!DataManager.Instance.dialogueDatas.Contains(dialogueData) || dialogueData.)
-            //{
-
-            //}
 
             // 대화 이벤트 관리
             uiManager = DataManager.Instance.UIManager;

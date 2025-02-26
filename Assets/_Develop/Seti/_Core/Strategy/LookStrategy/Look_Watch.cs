@@ -18,7 +18,8 @@ namespace Seti
                 Condition_Enemy enemyCondition = enemy.Condition as Condition_Enemy;
                 if (!enemyCondition.IsChase &&
                     !enemyCondition.IsAttack &&
-                    !enemyCondition.IsPositioning)
+                    !enemyCondition.IsPositioning &&
+                    !enemyCondition.IsDead)
                 {
                     enemy.transform.LookAt(enemy.Player.transform.position);
                 }

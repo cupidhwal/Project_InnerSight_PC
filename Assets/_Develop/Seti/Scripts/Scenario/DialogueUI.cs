@@ -150,8 +150,7 @@ namespace Seti
         {
             DataManager.Instance.DialogueData.CheckSeens[currentNumber] = true;
 
-            if (StoryManager.Instance.StageName == "Stage_T" &&
-                DataManager.Instance.DialogueData.CheckSeens[^1])
+            if (DataManager.Instance.DialogueData.CheckSeens[^1])
                 DataManager.Instance.DialogueData.SeenCompleted = true;
 
             SaveLoadManager.Instance.SaveScenario(DataManager.Instance.DialogueData);
