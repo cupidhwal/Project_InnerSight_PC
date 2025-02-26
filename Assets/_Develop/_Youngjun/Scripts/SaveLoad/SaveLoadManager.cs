@@ -30,10 +30,7 @@ namespace Noah
         //public string upgradeGoldSavePath = "/UpgradeGold.json";
         //public Gold upgradeGold = new Gold();
 
-
-
         public bool isTutorial;
-        public bool isLoadData;
 
         protected override void Awake()
         {
@@ -116,7 +113,7 @@ namespace Noah
 
                 if (dataGroupDic.TryGetValue(_path, out bool value))
                 {
-                    Debug.Log($"PlayerStats Value: {value}");
+                    Debug.Log($"{_path} Value: {value}");
                 }
                 else
                 {
