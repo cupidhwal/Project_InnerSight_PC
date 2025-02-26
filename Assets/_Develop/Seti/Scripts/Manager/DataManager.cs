@@ -1,4 +1,6 @@
+using Noah;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Seti
@@ -78,6 +80,18 @@ namespace Seti
             dialogueData = ScriptableObject.CreateInstance<DialogueData>();
             dialogueData.LoadData();
             dialogueData.name = dataName;
+
+            // 세이브 데이터 읽어오기
+            ScenarioData data = SaveLoadManager.Instance.scenarioSaveData;
+            if (data != null)
+            {
+                ScenarioProgress progress = data.dialogueDatas.FirstOrDefault(dialogue => dialogue.ScenarioName == dataName);
+                if (progress != null)
+                {
+                    dialogueData.CheckSeens = progress.CheckSeens;
+                    dialogueData.SeenCompleted = progress.SeenCompleted;
+                }
+            }
             dialogueDatas.Add(dialogueData);
 
             return dialogueData;

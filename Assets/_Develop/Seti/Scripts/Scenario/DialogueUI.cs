@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using Noah;
 
 namespace Seti
 {
@@ -114,6 +115,7 @@ namespace Seti
             StopAllCoroutines();
             StartCoroutine(TypingSentence(dialogue.sentence));
 
+            // 대화 도중 연출 처리
             if (dialogue.nextType == NextType.Composition)
                 StoryManager.Instance.SelectComposition(dialogue.number, dialogue.order);
         }
@@ -146,14 +148,13 @@ namespace Seti
 
         private void SeenHandle()
         {
-            /*if (!StoryManager.Instance.CheckSeenDialogue(currentNumber))
-                StoryManager.Instance.SeenDialogueList.Add(StoryManager.Instance.StageName + "/" + currentNumber.ToString());*/
-
             DataManager.Instance.DialogueData.CheckSeens[currentNumber] = true;
 
             if (StoryManager.Instance.StageName == "Stage_T" &&
                 DataManager.Instance.DialogueData.CheckSeens[^1])
                 DataManager.Instance.DialogueData.SeenCompleted = true;
+
+            SaveLoadManager.Instance.SaveScenario(DataManager.Instance.DialogueData);
         }
     }
 }

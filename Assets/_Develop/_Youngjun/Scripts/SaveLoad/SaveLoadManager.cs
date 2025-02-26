@@ -1,6 +1,7 @@
 using JungBin;
 using Seti;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
@@ -19,6 +20,9 @@ namespace Noah
 
         public string relicSavePath = "/RelicData.json";
         public RelicSaveData relicSaveData = new RelicSaveData();
+
+        public string scenarioSaveDataPath = "/scenarioData.json";
+        public ScenarioData scenarioSaveData = new();
 
         //public string upgradeGoldSavePath = "/UpgradeGold.json";
         //public Gold upgradeGold = new Gold();
@@ -43,9 +47,7 @@ namespace Noah
             playerStats.ResetData();
             playerItem.ResetData();
             relicSaveData.ResetData();
-
-            if (DataManager.Instance.dialogueDatas.Count > 0)
-                isTutorial = DataManager.Instance.dialogueDatas[0].SeenCompleted;
+            scenarioSaveData.ResetData();
         }
 
         [ContextMenu("Save")]
@@ -92,7 +94,7 @@ namespace Noah
             }
             else
             {
-                if (_path != relicSavePath)
+                if (_path != relicSavePath || _path != scenarioSaveDataPath)
                 {
                     isLoadData = false;
                     Debug.Log("세이브 데이터가 없습니다");
@@ -105,6 +107,8 @@ namespace Noah
             LoadData(upgradeCountSavePath, ref upgradeCount);
             LoadData(playerItemSavePath, ref playerItem);
             LoadData(relicSavePath, ref relicSaveData);
+            LoadData(scenarioSaveDataPath, ref scenarioSaveData);
+
             //LoadData(upgradeGoldSavePath, ref upgradeGold);
         }
 
@@ -140,7 +144,18 @@ namespace Noah
             Save(relicSavePath, relicSaveData);
         }
 
-
+        public void SaveScenario(DialogueData dialogueData)
+        {
+            ScenarioProgress data = scenarioSaveData.dialogueDatas.FirstOrDefault(dialogue => dialogue.ScenarioName == dialogueData.name);
+            if (data == null)
+            {
+                data = new(dialogueData);
+                scenarioSaveData.dialogueDatas.Add(data);
+            }
+            data.SetData(dialogueData);
+            Save(scenarioSaveDataPath, scenarioSaveData);
+        }
+        public void CheckTutorial(bool flag) => isTutorial = flag;
     }
 }
 

@@ -1,3 +1,5 @@
+using Noah;
+using System;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -42,7 +44,7 @@ namespace Seti
             CheckSeens = GetSeenList();
         }
 
-        private bool[] GetSeenList()
+        public bool[] GetSeenList()
         {
             if (CheckSeens == null)
             {

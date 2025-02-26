@@ -1,0 +1,19 @@
+using Noah;
+using UnityEngine;
+
+namespace Seti
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public class SetTarget : MonoBehaviour
+    {
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                StoryManager.Instance.SetTempTarget(StageManager.Instance.transform.GetChild(0).GetChild(0).gameObject);
+            }
+        }
+    }
+}

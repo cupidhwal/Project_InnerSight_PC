@@ -4,8 +4,6 @@ using System.Linq;
 using UnityEngine;
 using Unity.Cinemachine;
 using Noah;
-using Unity.VisualScripting;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Seti
 {
@@ -112,6 +110,7 @@ namespace Seti
 
         private void InitializeOnAwake()
         {
+            // 참조
             Player = FindAnyObjectByType<Player>();
             if (!Player)
             {
@@ -119,8 +118,17 @@ namespace Seti
                 return;
             }
             condition_Player = Player.GetComponent<Condition_Player>();
-
             Cinemachine = FindAnyObjectByType<CinemachineCamera>();
+
+            // 연출 이벤트 관리
+            // 미니맵
+            DialogueData dialogueData = DataManager.Instance.dialogueDatas.FirstOrDefault(data => data.name == "Stage001");
+            //if (!DataManager.Instance.dialogueDatas.Contains(dialogueData) || dialogueData.)
+            //{
+
+            //}
+
+            // 대화 이벤트 관리
             uiManager = DataManager.Instance.UIManager;
             uiManager.dialogueUI.OnDialogueEnter += OnDisablePlayer;
             uiManager.dialogueUI.OnDialogueEnd += OnEnablePlayer;
