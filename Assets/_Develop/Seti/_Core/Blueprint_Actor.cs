@@ -9,7 +9,8 @@ namespace Seti
     public enum ControlType
     {
         Input,
-        AI
+        FSM,
+        BT
     }
 
     [Serializable]

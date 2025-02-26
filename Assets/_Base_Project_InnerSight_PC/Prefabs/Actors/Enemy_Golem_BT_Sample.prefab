@@ -1424,16 +1424,16 @@ GameObject:
   - component: {fileID: 2082635410144380935}
   - component: {fileID: 9118154308318002457}
   - component: {fileID: 3364466483215636433}
-  - component: {fileID: 3511435886345394626}
-  - component: {fileID: 4292751661068214576}
-  - component: {fileID: 7496203609271835747}
+  - component: {fileID: 1336543980630631421}
+  - component: {fileID: 3754336618153912970}
+  - component: {fileID: 2272094837620645235}
   - component: {fileID: 3846494019382873228}
   - component: {fileID: 8162035992737556349}
   - component: {fileID: 7613408047795084551}
   - component: {fileID: 6511279441557689298}
   - component: {fileID: 658566218423419064}
   m_Layer: 6
-  m_Name: Enemy_Golem_Tutorial
+  m_Name: Enemy_Golem_BT_Sample
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1531,7 +1531,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 0
---- !u!114 &3511435886345394626
+--- !u!114 &1336543980630631421
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1540,14 +1540,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8367765423597452721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc229df5b6aa39640906c1c2df3bbaeb, type: 3}
+  m_Script: {fileID: 11500000, guid: aea16b6fa0aba0348865fcab078ab2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeaponType: 4
-  currentWeapon: {fileID: 2060960671895744437}
+  currentWeaponType: 0
+  currentWeapon: {fileID: 0}
   inAction: 0
-  destroyDelay: 0
---- !u!114 &4292751661068214576
+  destroyDelay: 2
+--- !u!114 &3754336618153912970
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1556,11 +1556,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8367765423597452721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3890b17220493bb45a2a0fb297dea72f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9fa9e3c6985358b4d81b4e3c249b8d92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
---- !u!114 &7496203609271835747
+  distancePlace: 0
+  range_Attack: 1
+  range_Magic: 0
+  range_BackOff: 10
+  searchDuration: 3
+  patrolInterval: 3
+  attackInterval: 3
+  magicInterval: 5
+--- !u!114 &2272094837620645235
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1569,13 +1576,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8367765423597452721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d1d08c09f3650c40b0a5c36ead57816, type: 3}
+  m_Script: {fileID: 11500000, guid: 9aa79e21702e58240bd37662cca776a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blueprint: {fileID: 11400000, guid: 2aa50056d2c71e441ad8c1278d43ac19, type: 2}
-  condition: {fileID: 3511435886345394626}
+  blueprint: {fileID: 11400000, guid: 52c436a8bbfaee04887a8715974431e5, type: 2}
+  condition: {fileID: 0}
   controller: {fileID: 0}
-  health: 30
+  health: 100
   attack: 10
   defend: 1
   rate_Attack: 1
@@ -1596,7 +1603,6 @@ MonoBehaviour:
   magicInterval: 5
   magicObject: {fileID: 0}
   magicDamage: 0
-  award: {fileID: 0}
 --- !u!114 &3846494019382873228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1860,14 +1866,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7789538877348465877, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
   m_PrefabInstance: {fileID: 7180457152685189466}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2060960671895744437 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9168233123745613551, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
-  m_PrefabInstance: {fileID: 7180457152685189466}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0440a1bb5944d447902a1dca736ab38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

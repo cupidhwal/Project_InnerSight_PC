@@ -172,8 +172,12 @@ namespace Seti
                     SwitchControlType(typeof(Control_Input));
                     break;
 
-                case ControlType.AI:
+                case ControlType.FSM:
                     SwitchControlType(typeof(Control_FSM));
+                    break;
+
+                case ControlType.BT:
+                    SwitchControlType(typeof(Control_BT));
                     break;
             }
         }

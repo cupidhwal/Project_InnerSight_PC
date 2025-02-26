@@ -10,10 +10,17 @@ namespace Seti
     {
         // 필드
         #region Variables
+        [SerializeField]
+        private Player player;
+
+        // 초기화 이벤트
         public UnityAction Set_First;
         public UnityAction Set_Second;
         public UnityAction Set_Third;
         #endregion
+
+        // 속성
+        public Player Player => player;
 
         private void Start()
         {
@@ -25,6 +32,10 @@ namespace Seti
 
             // 기타
             Set_Third?.Invoke();
+
+            // 플레이어
+            if (!player)
+                player = FindAnyObjectByType<Player>();
         }
     }
 }

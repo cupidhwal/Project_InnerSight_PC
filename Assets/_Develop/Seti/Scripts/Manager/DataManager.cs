@@ -22,42 +22,17 @@ namespace Seti
 
         // 속성
         public DialogueData DialogueData => dialogueData;
-        public UIManager UIManager
-        {
-            get
-            {
-                return GetComponent<UIManager>();
-            }
-        }
-
-        private void Start()
-        {
-            /*//대화 데이터 가져오기
-            if (dialogueData == null)
-            {
-                dialogueData = ScriptableObject.CreateInstance<DialogueData>();
-                dialogueData.LoadData();
-            }
-
-            //이펙트 데이터 가져오기
-            if (effectData == null)
-            {
-                effectData = ScriptableObject.CreateInstance<EffectData>();
-                effectData.LoadData();
-            }
-
-            //퀘스트 데이터 가져오기
-            if (questData == null)
-            {
-                questData = ScriptableObject.CreateInstance<QuestData>();
-                questData.LoadData();
-            }*/
-        }
+        public UIManager UIManager { get; private set; }
 
         protected override void Awake()
         {
             base.Awake();
+
+            InitializeManager.Instance.Set_First += Initialize;
         }
+
+        // 초기화
+        void Initialize() => UIManager = GetComponent<UIManager>();
 
         // 대화 데이터 가져오기
         public DialogueData GetDialogData()

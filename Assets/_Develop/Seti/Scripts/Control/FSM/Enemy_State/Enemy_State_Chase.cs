@@ -87,7 +87,7 @@ namespace Seti
         }
         private void PathFindToChase()
         {
-            if (enemy.IsObstacle)
+            if (enemy && enemy.Agent && enemy.IsObstacle)
                 enemy.Agent.SetDestination(enemy.Player.transform.position);
         }
         #endregion

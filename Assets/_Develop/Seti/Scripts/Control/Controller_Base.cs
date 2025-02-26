@@ -49,11 +49,6 @@ namespace Seti
 
         // 라이프 사이클
         #region Life Cycle
-        protected virtual void Start()
-        {
-            //Cursor.lockState = CursorLockMode.Locked;
-        }
-
         protected virtual void Update()
         {
             // Move 행동이 있으면 Update 호출
