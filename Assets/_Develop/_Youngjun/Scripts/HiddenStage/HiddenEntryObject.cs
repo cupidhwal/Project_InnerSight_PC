@@ -19,7 +19,7 @@ namespace Noah
         {
             GameObject paritcle = Instantiate(hiddenParitcle, new Vector3(transform.position.x, 0f, transform.position.z), Quaternion.identity);
 
-            while (transform.position.y < -0.5f)
+            while (transform.position.y < 0f)
             {
                 transform.position += Vector3.up * riseSpeed * Time.deltaTime;
                 yield return null; // 다음 프레임까지 대기
