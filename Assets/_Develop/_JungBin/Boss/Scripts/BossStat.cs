@@ -1,5 +1,6 @@
 using Seti;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -20,6 +21,8 @@ namespace JungBin
         [SerializeField] private Material bossMaterial;
         private Color originalColor;
         [SerializeField] private GameObject berserkEffect;
+        [SerializeField] private GameObject smokeParticle;
+        [SerializeField] private Material smokeMaterial;
 
         private Animator animator; // 보스 애니메이션
         private bool isBerserk = false; // 버서커 모드 여부
@@ -27,6 +30,7 @@ namespace JungBin
         private float timeSinceLastHit = 0f; // 무적 시간 관리
 
         private Damagable damagable; // Damagable 참조
+        [SerializeField] private SecondBossConnect secondBossConnect;
 
         // Events
         public UnityAction OnDeath; // 보스가 죽었을 때
@@ -42,6 +46,7 @@ namespace JungBin
             // 초기화
             animator = GetComponent<Animator>();
             damagable = GetComponent<Damagable>();
+            secondBossConnect = GetComponent<SecondBossConnect>();
 
             if (damagable != null)
             {
@@ -57,6 +62,13 @@ namespace JungBin
             ResetHealth();
             OnDeath += SpawnRelic;
             OnDeath += OnBossDeath;
+        }
+
+        // 🎯 특정 애니메이션 파라미터가 존재하는지 확인하는 함수
+        private bool HasAnimatorParameter(string paramName)
+        {
+            if (animator == null) return false;
+            return animator.parameters.Any(p => p.name == paramName);
         }
 
         private void Update()
@@ -75,7 +87,7 @@ namespace JungBin
             }
 
             // 버서커 모드 전환
-            if (!isBerserk && Health <= maxHealth / 2)
+            if (!isBerserk && Health <= maxHealth / 2 && HasAnimatorParameter("IsBerserk"))
             {
                 EnterBerserkMode();
             }
@@ -84,6 +96,7 @@ namespace JungBin
         // 버서커 모드 진입
         private void EnterBerserkMode()
         {
+
             isBerserk = true;
             capsuleCollider.enabled = false;
             isInvulnerable = true; // 버서커 모드 진입 중 무적
@@ -151,6 +164,8 @@ namespace JungBin
         // 유물 드랍
         private void SpawnRelic()
         {
+            if (relicPrefab == null) return;
+
             capsuleCollider.enabled = false;
             Instantiate(relicPrefab, transform.position, Quaternion.identity, this.transform.parent);
         }
@@ -166,13 +181,75 @@ namespace JungBin
             isInvulnerable = false;
             isBerserk = false;
             timeSinceLastHit = 0f;
-            animator.SetBool("IsBerserk", false);
+            if (HasAnimatorParameter("IsBerserk"))
+            {
+                animator.SetBool("IsBerserk", false);
+            }
             animator.SetBool("IsDeath", false);
             Color newColor = originalColor;
             newColor.a = 1f;
             bossMaterial.color = newColor;
 
         }
+        
+
+        public void Phase2Start()
+        {
+            StartCoroutine(PhaseChange());
+        }
+
+        private IEnumerator PhaseChange()
+        {
+            GameObject smokeObj = Instantiate(smokeParticle, transform.position, Quaternion.identity);
+            Debug.Log("안개 소환");
+            yield return new WaitForSeconds(1f);
+
+            smokeObj.transform.GetChild(0).gameObject.SetActive(true);
+            Debug.Log("안개 자식 활성화");
+            yield return new WaitForSeconds(1f);
+
+            // 🚨 `secondBossConnect`가 `null`인지 확인하는 디버그 코드 추가
+            if (secondBossConnect == null)
+            {
+                Debug.LogError("🚨 secondBossConnect가 NULL입니다. Inspector에서 할당되었는지 확인하세요.");
+            }
+            else
+            {
+                Debug.Log($"✅ secondBossConnect가 정상적으로 할당됨: {secondBossConnect.gameObject.name}");
+            }
+
+            // 🎯 secondBossConnect가 비활성화 상태라면 활성화하기
+            if (!secondBossConnect.gameObject.activeInHierarchy)
+            {
+                Debug.LogWarning("⚠️ secondBossConnect가 비활성화된 상태입니다. 활성화합니다.");
+                secondBossConnect.gameObject.SetActive(true);
+            }
+            StartCoroutine(SmokeFadeOut());
+
+            Destroy(smokeObj);
+            Debug.Log("안개 삭제");
+        }
+
+        private IEnumerator SmokeFadeOut()
+        {
+            float elapsedTime = 0f;
+            while (elapsedTime < fadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+
+                if (smokeMaterial != null)
+                {
+                    Debug.Log("안개 페이드 아웃");
+                    Color newColor = smokeMaterial.color;
+                    newColor.a = alpha;
+                    smokeMaterial.color = newColor;
+                }
+
+                yield return null;
+            }
+        }
+
 
         /*// 치트로 즉시 죽이기
         public void CheatDie()
