@@ -57,6 +57,7 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             // Move 행동 AI Input
+            Debug.Log(enemy.IsObstacle);
             if (enemy.IsObstacle)
             {
                 if (move.CurrentStrategy is Move_Run)

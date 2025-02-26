@@ -79,6 +79,8 @@ namespace Seti
             get
             {
                 // Modifier 검사
+                if (!StageManager.Instance) return false;
+
                 Environment environment = StageManager.Instance.transform.GetComponentInChildren<Environment>();
                 if (!environment) return false;
 
