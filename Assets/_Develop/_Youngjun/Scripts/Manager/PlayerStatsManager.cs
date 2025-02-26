@@ -60,7 +60,7 @@ namespace Noah
                 inGameUI_RandomStats.Init();
             }
 
-            if (!SaveLoadManager.Instance.isLoadData)
+            if (!SaveLoadManager.Instance.IsLoadData(SaveLoadManager.Instance.playerStatsSavePath))
             {
                 SaveLoadManager.Instance.SaveAll();
             }
