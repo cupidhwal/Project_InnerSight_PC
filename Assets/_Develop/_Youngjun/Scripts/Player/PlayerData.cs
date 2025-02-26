@@ -63,7 +63,7 @@ namespace Noah
 
         public void ResetData()
         {
-            if (!SaveLoadManager.Instance.isLoadData)
+            if (!SaveLoadManager.Instance.IsLoadData(SaveLoadManager.Instance.playerStatsSavePath))
             {
                 hp = PlayerStatsManager.Instance.startPlayerData.hp_Start;
                 atk = PlayerStatsManager.Instance.startPlayerData.atk_Start;

@@ -10,7 +10,7 @@ public class PlayerItem
 
     public void ResetData()
     {
-        if (!SaveLoadManager.Instance.isLoadData)
+        if (!SaveLoadManager.Instance.IsLoadData(SaveLoadManager.Instance.playerItemSavePath))
         {
             gold = PlayerInfoManager.Instance.startGold;
         }

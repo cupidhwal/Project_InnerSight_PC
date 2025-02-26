@@ -1,5 +1,6 @@
 using JungBin;
 using Seti;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -9,6 +10,8 @@ namespace Noah
 {
     public class SaveLoadManager : Singleton<SaveLoadManager>
     {
+        private Dictionary<string, bool> dataGroupDic = new Dictionary<string, bool>();
+
         public string playerStatsSavePath = "/PlayerStats.json";
         public PlayerData playerStats = new PlayerData();
 
@@ -27,6 +30,8 @@ namespace Noah
         //public string upgradeGoldSavePath = "/UpgradeGold.json";
         //public Gold upgradeGold = new Gold();
 
+
+
         public bool isTutorial;
         public bool isLoadData;
 
@@ -39,8 +44,7 @@ namespace Noah
 
         void Init()
         {
-            //playerStats = new PlayerData(ps_Manager.startPlayerData.hp_Start, ps_Manager.startPlayerData.atk_Start,
-            //    ps_Manager.startPlayerData.def_Start, ps_Manager.startPlayerData.moveSpeed_Start, ps_Manager.startPlayerData.atkSpeed_Start);
+            AddDictionary();
 
             LoadAll();
 
@@ -48,6 +52,20 @@ namespace Noah
             playerItem.ResetData();
             relicSaveData.ResetData();
             scenarioSaveData.ResetData();
+        }
+
+        void AddDictionary()
+        {
+            dataGroupDic.Add(playerStatsSavePath, false);
+            dataGroupDic.Add(upgradeCountSavePath, false);
+            dataGroupDic.Add(playerItemSavePath, false);
+            dataGroupDic.Add(relicSavePath, false);
+            dataGroupDic.Add(scenarioSaveDataPath, false);
+        }
+
+        public bool IsLoadData(string _path)
+        {
+            return dataGroupDic[_path];
         }
 
         [ContextMenu("Save")]
@@ -90,15 +108,22 @@ namespace Noah
 
                 Debug.Log("Loaded: " + loadData);
 
-                isLoadData = true;
+                dataGroupDic[_path] = true;
             }
             else
             {
-                if (_path != relicSavePath || _path != scenarioSaveDataPath)
+                dataGroupDic[_path] = false;
+
+                if (dataGroupDic.TryGetValue(_path, out bool value))
                 {
-                    isLoadData = false;
-                    Debug.Log("세이브 데이터가 없습니다");
+                    Debug.Log($"PlayerStats Value: {value}");
                 }
+                else
+                {
+                    Debug.Log("Key not found!");
+                }
+
+                Debug.Log("세이브 데이터가 없습니다");     
             }
         }
         public void LoadAll()
@@ -156,6 +181,7 @@ namespace Noah
             Save(scenarioSaveDataPath, scenarioSaveData);
         }
         public void CheckTutorial(bool flag) => isTutorial = flag;
+
     }
 }
 
