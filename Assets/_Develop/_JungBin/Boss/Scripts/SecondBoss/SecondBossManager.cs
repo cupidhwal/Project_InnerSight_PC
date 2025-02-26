@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -43,9 +44,9 @@ namespace JungBin
         [Header("2페이즈 공격 패턴")]
         [SerializeField] private GameObject spikeAttackPhase2Prefab;
         [SerializeField] private GameObject spikeWallPrefab;
-        [SerializeField] private GameObject lazerPrefab;
-        [SerializeField] private Transform lazerSpawnPoint;
-
+        
+        
+        private LazerAttack lazerAttack;
 
 
         private int lastAttack = -1;
@@ -93,6 +94,12 @@ namespace JungBin
             }
             animator = GetComponent<Animator>();
             navMeshAgent = GetComponent<NavMeshAgent>();
+
+            lazerAttack = GetComponentInChildren<LazerAttack>(); // 자식 오브젝트에서 가져오기
+            if (lazerAttack == null)
+            {
+                Debug.LogError("🚨 LazerAttack 스크립트가 없습니다! LazerAttack이 포함된 오브젝트를 확인하세요.");
+            }
         }
 
         // Update is called once per frame
@@ -108,7 +115,10 @@ namespace JungBin
                 RotateTowardsPlayer(direction);
             }
 
-            ManageDistanceToPlayer(distance);
+            if (HasAnimatorParameter(isFar))
+            {
+                ManageDistanceToPlayer(distance);
+            }
 
             if (animator.GetBool(isRun) == true)
             {
@@ -134,6 +144,24 @@ namespace JungBin
             {
                 StartFlightPattern();
             }
+        }
+
+        // 🎯 특정 애니메이션 파라미터가 존재하는지 확인하는 함수
+        private bool HasAnimatorParameter(string paramName)
+        {
+            if (animator == null)
+            {
+                Debug.LogWarning("⚠️ Animator가 존재하지 않습니다!");
+                return false;
+            }
+
+            if (animator.parameters == null)
+            {
+                Debug.LogWarning("⚠️ Animator에 파라미터가 없습니다.");
+                return false;
+            }
+
+            return animator.parameters.Any(p => p.name == paramName);
         }
 
         #region 일반적인 상태
@@ -362,24 +390,15 @@ namespace JungBin
             Destroy(spikePrefab, 15f);
         }
 
-        public void LazerAttack()
+        // 🎯 보스가 특정 패턴에서 레이저 발사를 실행
+        public void StartLaser()
         {
-            StartCoroutine(LazerRotate());
-            
+            if (lazerAttack != null && !lazerAttack.IsFiring)
+            {
+                lazerAttack.FireLaser();
+            }
         }
 
-        private IEnumerator LazerRotate()
-        {
-            GameObject lazerAttack = Instantiate(lazerPrefab, lazerSpawnPoint.position, lazerSpawnPoint.rotation, lazerSpawnPoint);
-
-            float temp = turnSpeed;
-            turnSpeed = 3f;
-
-            yield return new WaitForSeconds(3f);
-
-            turnSpeed = temp;
-            Destroy(lazerAttack);
-        }
 
         #endregion
 
