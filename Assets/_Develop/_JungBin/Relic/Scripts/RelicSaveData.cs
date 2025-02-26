@@ -33,7 +33,7 @@ namespace JungBin
         /// </summary>
         public void ResetData()
         {
-            if (!SaveLoadManager.Instance.isLoadData)
+            if (!SaveLoadManager.Instance.IsLoadData(SaveLoadManager.Instance.relicSavePath))
             {
                 relics.Clear(); // 🔹 저장된 데이터가 없으면 리스트를 비워서 오류 방지
             }

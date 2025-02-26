@@ -35,7 +35,7 @@ namespace Seti
         public void ResetData()
         {
             SaveLoadManager save = SaveLoadManager.Instance;
-            if (save.isLoadData)
+            if (save.IsLoadData(save.scenarioSaveDataPath))
             {
                 ScenarioData scenarioData = save.scenarioSaveData;
 
@@ -45,9 +45,11 @@ namespace Seti
                     dialogueDatas[i].CheckSeens = scenarioData.dialogueDatas[i].CheckSeens;
                     dialogueDatas[i].SeenCompleted = scenarioData.dialogueDatas[i].SeenCompleted;
                 }
+
+                save.CheckTutorial(save.scenarioSaveData.dialogueDatas[0].SeenCompleted);
             }
 
-            save.CheckTutorial(save.scenarioSaveData.dialogueDatas[0].SeenCompleted);
+            
         }
     }
 }
