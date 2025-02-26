@@ -13,7 +13,7 @@ namespace Seti
         {
             base.Start();
 
-            award = StageManager.Instance.transform.GetChild(0).GetChild(0).gameObject;
+            award = StageManager.Instance.CurrentStage.transform.GetChild(0).gameObject;
         }
 
         private void OnDestroy()

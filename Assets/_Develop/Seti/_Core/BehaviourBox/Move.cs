@@ -109,7 +109,7 @@ namespace Seti
                     break;
 
                 case Enemy_State_Chase:
-                    ChangeStrategy(typeof(Move_Run));
+                    ChangeStrategy(typeof(Move_Nav));
                     break;
 
                 case Enemy_State_Encounter:

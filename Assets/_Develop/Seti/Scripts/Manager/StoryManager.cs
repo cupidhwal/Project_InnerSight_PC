@@ -126,10 +126,10 @@ namespace Seti
             base.Awake();
 
             // 초기화
-            InitializeOnAwake();
+            InitializeManager.Instance.Set_Second += Initialize;
         }
 
-        private void InitializeOnAwake()
+        private void Initialize()
         {
             // 참조
             Player = FindAnyObjectByType<Player>();
