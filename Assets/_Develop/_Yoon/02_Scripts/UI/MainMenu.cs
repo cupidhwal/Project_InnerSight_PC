@@ -12,7 +12,11 @@ namespace Yoon
 
         public GameObject mainMenuUI;
         public GameObject creditUI;
-        public GameObject continueButton;
+
+        public Animator creditAnim;
+
+        //public GameObject continueButton;
+        SaveLoadManager saveLoadManager;
 
         #endregion
 
@@ -20,6 +24,7 @@ namespace Yoon
         {
             //게임 데이터 초기화
             InitGameData();
+            
             //저장된 씬이 있으면
 
             //if(PlayerStats.Instance.SceneNumber > 0)
@@ -44,15 +49,17 @@ namespace Yoon
         {
             Debug.Log("NewGame");
 
+
             //게임 데이터 초기화
-            //PlayerStats.Instance.PlayerStatInit(null);
+            saveLoadManager.DeleteAllSaveFiles();
+            //PlayerStats.Instance.PlayerStatInit(null);        //
 
             //fader.FadeTo(loadToScene);
         }
 
-        public void ContinueGame()
+        public void LoadGame()
         {
-            Debug.Log("ContinueGame");
+            Debug.Log("LoadGame");
             
             //fader.FadeTo(PlayerStats.Instance.SceneNumber);
         }
@@ -63,19 +70,29 @@ namespace Yoon
             ShowCredit();
         }
 
-        public void QuitGame()
-        {
-            Debug.Log("Quit Game");
-            Application.Quit();
-        }
-
         //크레딧 UI 실행
         private void ShowCredit()
         {
             Debug.Log("ShowCredit");            //
 
-            //mainMenuUI.SetActive(false);
-            //creditUI.SetActive(true);
+            mainMenuUI.SetActive(false);
+            creditUI.SetActive(true);
+
+            creditAnim.Play("CreditAnimation");
+        }
+
+        public void OnCreditEnd()
+        {
+            Debug.Log("Credit End");
+            creditUI.SetActive(false);
+            mainMenuUI.SetActive(true);
+        }
+
+
+        public void QuitGame()
+        {
+            Debug.Log("Quit Game");
+            Application.Quit();
         }
     }
 }
