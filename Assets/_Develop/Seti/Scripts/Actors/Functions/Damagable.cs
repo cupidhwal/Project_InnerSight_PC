@@ -145,14 +145,14 @@ namespace Seti
             }
         }
 
-        private void LateUpdate()
+        /*private void LateUpdate()
         {
             if (schedule != null)
             {
                 schedule();
                 schedule = null;
             }
-        }
+        }*/
         #endregion
 
         // 메서드
@@ -221,7 +221,8 @@ namespace Seti
             {
                 if (OnDeath != null)
                 {
-                    schedule += OnDeath.Invoke;
+                    //schedule += OnDeath.Invoke;
+                    OnDeath?.Invoke();
                     StageManager.Instance.EnemyCount(gameObject);
                 }
             }
