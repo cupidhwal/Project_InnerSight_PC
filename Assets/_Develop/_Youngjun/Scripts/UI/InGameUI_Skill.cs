@@ -161,6 +161,8 @@ namespace Noah
                 // 슬롯이 가득 찬 경우, 선택 UI 표시
                 selectSkillNum = skillIndex;
                 SetSelectUI(randomSkills[skillIndex]);
+
+                Debug.Log("1");
             }
         }
 
@@ -219,6 +221,8 @@ namespace Noah
         void SetSelectUI(SkillBase _skill)
         {
             selectUI.SetActive(true);
+
+            Debug.Log("2");
 
             for (int i = 0; i < changeBtns.Count; i++)
             {
