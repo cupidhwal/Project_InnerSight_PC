@@ -10,7 +10,7 @@ namespace Noah
 
         Damagable e_Damagable;
 
-        private float dropDelay = 1.5f;
+        private float dropDelay = 0.5f;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
