@@ -36,12 +36,13 @@ namespace Seti
                 if (mapping.behaviour == null) continue;
 
                 // 명시적으로 Initialize 호출
-                mapping.behaviour.Initialize(actor);
+                Behaviour behaviour = new(mapping.behaviour);
+                behaviour.behaviour.Initialize(actor);
 
-                var behaviourType = mapping.behaviour.GetType();
+                var behaviourType = behaviour.behaviour.GetType();
                 if (!behaviourMap.ContainsKey(behaviourType))
                 {
-                    behaviourMap.Add(behaviourType, mapping.behaviour);
+                    behaviourMap.Add(behaviourType, behaviour.behaviour);
                 }
             }
         }
