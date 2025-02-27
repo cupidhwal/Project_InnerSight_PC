@@ -375,6 +375,7 @@ namespace Noah
                         Quaternion yOnlyRotation = Quaternion.Euler(0f, eulerRotation.y, 0f); // Y축 회전만 적용
 
                         effectGo.transform.rotation = yOnlyRotation;
+
                     }
                 }
             }

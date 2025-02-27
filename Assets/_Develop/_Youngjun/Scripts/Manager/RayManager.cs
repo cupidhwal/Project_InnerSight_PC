@@ -54,5 +54,29 @@ namespace Noah
 
             return targetRotation;
         }
+
+        public Quaternion UpdateSkillRangeRotationUI()
+        {
+            // 마우스 위치 가져오기
+            Vector3 mousePosition = Input.mousePosition;
+            Quaternion targetRotation = Quaternion.identity;
+
+            // 마우스 위치를 월드 좌표로 변환
+            Ray ray = mainCamera.ScreenPointToRay(mousePosition);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, groundLayerMask))
+            {
+                // 방향 계산 (오브젝트 위치 -> 마우스 위치)
+                Vector3 direction = hit.point - transform.position;
+
+                // 방향에 따라 회전 적용
+                targetRotation = Quaternion.LookRotation(direction);
+
+                return targetRotation;
+            }
+
+            return targetRotation;
+        }
+
     }
 }
