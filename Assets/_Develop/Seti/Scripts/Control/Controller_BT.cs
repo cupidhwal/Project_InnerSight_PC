@@ -23,7 +23,7 @@ namespace Seti
         // 필드
         #region Variables
         private Actor actor;
-        private Player player;
+        private Actor target;
 
         [Header("Root Node : AI Behaviour")]
         [SerializeField]
@@ -74,17 +74,18 @@ namespace Seti
 
             // 플레이어 공격 Sequence
             Node_Sequence attackSequence = new();
-            attackSequence.AddChild(new Condition_IsPlayerEncounter(transform, player.transform, range_Attack));
+            attackSequence.AddChild(new Condition_IsPlayerEncounter(actor, target, range_Attack));
+            attackSequence.AddChild(new Action_Attack(actor));
 
             // 플레이어 추적 Sequence
             Node_Sequence chaseSequence = new();
-            chaseSequence.AddChild(new Condition_IsPlayerDetected(transform, player.transform, range_Detect));
-            chaseSequence.AddChild(new Action_Chase(transform, player.transform, actor.Rate_Movement * actor.Magnification_WalkToRun));
+            chaseSequence.AddChild(new Condition_IsPlayerDetected(actor, target, range_Detect));
+            chaseSequence.AddChild(new Action_Chase(actor, target, actor.Rate_Movement * actor.Magnification_WalkToRun));
 
             // Selector에 추가 (우선순위: 공격 > 추적 > Idle)
             selector.AddChild(attackSequence);
             selector.AddChild(chaseSequence);
-            selector.AddChild(new Action_Idle());
+            selector.AddChild(new Action_Idle(actor));
 
             root = selector;
         }
@@ -95,7 +96,7 @@ namespace Seti
 
             // 참조
             actor = GetComponent<Actor>();
-            player = InitializeManager.Instance.Player;
+            target = InitializeManager.Instance.Player;
 
             // 행동 이벤트 바인딩
             //BindFSMBehaviours();
@@ -103,7 +104,7 @@ namespace Seti
 
         protected override void Update()
         {
-            base.Update();
+            //base.Update();
 
             root.Execute();
         }
@@ -232,13 +233,13 @@ namespace Seti
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
-                player = other.GetComponent<Player>();
+                target = other.GetComponent<Player>();
         }
 
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Player"))
-                player = null;
+                target = null;
         }
         #endregion
     }

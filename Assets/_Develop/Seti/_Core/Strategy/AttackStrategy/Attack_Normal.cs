@@ -12,6 +12,8 @@ namespace Seti
         #region Override
         public override void Attack()
         {
+            if (!condition) return;
+
             base.Attack();
             Attack_WithWeapon();
         }

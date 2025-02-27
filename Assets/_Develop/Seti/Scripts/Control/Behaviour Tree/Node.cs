@@ -1,10 +1,13 @@
 namespace Seti
 {
     /// <summary>
-    /// Behaviour TreeÀÇ ±âº»
+    /// Behaviour Treeì˜ ê¸°ë³¸
     /// </summary>
     public abstract class Node
     {
+        protected Actor actor;
+        protected Actor target;
+
         public abstract bool Execute();
     }
 }

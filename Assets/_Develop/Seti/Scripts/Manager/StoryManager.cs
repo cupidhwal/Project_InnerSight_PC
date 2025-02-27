@@ -75,7 +75,6 @@ namespace Seti
         {
             // 마을 포탈
             GameObject portals = StageManager.Instance.CurrentStage.transform.GetChild(0).GetChild(0).gameObject;
-            Debug.Log($"portals: {portals}");
             DisableComposition("Stage000", 1, portals);
 
             // 미니맵

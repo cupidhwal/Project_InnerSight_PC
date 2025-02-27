@@ -3,13 +3,18 @@ using UnityEngine;
 namespace Seti
 {
     /// <summary>
-    /// Behaviour TreeÀÇ Action - ±âº» Çàµ¿
+    /// Behaviour Treeì˜ Action - ê¸°ë³¸ í–‰ë™
     /// </summary>
     public class Action_Idle : Node
     {
+        public Action_Idle(Actor actor)
+        {
+            this.actor = actor;
+        }
+
         public override bool Execute()
         {
-            Debug.Log("AI: ´ë±â »óÅÂ À¯Áö...");
+            actor.Condition.IsMove = false;
             return true;
         }
     }

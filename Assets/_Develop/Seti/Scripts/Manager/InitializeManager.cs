@@ -32,6 +32,11 @@ namespace Seti
 
             // 기타
             Set_Third?.Invoke();
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
 
             // 플레이어
             if (!player)

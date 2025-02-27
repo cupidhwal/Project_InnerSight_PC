@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Seti
 {
@@ -23,7 +24,12 @@ namespace Seti
             condition = actor.Condition;
         }
         public Type GetStrategyType() => typeof(IAttackStrategy);
-        public virtual void Attack() => condition.IsAttack = true;
+        public virtual void Attack()
+        {
+            if (!condition) return;
+
+            condition.IsAttack = true;
+        }
         #endregion
 
         // 메서드

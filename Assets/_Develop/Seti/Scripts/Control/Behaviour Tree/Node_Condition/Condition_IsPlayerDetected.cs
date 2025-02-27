@@ -7,20 +7,18 @@ namespace Seti
     /// </summary>
     public class Condition_IsPlayerDetected : Node
     {
-        private Transform enemy;
-        private Transform player;
         private float detectionRange;
 
-        public Condition_IsPlayerDetected(Transform enemy, Transform player, float detectionRange)
+        public Condition_IsPlayerDetected(Actor actor, Actor target, float detectionRange)
         {
-            this.enemy = enemy;
-            this.player = player;
+            this.actor = actor;
+            this.target = target;
             this.detectionRange = detectionRange;
         }
 
         public override bool Execute()
         {
-            return Vector3.Distance(enemy.position, player.position) < detectionRange;
+            return Vector3.Distance(actor.transform.position, target.transform.position) < detectionRange;
         }
     }
 }

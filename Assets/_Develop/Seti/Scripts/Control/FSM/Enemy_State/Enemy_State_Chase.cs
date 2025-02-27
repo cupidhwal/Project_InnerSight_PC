@@ -1,4 +1,6 @@
+using Noah;
 using System;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 namespace Seti
@@ -57,7 +59,6 @@ namespace Seti
         public override void Update(float deltaTime)
         {
             // Move 행동 AI Input
-            Debug.Log(enemy.IsObstacle);
             if (enemy.IsObstacle)
             {
                 if (move.CurrentStrategy is Move_Run)
@@ -87,6 +88,11 @@ namespace Seti
         }
         private void PathFindToChase()
         {
+            if (!StageManager.Instance || !StageManager.Instance.CurrentStage) return;
+
+            NavMeshSurface surface = StageManager.Instance.CurrentStage.GetComponentInChildren<NavMeshSurface>();
+            if (!surface.enabled) return;
+
             if (enemy && enemy.Agent && enemy.IsObstacle)
                 enemy.Agent.SetDestination(enemy.Player.transform.position);
         }

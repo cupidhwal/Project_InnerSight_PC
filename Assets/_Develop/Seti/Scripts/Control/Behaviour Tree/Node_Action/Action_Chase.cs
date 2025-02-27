@@ -7,20 +7,24 @@ namespace Seti
     /// </summary>
     public class Action_Chase : Node
     {
-        private Transform enemy;
-        private Transform player;
         private float speed;
 
-        public Action_Chase(Transform enemy, Transform player, float speed)
+        public Action_Chase(Actor actor, Actor target, float speed)
         {
-            this.enemy = enemy;
-            this.player = player;
+            this.actor = actor;
+            this.target = target;
             this.speed = speed;
         }
 
         public override bool Execute()
         {
-            enemy.position = Vector3.MoveTowards(enemy.position, player.position, speed * Time.deltaTime);
+            if (actor.Controller.BehaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
+                if (lookBehaviour is Look look)
+                    look.FSM_LookInput();
+
+            actor.Condition.IsMove = true;
+
+            actor.transform.position = Vector3.MoveTowards(actor.transform.position, target.transform.position, speed * Time.deltaTime);
             return true;
         }
     }

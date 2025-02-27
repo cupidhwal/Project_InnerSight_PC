@@ -4,16 +4,14 @@ namespace Seti
 {
     public class Action_Attack : Node
     {
-        private Enemy enemy;
-
-        public Action_Attack(Enemy enemy)
+        public Action_Attack(Actor actor)
         {
-            this.enemy = enemy;
+            this.actor = actor;
         }
 
         public override bool Execute()
         {
-            if (enemy.Controller.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+            if (actor.Controller.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
                 if (attackBehaviour is Attack attack)
                     attack.OnAttack(true);
             return true;
