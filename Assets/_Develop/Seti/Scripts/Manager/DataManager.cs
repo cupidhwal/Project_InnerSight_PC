@@ -8,10 +8,14 @@ namespace Seti
     /// <summary>
     /// 게임에서 사용하는 데이터들을 관리하는 클래스
     /// </summary>
-    public class DataManager : Singleton<DataManager>
+    public class DataManager : PersistentSingleton<DataManager>
     {
         // 필드
         #region Variables
+        [Header("Data : Player")]
+        public int deathCount;
+        public bool[] sinEvent = new bool[6];
+
         [Header("Data : Dialogue")]
         public List<DialogueData> dialogueDatas;
 
@@ -66,7 +70,9 @@ namespace Seti
                     dialogueData.CheckSeens = progress.CheckSeens;
                     dialogueData.SeenCompleted = progress.SeenCompleted;
                 }
-            }
+                deathCount = data.deathCount;
+                sinEvent = data.sinEvent;
+    }
             dialogueDatas.Add(dialogueData);
 
             return dialogueData;

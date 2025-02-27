@@ -30,6 +30,9 @@ namespace Seti
     [Serializable]
     public class ScenarioData
     {
+        public int deathCount;
+        public bool[] sinEvent = new bool[6];
+
         public List<ScenarioProgress> dialogueDatas = new();
 
         public void ResetData()
@@ -48,8 +51,6 @@ namespace Seti
 
                 save.CheckTutorial(save.scenarioSaveData.dialogueDatas[0].SeenCompleted);
             }
-
-            
         }
     }
 }

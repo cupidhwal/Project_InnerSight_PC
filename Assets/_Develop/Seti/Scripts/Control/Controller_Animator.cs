@@ -115,6 +115,12 @@ namespace Seti
 
                 if (attack.HasStrategy<Attack_Magic>())
                     AniMachine.AddState(new AniState_Attack_Magic());
+
+                if (attack.HasStrategy<Attack_Slash_Double>())
+                    AniMachine.AddState(new AniState_Slash_Double());
+
+                if (attack.HasStrategy<Attack_Slash_Multiple>())
+                    AniMachine.AddState(new AniState_Slash_Multiple());
             }
 
             if (controller.BehaviourMap.TryGetValue(typeof(Stagger), out var staggerBehaviour))
@@ -156,6 +162,8 @@ namespace Seti
             }*/
         }
         public void MagicAttackEnd() => Actor.Condition.IsMagic = false;
+        public void Slash_Double_End() => Actor.Condition.IsSlash_Double = false;
+        public void Slash_Multiple_End() => Actor.Condition.IsSlash_Multiple = false;
         public void CantMoveDurAtk() => Actor.Condition.CanMove = false;
         public void CanMoveAfterAtk() => Actor.Condition.CanMove = true;
 

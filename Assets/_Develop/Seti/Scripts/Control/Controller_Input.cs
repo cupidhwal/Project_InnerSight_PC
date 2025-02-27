@@ -102,7 +102,7 @@ namespace Seti
                     control.Player.Attack.started += attack.OnAttackStarted;
                     control.Player.Attack.canceled += attack.OnAttackCanceled;
                 }
-                if (attack.HasStrategy<Attack_Weapon>())
+                if (attack.HasStrategy<Attack_Slash_Double>() || attack.HasStrategy<Attack_Slash_Multiple>())
                 {
                     control.Player.Weapon.started += attack.OnWeaponStarted;
                     control.Player.Weapon.canceled += attack.OnWeaponCanceled;

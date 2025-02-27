@@ -32,6 +32,8 @@ namespace Seti
         protected int Hash_TimeoutToIdle = Animator.StringToHash("TimeoutToIdle");
         protected int Hash_MeleeAttack = Animator.StringToHash("MeleeAttack");
         protected int Hash_MagicAttack = Animator.StringToHash("MagicAttack");
+        protected int Hash_Slash_Double = Animator.StringToHash("Slash_Double");
+        protected int Hash_Slash_Multiple = Animator.StringToHash("Slash_Multiple");
         protected int Hash_Hurt = Animator.StringToHash("Hurt");
         protected int Hash_Death = Animator.StringToHash("Death");
         protected int Hash_Respawn = Animator.StringToHash("Respawn");

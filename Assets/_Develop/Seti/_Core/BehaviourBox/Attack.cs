@@ -55,6 +55,14 @@ namespace Seti
                         attackStrategy.Initialize(actor);
                         break;
 
+                    case Attack_Slash_Double:
+                        attackStrategy.Initialize(actor);
+                        break;
+
+                    case Attack_Slash_Multiple:
+                        attackStrategy.Initialize(actor);
+                        break;
+
                     case Attack_Tackle:
                         attackStrategy.Initialize(actor);
                         break;
@@ -131,22 +139,24 @@ namespace Seti
         #region Controller_Input
         public void OnAttackStarted(InputAction.CallbackContext _) => OnAttack(true);
         public void OnAttackCanceled(InputAction.CallbackContext _) => OnAttack(false);
-        public void OnWeaponStarted(InputAction.CallbackContext _) => OnMagic(true);
-        public void OnWeaponCanceled(InputAction.CallbackContext _)
+        public void OnMagicStarted(InputAction.CallbackContext _) => OnMagic(true);
+        public void OnMagicCanceled(InputAction.CallbackContext _)
         {
             //OnMagic(false);
         }
-        public void OnMagicStarted(InputAction.CallbackContext context)
+        public void OnWeaponStarted(InputAction.CallbackContext context)
         {
             string path = context.control.path;
             switch (path)
             {
                 case "/Keyboard/1":
                     //Debug.Log("Magic 1");
+                    OnSlash(0);
                     break;
 
                 case "/Keyboard/2":
                     //Debug.Log("Magic 2");
+                    OnSlash(1);
                     break;
 
                 case "/Keyboard/3":
@@ -159,8 +169,11 @@ namespace Seti
             }
 
             //OnMagic(true);
+
+            //OnSlash 메서드로 스킬 실행, 0이 더블, 1이 멀티플
+            //스킬 이펙트는 애니메이션에 이벤트로 삽입하는 걸로
         }
-        public void OnMagicCanceled(InputAction.CallbackContext _)
+        public void OnWeaponCanceled(InputAction.CallbackContext _)
         {
             //SwitchStrategy(StrategyType.Normal);
         }
@@ -210,6 +223,22 @@ namespace Seti
                     ChangeStrategy(typeof(Attack_Magic));
                     currentStrategy?.Attack();
                 }
+            }
+        }
+
+        public void OnSlash(int whichSlash)
+        {
+            switch (whichSlash)
+            {
+                case 0:
+                    ChangeStrategy(typeof(Attack_Slash_Double));
+                    currentStrategy?.Attack();
+                    break;
+
+                case 1:
+                    ChangeStrategy(typeof(Attack_Slash_Multiple));
+                    currentStrategy?.Attack();
+                    break;
             }
         }
         #endregion

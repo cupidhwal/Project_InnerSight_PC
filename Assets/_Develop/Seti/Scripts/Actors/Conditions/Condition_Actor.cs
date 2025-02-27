@@ -42,6 +42,8 @@ namespace Seti
         public bool CanMove { get; set; } = true;
         public bool IsStagger { get; set; } = false;
         public bool IsAttack { get; set; } = false;
+        public bool IsSlash_Double { get; set; } = false;
+        public bool IsSlash_Multiple { get; set; } = false;
         public bool IsMagic { get; set; } = false;
         public bool IsMove { get; set; } = false;
         public bool IsDead { get; set; } = false;

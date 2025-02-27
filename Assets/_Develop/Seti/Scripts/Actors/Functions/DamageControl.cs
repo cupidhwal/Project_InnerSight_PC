@@ -115,7 +115,14 @@ namespace Seti
 
             // 플레이어 사망 시 재시작
             if (actor is Player)
+            {
+                // 죽음 횟수 +1 / 저장
+                DataManager.Instance.deathCount++;
+                SaveLoadManager.Instance.SaveScenario(DataManager.Instance.DialogueData);
+
+                // 재시작
                 StageManager.Instance.ReStartGame();
+            }
         }
 
         // 씬 내의 대적자 액터 가져오기

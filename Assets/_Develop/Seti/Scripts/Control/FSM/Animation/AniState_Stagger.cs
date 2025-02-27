@@ -46,6 +46,12 @@ namespace Seti
             if (!context.Actor.Condition.IsStagger && context.Actor.Condition.IsAttack)
                 return typeof(AniState_Attack_Melee);
 
+            if (!context.Actor.Condition.IsStagger && context.Actor.Condition.IsSlash_Double)
+                return typeof(AniState_Slash_Double);
+
+            if (!context.Actor.Condition.IsStagger && context.Actor.Condition.IsSlash_Multiple)
+                return typeof(AniState_Slash_Multiple);
+
             return null;
         }
 

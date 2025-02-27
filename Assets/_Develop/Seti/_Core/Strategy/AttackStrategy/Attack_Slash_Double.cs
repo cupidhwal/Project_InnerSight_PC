@@ -1,0 +1,16 @@
+using UnityEngine;
+
+namespace Seti
+{
+    public class Attack_Slash_Double : Attack_Base
+    {
+        // 추상화
+        #region Abstract
+        public override void Attack()
+        {
+            condition.CanMove = false;
+            condition.IsSlash_Double = true;
+        }
+        #endregion
+    }
+}
