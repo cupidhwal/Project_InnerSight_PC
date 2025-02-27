@@ -417,6 +417,8 @@ namespace JungBin
 
                 transform.position = Vector3.Lerp(startPosition, targetPosition, t);
 
+                Debug.Log(Vector3.Distance(transform.position, targetPosition));
+
                 // 💡 도착 직전이면 애니메이션을 미리 전환
                 if (Vector3.Distance(transform.position, targetPosition) < 1f) // 1f 이하일 때
                 {
