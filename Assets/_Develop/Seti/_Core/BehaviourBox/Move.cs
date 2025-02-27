@@ -14,6 +14,8 @@ namespace Seti
     {
         // 필드
         #region Variables
+        public string currentStrategyName;
+
         // 전략 관리
         private Actor actor;
         private Condition_Player condition_Player;
@@ -96,6 +98,8 @@ namespace Seti
             {
                 currentStrategy = moveStrategy.strategy as IMoveStrategy;
             }
+
+            currentStrategyName = currentStrategy.GetType().ToString();
         }
 
         public void SwitchStrategy(State<Controller_FSM> state)

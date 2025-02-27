@@ -8,6 +8,8 @@ namespace Seti
     {
         // 필드
         #region Variables
+        public string currentMoveStrategy;
+
         protected Dictionary<Type, IBehaviour> behaviourMap;            // 행동 매핑 (타입에 따른 행동 인스턴스)
         #endregion
 
@@ -55,7 +57,11 @@ namespace Seti
             // Move 행동이 있으면 Update 호출
             if (behaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
             {
-                (moveBehaviour as Move)?.Update();
+                if (moveBehaviour is Move move)
+                {
+                    move?.Update();
+                    currentMoveStrategy = move.currentStrategyName;
+                }
             }
         }
 
