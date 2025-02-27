@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,8 +15,6 @@ namespace Seti
     {
         // 필드
         #region Variables
-        public string currentStrategyName;
-
         // 전략 관리
         private Actor actor;
         private Condition_Player condition_Player;
@@ -38,8 +37,6 @@ namespace Seti
         public void Initialize(Actor actor)
         {
             this.actor = actor;
-            strategies = actor.Blueprint.GetStrategies(this);
-
             if (actor is Player)
             {
                 condition_Player = actor.Condition as Condition_Player;
@@ -90,6 +87,12 @@ namespace Seti
         // 보유 전략 확인
         public bool HasStrategy<T>() where T : class, IStrategy => strategies.Any(strategy => strategy.strategy is T);
 
+        // 행동 전략 설정
+        public void SetStrategies(IEnumerable<Strategy> strategies)
+        {
+            this.strategies = strategies.ToList(); // 전달받은 전략 리스트 저장
+        }
+
         // 행동 전략 변경
         public void ChangeStrategy(Type strategyType)
         {
@@ -98,8 +101,6 @@ namespace Seti
             {
                 currentStrategy = moveStrategy.strategy as IMoveStrategy;
             }
-
-            currentStrategyName = currentStrategy.GetType().ToString();
         }
 
         public void SwitchStrategy(State<Controller_FSM> state)
@@ -113,7 +114,7 @@ namespace Seti
                     break;
 
                 case Enemy_State_Chase:
-                    ChangeStrategy(typeof(Move_Nav));
+                    ChangeStrategy(typeof(Move_Run));
                     break;
 
                 case Enemy_State_Encounter:

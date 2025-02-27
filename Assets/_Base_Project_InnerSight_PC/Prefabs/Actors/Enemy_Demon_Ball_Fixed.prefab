@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeaponType: 4
-  currentWeapon: {fileID: 0}
+  currentWeapon: {fileID: 867059816042347670}
   inAction: 0
   destroyDelay: 2
 --- !u!114 &8167818714741915104
@@ -395,6 +395,15 @@ MonoBehaviour:
   blueprint: {fileID: 11400000, guid: a601e5513d9ac694b9daa286498bdd3d, type: 2}
   condition: {fileID: 7999814439391913779}
   controller: {fileID: 0}
+  behaviours:
+  - behaviour:
+      rid: 5990299393329463558
+  - behaviour:
+      rid: 5990299393329463559
+  - behaviour:
+      rid: 5990299393329463560
+  - behaviour:
+      rid: 5990299393329463561
   health: 200
   attack: 20
   defend: 1
@@ -416,6 +425,76 @@ MonoBehaviour:
   magicInterval: 5
   magicObject: {fileID: 0}
   magicDamage: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5990299393329463558
+      type: {class: Attack, ns: Seti, asm: Assembly-CSharp}
+      data:
+        attack: 0
+        strategies:
+        - rid: 5990299393329463562
+        isSkillAttack: 0
+    - rid: 5990299393329463559
+      type: {class: Look, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 5990299393329463563
+    - rid: 5990299393329463560
+      type: {class: Move, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 5990299393329463564
+        - rid: 5990299393329463565
+        - rid: 5990299393329463566
+    - rid: 5990299393329463561
+      type: {class: Stagger, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463562
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463567
+        isActive: 1
+    - rid: 5990299393329463563
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463568
+        isActive: 1
+    - rid: 5990299393329463564
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463569
+        isActive: 1
+    - rid: 5990299393329463565
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463570
+        isActive: 1
+    - rid: 5990299393329463566
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463571
+        isActive: 1
+    - rid: 5990299393329463567
+      type: {class: Attack_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463568
+      type: {class: Look_Watch, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463569
+      type: {class: Move_Run, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463570
+      type: {class: Move_Walk, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463571
+      type: {class: Move_Nav, ns: Seti, asm: Assembly-CSharp}
+      data: 
 --- !u!114 &5942708562177924615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3010,11 +3089,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: NULL
       objectReference: {fileID: 0}
+    - target: {fileID: 9168233123745613551, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
+      propertyPath: m_Owner
+      value: 
+      objectReference: {fileID: 421721970356051598}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
+--- !u!114 &867059816042347670 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9168233123745613551, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
+  m_PrefabInstance: {fileID: 8301384517020285561}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0440a1bb5944d447902a1dca736ab38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2246857967483270828 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7789538877348465877, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}

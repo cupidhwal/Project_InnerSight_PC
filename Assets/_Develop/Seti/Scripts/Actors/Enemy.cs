@@ -79,11 +79,7 @@ namespace Seti
             get
             {
                 // Modifier 검사
-                if (!StageManager.Instance) return false;
-
                 Environment environment = StageManager.Instance.transform.GetComponentInChildren<Environment>();
-                if (!environment) return false;
-
                 float minMod = environment.Modifiers.Count == 0 ? 0 : float.MaxValue;
                 foreach (var obs in environment.Modifiers)
                 {
@@ -130,7 +126,7 @@ namespace Seti
 
         // 라이프 사이클
         #region Life Cycle
-        protected virtual void Start()
+        private void Start()
         {
             // 초기화
             HomePosition = transform.position;

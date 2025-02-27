@@ -3515,7 +3515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeaponType: 4
-  currentWeapon: {fileID: 0}
+  currentWeapon: {fileID: 4647980176345381246}
   inAction: 0
   destroyDelay: 2
 --- !u!114 &1338054427713574085
@@ -3533,6 +3533,15 @@ MonoBehaviour:
   blueprint: {fileID: 11400000, guid: 3ae58e272392f674ba7be3aff65e21cb, type: 2}
   condition: {fileID: 7163008205139051634}
   controller: {fileID: 0}
+  behaviours:
+  - behaviour:
+      rid: 5990299393329463586
+  - behaviour:
+      rid: 5990299393329463587
+  - behaviour:
+      rid: 5990299393329463588
+  - behaviour:
+      rid: 5990299393329463589
   health: 100
   attack: 15
   defend: 0
@@ -3554,6 +3563,86 @@ MonoBehaviour:
   magicInterval: 5
   magicObject: {fileID: 1820680284854294, guid: 3848dfe682bc964459bedcf77bcc7160, type: 3}
   magicDamage: 15
+  references:
+    version: 2
+    RefIds:
+    - rid: 5990299393329463586
+      type: {class: Attack, ns: Seti, asm: Assembly-CSharp}
+      data:
+        attack: 0
+        strategies:
+        - rid: 5990299393329463590
+        - rid: 5990299393329463591
+        isSkillAttack: 0
+    - rid: 5990299393329463587
+      type: {class: Look, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 5990299393329463592
+    - rid: 5990299393329463588
+      type: {class: Move, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 5990299393329463593
+        - rid: 5990299393329463594
+        - rid: 5990299393329463595
+    - rid: 5990299393329463589
+      type: {class: Stagger, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463590
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463596
+        isActive: 1
+    - rid: 5990299393329463591
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463597
+        isActive: 1
+    - rid: 5990299393329463592
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463598
+        isActive: 1
+    - rid: 5990299393329463593
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463599
+        isActive: 1
+    - rid: 5990299393329463594
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463600
+        isActive: 1
+    - rid: 5990299393329463595
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463601
+        isActive: 1
+    - rid: 5990299393329463596
+      type: {class: Attack_Magic, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463597
+      type: {class: Attack_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463598
+      type: {class: Look_Watch, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463599
+      type: {class: Move_Run, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463600
+      type: {class: Move_Walk, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463601
+      type: {class: Move_Nav, ns: Seti, asm: Assembly-CSharp}
+      data: 
 --- !u!114 &132088449897813482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4349,11 +4438,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: NULL
       objectReference: {fileID: 0}
+    - target: {fileID: 9168233123745613551, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
+      propertyPath: m_Owner
+      value: 
+      objectReference: {fileID: 8002989642365521967}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
+--- !u!114 &4647980176345381246 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9168233123745613551, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
+  m_PrefabInstance: {fileID: 4592803192442224529}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0440a1bb5944d447902a1dca736ab38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6027762977845752644 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7789538877348465877, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}

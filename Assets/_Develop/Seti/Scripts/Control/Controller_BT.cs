@@ -55,11 +55,6 @@ namespace Seti
         protected float magicInterval = 5f;
         #endregion
 
-        // 속성
-        #region Properties
-        public Actor Actor => actor;
-        #endregion
-
         // 인터페이스
         #region Interface
         public override Type GetControlType() => typeof(Control_BT);
@@ -67,8 +62,10 @@ namespace Seti
 
         // 라이프 사이클
         #region Life Cycle
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
+
             // 최상위 Selector 노드
             Node_Selector selector = new();
 

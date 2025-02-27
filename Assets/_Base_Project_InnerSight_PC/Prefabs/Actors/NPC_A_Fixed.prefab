@@ -2618,7 +2618,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distanceToPlayer: 0
   dialogueNumber: 1
-  range_Event: 3
   canDialogue: 0
 --- !u!114 &4426285132630832037
 MonoBehaviour:
@@ -2633,8 +2632,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint: {fileID: 11400000, guid: f67e97326ba0bc24b9dbbf557ab30c4b, type: 2}
-  condition: {fileID: 0}
+  condition: {fileID: 3137153973983207957}
   controller: {fileID: 0}
+  behaviours: []
   health: 100
   attack: 10
   defend: 1
@@ -2644,6 +2644,9 @@ MonoBehaviour:
   mag_WalkToRun: 1.5
   attackProgressive: 2.5
   type: 0
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3137153973983207957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3165,6 +3168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2945848864891155530}
   - component: {fileID: 2281801031430245145}
+  - component: {fileID: 5778634159560553906}
   m_Layer: 0
   m_Name: SK_MMO_NEWBIE_M_AllPartsTogether Variant
   m_TagString: Untagged
@@ -3215,6 +3219,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5778634159560553906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6247561377715226541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ffc482ad06ab154fa87a3cfe0343d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
+  forwardSpeed: 0
 --- !u!1 &6370730328530552600
 GameObject:
   m_ObjectHideFlags: 0

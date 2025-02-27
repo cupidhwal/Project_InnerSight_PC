@@ -918,7 +918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeaponType: 4
-  currentWeapon: {fileID: 0}
+  currentWeapon: {fileID: 2208516642868412991}
   inAction: 0
   destroyDelay: 2
 --- !u!114 &1249396391850830513
@@ -936,6 +936,15 @@ MonoBehaviour:
   blueprint: {fileID: 11400000, guid: ccb6a81a0dbdfd049b18e073b0c92536, type: 2}
   condition: {fileID: 6754219420394870450}
   controller: {fileID: 0}
+  behaviours:
+  - behaviour:
+      rid: 5990299393329463572
+  - behaviour:
+      rid: 5990299393329463573
+  - behaviour:
+      rid: 5990299393329463574
+  - behaviour:
+      rid: 5990299393329463575
   health: 150
   attack: 15
   defend: 0
@@ -957,6 +966,76 @@ MonoBehaviour:
   magicInterval: 5
   magicObject: {fileID: 0}
   magicDamage: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5990299393329463572
+      type: {class: Attack, ns: Seti, asm: Assembly-CSharp}
+      data:
+        attack: 0
+        strategies:
+        - rid: 5990299393329463576
+        isSkillAttack: 0
+    - rid: 5990299393329463573
+      type: {class: Look, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 5990299393329463577
+    - rid: 5990299393329463574
+      type: {class: Move, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 5990299393329463578
+        - rid: 5990299393329463579
+        - rid: 5990299393329463580
+    - rid: 5990299393329463575
+      type: {class: Stagger, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463576
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463581
+        isActive: 1
+    - rid: 5990299393329463577
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463582
+        isActive: 1
+    - rid: 5990299393329463578
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463583
+        isActive: 1
+    - rid: 5990299393329463579
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463584
+        isActive: 1
+    - rid: 5990299393329463580
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463585
+        isActive: 1
+    - rid: 5990299393329463581
+      type: {class: Attack_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463582
+      type: {class: Look_Watch, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463583
+      type: {class: Move_Run, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463584
+      type: {class: Move_Walk, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463585
+      type: {class: Move_Nav, ns: Seti, asm: Assembly-CSharp}
+      data: 
 --- !u!114 &1486842627109985437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1152,6 +1231,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NULL
       objectReference: {fileID: 0}
+    - target: {fileID: 9168233123745613551, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
+      propertyPath: m_Owner
+      value: 
+      objectReference: {fileID: 7887634640613748944}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1162,3 +1245,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7789538877348465877, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
   m_PrefabInstance: {fileID: 7032970447723824336}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2208516642868412991 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9168233123745613551, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
+  m_PrefabInstance: {fileID: 7032970447723824336}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0440a1bb5944d447902a1dca736ab38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

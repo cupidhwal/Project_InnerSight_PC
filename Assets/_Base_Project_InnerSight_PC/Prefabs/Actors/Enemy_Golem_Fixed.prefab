@@ -1557,7 +1557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeaponType: 4
-  currentWeapon: {fileID: 0}
+  currentWeapon: {fileID: 7985957042920567703}
   inAction: 0
   destroyDelay: 2
 --- !u!114 &8785395257725108577
@@ -1575,6 +1575,15 @@ MonoBehaviour:
   blueprint: {fileID: 11400000, guid: a531f6c57b89b7548b9b435f7cb19cea, type: 2}
   condition: {fileID: 6678731094175085228}
   controller: {fileID: 0}
+  behaviours:
+  - behaviour:
+      rid: 5990299393329463528
+  - behaviour:
+      rid: 5990299393329463529
+  - behaviour:
+      rid: 5990299393329463530
+  - behaviour:
+      rid: 5990299393329463531
   health: 50
   attack: 10
   defend: 0
@@ -1587,7 +1596,7 @@ MonoBehaviour:
   distancePlayer: 0
   distancePlace: 0
   range_Detect: 7.5
-  range_Attack: 1
+  range_Attack: 1.1
   range_Magic: 0
   range_BackOff: 15
   searchDuration: 5
@@ -1596,6 +1605,76 @@ MonoBehaviour:
   magicInterval: 5
   magicObject: {fileID: 0}
   magicDamage: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5990299393329463528
+      type: {class: Attack, ns: Seti, asm: Assembly-CSharp}
+      data:
+        attack: 0
+        strategies:
+        - rid: 5990299393329463532
+        isSkillAttack: 0
+    - rid: 5990299393329463529
+      type: {class: Look, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 5990299393329463533
+    - rid: 5990299393329463530
+      type: {class: Move, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 5990299393329463534
+        - rid: 5990299393329463535
+        - rid: 5990299393329463536
+    - rid: 5990299393329463531
+      type: {class: Stagger, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463532
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463537
+        isActive: 1
+    - rid: 5990299393329463533
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463538
+        isActive: 1
+    - rid: 5990299393329463534
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463539
+        isActive: 1
+    - rid: 5990299393329463535
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463540
+        isActive: 1
+    - rid: 5990299393329463536
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463541
+        isActive: 1
+    - rid: 5990299393329463537
+      type: {class: Attack_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463538
+      type: {class: Look_Watch, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463539
+      type: {class: Move_Run, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463540
+      type: {class: Move_Walk, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463541
+      type: {class: Move_Nav, ns: Seti, asm: Assembly-CSharp}
+      data: 
 --- !u!114 &3846494019382873228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1845,11 +1924,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: NULL
       objectReference: {fileID: 0}
+    - target: {fileID: 9168233123745613551, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
+      propertyPath: m_Owner
+      value: 
+      objectReference: {fileID: 8367765423597452721}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
+--- !u!114 &7985957042920567703 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9168233123745613551, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
+  m_PrefabInstance: {fileID: 1292474737873450360}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0440a1bb5944d447902a1dca736ab38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &9076383531570018733 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7789538877348465877, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}

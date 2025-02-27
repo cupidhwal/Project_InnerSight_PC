@@ -63,7 +63,7 @@ namespace Seti
             // Attack 행동 AI Input
             if (Input_Attack(deltaTime))
                 attack?.FSM_AttackInput(true);
-            //else attack?.FSM_AttackInput(false);
+            else attack?.FSM_AttackInput(false);
         }
         #endregion
 

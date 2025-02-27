@@ -1543,8 +1543,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aea16b6fa0aba0348865fcab078ab2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeaponType: 0
-  currentWeapon: {fileID: 0}
+  currentWeaponType: 4
+  currentWeapon: {fileID: 2060960671895744437}
   inAction: 0
   destroyDelay: 2
 --- !u!114 &3754336618153912970
@@ -1560,6 +1560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distancePlace: 0
+  range_Detect: 7.5
   range_Attack: 1
   range_Magic: 0
   range_BackOff: 10
@@ -1580,8 +1581,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint: {fileID: 11400000, guid: 52c436a8bbfaee04887a8715974431e5, type: 2}
-  condition: {fileID: 0}
+  condition: {fileID: 1336543980630631421}
   controller: {fileID: 0}
+  behaviours:
+  - behaviour:
+      rid: 5990299393329463514
+  - behaviour:
+      rid: 5990299393329463515
+  - behaviour:
+      rid: 5990299393329463516
+  - behaviour:
+      rid: 5990299393329463517
   health: 100
   attack: 10
   defend: 1
@@ -1603,6 +1613,76 @@ MonoBehaviour:
   magicInterval: 5
   magicObject: {fileID: 0}
   magicDamage: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5990299393329463514
+      type: {class: Attack, ns: Seti, asm: Assembly-CSharp}
+      data:
+        attack: 0
+        strategies:
+        - rid: 5990299393329463518
+        isSkillAttack: 0
+    - rid: 5990299393329463515
+      type: {class: Look, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 5990299393329463519
+    - rid: 5990299393329463516
+      type: {class: Move, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategies:
+        - rid: 5990299393329463520
+        - rid: 5990299393329463521
+        - rid: 5990299393329463522
+    - rid: 5990299393329463517
+      type: {class: Stagger, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463518
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463523
+        isActive: 1
+    - rid: 5990299393329463519
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463524
+        isActive: 1
+    - rid: 5990299393329463520
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463525
+        isActive: 1
+    - rid: 5990299393329463521
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463526
+        isActive: 1
+    - rid: 5990299393329463522
+      type: {class: Strategy, ns: Seti, asm: Assembly-CSharp}
+      data:
+        strategy:
+          rid: 5990299393329463527
+        isActive: 1
+    - rid: 5990299393329463523
+      type: {class: Attack_Normal, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463524
+      type: {class: Look_Watch, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463525
+      type: {class: Move_Run, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463526
+      type: {class: Move_Walk, ns: Seti, asm: Assembly-CSharp}
+      data: 
+    - rid: 5990299393329463527
+      type: {class: Move_Nav, ns: Seti, asm: Assembly-CSharp}
+      data: 
 --- !u!114 &3846494019382873228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1866,3 +1946,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7789538877348465877, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
   m_PrefabInstance: {fileID: 7180457152685189466}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2060960671895744437 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9168233123745613551, guid: 8c0415394cf50fd4fb62c4489f4ff2c0, type: 3}
+  m_PrefabInstance: {fileID: 7180457152685189466}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0440a1bb5944d447902a1dca736ab38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

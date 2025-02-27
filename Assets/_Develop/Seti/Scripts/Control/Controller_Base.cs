@@ -8,9 +8,8 @@ namespace Seti
     {
         // 필드
         #region Variables
-        public string currentMoveStrategy;
-
-        protected Dictionary<Type, IBehaviour> behaviourMap;            // 행동 매핑 (타입에 따른 행동 인스턴스)
+        public Actor Actor { get; protected set; }
+        protected Dictionary<Type, IBehaviour> behaviourMap;    // 행동 매핑 (타입에 따른 행동 인스턴스)
         #endregion
 
         // 속성
@@ -20,25 +19,23 @@ namespace Seti
 
         // 인터페이스
         #region Interface
-        public abstract Type GetControlType();
-        public virtual void Initialize()
+        public void Initialize()
         {
-            // Actor의 behaviours 리스트에서 동적으로 매핑
-            SetBehaviours(GetComponent<Actor>());
-        }
-        public virtual void SetBehaviours(Actor actor)
-        {
-            // 행동 매핑 초기화
-            if (behaviourMap == null)
-                behaviourMap = new();
-            else behaviourMap.Clear();
+            // Actor 참조
+            Actor = GetComponent<Actor>();
 
-            foreach (var mapping in actor.Blueprint.behaviourStrategies)
+            // Actor의 behaviours 리스트에서 동적으로 매핑
+            SetBehaviours(Actor);
+        }
+        public void SetBehaviours(Actor actor)
+        {
+            behaviourMap = new();
+
+            foreach (var behaviour in actor.Behaviours)
             {
-                if (mapping.behaviour == null) continue;
+                if (behaviour.behaviour == null) continue;
 
                 // 명시적으로 Initialize 호출
-                Behaviour behaviour = new(mapping.behaviour);
                 behaviour.behaviour.Initialize(actor);
 
                 var behaviourType = behaviour.behaviour.GetType();
@@ -48,26 +45,29 @@ namespace Seti
                 }
             }
         }
+
+        public abstract Type GetControlType();
         #endregion
 
         // 라이프 사이클
         #region Life Cycle
+        protected virtual void Awake()
+        {
+            Initialize();
+        }
+
+        protected virtual void Start()
+        {
+            //Cursor.lockState = CursorLockMode.Locked;
+        }
+
         protected virtual void Update()
         {
             // Move 행동이 있으면 Update 호출
             if (behaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
             {
-                if (moveBehaviour is Move move)
-                {
-                    move?.Update();
-                    currentMoveStrategy = move.currentStrategyName;
-                }
+                (moveBehaviour as Move)?.Update();
             }
-        }
-
-        protected virtual void Awake()
-        {
-            Initialize();
         }
 
         protected virtual void OnDestroy()

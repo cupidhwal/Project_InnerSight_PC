@@ -65,12 +65,6 @@ namespace Seti
                 IsMagic = false;
                 IsMove = false;
 
-                if (actor == null)
-                {
-                    Initialize();
-                    actor.Initialize();
-                }
-
                 if (actor.Controller.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
                     if (moveBehaviour is Move move)
                         move.OnMove(Vector2.zero, false);

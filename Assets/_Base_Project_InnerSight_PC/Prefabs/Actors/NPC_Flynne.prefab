@@ -2713,7 +2713,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distanceToPlayer: 0
   dialogueNumber: 3
-  range_Event: 3
   canDialogue: 0
 --- !u!114 &4933642059739315503
 MonoBehaviour:
@@ -2730,6 +2729,7 @@ MonoBehaviour:
   blueprint: {fileID: 11400000, guid: d78ad44c4cbfc0e4b93d515952d3705f, type: 2}
   condition: {fileID: 5157249558499181164}
   controller: {fileID: 0}
+  behaviours: []
   health: 100
   attack: 10
   defend: 1
@@ -2738,6 +2738,9 @@ MonoBehaviour:
   stagger: 0.5
   mag_WalkToRun: 1.5
   attackProgressive: 2.5
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1031442582353745549
 MonoBehaviour:
   m_ObjectHideFlags: 0

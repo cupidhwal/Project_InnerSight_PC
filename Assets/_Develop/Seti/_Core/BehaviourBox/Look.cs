@@ -31,8 +31,6 @@ namespace Seti
         public void Initialize(Actor actor)
         {
             this.actor = actor;
-            strategies = actor.Blueprint.GetStrategies(this);
-
             foreach (var mapping in strategies)
             {
                 ILookStrategy lookStrategy = mapping.strategy as ILookStrategy;
@@ -70,6 +68,12 @@ namespace Seti
 
         // 보유 전략 확인
         public bool HasStrategy<T>() where T : class, IStrategy => strategies.Any(strategy => strategy.strategy is T);
+
+        // 행동 전략 설정
+        public void SetStrategies(IEnumerable<Strategy> strategies)
+        {
+            this.strategies = strategies.ToList(); // 전달받은 전략 리스트 저장
+        }
 
         // 행동 전략 변경
         public void ChangeStrategy(Type strategyType)
