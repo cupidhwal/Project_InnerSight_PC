@@ -128,9 +128,6 @@ namespace Seti
         #region Life Cycle
         private void Start()
         {
-            // 초기화
-            Invoke("SetHomePosition", 1);
-
             // 이벤트 구독
             if (TryGetComponent<Damagable>(out var damagable))
                 damagable.OnReceiveDamage += SearchAndChase;
@@ -138,7 +135,7 @@ namespace Seti
 
         protected virtual void Update()
         {
-            distancePlace = Vector3.Distance(HomePosition, transform.position);
+            CheckHomePosition();
             
             if (!player) return;
 
@@ -158,12 +155,20 @@ namespace Seti
 
             previousTargetPos = player.transform.position;
             currentTargetPos = player.transform.position;
+
+            SetHomePosition();
         }
         #endregion
 
         // 메서드
         #region Methods
         private void SetHomePosition() => HomePosition = transform.position;
+        private void CheckHomePosition()
+        {
+            Vector2 initialPos = new(HomePosition.x, HomePosition.z);
+            Vector2 actorPos = new(transform.position.x, transform.position.z);
+            distancePlace = Vector2.Distance(initialPos, actorPos);
+        }
         private void SearchAndChase() => CoroutineExecutor(SearchAndChaseCor());
 
         float elapsed = 0f;

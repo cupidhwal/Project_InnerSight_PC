@@ -77,10 +77,7 @@ namespace Seti
 
         public void OpenDialogueUI(int dialogIndex)
         {
-            //if (DataManager.Instance.DialogueData.CheckSeens.All(f => f)) return;
-            if (DataManager.Instance.DialogueData.CheckSeens[dialogIndex]) return;
-
-            Toggle(dialogueUI.dialogueSwitch.gameObject);
+            Toggle(dialogueUI.dialogueSwitch);
             dialogueUI.StartDialogue(dialogIndex);
         }
 

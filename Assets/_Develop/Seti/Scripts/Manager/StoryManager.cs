@@ -54,7 +54,14 @@ namespace Seti
             CurrentDialogue = dialogueList[currentIndex];
             DataManager.Instance.GetDialogData();
         }
-        public void OpenDialogue(int index) => uiManager.OpenDialogueUI(index);
+        public bool OpenDialogue(int index)
+        {
+            if (DataManager.Instance.DialogueData.CheckSeens[index])
+                return false;
+
+            uiManager.OpenDialogueUI(index);
+            return true;
+        }
         public void NextDialogue() => uiManager.NextDialogueUI();
 
         // 연출
@@ -75,7 +82,8 @@ namespace Seti
         {
             // 마을 포탈
             GameObject portals = StageManager.Instance.CurrentStage.transform.GetChild(0).GetChild(0).gameObject;
-            DisableComposition("Stage000", 1, portals);
+            if (DataManager.Instance.deathCount > 0)
+                DisableComposition("Stage000", 1, portals);
 
             // 미니맵
             GameObject miniMap = FindAnyObjectByType<Mini_Map>().gameObject;
@@ -107,7 +115,12 @@ namespace Seti
 
                 case "Stage000":
                     SetDialogue(1);
-                    OpenDialogue(0);
+                    if (DataManager.Instance.deathCount > 0)
+                    {
+                        DialogueData townData = DataManager.Instance.GetDialogData();
+                        if (townData != null && !townData.CheckSeens[0])
+                            OpenDialogue(0);
+                    }
                     break;
 
                 case "Stage001":
