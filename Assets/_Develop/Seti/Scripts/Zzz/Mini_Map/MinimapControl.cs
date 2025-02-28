@@ -15,6 +15,8 @@ namespace Seti
         #region Life Cycle
         private void Start()
         {
+            if (!player)
+                player = InitializeManager.Instance.Player;
             playerIcon = transform.GetChild(0);
         }
 

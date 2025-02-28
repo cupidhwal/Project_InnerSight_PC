@@ -129,7 +129,7 @@ namespace Seti
         private void Start()
         {
             // 초기화
-            HomePosition = transform.position;
+            Invoke("SetHomePosition", 1);
 
             // 이벤트 구독
             if (TryGetComponent<Damagable>(out var damagable))
@@ -163,6 +163,7 @@ namespace Seti
 
         // 메서드
         #region Methods
+        private void SetHomePosition() => HomePosition = transform.position;
         private void SearchAndChase() => CoroutineExecutor(SearchAndChaseCor());
 
         float elapsed = 0f;
