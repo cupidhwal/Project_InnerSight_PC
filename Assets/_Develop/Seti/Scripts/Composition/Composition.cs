@@ -10,8 +10,7 @@ namespace Seti
         // 필드
         [SerializeField]
         private string iD;
-        [SerializeField]
-        private GameObject target;
+        public GameObject target;
         [SerializeField]
         private List<CompositionObject> actions;
 

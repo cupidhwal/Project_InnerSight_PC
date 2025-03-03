@@ -41,7 +41,7 @@ namespace Seti
 
             trigger.enabled = false;
 
-            StoryManager.Instance.SetTempTarget(tutorialEnemy);
+            StoryManager.Instance.SetTarget(tutorialEnemy);
             StoryManager.Instance.OpenDialogue(2);
         }
 

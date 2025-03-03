@@ -15,6 +15,7 @@ namespace Seti
         [Header("Data : Player")]
         public int deathCount;
         public bool[] sinEvent = new bool[6];
+        public bool[] flynneEvent = new bool[6];
 
         [Header("Data : Dialogue")]
         public List<DialogueData> dialogueDatas;

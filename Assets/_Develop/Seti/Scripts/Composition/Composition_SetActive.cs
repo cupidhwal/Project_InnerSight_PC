@@ -38,12 +38,16 @@ namespace Seti
             }
         }
 
-        public override void Execute(GameObject obj) => StoryManager.Instance.CorExcutor(Delay(obj));
+        public override void Execute(GameObject obj)
+        {
+            StoryManager.Instance.CorExcutor(Delay(obj));
+        }
 
         IEnumerator Delay(GameObject obj)
         {
             yield return new WaitForSeconds(delayExcute);
             obj.SetActive(Flag);
+            yield break;
         }
     }
 }

@@ -1,25 +1,70 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Seti
 {
+    [Serializable]
+    public class TriggerVariables
+    {
+        public int deathCount;
+        public int targetSinEvent = -1;
+        public int dialogueNumber;
+        public float dialogueDelay = 1f;
+    }
+
     /// <summary>
     /// 스테이지의 이벤트 트리거
     /// </summary>
     public class Trigger_Stage : MonoBehaviour
     {
-        [Header("Variables")]
+        [Header("Variables : Dialogue")]
         [SerializeField]
-        private int dialogueNumber;
-        [SerializeField]
-        private float dialogueDelay = 1f;
+        private List<TriggerVariables> triggers;
 
-        public void OpenDialogue() => StartCoroutine(DialogueCor());
-
-        IEnumerator DialogueCor()
+        public void OpenDialogue()
         {
-            yield return new WaitForSeconds(1);
+            int index = -1;
+            float delay = 0;
+            DialogueData dialogueData = DataManager.Instance.GetDialogData();
+            foreach (var data in triggers)
+            {
+                // 기독 여부 체크
+                if (dialogueData.CheckSeens[data.dialogueNumber])
+                    continue;
+
+                // 원흉 이벤트 체크
+                if (data.targetSinEvent >= 0)
+                {
+                    if (DataManager.Instance.deathCount < data.deathCount)
+                        continue;
+
+                    if (!DataManager.Instance.sinEvent[data.targetSinEvent])
+                    {
+                        index = data.dialogueNumber;
+                        delay = data.dialogueDelay;
+                        break;
+                    }
+                }
+                else
+                {
+                    index = data.dialogueNumber;
+                    delay = data.dialogueDelay;
+                    break;
+                }
+            }
+
+            // 실행 가능한 대화가 존재하면 출력
+            if (index >= 0)
+                StartCoroutine(DialogueCor(index, delay));
+        }
+
+        IEnumerator DialogueCor(int dialogueNumber, float delay)
+        {
+            yield return new WaitForSeconds(delay);
             StoryManager.Instance.OpenDialogue(dialogueNumber);
+            yield break;
         }
     }
 }

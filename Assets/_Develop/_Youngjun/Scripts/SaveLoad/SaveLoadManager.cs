@@ -170,6 +170,7 @@ namespace Noah
         {
             scenarioSaveData.deathCount = DataManager.Instance.deathCount;
             scenarioSaveData.sinEvent = DataManager.Instance.sinEvent;
+            scenarioSaveData.flynneEvent = DataManager.Instance.flynneEvent;
             ScenarioProgress data = scenarioSaveData.dialogueDatas.FirstOrDefault(dialogue => dialogue.ScenarioName == dialogueData.name);
             if (data == null)
             {

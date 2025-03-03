@@ -23,7 +23,6 @@ namespace Seti
 
         public override void Execute(GameObject obj)
         {
-            StoryManager.Instance.CorStopper();
             StoryManager.Instance.CorExcutor(CameraCor(obj.transform, durationExcute, durationStay, durationComeback));
         }
 

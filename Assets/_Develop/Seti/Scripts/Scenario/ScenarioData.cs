@@ -32,6 +32,7 @@ namespace Seti
     {
         public int deathCount;
         public bool[] sinEvent = new bool[6];
+        public bool[] flynneEvent = new bool[6];
 
         public List<ScenarioProgress> dialogueDatas = new();
 

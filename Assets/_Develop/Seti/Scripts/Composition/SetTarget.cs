@@ -12,7 +12,7 @@ namespace Seti
         {
             if (other.CompareTag("Player"))
             {
-                StoryManager.Instance.SetTempTarget(StageManager.Instance.CurrentStage.transform.GetChild(0).GetChild(0).gameObject);
+                StoryManager.Instance.SetTarget(StageManager.Instance.CurrentStage.transform.GetChild(0).GetChild(0).gameObject);
             }
         }
     }

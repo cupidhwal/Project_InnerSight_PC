@@ -2509,7 +2509,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.11666667
+  m_VoxelSize: 0.1
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: a0e044d315054ce42b2743d2dc02a348, type: 2}
   m_BuildHeightMesh: 0
@@ -2681,8 +2681,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76bfab5e7e7e1c4aa19b289beb61815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueNumber: 0
-  dialogueDelay: 1
+  triggers:
+  - deathCount: 0
+    targetSinEvent: -1
+    dialogueNumber: 0
+    dialogueDelay: 1
 --- !u!1 &8229470326297086506
 GameObject:
   m_ObjectHideFlags: 0

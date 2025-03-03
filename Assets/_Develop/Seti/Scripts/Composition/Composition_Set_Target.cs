@@ -1,5 +1,5 @@
-using System.Collections;
 using UnityEngine;
+using Noah;
 
 namespace Seti
 {
@@ -11,12 +11,15 @@ namespace Seti
     {
         // 연출
         [Header("Variables")]
+        //[SerializeField]
+        //Transform targetRoot;
         [SerializeField]
-        Transform targetRoot;
+        private int targetChildIndex;
 
         public override void Execute(GameObject obj)
         {
-            StoryManager.Instance.SetTempTarget(targetRoot.GetChild(0).gameObject);
+            GameObject target = StageManager.Instance.CurrentStage.transform.GetChild(targetChildIndex).gameObject;
+            StoryManager.Instance.CurrentComp.target = target;
         }
     }
 }

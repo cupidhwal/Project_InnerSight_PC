@@ -2,9 +2,10 @@ using UnityEngine;
 
 namespace Seti
 {
-    public class Flynne : Actor
+    /// <summary>
+    /// Storyteller - Flynne
+    /// </summary>
+    public class Flynne : Storyteller_NPC
     {
-        // 오버라이드
-        protected override Condition_Actor CreateState() => gameObject.AddComponent<Condition_NPC>();
     }
 }

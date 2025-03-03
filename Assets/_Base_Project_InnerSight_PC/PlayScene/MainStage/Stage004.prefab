@@ -390,6 +390,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5978030820829078457}
+  - component: {fileID: 8119831053738206386}
   m_Layer: 0
   m_Name: Stage004
   m_TagString: Untagged
@@ -417,6 +418,23 @@ Transform:
   - {fileID: 5888609439919909206}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8119831053738206386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109194272584283807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f76bfab5e7e7e1c4aa19b289beb61815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers:
+  - deathCount: 1
+    targetSinEvent: 1
+    dialogueNumber: 0
+    dialogueDelay: 1
 --- !u!1 &1148902117830852622
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,13 +668,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5888609439919909206}
+  - component: {fileID: 431232485950477235}
+  - component: {fileID: 7690134206724700251}
   m_Layer: 0
   m_Name: StoryPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5888609439919909206
 Transform:
   m_ObjectHideFlags: 0
@@ -672,6 +692,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5978030820829078457}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &431232485950477235
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2301945933034896315}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 2, z: 10}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &7690134206724700251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2301945933034896315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b7487bcf148de4dbe70fe9d339614d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueNumber: 1
+  dialogueDelay: 1
+  eventObject: {fileID: 0}
 --- !u!1 &2757745967152707776
 GameObject:
   m_ObjectHideFlags: 0

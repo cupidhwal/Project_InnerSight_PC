@@ -36,11 +36,6 @@ namespace Seti
 
         public int CurrentNumber => currentNumber;
 
-        private void Awake()
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-
         private void OnEnable()
         {
             dialogues = new Queue<Dialogue>();
@@ -64,7 +59,7 @@ namespace Seti
 
             nextButton.gameObject.SetActive(false);
 
-            OnDialogueEnd += SeenHandle;
+            OnDialogueEnd += Seen;
         }
 
         //대화 시작하기
@@ -146,7 +141,7 @@ namespace Seti
                 uiManager.CloseDialogueUI();
         }
 
-        private void SeenHandle()
+        private void Seen()
         {
             DataManager.Instance.DialogueData.CheckSeens[currentNumber] = true;
 

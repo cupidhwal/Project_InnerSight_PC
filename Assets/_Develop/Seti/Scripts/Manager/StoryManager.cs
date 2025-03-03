@@ -28,6 +28,8 @@ namespace Seti
         // 연출
         [Header("Composition")]
         [SerializeField]
+        private Composition currentComposition;
+        [SerializeField]
         private List<CompositionsPerScene> compositionList;
         #endregion
 
@@ -35,6 +37,7 @@ namespace Seti
         #region Properties
         public Player Player { get; private set; }
         public CinemachineCamera Cinemachine { get; private set; }
+        public Composition CurrentComp => currentComposition;
         public GameObject TempTarget { get; private set; }
         public string CurrentDialogue { get; private set; }
         public string StageName { get; private set; }
@@ -56,6 +59,9 @@ namespace Seti
         }
         public bool OpenDialogue(int index)
         {
+            ScenarioData data = SaveLoadManager.Instance.scenarioSaveData;
+            if (data == null) return false;
+
             if (DataManager.Instance.DialogueData.CheckSeens[index])
                 return false;
 
@@ -65,17 +71,17 @@ namespace Seti
         public void NextDialogue() => uiManager.NextDialogueUI();
 
         // 연출
-        public void SetTempTarget(GameObject tempTarget) => TempTarget = tempTarget;
+        public void SetTarget(GameObject target) => TempTarget = target;
         public void CorStopper() => StopAllCoroutines();
         public void CorExcutor(IEnumerator cor) => StartCoroutine(cor);
         public void SelectComposition(int number, int order)
         {
             string number_order = number.ToString() + "/" + order.ToString();
-            var composition = compositionList[currentIndex].compositions.FirstOrDefault(com => com.ID == number_order);
+            currentComposition = compositionList[currentIndex].compositions.FirstOrDefault(com => com.ID == number_order);
 
-            foreach (var act in composition.Actions)
+            foreach (var act in currentComposition.Actions)
             {
-                act.Execute(composition.Target);
+                act.Execute(currentComposition.Target);
             }
         }
         public void ReadyComposition()
@@ -130,6 +136,10 @@ namespace Seti
 
                 case "Stage003":
                     SetDialogue(3);
+                    break;
+
+                case "Stage004":
+                    SetDialogue(4);
                     break;
             }
         }
