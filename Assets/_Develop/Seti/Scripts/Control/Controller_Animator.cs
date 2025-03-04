@@ -191,5 +191,10 @@ namespace Seti
             useSkill.UseSkillAnimation();
             MagicAttackEnd();
         }
+
+        public void PlayerSkillMove()
+        {
+            transform.parent.GetComponent<Condition_Player>().PlayerSetActive(true);
+        }
     }
 }
