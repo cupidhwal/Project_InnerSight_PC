@@ -49,6 +49,11 @@ namespace JungBin
 
                 ShowBrokenProjectile();
             }
+
+            if (other.CompareTag("Wall"))
+            {
+                ShowBrokenProjectile();
+            }
         }
 
         public void ShowBrokenProjectile()
