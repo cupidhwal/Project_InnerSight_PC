@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections;
 using Unity.VisualScripting;
+using Seti;
 
 namespace Noah
 {
@@ -9,7 +10,8 @@ namespace Noah
     { 
         Nomal,
         Circle,
-        Cube
+        Cube,
+        Proximity
     }
 
     // 공통 부모 클래스 정의 (비제네릭)
@@ -33,6 +35,9 @@ namespace Noah
         [TextArea(5, 5)]
         public string skillDescription;
 
+        // 스킬 애니메이션 작동 번호 (고유 애니메이션 없으면 -1)
+        public int animationNum = -1;
+
         // 스킬 사용 시 실행되는 메서드
         public abstract void Activate();
 
@@ -45,12 +50,24 @@ namespace Noah
                 isSkillOn = true;
             }
         }
+
+        public virtual void PlayerAnimation(Transform _player, int _typeNum)
+        {
+            if (_player.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+            {
+                if (attackBehaviour is Attack attack)
+                {
+                    attack.OnSlash(_typeNum);
+                }
+            }
+        }
+
     }
 
     public abstract class Skill<T> : SkillBase where T : Skill<T>
     {
         // 스킬 사용 시 실행되는 메서드
-        public override abstract void Activate(/*T skillData*/);
+        public override abstract void Activate();
 
         // 스킬 사용 후 풀로 반환
         public void ReturnToPool()
@@ -66,8 +83,6 @@ namespace Noah
         {
             isSkillOn = false;
             Debug.Log(damage + " / " + cooldown);
-
-            
 
             ReturnToPool();
         }
@@ -143,7 +158,20 @@ namespace Noah
             Debug.Log(damage + " / " + cooldown);
 
             ReturnToPool();
+
+            GameObject _player = GameObject.FindGameObjectWithTag("Player");
+
+            if (_player != null)
+            {
+                _player.GetComponent<Condition_Player>().PlayerSetActive(false);
+
+                //PlayerAnimation(_player.transform, 0);
+            }
+
+
+            
         }
+
     }
 
     [Serializable]
@@ -155,6 +183,15 @@ namespace Noah
             Debug.Log(damage + " / " + cooldown);
 
             ReturnToPool();
+
+            GameObject _player = GameObject.FindGameObjectWithTag("Player");
+
+            if (_player != null)
+            {
+                _player.GetComponent<Condition_Player>().PlayerSetActive(false);
+
+                //PlayerAnimation(_player.transform, 1);
+            }
         }
     }
 

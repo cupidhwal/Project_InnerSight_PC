@@ -55,18 +55,6 @@ namespace Noah
             gold_Text.text = PlayerInfoManager.Instance.GetGold().ToString();
         }
 
-        void LimitState(int _index, ref float amount)
-        {
-            if (_index == 3 || _index == 4) // MoveSpeed 또는 AttackSpeed
-            {
-                if (amount > maxData_Speed)
-                {
-                    amount = maxData_Speed; // maxData_Speed 이상으로 못 올라가게 제한
-                } 
-            }
-
-        }
-
         public void AddButton(int _index)
         {
             int cost = upgradeCounts[_index] * PlayerStatsManager.Instance.GetUpgradeCost()[_index];

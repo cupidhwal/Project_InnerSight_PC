@@ -81,7 +81,8 @@ namespace Noah
 
         void UsePlayerSkill(int _index)
         {
-            if (Input.GetMouseButton(1) && setSkill.skillSlots[_index].rangeType != SkillRangeType.Nomal)
+            if (Input.GetMouseButton(1) && setSkill.skillSlots[_index].rangeType != SkillRangeType.Nomal
+                && setSkill.skillSlots[_index].rangeType != SkillRangeType.Proximity)
             {
                 isReadySkill = false;
                 isChange = false;
@@ -93,14 +94,17 @@ namespace Noah
                 }
 
                 SkillPosition();
-
-                //if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
-                //{
-                //    UseSkill(() => setSkill.skillSlots[_index]);
-                //    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[_index], setSkill.skillUIList[_index]));
-                //}
             }
-            else if(setSkill.skillSlots[_index].rangeType == SkillRangeType.Nomal)
+            else if (setSkill.skillSlots[_index].rangeType == SkillRangeType.Proximity)
+            {
+                isReadySkill = false;
+                isChange = false;
+
+                SkillPosition();
+
+                setSkill.skillSlots[_index].PlayerAnimation(transform, setSkill.skillSlots[_index].animationNum);
+            }
+            else if (setSkill.skillSlots[_index].rangeType == SkillRangeType.Nomal)
             {
                 isReadySkill = false;
                 isChange = false;
@@ -307,7 +311,7 @@ namespace Noah
 
                         skillef = Instantiate(skill.skillPrefab, skillPos, yOnlyRotation);
                     }
-                    else if(skill.rangeType == SkillRangeType.Nomal)
+                    else if(skill.rangeType == SkillRangeType.Nomal || skill.rangeType == SkillRangeType.Proximity)
                     {
                         // 플레이어가 보는 방향으로 스킬 위치 설정
                         skillPos = transform.position + transform.forward * skill.skillPos.z
@@ -322,8 +326,6 @@ namespace Noah
                     {
                         skillef.transform.GetChild(0).GetComponent<SkillAttack>().damage = skill.damage;
                     }
-
-           
 
                     StartCoroutine(skill.SkillCoolTime());
                     Destroy(skillef, skill.skillAtkTime);

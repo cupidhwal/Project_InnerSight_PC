@@ -151,12 +151,12 @@ namespace Seti
             {
                 case "/Keyboard/1":
                     //Debug.Log("Magic 1");
-                    OnSlash(0);
+                    //OnSlash(0);
                     break;
 
                 case "/Keyboard/2":
                     //Debug.Log("Magic 2");
-                    OnSlash(1);
+                    //OnSlash(1);
                     break;
 
                 case "/Keyboard/3":
