@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Seti
 {
-    [CreateAssetMenu(fileName = "New Camera Action", menuName = "Scenario/Composition/Camera")]
+    [CreateAssetMenu(fileName = "New Camera Action", menuName = "Scenario/Composition/Camera/Scroll")]
     public class Composition_Camera : CompositionObject
     {
         // 연출
