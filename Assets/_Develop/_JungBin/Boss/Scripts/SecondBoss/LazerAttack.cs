@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO.Pipes;
 using UnityEngine;
 
 namespace JungBin
@@ -10,6 +11,9 @@ namespace JungBin
         [SerializeField] private float maxLaserDistance = 50f;
         [SerializeField] private float laserDuration = 2f;
         [SerializeField] private float trackingSpeed = 2f; // 플레이어 피할 때 따라가는 속도
+        [SerializeField] private float turnSpeed = 30f;
+        [SerializeField] Vector3 fireDirection;
+        [SerializeField] GameObject Boss;
 
         private Transform player;
         private bool isFiring = false;
@@ -20,11 +24,20 @@ namespace JungBin
 
         private void Start()
         {
-            player = GameObject.FindGameObjectWithTag("Player").transform; // 플레이어 찾기
+            player = BossStageManager.Instance.Player?.transform;
+
+            if (player == null)
+            {
+                Debug.LogError("Player GameObject is null in BossStageManager!");
+            }
+
             if (laserLine == null)
             {
                 Debug.LogError("🚨 LineRenderer가 설정되지 않았습니다!");
             }
+
+            fireDirection = firePoint.forward;
+
         }
 
         public void FireLaser()
@@ -40,14 +53,47 @@ namespace JungBin
             isFiring = true;
             laserLine.enabled = true;
 
+
+            Vector3 direction = player.position - transform.position;
+
             float elapsedTime = 0f;
             while (elapsedTime < laserDuration)
             {
                 elapsedTime += Time.deltaTime;
 
-                // 🎯 레이저 방향 & 길이 조절
+                Vector3 fireDirection = firePoint.TransformDirection(Vector3.forward);
+
+                Debug.Log($"🔥 firePoint.rotation: {firePoint.rotation.eulerAngles}");
+                Debug.Log($"🔥 Boss.rotation: {Boss.transform.rotation.eulerAngles}");
+
+                // 🔴 firePoint가 정확한 방향을 바라보는지 확인 (디버그용)
+                Debug.DrawRay(firePoint.position, fireDirection * maxLaserDistance, Color.red, 2f);
+
+
+                RotateTowardsPlayer(direction);
+
+                // 🏹 Raycast로 충돌 확인 (벽이나 바닥 감지)
+                RaycastHit hit;
+                float laserLength = maxLaserDistance;
+
+                if (Physics.Raycast(firePoint.position, fireDirection, out hit, maxLaserDistance))
+                {
+                    laserLength = hit.distance;
+                }
+
+                // 🔥 LineRenderer를 정확한 위치에 맞추기
+                Vector3 startPos = firePoint.position;
+                Vector3 endPos = startPos + (fireDirection * laserLength);
+
+                laserLine.SetPosition(0, startPos);
+                laserLine.SetPosition(1, endPos);
+
+                /*// 🎯 레이저 방향 & 길이 조절
                 AdjustLaser();
-                AdjustAim();
+                AdjustAim();*/
+                
+
+
 
                 yield return null;
             }
@@ -58,7 +104,6 @@ namespace JungBin
 
         private void AdjustLaser()
         {
-            Vector3 fireDirection = firePoint.forward;
             RaycastHit hit;
             float laserLength = maxLaserDistance;
 
@@ -99,7 +144,14 @@ namespace JungBin
             laserCollider.radius = 0.2f;
             laserCollider.isTrigger = true;
         }
-        
+
+        private void RotateTowardsPlayer(Vector3 direction) // 보스의 회전
+        {
+            Vector3 flatDirection = new Vector3(direction.x, 0, direction.z).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(flatDirection);
+            Boss.transform.rotation = Quaternion.RotateTowards(Boss.transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+        }
+
 
 
     }

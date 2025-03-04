@@ -393,6 +393,8 @@ namespace JungBin
         // 🎯 보스가 특정 패턴에서 레이저 발사를 실행
         public void StartLaser()
         {
+            Debug.Log(lazerAttack);
+            Debug.Log(lazerAttack.IsFiring);
             if (lazerAttack != null && !lazerAttack.IsFiring)
             {
                 lazerAttack.FireLaser();
