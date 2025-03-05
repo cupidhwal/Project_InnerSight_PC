@@ -29,6 +29,7 @@ namespace Seti
             if (actor)
             {
                 actor.Controller_Animator.CantMoveDurAtk();
+                animator.speed = actor.Rate_Attack;
             }
         }
 
@@ -39,6 +40,7 @@ namespace Seti
             {
                 actor.Controller_Animator.CanMoveAfterAtk();
                 actor.Controller_Animator.MeleeAttackEnd();
+                animator.speed = 1f;
             }
         }
     }
