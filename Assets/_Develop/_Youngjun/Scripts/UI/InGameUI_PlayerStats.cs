@@ -21,6 +21,7 @@ namespace Noah
         private float currentPoint;
 
         public float maxData_Speed = 13f;
+        public float maxData_Atkspeed = 20f;
 
         public void Init()
         {
@@ -53,6 +54,16 @@ namespace Noah
             }
 
             gold_Text.text = PlayerInfoManager.Instance.GetGold().ToString();
+
+            if (PlayerStatsManager.Instance.GetPlayerData()[3] == maxData_Speed)
+            {
+                states[3].GetChild(0).GetComponent<TMP_Text>().text = "MAX";
+            }
+            if (PlayerStatsManager.Instance.GetPlayerData()[4] == maxData_Atkspeed)
+            {
+                states[4].GetChild(0).GetComponent<TMP_Text>().text = "MAX";
+            }
+        
         }
 
         public void AddButton(int _index)
