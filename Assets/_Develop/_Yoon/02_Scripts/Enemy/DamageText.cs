@@ -19,6 +19,7 @@ namespace Yoon
         private void Start()
         {
             damagable = GetComponent<Damagable>();
+            player = InitializeManager.Instance.Player;
             //damagable.OnReceiveDamage += OnTakeDamage;
         }
 
