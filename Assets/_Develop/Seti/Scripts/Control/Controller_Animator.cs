@@ -195,6 +195,8 @@ namespace Seti
         public void PlayerSkillMove()
         {
             transform.parent.GetComponent<Condition_Player>().PlayerSetActive(true);
+
+            Actor.Condition.IsMagic = false;
         }
     }
 }
