@@ -7,8 +7,9 @@ namespace Yoon
     public class MainMenu : MonoBehaviour
     {
         #region Variables
-        public SceneFade fader;
+        SceneFade fader;
         [SerializeField] private string loadToScene = "PlayScene";        //playScene 불러오기
+        [SerializeField] private GameObject contiune;
 
         public GameObject mainMenuUI;
         public GameObject creditUI;
@@ -40,6 +41,10 @@ namespace Yoon
 
         private void InitGameData()
         {
+            fader = SceneFade.instance;
+            saveLoadManager = SaveLoadManager.Instance;
+            saveLoadManager.EmptyData(contiune);
+
             //게임 플레이 데이터 로드
             //PlayData playData = SaveLoad.LoadData();
             //PlayerStats.Instance.PlayerStatInit(playData);
@@ -54,14 +59,14 @@ namespace Yoon
             saveLoadManager.DeleteAllSaveFiles();
             //PlayerStats.Instance.PlayerStatInit(null);        //
 
-            //fader.FadeTo(loadToScene);
+            fader.FadeOut(loadToScene);
         }
 
         public void LoadGame()
         {
             Debug.Log("LoadGame");
-            
-            //fader.FadeTo(PlayerStats.Instance.SceneNumber);
+
+            fader.FadeOut(loadToScene);
         }
 
 
