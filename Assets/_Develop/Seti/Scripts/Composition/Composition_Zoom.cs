@@ -27,7 +27,7 @@ namespace Seti
         // 카메라 연출 : Zoom
         IEnumerator CameraCor(float excuteDuration, float presentZoomEff)
         {
-            DataManager.Instance.UIManager.dialogueUI.OnZoom = true;
+            StoryManager.Instance.IsComposition = true;
 
             // 타겟 지점으로 카메라 이동
             float elapsed = 0f;
@@ -41,7 +41,7 @@ namespace Seti
             }
             StoryManager.Instance.Cinemachine.Lens.OrthographicSize = presentZoomEff;
 
-            DataManager.Instance.UIManager.dialogueUI.OnZoom = false;
+            StoryManager.Instance.IsComposition = false;
             yield break;
         }
         #endregion

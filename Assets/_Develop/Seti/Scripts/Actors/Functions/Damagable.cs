@@ -89,7 +89,6 @@ namespace Seti
 
                 if (actor is Player player)
                 {
-                    player.GetComponent<Enhance>().OnEnhance += ResetDamage;
                     OnRevive += ResetDamage;
                 }
 

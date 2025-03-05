@@ -29,7 +29,7 @@ namespace Seti
 
         IEnumerator Fade()
         {
-            DataManager.Instance.UIManager.dialogueUI.OnZoom = true;
+            StoryManager.Instance.IsComposition = true;
 
             // Set
             Image fadeImage = StoryManager.Instance.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
@@ -68,7 +68,7 @@ namespace Seti
             if (activeFlag == ActiveFlag.In)
                 fadeImage.gameObject.SetActive(false);
 
-            DataManager.Instance.UIManager.dialogueUI.OnZoom = false;
+            StoryManager.Instance.IsComposition = false;
             yield break;
         }
     }

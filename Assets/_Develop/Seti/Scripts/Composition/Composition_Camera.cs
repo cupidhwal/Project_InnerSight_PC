@@ -31,6 +31,8 @@ namespace Seti
         // 카메라 연출 : target까지 excuteDuration 안에 도달했다가 stayDuration 동안 머물고 comebackDuration 안에 돌아오는 연출
         IEnumerator CameraCor(Transform target, float excuteDuration, float stayDuration = 1f, float comebackDuration = 1f)
         {
+            StoryManager.Instance.IsComposition = true;
+
             // Offset
             Vector3 offset = StoryManager.Instance.Cinemachine.transform.position - StoryManager.Instance.Player.transform.position;
 
@@ -66,7 +68,7 @@ namespace Seti
 
             // 플레이어 타게팅 재설정
             StoryManager.Instance.Cinemachine.Target.TrackingTarget = StoryManager.Instance.Player.transform;
-
+            StoryManager.Instance.IsComposition = false;
             yield break;
         }
         #endregion

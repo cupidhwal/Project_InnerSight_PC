@@ -35,7 +35,6 @@ namespace Seti
         #endregion
 
         public int CurrentNumber => currentNumber;
-        public bool OnZoom { get; set; } = false;
 
         private void OnEnable()
         {
@@ -83,9 +82,6 @@ namespace Seti
         //다음 대화를 보여준다 - (큐)dialogs에서 하나 꺼내서 보여준다
         public void DrawNextDialogue()
         {
-            // Zoom Out 체크
-            if (OnZoom) return;
-
             //dialogs 체크
             if (dialogues == null || dialogues.Count == 0)
             {

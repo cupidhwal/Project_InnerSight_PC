@@ -64,7 +64,12 @@ namespace Seti
             }
             else
             {
-                enemy.Agent.ResetPath();
+                try
+                {
+                    enemy.Agent.ResetPath();
+                }
+                catch { }
+                
                 if (move.CurrentStrategy is Move_Nav)
                     move.ChangeStrategy(typeof(Move_Run));
             }

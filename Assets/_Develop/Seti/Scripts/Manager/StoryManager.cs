@@ -42,6 +42,7 @@ namespace Seti
         public string CurrentDialogue { get; private set; }
         public string StageName { get; private set; }
         public bool IsDialogue { get; private set; } = false;
+        public bool IsComposition { get; set; } = false;
         #endregion
 
         // 라이프 사이클
@@ -68,7 +69,12 @@ namespace Seti
             uiManager.OpenDialogueUI(index);
             return true;
         }
-        public void NextDialogue() => uiManager.NextDialogueUI();
+        public void NextDialogue()
+        {
+            if (IsComposition) return;
+
+            uiManager.NextDialogueUI();
+        }
 
         // 연출
         public void SetTarget(GameObject target) => TempTarget = target;
