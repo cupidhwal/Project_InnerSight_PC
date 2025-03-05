@@ -30,9 +30,10 @@ namespace Noah
             transform.position = new Vector3(transform.position.x, maxUp, transform.position.z);
 
             transform.GetComponent<Collider>().enabled = true;
-            transform.GetChild(0).gameObject.SetActive(true);
 
             paritcle.GetComponent<ParticleSystem>().Stop();
+
+            transform.GetChild(0).gameObject.SetActive(true);
 
             yield return new WaitForSeconds(1f);
 
