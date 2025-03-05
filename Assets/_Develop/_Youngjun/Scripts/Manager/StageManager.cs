@@ -189,7 +189,7 @@ namespace Noah
             // 테스트
             //NewStage();
 
-            SceneFade.instance.FadeOut(SceneManager.GetActiveScene().name);
+            SceneFade.instance.FadeOut(SceneManager.GetActiveScene().name, 5f);
         }
 
         // 테스트용

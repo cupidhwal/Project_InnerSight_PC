@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Noah
 {
@@ -36,7 +37,14 @@ namespace Noah
         {
             base.Awake();
 
-            Init();
+            if (SceneManager.GetActiveScene().name != "MainMenu") // 타이틀 씬이 아닐 때만 Init 호출
+            {
+                Init();
+            }
+            else
+            {
+                LoadAll();
+            }
         }
 
         void Init()
@@ -128,7 +136,14 @@ namespace Noah
         {
             if (dataGroupDic.TryGetValue(playerStatsSavePath, out bool value))
             {
-                _object.SetActive(false);
+                if (!value)
+                {
+                    _object.SetActive(false);
+                }
+                else
+                {
+                    _object.SetActive(true);
+                }
 
                 Debug.Log($"{playerStatsSavePath} Value: {value}");
             }

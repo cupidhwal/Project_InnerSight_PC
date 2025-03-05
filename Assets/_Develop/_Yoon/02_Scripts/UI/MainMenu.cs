@@ -25,18 +25,6 @@ namespace Yoon
         {
             //게임 데이터 초기화
             InitGameData();
-            
-            //저장된 씬이 있으면
-
-            //if(PlayerStats.Instance.SceneNumber > 0)
-            //{
-            //    continueButton.SetActive(true);
-            //}
-
-            //씬 페이드인 효과
-            //fader.FromFade();                 //TODO : fader 스크립트 확인
-
-
         }
 
         private void InitGameData()
@@ -44,10 +32,6 @@ namespace Yoon
             fader = SceneFade.instance;
             saveLoadManager = SaveLoadManager.Instance;
             saveLoadManager.EmptyData(contiune);
-
-            //게임 플레이 데이터 로드
-            //PlayData playData = SaveLoad.LoadData();
-            //PlayerStats.Instance.PlayerStatInit(playData);
         }
 
         public void NewGame()
@@ -57,7 +41,7 @@ namespace Yoon
 
             //게임 데이터 초기화
             saveLoadManager.DeleteAllSaveFiles();
-            //PlayerStats.Instance.PlayerStatInit(null);        //
+            //PlayerStats.Instance.PlayerStatInit(null);
 
             fader.FadeOut(loadToScene);
         }
@@ -78,7 +62,7 @@ namespace Yoon
         //크레딧 UI 실행
         private void ShowCredit()
         {
-            Debug.Log("ShowCredit");            //
+            Debug.Log("ShowCredit");
 
             mainMenuUI.SetActive(false);
             creditUI.SetActive(true);
