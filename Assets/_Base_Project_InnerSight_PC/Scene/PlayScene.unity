@@ -477,6 +477,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d2f29c1358a786649b5646d96e39005f, type: 2}
     - target: {fileID: 8450958050034000045, guid: b3c94ea10235b68479156c40c192b64f, type: 3}
+      propertyPath: startPlayerData.atkSpeed_Start
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450958050034000045, guid: b3c94ea10235b68479156c40c192b64f, type: 3}
       propertyPath: startPlayerData.moveSpeed_Start
       value: 7
       objectReference: {fileID: 0}
@@ -841,10 +845,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageObject:
   - {fileID: 1389252411443906826, guid: 85a94be231398794d91a53e120dbd84b, type: 3}
-  - {fileID: 8174311245377369171, guid: de00f5bc456d925449a1783495b0b499, type: 3}
   - {fileID: 3203969655250950944, guid: e5d0ca6ff2eec5f48b35f89baaabafc3, type: 3}
   - {fileID: 8174311245377369171, guid: 9be181b300b0830439236abc262275d3, type: 3}
   - {fileID: 8174311245377369171, guid: f3a82ec1da56df34cbf80445bdcf0ce8, type: 3}
+  - {fileID: 8174311245377369171, guid: de00f5bc456d925449a1783495b0b499, type: 3}
   - {fileID: 1109194272584283807, guid: 40695b36fa1dad0428d06e13e019aeec, type: 3}
   - {fileID: 5297717256532951313, guid: 3a5f0e41353f34f4d9abd722f3afa9e3, type: 3}
   - {fileID: 8044662757036274584, guid: b421343f04c43d349a59dc85e663454a, type: 3}
@@ -3064,9 +3068,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 80730884137161062, guid: aaae8b6631773b14aae9734ef5211cd8, type: 3}
+      propertyPath: animationName
+      value: StaffSwish03
+      objectReference: {fileID: 0}
+    - target: {fileID: 545398250561021472, guid: aaae8b6631773b14aae9734ef5211cd8, type: 3}
+      propertyPath: animationName
+      value: StaffSwish01
+      objectReference: {fileID: 0}
     - target: {fileID: 1007347813077829552, guid: aaae8b6631773b14aae9734ef5211cd8, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3414033160135752129, guid: aaae8b6631773b14aae9734ef5211cd8, type: 3}
+      propertyPath: animationName
+      value: StaffSwish04
       objectReference: {fileID: 0}
     - target: {fileID: 4492338660841232183, guid: aaae8b6631773b14aae9734ef5211cd8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3107,6 +3123,10 @@ PrefabInstance:
     - target: {fileID: 4492338660841232183, guid: aaae8b6631773b14aae9734ef5211cd8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526186631430933511, guid: aaae8b6631773b14aae9734ef5211cd8, type: 3}
+      propertyPath: animationName
+      value: StaffSwish02
       objectReference: {fileID: 0}
     - target: {fileID: 5703791084906804051, guid: aaae8b6631773b14aae9734ef5211cd8, type: 3}
       propertyPath: skillRange_Cube

@@ -1,3 +1,4 @@
+using Noah;
 using UnityEngine;
 
 namespace Seti
@@ -16,6 +17,14 @@ namespace Seti
 
             if (TryGetComponent<Damagable>(out var damagable))
                 damagable.OnDeath += ReviveInvoke;
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            StageManager.Instance.stageStartEvent += PlayerDisable;
+            StageManager.Instance.stageEndEvent += PlayerEnable;
         }
         #endregion
 
@@ -50,6 +59,8 @@ namespace Seti
         }
 
         // 플레이어 제어권 여부
+        private void PlayerEnable() => PlayerSetActive(true);
+        private void PlayerDisable() => PlayerSetActive(false);
         public void PlayerSetActive(bool inAction)
         {
             this.inAction = inAction;

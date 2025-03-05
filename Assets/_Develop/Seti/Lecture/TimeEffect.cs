@@ -12,6 +12,8 @@ namespace Seti
         #region Variables
         //public Light weaponLight;
         private Animation m_Animation;
+        [SerializeField]
+        private string animationName;
         #endregion
 
         // 라이프 사이클
@@ -36,6 +38,7 @@ namespace Seti
 
             if (m_Animation != null)
             {
+                m_Animation[animationName].speed = InitializeManager.Instance.Player.Rate_Attack / 10f;
                 m_Animation.Play();
 
                 // 이펙트 초기화
@@ -52,7 +55,7 @@ namespace Seti
             Condition_Player condition = player.GetComponent<Condition_Player>();
 
             float timeStamp = Time.time;
-            while (timeStamp + m_Animation.clip.length > Time.time)
+            while (timeStamp + (m_Animation.clip.length / (InitializeManager.Instance.Player.Rate_Attack / 10f)) > Time.time)
             {
                 if (condition.IsDash)
                     break;
