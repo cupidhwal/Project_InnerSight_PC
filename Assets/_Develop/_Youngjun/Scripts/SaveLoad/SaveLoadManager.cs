@@ -123,6 +123,22 @@ namespace Noah
                 Debug.Log("세이브 데이터가 없습니다");     
             }
         }
+
+        public void EmptyData(GameObject _object)
+        {
+            if (dataGroupDic.TryGetValue(playerStatsSavePath, out bool value))
+            {
+                _object.SetActive(false);
+
+                Debug.Log($"{playerStatsSavePath} Value: {value}");
+            }
+            else
+            {
+                Debug.Log("Key not found!");
+            }
+
+        }
+
         public void LoadAll()
         {
             LoadData(playerStatsSavePath, ref playerStats);
