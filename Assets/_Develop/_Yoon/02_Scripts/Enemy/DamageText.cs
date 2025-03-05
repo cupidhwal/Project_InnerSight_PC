@@ -1,7 +1,8 @@
 using UnityEngine;
 using Seti;
 using static Seti.Damagable;
-using Noah;
+using System;
+//using Noah;
 
 namespace Yoon
 {
@@ -23,7 +24,7 @@ namespace Yoon
 
 
         // 데미지를 받은 경우 호출되는 메서드
-        public void OnTakeDamage(DamageMessage data)
+        public  void OnTakeDamage(DamageMessage data)
         {
             //DamageAmount(data);    // 데미지 계산 및 출력
 
@@ -49,7 +50,7 @@ namespace Yoon
             {
                 // DamageText 프리팹 생성
                 GameObject damageTextInstance = Instantiate(damageTextPrefab, fightWorldCanvas);
-
+                
                 // DamageText 위치 설정 (적 머리 위)
                 damageTextInstance.transform.position = transform.position + new Vector3(0, 2f, 0);
 
@@ -64,6 +65,27 @@ namespace Yoon
                 }
 
             }
+            if (damageTextPrefab == null)
+            {
+                Debug.LogError("🚨 damageTextPrefab이 연결되지 않았습니다!");
+                return;
+            }
+
+            if (fightWorldCanvas == null)
+            {
+                Debug.LogError("🚨 fightWorldCanvas가 설정되지 않았습니다!");
+                return;
+            }
+
+            // 플레이어가 존재하는지 확인
+            if (player == null)
+            {
+                Debug.LogError("🚨 플레이어 객체가 설정되지 않았습니다!");
+                return;
+            }
+
+
+
 
         }
     }

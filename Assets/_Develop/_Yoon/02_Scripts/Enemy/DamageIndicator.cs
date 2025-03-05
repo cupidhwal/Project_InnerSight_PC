@@ -1,7 +1,7 @@
     using UnityEngine;
     using TMPro;
 using System.Collections;
-    using Seti;
+    //using Seti;
 
 namespace Yoon
 {
