@@ -29,6 +29,8 @@ namespace Seti
 
         IEnumerator Fade()
         {
+            DataManager.Instance.UIManager.dialogueUI.OnZoom = true;
+
             // Set
             Image fadeImage = StoryManager.Instance.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
             if (activeFlag == ActiveFlag.Out)
@@ -65,6 +67,8 @@ namespace Seti
             // End
             if (activeFlag == ActiveFlag.In)
                 fadeImage.gameObject.SetActive(false);
+
+            DataManager.Instance.UIManager.dialogueUI.OnZoom = false;
             yield break;
         }
     }

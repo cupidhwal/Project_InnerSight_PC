@@ -37,7 +37,7 @@ namespace Seti
         // 메서드
         void LifeChange()
         {
-            if (DataManager.Instance.deathCount >= deathCount)
+            if (SaveLoadManager.Instance.scenarioSaveData.deathCount >= deathCount)
             {
                 formAlive.SetActive(false);
                 formDead.SetActive(true);
