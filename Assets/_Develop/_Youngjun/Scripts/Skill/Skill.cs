@@ -58,6 +58,8 @@ namespace Noah
                 if (attackBehaviour is Attack attack)
                 {
                     attack.OnSlash(_typeNum);
+
+                    _player.GetComponent<Actor>().Condition.AttackPoint = RayManager.Instance.RayToScreen();
                 }
             }
         }
