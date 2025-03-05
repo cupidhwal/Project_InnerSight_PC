@@ -38,13 +38,15 @@ namespace Seti
 
         private void ReviveInvoke()
         {
-            Invoke("Revive", 1);
+            Invoke("Revive", 7);
         }
 
         public void Revive()
         {
             IsDead = false;
             inAction = true;
+
+            actor.Controller_Animator.Animator.Rebind();
         }
 
         public override void Initialize()
