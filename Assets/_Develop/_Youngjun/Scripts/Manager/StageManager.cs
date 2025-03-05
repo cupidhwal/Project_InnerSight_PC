@@ -28,14 +28,14 @@ namespace Noah
         private Transform enemyPar;
         [SerializeField] private List<GameObject> enemys = new List<GameObject>();
 
-        public int testStageChange;
-
         // 히든 스테이지
         public GameObject hiddenStage;
         private GameObject hiddenPotal;
         public Vector3 playerPos;
 
         private bool isHidden = false;
+
+        public GameObject gameOverUI;
 
         public bool IsHidden
         {
@@ -65,7 +65,7 @@ namespace Noah
 
         IEnumerator ResetStage()
         {
-            SetCurrentStage(testStageChange);
+            SetCurrentStage();
 
             yield return new WaitForSeconds(0.1f);
 
@@ -187,22 +187,9 @@ namespace Noah
             // 테스트
             //NewStage();
 
+            gameOverUI.SetActive(true);
+
             SceneFade.instance.FadeOut(SceneManager.GetActiveScene().name, 5f);
-        }
-
-        // 테스트용
-        void TestStageChage()
-        {
-            player.GetComponent<Condition_Player>().PlayerSetActive(true);
-            player.GetComponent<NavMeshAgent>().enabled = true;
-            player.GetComponent<PlayerUseSkill>().enabled = true;
-            player.GetComponent<Rigidbody>().useGravity = true;
-
-            if (currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>() != null)
-            {
-                currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = true;
-            }
-
         }
 
         #region Test
