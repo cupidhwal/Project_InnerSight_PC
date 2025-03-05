@@ -71,8 +71,6 @@ namespace Noah
 
             GetCurrentStage();
 
-            TestStageChage();
-
             StoryManager.Instance.ReadyComposition();
         }
 
