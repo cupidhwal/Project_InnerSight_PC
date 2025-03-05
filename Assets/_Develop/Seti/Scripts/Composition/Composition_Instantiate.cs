@@ -11,18 +11,20 @@ namespace Seti
         [SerializeField]
         GameObject targetPrefab;
         [SerializeField]
+        Vector3 targetPosition;
+        [SerializeField]
         float delayExcute = 1f;
 
-        public override void Execute(GameObject obj)
+        public override void Execute(GameObject _)
         {
-            StoryManager.Instance.CorExcutor(InstantiateCor(obj, delayExcute));
+            StoryManager.Instance.CorExcutor(InstantiateCor(delayExcute));
         }
 
         // 반복기
-        IEnumerator InstantiateCor(GameObject obj, float delayExcute)
+        IEnumerator InstantiateCor(float delayExcute)
         {
             yield return new WaitForSeconds(delayExcute);
-            Instantiate(targetPrefab, obj.transform.position, obj.transform.rotation);
+            Instantiate(targetPrefab, targetPosition, Quaternion.Euler(new(0f, 90f, 0f)));
         }
     }
 }

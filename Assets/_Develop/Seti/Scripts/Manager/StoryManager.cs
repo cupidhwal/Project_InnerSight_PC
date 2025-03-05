@@ -87,9 +87,29 @@ namespace Seti
         public void ReadyComposition()
         {
             // 마을 포탈
-            GameObject portals = StageManager.Instance.CurrentStage.transform.GetChild(0).GetChild(0).gameObject;
-            if (DataManager.Instance.deathCount > 0)
-                DisableComposition("Stage000", 1, portals);
+            GameObject portals = StageManager.Instance.CurrentStage.transform.GetChild(0).gameObject;
+            switch (DataManager.Instance.deathCount)
+            {
+                case 1:
+                    DisableComposition("Stage000", 1, portals);
+                    break;
+
+                case 2:
+                    DisableComposition("Stage000", 2, portals);
+                    break;
+
+                case 3:
+                    DisableComposition("Stage000", 3, portals);
+                    break;
+
+                case 4:
+                    DisableComposition("Stage000", 4, portals);
+                    break;
+
+                case 5:
+                    DisableComposition("Stage000", 5, portals);
+                    break;
+            }
 
             // 미니맵
             GameObject miniMap = FindAnyObjectByType<Mini_Map>().gameObject;
@@ -121,11 +141,18 @@ namespace Seti
 
                 case "Stage000":
                     SetDialogue(1);
-                    if (DataManager.Instance.deathCount > 0)
+                    DialogueData townData = DataManager.Instance.GetDialogData();
+                    switch (DataManager.Instance.deathCount)
                     {
-                        DialogueData townData = DataManager.Instance.GetDialogData();
-                        if (townData != null && !townData.CheckSeens[0])
-                            OpenDialogue(0);
+                        case 1:
+                            if (townData != null && !townData.CheckSeens[0])
+                                OpenDialogue(0);
+                            break;
+
+                        case 5:
+                            if (townData != null && !townData.CheckSeens[5])
+                                OpenDialogue(5);
+                            break;
                     }
                     break;
 
