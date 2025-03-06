@@ -44,9 +44,10 @@ namespace JungBin
         [Header("2페이즈 공격 패턴")]
         [SerializeField] private GameObject spikeAttackPhase2Prefab;
         [SerializeField] private GameObject spikeWallPrefab;
-        
-        
-        private LazerAttack lazerAttack;
+        [SerializeField] private float spikeWallDuration = 5f;
+        [SerializeField] private float spikeAngle;
+
+        [SerializeField] private LaserParticleSystem laserParticleSystem;
 
 
         private int lastAttack = -1;
@@ -94,17 +95,13 @@ namespace JungBin
             }
             animator = GetComponent<Animator>();
             navMeshAgent = GetComponent<NavMeshAgent>();
-
-            lazerAttack = GetComponentInChildren<LazerAttack>(); // 자식 오브젝트에서 가져오기
-            if (lazerAttack == null)
-            {
-                Debug.LogError("🚨 LazerAttack 스크립트가 없습니다! LazerAttack이 포함된 오브젝트를 확인하세요.");
-            }
         }
 
         // Update is called once per frame
         void Update()
         {
+            if (animator.GetBool("IsDeath")) return;
+
             Vector3 direction = player.position - transform.position;
             float distance = direction.magnitude;
 
@@ -115,7 +112,7 @@ namespace JungBin
                 RotateTowardsPlayer(direction);
             }
 
-            if (HasAnimatorParameter(isFar))
+            if (HasAnimatorParameterManager(isFar))
             {
                 ManageDistanceToPlayer(distance);
             }
@@ -147,7 +144,7 @@ namespace JungBin
         }
 
         // 🎯 특정 애니메이션 파라미터가 존재하는지 확인하는 함수
-        private bool HasAnimatorParameter(string paramName)
+        private bool HasAnimatorParameterManager(string paramName)
         {
             if (animator == null)
             {
@@ -371,33 +368,43 @@ namespace JungBin
         #region Phase 2 공격 패턴
         public void Phase2SpawnSpike()
         {
-            // `spikeSpawnPoint`의 정면 방향을 그대로 반영하여 회전값 적용
-            Quaternion rotation = spikeSpawnPoint.rotation;
+            /*// `spikeSpawnPoint`의 정면 방향을 그대로 반영하여 회전값 적용
+            Quaternion rotation = spikeSpawnPoint.rotation;*/
 
             // `spikeSpawnPoint`의 위치에서 스파이크 프리팹 생성
-            GameObject spikePrefab = Instantiate(spikeAttackPhase2Prefab, spikeSpawnPoint.position, rotation);
 
-            // 4초 후 오브젝트 삭제
-            Destroy(spikePrefab, 4f);
+            float[] angles = { -spikeAngle, 0f, spikeAngle }; // 3개의 각도 설정
+
+            for (int i = 0; i < 3; i++)
+            {
+                Quaternion rotation = Quaternion.Euler(0, angles[i], 0) * spikeSpawnPoint.rotation;
+                GameObject spikePrefab = Instantiate(spikeAttackPhase2Prefab, spikeSpawnPoint.position, rotation);
+
+                Destroy(spikePrefab, 4f);
+            }
         }
 
-        public void SpawnSpikeWall()
+        public void Phase2SpawnSpikeWall()
         {
             // `spikeSpawnPoint`의 위치에서 스파이크 프리팹 생성
-            GameObject spikePrefab = Instantiate(spikeWallPrefab, spikeSpawnPoint.position, Quaternion.identity);
+            
+            GameObject spikeWall = Instantiate(spikeWallPrefab, player.position, Quaternion.identity);
 
             // 4초 후 오브젝트 삭제
-            Destroy(spikePrefab, 15f);
+            Destroy(spikeWall, spikeWallDuration);
         }
 
         // 🎯 보스가 특정 패턴에서 레이저 발사를 실행
-        public void StartLaser()
+        public void Phase2StartLaser()
         {
-            Debug.Log(lazerAttack);
-            Debug.Log(lazerAttack.IsFiring);
-            if (lazerAttack != null && !lazerAttack.IsFiring)
+            /*if (lazerAttack != null && !lazerAttack.IsFiring)
             {
                 lazerAttack.FireLaser();
+            }*/
+
+            if(laserParticleSystem != null)
+            {
+                laserParticleSystem.FireLaser();
             }
         }
 

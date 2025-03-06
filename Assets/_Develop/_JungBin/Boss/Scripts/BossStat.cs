@@ -26,11 +26,12 @@ namespace JungBin
         [SerializeField] private CapsuleCollider capsuleCollider;
         [SerializeField] private float fadeDuration = 2f; // 서서히 사라지는 시간
         [SerializeField] private GameObject bossHealthBarUI;
-        [SerializeField] private Material bossMaterial;
-        private Color originalColor;
+        [SerializeField] private Material[] bossMaterials; // 여러 개의 머티리얼 관리
+        private Color[] originalColors; // 머티리얼 초기 색상 저장
         [SerializeField] private GameObject berserkEffect;
-        [SerializeField] private GameObject smokeParticle;
+        [SerializeField] private GameObject smokeParticlePrefab;
         [SerializeField] private Material smokeMaterial;
+        [SerializeField] private BossStageManager bossStageManager;
 
         private Animator animator; // 보스 애니메이션
         private bool isBerserk = false; // 버서커 모드 여부
@@ -40,6 +41,7 @@ namespace JungBin
         private Damagable damagable; // Damagable 참조
         [SerializeField] private SecondBossConnect secondBossConnect;
         [SerializeField] private float smokeFadeDuration = 2f; // 서서히 사라지는 시간
+        [SerializeField] private Transform slashSpawnPoint;
 
         // Events
         public UnityAction OnDeath; // 보스가 죽었을 때
@@ -52,48 +54,33 @@ namespace JungBin
 
         private void Start()
         {
-            // 초기화
+                       // 초기화
             animator = GetComponent<Animator>();
             damagable = GetComponent<Damagable>();
             
 
             if (damagable != null)
             {
-                // Damagable 초기화
+                            // Damagable 초기화
                 damagable.OnDeath += HandleDeath;
                 damagable.OnReceiveDamage += HandleReceiveDamage;
             }
 
-            originalColor = bossMaterial.color;
+                       // 머티리얼 초기 색상 저장
+            originalColors = new Color[bossMaterials.Length];
+            for (int i = 0; i < bossMaterials.Length; i++)
+            {
+                originalColors[i] = bossMaterials[i].color;
+            }
 
             OnBecomeVulnerable += HandleBecomeVulnerable;
 
             ResetHealth();
             OnDeath += SpawnRelic;
             OnDeath += OnBossDeath;
-
-            // ✅ secondBossConnect가 인스펙터에서 할당되지 않았다면, 부모나 자식에서 자동 찾기
-            if (secondBossConnect == null)
-            {
-                secondBossConnect = GetComponentInChildren<SecondBossConnect>(); // 🔥 자식에서 찾기
-                if (secondBossConnect == null)
-                {
-                    secondBossConnect = transform.parent?.GetComponentInChildren<SecondBossConnect>(); // 🔥 부모에서 찾기
-                }
-
-                // 그래도 못 찾으면 경고 출력
-                if (secondBossConnect == null)
-                {
-                    Debug.LogError("🚨 secondBossConnect가 NULL입니다! Inspector에서 직접 할당하세요.");
-                }
-                else
-                {
-                    Debug.Log($"✅ secondBossConnect 자동 할당 완료: {secondBossConnect.gameObject.name}");
-                }
-            }
         }
 
-        // 🎯 특정 애니메이션 파라미터가 존재하는지 확인하는 함수
+                  // 🎯 특정 애니메이션 파라미터가 존재하는지 확인하는 함수
         private bool HasAnimatorParameter(string paramName)
         {
             if (animator == null)
@@ -114,7 +101,7 @@ namespace JungBin
 
         private void Update()
         {
-            // 무적 상태 타이머 처리
+                       // 무적 상태 타이머 처리
             if (isInvulnerable)
             {
                 timeSinceLastHit += Time.deltaTime;
@@ -147,7 +134,7 @@ namespace JungBin
                 animator.SetBool("IsBerserk", true);
                 animator.SetTrigger("Berserk");
             }
-
+/*
             if (HasAnimatorParameter("IsWall"))
             {
                 animator.SetBool("IsWall", false);
@@ -156,7 +143,7 @@ namespace JungBin
             if (HasAnimatorParameter("IsPlayer"))
             {
                 animator.SetBool("IsPlayer", false);
-            }
+            }*/
 
             Debug.Log("🔥 버서커 모드로 전환됨: 무적 상태 활성화");
             berserkEffect.SetActive(true);
@@ -202,15 +189,14 @@ namespace JungBin
                 elapsedTime += Time.deltaTime;
                 float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
 
-                if (bossMaterial != null)
+                foreach (var material in bossMaterials)
                 {
-                    Color newColor = bossMaterial.color;
-                    newColor.a = alpha;
-                    bossMaterial.color = newColor;
-                }
-                else
-                {
-                    Debug.LogWarning("⚠️ bossMaterial이 NULL이므로 페이드 아웃을 적용할 수 없습니다.");
+                    if (material != null && material != bossMaterials[7])
+                    {
+                        Color newColor = material.color;
+                        newColor.a = alpha;
+                        material.color = newColor;
+                    }
                 }
 
                 yield return null;
@@ -250,9 +236,29 @@ namespace JungBin
                 animator.SetBool("IsBerserk", false);
             }
             animator.SetBool("IsDeath", false);
-            Color newColor = originalColor;
-            newColor.a = 1f;
-            bossMaterial.color = newColor;
+
+                        // 머티리얼 색상 초기화
+            for (int i = 0; i < bossMaterials.Length; i++)
+            {
+                if (i <= 6)
+                {
+                    if (bossMaterials[i] != null)
+                    {
+                        Color newColor = originalColors[i];
+                        newColor.a = 1f;
+                        bossMaterials[i].color = newColor;
+                    }
+                }
+                else
+                {
+                    if (bossMaterials[i] != null)
+                    {
+                        Color newColor = originalColors[i];
+                        newColor.a = 0.5f;
+                        bossMaterials[i].color = newColor;
+                    }
+                }
+            }
 
         }
         
@@ -267,7 +273,7 @@ namespace JungBin
             yield return new WaitForSeconds(4f);
 
 
-            GameObject smokeObj = Instantiate(smokeParticle, transform.position, Quaternion.Euler(-90, 0, 0));
+            GameObject smokeObj = Instantiate(smokeParticlePrefab, slashSpawnPoint.position, Quaternion.Euler(-90, 0, 0));
             Debug.Log("☁️ 안개 소환");
 
             yield return new WaitForSeconds(2f);
@@ -279,7 +285,6 @@ namespace JungBin
 
             if (secondBossConnect == null)
             {
-                Debug.LogError("🚨 secondBossConnect가 NULL입니다. PhaseChange 실행을 중단합니다.");
                 yield break;
             }
 
@@ -294,10 +299,14 @@ namespace JungBin
             yield return new WaitForSeconds(1f);
 
             StartCoroutine(SmokeFadeOut());
+            //ParticleSystem smokeParticle = smokeObj.GetComponent<ParticleSystem>();
+            //smokeParticle.Stop();
 
-            yield return new WaitForSeconds(1f);
-            Destroy(gameObject);
+            yield return new WaitForSeconds(3f);
+
             Destroy(smokeObj);
+            Destroy(gameObject);
+
             Debug.Log("☁️ 안개 삭제 완료");
         }
 
@@ -308,7 +317,7 @@ namespace JungBin
             while (elapsedTime < smokeFadeDuration)
             {
                 elapsedTime += Time.deltaTime;
-                float alpha = Mathf.Lerp(1f, 0f, elapsedTime / smokeFadeDuration);
+                float alpha = Mathf.Lerp(0.5f, 0f, elapsedTime / smokeFadeDuration);
 
                 if (smokeMaterial != null)
                 {

@@ -18,6 +18,12 @@ public class SecondBossConnect : MonoBehaviour
         Phase2.transform.position = Phase1.transform.position;
         Phase2.SetActive(true);
         Debug.Log("Phase2 보스 등장");
+        Invoke("PhaseChangeVoid", 3.5f);
+    }
+
+    private void PhaseChangeVoid()
+    {
+        bossStageManager.EnterBossStage(1);
     }
 
 

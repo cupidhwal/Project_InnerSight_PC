@@ -7012,9 +7012,9 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.11666667
+  m_VoxelSize: 0.1
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: be68002ad717c894fa46326f3028d70c, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: ca434d811d4d88f43bb42ff978022c1d, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &6463849608080594347
 MonoBehaviour:
@@ -9185,8 +9185,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1273880280952143531}
   - {fileID: 38401133702475661}
+  - {fileID: 1273880280952143531}
   m_Father: {fileID: 7851146928910542958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1787989500547849221
@@ -45257,6 +45257,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7893218987487754691, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
+      propertyPath: bossStageManager
+      value: 
+      objectReference: {fileID: 4896591536618175259}
+    - target: {fileID: 7893218987487754691, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
       propertyPath: secondBossConnect
       value: 
       objectReference: {fileID: 8517127945979876064}
@@ -69962,6 +69966,10 @@ PrefabInstance:
       propertyPath: maxHitPoints
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 6351667812318926093, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: turnSpeed
+      value: 75
+      objectReference: {fileID: 0}
     - target: {fileID: 6498684032998956464, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
       propertyPath: detectionRange
       value: 5
@@ -70021,6 +70029,10 @@ PrefabInstance:
     - target: {fileID: 8628149810256165013, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8766506335083947029, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: damageCooldown
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
