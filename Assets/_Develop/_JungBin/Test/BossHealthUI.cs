@@ -19,8 +19,8 @@ namespace JungBin
 
                 // 보스 이름 및 체력 UI 설정
                 bossNameText.text = bossStat.BossName; // 보스 이름 표시
-                healthSlider.maxValue = bossStat.MaxHealth;
-                healthSlider.value = bossStat.Health;
+/*                healthSlider.maxValue = bossStat.MaxHealth;
+                healthSlider.value = bossStat.Health;*/
 
             }
             else
@@ -31,11 +31,11 @@ namespace JungBin
 
         private void Update()
         {
-            if (currentBossStat != null && healthSlider != null)
+            /*if (currentBossStat != null && healthSlider != null)
             {
                 // 현재 보스 체력에 따라 슬라이더 업데이트
                 healthSlider.value = currentBossStat.Health;
-            }
+            }*/
         }
     }
 }

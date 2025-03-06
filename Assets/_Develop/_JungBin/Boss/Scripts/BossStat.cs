@@ -74,8 +74,8 @@ namespace JungBin
             }
 
             OnBecomeVulnerable += HandleBecomeVulnerable;
-
             ResetHealth();
+
             OnDeath += SpawnRelic;
             OnDeath += OnBossDeath;
         }
@@ -158,6 +158,7 @@ namespace JungBin
             animator.SetBool("IsDeath", true);
             animator.SetTrigger("Death");
             OnDeath?.Invoke(); // 죽음 이벤트 호출
+            capsuleCollider.enabled = false;
             Debug.Log("보스가 사망했습니다.");
         }
 
