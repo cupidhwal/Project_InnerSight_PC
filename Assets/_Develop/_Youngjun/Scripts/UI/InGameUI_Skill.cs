@@ -43,6 +43,7 @@ namespace Noah
         public BloodSycthe bloodSycthe;
         public DoubleSlash doubleSlash;
         public MultipleSlash multipleSlash;
+        public IceAge iceAge;
 
         private void Awake()
         {
@@ -94,6 +95,7 @@ namespace Noah
             skills.Add(bloodSycthe);
             skills.Add(doubleSlash);
             skills.Add(multipleSlash);
+            skills.Add(iceAge);
         }
 
         // 만약 x 키에 데이터가 있으면 c 키에 스킬 넣기

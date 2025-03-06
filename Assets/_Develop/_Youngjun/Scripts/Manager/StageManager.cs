@@ -195,9 +195,14 @@ namespace Noah
             // 테스트
             //NewStage();
 
-            gameOverUI.SetActive(true);
+            Invoke("SetActiveDelay", 1f);
 
             SceneFade.instance.FadeOut(SceneManager.GetActiveScene().name, 5f);
+        }
+
+        void SetActiveDelay()
+        {
+            gameOverUI.SetActive(true);
         }
 
         #region Test
