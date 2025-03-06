@@ -1,4 +1,5 @@
 using UnityEngine;
+using Noah;
 
 namespace Seti
 {
@@ -27,7 +28,7 @@ namespace Seti
             {
                 if (eventObject)
                 {
-                    Instantiate(eventObject, transform.position, Quaternion.identity);
+                    Instantiate(eventObject, transform.position, Quaternion.identity, transform);
                 }
                 StoryManager.Instance.OpenDialogue(dialogueNumber);
 
