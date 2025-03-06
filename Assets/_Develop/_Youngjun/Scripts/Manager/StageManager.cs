@@ -92,6 +92,11 @@ namespace Noah
             }
 
             Instantiate(stageObject[curStage], currentStagePar);
+
+            player.GetComponent<Condition_Player>().PlayerSetActive(false);
+            player.GetComponent<NavMeshAgent>().enabled = false;
+            player.GetComponent<PlayerUseSkill>().enabled = false;
+            player.GetComponent<Rigidbody>().useGravity = false;
         }
 
         void GetCurrentStage()
@@ -134,12 +139,18 @@ namespace Noah
                 currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = false;
             }
 
-            player.transform.position = spawnPoint.position;
-
-
-            if (currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>() != null)
+            if (curStage == 0 || curStage == 1)
             {
-                currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = true;
+                player.transform.position = spawnPoint.position;
+
+                if (currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>() != null)
+                {
+                    currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = true;
+                }
+
+                player.GetComponent<NavMeshAgent>().enabled = true;
+                player.GetComponent<PlayerUseSkill>().enabled = true;
+                player.GetComponent<Rigidbody>().useGravity = true;
             }
 
             stageEndEvent?.Invoke();
@@ -153,6 +164,8 @@ namespace Noah
             {
                 currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = false;
             }
+
+
         }
 
         public void NextStage()
