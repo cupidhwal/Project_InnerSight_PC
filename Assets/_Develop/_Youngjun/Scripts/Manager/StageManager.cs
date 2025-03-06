@@ -140,6 +140,14 @@ namespace Noah
                 currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = false;
             }
 
+            player.transform.position = spawnPoint.position;
+
+
+            if (currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>() != null)
+            {
+                currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = true;
+            }
+
             stageEndEvent?.Invoke();
         }
 
