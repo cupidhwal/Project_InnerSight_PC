@@ -25,8 +25,6 @@ namespace Seti
 
         public void OpenDialogue()
         {
-            InitializeManager.Instance.Player.Condition.Action(false);
-
             int index = -1;
             float delay = 0;
             DialogueData dialogueData = DataManager.Instance.GetDialogData();
@@ -59,7 +57,10 @@ namespace Seti
 
             // 실행 가능한 대화가 존재하면 출력
             if (index >= 0)
+            {
+                InitializeManager.Instance.Player.Condition.Action(false);
                 StartCoroutine(DialogueCor(index, delay));
+            }
         }
 
         IEnumerator DialogueCor(int dialogueNumber, float delay)

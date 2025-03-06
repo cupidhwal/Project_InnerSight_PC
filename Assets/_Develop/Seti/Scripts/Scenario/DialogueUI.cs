@@ -53,6 +53,8 @@ namespace Seti
         //초기화
         private void Initialize()
         {
+            condition = InitializeManager.Instance.Player.Condition as Condition_Player;
+
             dialogues.Clear();
 
             npcImage.SetActive(false);
@@ -62,6 +64,7 @@ namespace Seti
             nextButton.gameObject.SetActive(false);
 
             OnDialogueEnd += Seen;
+            OnDialogueEnd += condition.EnablePlayer;
         }
 
         //대화 시작하기

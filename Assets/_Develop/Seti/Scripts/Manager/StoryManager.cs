@@ -61,6 +61,7 @@ namespace Seti
                 return false;
 
             uiManager.OpenDialogueUI(index);
+            condition_Player.PlayerSetActive(false);
             return true;
         }
         public void NextDialogue()

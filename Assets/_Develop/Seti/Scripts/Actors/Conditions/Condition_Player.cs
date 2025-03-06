@@ -32,11 +32,11 @@ namespace Seti
 
         private void OnDisable()
         {
-            if (StageManager.Instance.stageStartEvent != null)
-                StageManager.Instance.stageStartEvent -= DisablePlayer;
+            //if (StageManager.Instance.stageStartEvent != null)
+            //    StageManager.Instance.stageStartEvent -= DisablePlayer;
 
-            if (StageManager.Instance.stageEndEvent != null)
-                StageManager.Instance.stageEndEvent -= EnablePlayer;
+            //if (StageManager.Instance.stageEndEvent != null)
+            //    StageManager.Instance.stageEndEvent -= EnablePlayer;
         }
         #endregion
 
@@ -73,8 +73,8 @@ namespace Seti
         }
 
         // 플레이어 제어권 여부
-        private void EnablePlayer() => PlayerSetActive(true);
-        private void DisablePlayer() => PlayerSetActive(false);
+        public void EnablePlayer() => PlayerSetActive(true);
+        public void DisablePlayer() => PlayerSetActive(false);
         public void PlayerSetActive(bool inAction)
         {
             this.inAction = inAction;
