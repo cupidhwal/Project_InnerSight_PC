@@ -25,6 +25,8 @@ namespace Seti
 
         public void OpenDialogue()
         {
+            InitializeManager.Instance.Player.Condition.Action(false);
+
             int index = -1;
             float delay = 0;
             DialogueData dialogueData = DataManager.Instance.GetDialogData();

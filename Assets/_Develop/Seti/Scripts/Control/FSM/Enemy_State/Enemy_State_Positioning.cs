@@ -101,6 +101,8 @@ namespace Seti
                 condition.IsPositioning = false;
                 positioningCompleted = true;
                 enemy.Agent.ResetPath();
+
+                context.Actor.Condition.IsMove = false;
             }
         }
         #endregion

@@ -113,6 +113,8 @@ namespace Seti
             inAction = false;
         }
 
+        public void Action(bool inAction) => this.inAction = inAction;
+
         // 명시적 정지
         protected void StopRigidBody()
         {
