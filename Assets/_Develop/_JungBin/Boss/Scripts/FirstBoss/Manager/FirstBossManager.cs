@@ -9,8 +9,20 @@ namespace JungBin
     public class FirstBossManager : MonoBehaviour
     {
         #region Variables
+
+        //공통적인 특징 ========================
         [Header("General Settings")]
         [SerializeField] private float turnSpeed = 30; // 보스의 회전 속도
+
+        private int lastAttack = -1;
+        public static bool isAttack { get; set; } = false;
+
+        [SerializeField] private Transform player;
+        [SerializeField] private Animator animator;
+        private NavMeshAgent navMeshAgent;
+        //==================================
+
+
         [SerializeField] private Transform detectedObj; // 돌진 시 켜지는 레이의 시작점
 
         [Header("Attack Settings")]
@@ -30,12 +42,6 @@ namespace JungBin
         [SerializeField] private float detectionRange = 8f;
         [SerializeField] private float detectionAngle = 30f;
 
-        private int lastAttack = -1;
-        public static bool isAttack { get; set; } = false;
-
-        [SerializeField] private Transform player;
-        [SerializeField] private Animator animator;
-        private NavMeshAgent navMeshAgent;
         #endregion
 
         private void Start()
