@@ -92,12 +92,6 @@ namespace Noah
             }
 
             Instantiate(stageObject[curStage], currentStagePar);
-
-            // 테스트용
-            player.GetComponent<Condition_Player>().PlayerSetActive(false);
-            player.GetComponent<NavMeshAgent>().enabled = false;
-            player.GetComponent<PlayerUseSkill>().enabled = false;
-            player.GetComponent<Rigidbody>().useGravity = false;
         }
 
         void GetCurrentStage()
@@ -182,21 +176,8 @@ namespace Noah
             StartCoroutine(GoCurrentStage());
         }
 
-        // Test
-        public void NewStage()
-        {
-            player.GetComponent<Condition_Player>().PlayerSetActive(false);
-            player.GetComponent<PlayerUseSkill>().enabled = false;
-            enemys.Clear();
-
-            StartCoroutine(ReStart());
-        }
-
         public void ReStartGame()
         {
-            // 테스트
-            //NewStage();
-
             Invoke("SetActiveDelay", 1f);
 
             SceneFade.instance.FadeOut(SceneManager.GetActiveScene().name, 5f);
@@ -206,56 +187,6 @@ namespace Noah
         {
             gameOverUI.SetActive(true);
         }
-
-        #region Test
-        IEnumerator ReStart()
-        {
-            SceneFade.instance.FadeOut(null);
-
-            yield return new WaitForSeconds(1f);
-
-            player.GetComponent<Rigidbody>().useGravity = false;
-
-            curStage = 0;
-
-            yield return new WaitForSeconds(0.5f);
-
-            Destroy(currentStage);
-
-            Instantiate(stageObject[curStage], currentStagePar);
-
-            yield return new WaitForSeconds(0.5f);
-
-            GetCurrentStage();
-
-            yield return new WaitForSeconds(0.5f);
-
-
-            //player.GetComponent<Condition_Player>().PlayerSetActive(true);
-            player.GetComponent<PlayerUseSkill>().enabled = true;
-
-
-            if (currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>() != null)
-            {
-                currentStage.transform.GetChild(2).GetComponent<NavMeshSurface>().enabled = true;
-            }
-
-            player.GetComponent<NavMeshAgent>().enabled = false;
-
-            player.GetComponent<Damagable>().OnRevive?.Invoke();
-
-            player.transform.position = spawnPoint.position;
-
-            player.GetComponent<Rigidbody>().useGravity = true;
-
-            yield return new WaitForSeconds(0.5f);
-
-            player.GetComponent<NavMeshAgent>().enabled = true;
-
-            SceneFade.instance.FadeIn(null);
-
-        }
-        #endregion
 
         // 일반 스테이지 전환 및 히든 스테이지
         IEnumerator GoNextStage()
