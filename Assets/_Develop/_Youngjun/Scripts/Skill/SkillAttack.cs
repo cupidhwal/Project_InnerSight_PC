@@ -25,7 +25,7 @@ namespace Noah
 
         public float damage;
 
-        [SerializeField] private float ctime = 0.5f;
+        [SerializeField] private float ctime = 0f;
         [SerializeField] private float attackDur = 0.5f;
 
         void HitSkill(Transform enemy)
