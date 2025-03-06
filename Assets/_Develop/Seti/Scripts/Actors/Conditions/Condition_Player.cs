@@ -23,8 +23,8 @@ namespace Seti
         {
             base.Awake();
 
-            StageManager.Instance.stageStartEvent += PlayerDisable;
-            StageManager.Instance.stageEndEvent += PlayerEnable;
+            //StageManager.Instance.stageStartEvent += PlayerDisable;
+            //StageManager.Instance.stageEndEvent += PlayerEnable;
         }
         #endregion
 

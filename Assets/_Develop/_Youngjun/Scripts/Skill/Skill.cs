@@ -197,5 +197,17 @@ namespace Noah
         }
     }
 
+    [Serializable]
+    public class IceAge : Skill<IceAge>
+    {
+        public override void Activate()
+        {
+            isSkillOn = false;
+            Debug.Log(damage + " / " + cooldown);
+
+            ReturnToPool();
+        }
+    }
+
 
 }
