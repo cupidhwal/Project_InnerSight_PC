@@ -12,7 +12,7 @@ namespace JungBin
 
         private Damagable damagable; // Damagable 참조
         [SerializeField] private float targetHealth; // 목표 체력 값
-        [SerializeField] private float lerpSpeed = 0.5f; // 체력 감소 속도
+        [SerializeField] private float lerpSpeed = 0.8f; // 체력 감소 속도
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -45,11 +45,12 @@ namespace JungBin
             {
                 elapsedTime += Time.deltaTime;
                 BossHealthBarSlider.value = Mathf.Lerp(startHealth, endHealth, elapsedTime / lerpSpeed);
+                Debug.Log(BossHealthBarSlider.value);
                 yield return null;
             }
 
             // 최종값을 정확히 설정
-            BossHealthBarSlider.value = endHealth;
+            //BossHealthBarSlider.value = endHealth;
         }
     }
 }

@@ -895,6 +895,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 51.912548
       objectReference: {fileID: 0}
+    - target: {fileID: -5067417469064874575, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -5015215336091119573, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 6.8762355
@@ -1319,6 +1323,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 1.9682659
       objectReference: {fileID: 0}
+    - target: {fileID: 4607668393258877731, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4805772471351093441, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 11.532798
@@ -1406,6 +1414,10 @@ PrefabInstance:
     - target: {fileID: 7633478575550896759, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.046845976
+      objectReference: {fileID: 0}
+    - target: {fileID: 7652042967668528635, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7728264498150516364, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1915,7 +1927,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -2122,7 +2134,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -2223,7 +2235,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -2439,7 +2451,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -2605,6 +2617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossName: "\uD0C0\uC6B0\uB85C\uC2A4"
+  bossType: 0
   maxHealth: 1000
   invulnerabilityTime: 3.5
   bossAttack: 20
@@ -2612,8 +2625,14 @@ MonoBehaviour:
   capsuleCollider: {fileID: 689229898053702461}
   fadeDuration: 5
   bossHealthBarUI: {fileID: 0}
-  bossMaterial: {fileID: 2100000, guid: f776bef17a7d4744e811092cb8cd4e4f, type: 2}
+  bossMaterials: []
   berserkEffect: {fileID: 277228310458481314}
+  smokeParticlePrefab: {fileID: 0}
+  smokeMaterial: {fileID: 0}
+  bossStageManager: {fileID: 0}
+  secondBossConnect: {fileID: 0}
+  smokeFadeDuration: 2
+  slashSpawnPoint: {fileID: 0}
 --- !u!114 &6075225281429976208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2676,7 +2695,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageTextPrefab: {fileID: 9211949316755326926, guid: 9d0558470b8bbae48914eeb5ca8096ba, type: 3}
   fightWorldCanvas: {fileID: 6839284077982887547}
-  player: {fileID: 8759698427550002359, guid: aaae8b6631773b14aae9734ef5211cd8, type: 3}
 --- !u!114 &5662833438431564929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2753,7 +2771,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
