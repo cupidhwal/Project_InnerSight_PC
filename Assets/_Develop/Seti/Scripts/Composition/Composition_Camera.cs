@@ -53,6 +53,7 @@ namespace Seti
 
             // 타겟 지점에서 stayDuration만큼 대기
             yield return new WaitForSeconds(stayDuration);
+            StoryManager.Instance.IsComposition = false;
 
             // 기존 지점으로 카메라 이동
             elapsed = 0f;
@@ -68,7 +69,6 @@ namespace Seti
 
             // 플레이어 타게팅 재설정
             StoryManager.Instance.Cinemachine.Target.TrackingTarget = StoryManager.Instance.Player.transform;
-            StoryManager.Instance.IsComposition = false;
             yield break;
         }
         #endregion

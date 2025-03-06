@@ -45,12 +45,6 @@ namespace Seti
         public bool IsComposition { get; set; } = false;
         #endregion
 
-        // 라이프 사이클
-        private void Start()
-        {
-            StageManager.Instance.stageEndEvent += SwitchCurrentStage;
-        }
-
         // 대화
         private void SetDialogue(int index)
         {
@@ -137,6 +131,8 @@ namespace Seti
         #region Methods
         private void SwitchCurrentStage()
         {
+            if (IsDialogue) return;
+
             StageName = StageManager.Instance.CurrentStage.name.Replace("(Clone)", "").Trim();
             switch (StageName)
             {
@@ -158,6 +154,10 @@ namespace Seti
                         case 5:
                             if (townData != null && !townData.CheckSeens[5])
                                 OpenDialogue(5);
+                            break;
+
+                        default:
+                            condition_Player.PlayerSetActive(true);
                             break;
                     }
                     break;
@@ -200,27 +200,19 @@ namespace Seti
             condition_Player = Player.GetComponent<Condition_Player>();
             Cinemachine = FindAnyObjectByType<CinemachineCamera>();
 
+            StageManager.Instance.stageEndEvent += SwitchCurrentStage;
+
             // 대화 이벤트 관리
             uiManager = DataManager.Instance.UIManager;
-            uiManager.dialogueUI.OnDialogueEnter += OnDisablePlayer;
-            uiManager.dialogueUI.OnDialogueEnd += OnEnablePlayer;
+            uiManager.dialogueUI.OnDialogueEnter += OnDialogue;
+            uiManager.dialogueUI.OnDialogueEnd += OffDialogue;
 
             CurrentDialogue = dialogueList[currentIndex];
         }
 
-        private void OnEnablePlayer()
-        {
-            if (condition_Player == null) return;
-            condition_Player.PlayerSetActive(true);
-            IsDialogue = false;
-        }
+        private void OnDialogue() => IsDialogue = true;
 
-        private void OnDisablePlayer()
-        {
-            if (condition_Player == null) return;
-            condition_Player.PlayerSetActive(false);
-            IsDialogue = true;
-        }
+        private void OffDialogue() => IsDialogue = false;
 
         private void OnValidate()
         {

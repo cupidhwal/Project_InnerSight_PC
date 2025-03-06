@@ -106,7 +106,7 @@ namespace Seti
                                           enemy.MagicRange) &&
                                           hit.transform.GetComponent<Player>();
 
-            return isPlayer;
+            return isPlayer && !enemy.IsObstacle;
         }
         #endregion
     }

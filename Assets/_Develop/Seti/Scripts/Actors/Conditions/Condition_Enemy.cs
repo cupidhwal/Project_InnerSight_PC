@@ -39,8 +39,11 @@ namespace Seti
         protected override void Die()
         {
             base.Die();
+            Invoke(nameof(DisableIcon), 1);
             Destroy(gameObject, destroyDelay);
         }
+
+        private void DisableIcon() => transform.Find("Icon_Enemy").gameObject.SetActive(false);
         #endregion
     }
 }

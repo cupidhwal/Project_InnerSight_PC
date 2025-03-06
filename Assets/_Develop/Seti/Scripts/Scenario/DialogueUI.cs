@@ -32,6 +32,8 @@ namespace Seti
         // 대화 관련
         public UnityAction OnDialogueEnter;
         public UnityAction OnDialogueEnd;
+
+        private Condition_Player condition;
         #endregion
 
         public int CurrentNumber => currentNumber;
@@ -126,6 +128,10 @@ namespace Seti
                 yield return new WaitForSeconds(0.01f);
             }
 
+            while (StoryManager.Instance.IsComposition)
+            {
+                yield return null;
+            }
             nextButton.gameObject.SetActive(true);
 
             yield break;

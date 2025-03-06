@@ -22,9 +22,21 @@ namespace Seti
         protected override void Awake()
         {
             base.Awake();
+        }
 
-            //StageManager.Instance.stageStartEvent += PlayerDisable;
-            //StageManager.Instance.stageEndEvent += PlayerEnable;
+        private void OnEnable()
+        {
+            StageManager.Instance.stageStartEvent += DisablePlayer;
+            StageManager.Instance.stageEndEvent += EnablePlayer;
+        }
+
+        private void OnDisable()
+        {
+            if (StageManager.Instance.stageStartEvent != null)
+                StageManager.Instance.stageStartEvent -= DisablePlayer;
+
+            if (StageManager.Instance.stageEndEvent != null)
+                StageManager.Instance.stageEndEvent -= EnablePlayer;
         }
         #endregion
 
@@ -61,8 +73,8 @@ namespace Seti
         }
 
         // 플레이어 제어권 여부
-        private void PlayerEnable() => PlayerSetActive(true);
-        private void PlayerDisable() => PlayerSetActive(false);
+        private void EnablePlayer() => PlayerSetActive(true);
+        private void DisablePlayer() => PlayerSetActive(false);
         public void PlayerSetActive(bool inAction)
         {
             this.inAction = inAction;
@@ -77,6 +89,8 @@ namespace Seti
                 IsAttack = false;
                 IsMagic = false;
                 IsMove = false;
+                IsDash = false;
+                CanDash = true;
 
                 if (actor.Controller.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
                     if (moveBehaviour is Move move)

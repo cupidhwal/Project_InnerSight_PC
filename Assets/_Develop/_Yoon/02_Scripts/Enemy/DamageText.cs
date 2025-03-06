@@ -13,7 +13,7 @@ namespace Yoon
         public GameObject damageTextPrefab;     // DamageText 프리팹 연결
         public Transform fightWorldCanvas;      // DamageText가 생성될 부모 FightWorldCanvas
 
-        public Player player;
+        private Player player;
         private Damagable damagable;
 
         private void Start()

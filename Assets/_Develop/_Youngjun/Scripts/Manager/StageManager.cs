@@ -163,12 +163,14 @@ namespace Noah
 
         public void NextStage()
         {
-            player.GetComponent<Condition_Player>().PlayerSetActive(false);
+            //player.GetComponent<Condition_Player>().PlayerSetActive(false);
+
+            stageStartEvent?.Invoke();
+
             player.GetComponent<PlayerUseSkill>().enabled = false;
             enemys.Clear();
 
             StartCoroutine(GoNextStage());
-               
         }
 
         public void ReturnCurrentStage()
@@ -229,7 +231,7 @@ namespace Noah
             yield return new WaitForSeconds(0.5f);
 
 
-            player.GetComponent<Condition_Player>().PlayerSetActive(true);
+            //player.GetComponent<Condition_Player>().PlayerSetActive(true);
             player.GetComponent<PlayerUseSkill>().enabled = true;
 
 
@@ -305,7 +307,7 @@ namespace Noah
 
             yield return new WaitForSeconds(0.5f);
 
-            player.GetComponent<Condition_Player>().PlayerSetActive(true);
+            //player.GetComponent<Condition_Player>().PlayerSetActive(true);
             player.GetComponent<PlayerUseSkill>().enabled = true;
 
 
@@ -326,6 +328,7 @@ namespace Noah
 
             SceneFade.instance.FadeIn(null);
 
+            stageEndEvent?.Invoke();
         }
 
         // 히든 던전 빠져나가는 코루틴
