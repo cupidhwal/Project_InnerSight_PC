@@ -40,7 +40,6 @@ namespace JungBin
                 Debug.LogError("Player GameObject is null in BossStageManager!");
             }
 
-            animator = GetComponent<Animator>();
             navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
