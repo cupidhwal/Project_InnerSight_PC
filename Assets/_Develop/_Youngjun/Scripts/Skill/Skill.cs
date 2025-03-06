@@ -51,7 +51,7 @@ namespace Noah
             }
         }
 
-        public virtual void PlayerAnimation(Transform _player, int _typeNum)
+        public virtual void     PlayerAnimation(Transform _player, int _typeNum)
         {
             if (_player.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
             {
@@ -160,18 +160,6 @@ namespace Noah
             Debug.Log(damage + " / " + cooldown);
 
             ReturnToPool();
-
-            GameObject _player = GameObject.FindGameObjectWithTag("Player");
-
-            if (_player != null)
-            {
-                _player.GetComponent<Condition_Player>().PlayerSetActive(false);
-
-                //PlayerAnimation(_player.transform, 0);
-            }
-
-
-            
         }
 
     }
@@ -185,15 +173,6 @@ namespace Noah
             Debug.Log(damage + " / " + cooldown);
 
             ReturnToPool();
-
-            GameObject _player = GameObject.FindGameObjectWithTag("Player");
-
-            if (_player != null)
-            {
-                _player.GetComponent<Condition_Player>().PlayerSetActive(false);
-
-                //PlayerAnimation(_player.transform, 1);
-            }
         }
     }
 

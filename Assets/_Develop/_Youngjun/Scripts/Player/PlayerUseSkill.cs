@@ -102,6 +102,8 @@ namespace Noah
 
                 SkillPosition();
 
+                transform.GetComponent<Condition_Player>().PlayerSetActive(false);
+                
                 setSkill.skillSlots[_index].PlayerAnimation(transform, setSkill.skillSlots[_index].animationNum);
             }
             else if (setSkill.skillSlots[_index].rangeType == SkillRangeType.Nomal)
