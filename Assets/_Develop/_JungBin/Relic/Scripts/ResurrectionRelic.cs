@@ -16,7 +16,7 @@ namespace JungBin
         /// </summary>
         protected virtual void Awake()
         {
-            // 🔹 유물 효과를 중앙 관리 시스템에 등록
+                      // 🔹 유물 효과를 중앙 관리 시스템에 등록
             RelicEffectManager.RegisterEffect(RelicID,
                 () => Player.SetLives(Player.Lives + 1),  // ApplyEffect()
                 () => Player.SetLives(Player.Lives - 1)   // RemoveEffect()

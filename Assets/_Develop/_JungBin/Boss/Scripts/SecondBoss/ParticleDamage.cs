@@ -1,4 +1,5 @@
 using Seti;
+using System.Collections;
 using UnityEngine;
 
 namespace JungBin
@@ -8,6 +9,8 @@ namespace JungBin
     {
         [SerializeField] private string targetTag = "Player"; // 타겟 태그 설정
         [SerializeField] private int bossNumber = 0;
+        private bool canTakeDamage = true; // 데미지 가능 여부
+        [SerializeField] private float damageCooldown = 0.5f; // 데미지 입은 후 쿨타임
 
         private void OnParticleCollision(GameObject other)
         {
@@ -19,7 +22,7 @@ namespace JungBin
                 // 플레이어의 Damagable 컴포넌트 가져오기
                 Damagable playerDamagable = other.GetComponent<Damagable>();
                 Actor actor = other.GetComponent<Actor>();
-                if (playerDamagable != null)
+                if (playerDamagable != null && canTakeDamage)
                 {
                     // 데미지 메시지 생성
                     Damagable.DamageMessage damageMessage = new Damagable.DamageMessage
@@ -35,8 +38,19 @@ namespace JungBin
 
                     // 데미지 적용
                     playerDamagable.TakeDamage(damageMessage);
+
+                    canTakeDamage = false;
+
+                    StartCoroutine(ResetDamageCooldown());
                 }
             }
+        }
+
+        private IEnumerator ResetDamageCooldown()
+        {
+            yield return new WaitForSeconds(damageCooldown);
+            canTakeDamage = true;
+
         }
 
     }
