@@ -9,7 +9,8 @@ namespace JungBin
     public enum BossType
     {
         FirstBoss,
-        SecondBoss
+        SecondBoss,
+        LastBoss
     }
 
     public class BossStat : MonoBehaviour
@@ -33,7 +34,7 @@ namespace JungBin
         [SerializeField] private Material smokeMaterial;
         [SerializeField] private BossStageManager bossStageManager;
 
-        private Animator animator; // 보스 애니메이션
+        [SerializeField] private Animator animator; // 보스 애니메이션
         private bool isBerserk = false; // 버서커 모드 여부
         private bool isInvulnerable = false; // 무적 여부
         private float timeSinceLastHit = 0f; // 무적 시간 관리

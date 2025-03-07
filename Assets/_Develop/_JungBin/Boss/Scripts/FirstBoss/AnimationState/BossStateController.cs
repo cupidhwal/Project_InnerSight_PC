@@ -33,6 +33,13 @@ namespace JungBin
         public bool enterBoolSec;
         public bool exitBoolSec;
 
+        [Header("LastBossManager 인트턴스 설정"), SerializeField]
+        public BossState enterStateLast;
+        public BossState exitStateLast;
+
+        public bool enterBoolLast;
+        public bool exitBoolLast;
+
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
@@ -49,6 +56,11 @@ namespace JungBin
             if (enterStateSec == BossState.Attack)
             {
                 SecondBossManager.isAttack = enterBoolSec;
+            }
+
+            if(enterStateLast == BossState.Attack)
+            {
+                LastBossManager.isAttack = enterBoolLast;
             }
         }
 
@@ -74,6 +86,11 @@ namespace JungBin
             if (exitStateSec == BossState.Attack)
             {
                 SecondBossManager.isAttack = exitBoolSec;
+            }
+
+            if (exitStateLast == BossState.Attack)
+            {
+                SecondBossManager.isAttack = exitBoolLast;
             }
         }
 
