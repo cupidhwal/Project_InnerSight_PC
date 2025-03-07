@@ -7015,7 +7015,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.1
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: c01056887bc36c84784fced030abb3e2, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: a082e28aa83b7fb4881302df8c4b3d33, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &6463849608080594347
 MonoBehaviour:
@@ -47780,10 +47780,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: SecondBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 4836657849115817858, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
+      propertyPath: BossHealthBarSlider
+      value: 
+      objectReference: {fileID: 671144393610848948}
+    - target: {fileID: 7893218987487754691, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
+      propertyPath: relicPrefab
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7893218987487754691, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
       propertyPath: bossHealthBarUI
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7893218987487754691, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
+      propertyPath: bossStageManager
+      value: 
+      objectReference: {fileID: 4896591536618175259}
+    - target: {fileID: 7893218987487754691, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
+      propertyPath: secondBossConnect
+      value: 
+      objectReference: {fileID: 1790222423301499678}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -57247,6 +57263,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8850076229094073064}
     m_Modifications:
+    - target: {fileID: 58756393562092732, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: BossHealthBarSlider
+      value: 
+      objectReference: {fileID: 671144393610848948}
+    - target: {fileID: 6351667812318926093, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: turnSpeed
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 6920967402534965268, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
       propertyPath: m_Name
       value: SecondBoss_Phase2
@@ -57294,6 +57318,10 @@ PrefabInstance:
     - target: {fileID: 8628149810256165013, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8766506335083947029, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: damageCooldown
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

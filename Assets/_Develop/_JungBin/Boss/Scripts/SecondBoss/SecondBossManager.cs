@@ -100,7 +100,7 @@ namespace JungBin
         // Update is called once per frame
         void Update()
         {
-            if (animator.GetBool("IsDeath")) return;
+            if (animator.GetBool("IsDeath") || player == null) return;
 
             Vector3 direction = player.position - transform.position;
             float distance = direction.magnitude;
