@@ -65,9 +65,42 @@ namespace Seti
         #region Properties
         public Blueprint_Actor Origin => blueprint;
         public List<Behaviour> Behaviours => behaviours;
-        public Condition_Actor Condition => condition;
-        public Controller_Base Controller => controller;
-        public Controller_Animator Controller_Animator => animator;
+        public Condition_Actor Condition
+        {
+            get
+            {
+                if (!condition)
+                {
+                    condition = GetComponent<Condition_Actor>();
+                    condition.Initialize();
+                }
+                return condition;
+            }
+        }
+        public Controller_Base Controller
+        {
+            get
+            {
+                if (!controller)
+                {
+                    controller = GetComponent<Controller_Base>();
+                    controller.Initialize();
+                }
+                return controller;
+            }
+        }
+        public Controller_Animator Controller_Animator
+        {
+            get
+            {
+                if (!animator)
+                {
+                    animator = GetComponent<Controller_Animator>();
+                    animator.Initialize();
+                }
+                return animator;
+            }
+        }
 
         // 스탯 Default
         public float Health_Default => 100f;
@@ -145,8 +178,6 @@ namespace Seti
         {
             // 참조
             Initialize(blueprint);
-
-            controller = GetComponent<Controller_Base>();
         }
         #endregion
 
@@ -159,8 +190,6 @@ namespace Seti
 
             // Check Actor State
             condition = GetComponent<Condition_Actor>();
-            if (!condition)
-                condition = CreateState();
             condition.Initialize();
 
             // Check Animator Controller
@@ -169,7 +198,7 @@ namespace Seti
                 anim.transform.gameObject.AddComponent<Controller_Animator>();
 
             // Define Control
-            SwitchController();
+            //SwitchController();
         }
 
         public void AddBehaviour(IBehaviour be)

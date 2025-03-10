@@ -61,7 +61,6 @@ namespace Seti
                 return false;
 
             uiManager.OpenDialogueUI(index);
-            condition_Player.PlayerSetActive(false);
             return true;
         }
         public void NextDialogue()
@@ -96,7 +95,8 @@ namespace Seti
                     break;
 
                 case 2:
-                    DisableComposition("Stage000", 2, portals);
+                    if (DataManager.Instance.sinEvent[0])
+                        DisableComposition("Stage000", 2, portals);
                     break;
 
                 case 3:
@@ -130,6 +130,7 @@ namespace Seti
 
         // 기타 메서드
         #region Methods
+        private void InvokeStage() => Invoke(nameof(SwitchCurrentStage), 1);
         private void SwitchCurrentStage()
         {
             if (IsDialogue) return;
@@ -201,7 +202,7 @@ namespace Seti
             condition_Player = Player.GetComponent<Condition_Player>();
             Cinemachine = FindAnyObjectByType<CinemachineCamera>();
 
-            StageManager.Instance.stageEndEvent += SwitchCurrentStage;
+            StageManager.Instance.stageEndEvent += InvokeStage;
 
             // 대화 이벤트 관리
             uiManager = DataManager.Instance.UIManager;

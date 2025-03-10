@@ -36,6 +36,15 @@ namespace Seti
 
         // 속성
         #region Properties
+        public Actor Actor
+        {
+            get
+            {
+                if (!actor)
+                    actor = GetComponent<Actor>();
+                return actor;
+            }
+        }
         public Weapon CurrentWeapon => currentWeapon;
         public bool InAction => inAction;
         public bool IsGrounded { get; protected set; } = true;
@@ -72,12 +81,6 @@ namespace Seti
 
             IsGrounded = true;
             inAction = true;
-        }
-
-        protected virtual void Awake()
-        {
-            // 초기화
-            Initialize();
         }
         #endregion
 

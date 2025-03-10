@@ -38,8 +38,17 @@ namespace Seti
 
         public int CurrentNumber => currentNumber;
 
+        private void Start()
+        {
+            OnDialogueEnter += condition.DisablePlayer;
+            OnDialogueEnd += condition.EnablePlayer;
+            OnDialogueEnd += Seen;
+        }
+
         private void OnEnable()
         {
+            condition = InitializeManager.Instance.Player.Condition as Condition_Player;
+
             dialogues = new Queue<Dialogue>();
             Initialize();
         }
@@ -50,11 +59,16 @@ namespace Seti
             dialogues = null;
         }
 
+        private void OnDestroy()
+        {
+            OnDialogueEnter -= condition.DisablePlayer;
+            OnDialogueEnd -= condition.EnablePlayer;
+            OnDialogueEnd -= Seen;
+        }
+
         //초기화
         private void Initialize()
         {
-            condition = InitializeManager.Instance.Player.Condition as Condition_Player;
-
             dialogues.Clear();
 
             npcImage.SetActive(false);
@@ -62,9 +76,6 @@ namespace Seti
             sentenceText.text = "";
 
             nextButton.gameObject.SetActive(false);
-
-            OnDialogueEnd += Seen;
-            OnDialogueEnd += condition.EnablePlayer;
         }
 
         //대화 시작하기
