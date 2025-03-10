@@ -252,6 +252,7 @@ namespace Noah
             yield return new WaitForSeconds(0.5f);
 
             //player.GetComponent<Condition_Player>().PlayerSetActive(true);
+            stageEndEvent?.Invoke();
             player.GetComponent<PlayerUseSkill>().enabled = true;
 
 
@@ -271,8 +272,6 @@ namespace Noah
             player.GetComponent<NavMeshAgent>().enabled = true;
 
             SceneFade.instance.FadeIn(null);
-
-            stageEndEvent?.Invoke();
         }
 
         // 히든 던전 빠져나가는 코루틴

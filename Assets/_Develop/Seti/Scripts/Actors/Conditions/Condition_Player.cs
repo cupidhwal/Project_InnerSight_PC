@@ -6,6 +6,7 @@ namespace Seti
     public class Condition_Player : Condition_Actor
     {
         // 필드
+        private Move move;
         public bool CanDash { get; set; } = true;
         public bool IsDash { get; set; } = false;
 
@@ -17,11 +18,6 @@ namespace Seti
 
             if (TryGetComponent<Damagable>(out var damagable))
                 damagable.OnDeath += ReviveInvoke;
-        }
-
-        protected override void Awake()
-        {
-            base.Awake();
         }
 
         private void OnEnable()
@@ -58,7 +54,7 @@ namespace Seti
             IsDead = false;
             inAction = true;
 
-            actor.Controller_Animator.Animator.Rebind();
+            Actor.Controller_Animator.Animator.Rebind();
         }
 
         public override void Initialize()
@@ -70,6 +66,10 @@ namespace Seti
 
             // 초기 장비 설정
             ChangeWeapon(primaryWeaponType);
+
+            if (Actor.Controller.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
+                if (moveBehaviour is Move)
+                    move = moveBehaviour as Move;
         }
 
         // 플레이어 제어권 여부
@@ -92,10 +92,8 @@ namespace Seti
                 IsDash = false;
                 CanDash = true;
 
-                if (actor.Controller.BehaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
-                    if (moveBehaviour is Move move)
-                        move.OnMove(Vector2.zero, false);
-                actor.CoroutineStopper();
+                //move.OnMove(Vector2.zero, false);
+                //Actor.CoroutineStopper();
             }
         }
 
