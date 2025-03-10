@@ -27,6 +27,12 @@ namespace JungBin
         [Header("LastBoss Settings")]
         [SerializeField] private GameObject OneHandSword;
         [SerializeField] private GameObject TwoHandSword;
+
+        [SerializeField] private Transform slashSpawnPoint; 
+        [SerializeField] private GameObject slashAttack;    //보스 공격 이펙트(슬레쉬)
+
+        [SerializeField] private Transform shockSpawnPoint;
+        [SerializeField] private GameObject shockAttack;    //보스 공격 이펙트(충격)
         #endregion
 
         private void Start()
@@ -151,6 +157,24 @@ namespace JungBin
             {
                 animator.SetTrigger("WeaponChange");
             }
+        }
+
+        #endregion
+
+        #region 공격 상태
+
+        public void ToggleAttack()
+        {
+            GameObject slashParticle = Instantiate(slashAttack, slashSpawnPoint.position, Quaternion.identity);
+
+            Destroy(slashParticle, 1.5f);
+        }
+
+        public void ShockAttack()
+        {
+            GameObject shockParticle = Instantiate(shockAttack, shockSpawnPoint.position, Quaternion.identity);
+
+            Destroy(shockParticle, 1.5f);
         }
 
         #endregion
