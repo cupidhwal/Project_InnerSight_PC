@@ -1447,7 +1447,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8367765423597452721}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.9958459, z: 0, w: -0.0910549}
+  m_LocalRotation: {x: 0, y: -0.99584556, z: 0, w: 0.091058575}
   m_LocalPosition: {x: 26, y: 0.019637108, z: 53.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1458,7 +1458,7 @@ Transform:
   - {fileID: 6735578262021146505}
   - {fileID: 5943027161229694274}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -169.551, z: 0}
 --- !u!136 &2082635410144380935
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1546,7 +1546,6 @@ MonoBehaviour:
   currentWeaponType: 4
   currentWeapon: {fileID: 2060960671895744437}
   inAction: 0
-  destroyDelay: 0
 --- !u!114 &4292751661068214576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1699,6 +1698,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KnockbackCoefficient: 3.5
+  destroyDelay: 2
+  bodyRenderer: {fileID: 8873706932207451041}
+  dissolve: {fileID: 2100000, guid: 1b5b6c137bf4ae64c891bb745802ef67, type: 2}
 --- !u!114 &7613408047795084551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1713,7 +1715,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageTextPrefab: {fileID: 9211949316755326926, guid: 9d0558470b8bbae48914eeb5ca8096ba, type: 3}
   fightWorldCanvas: {fileID: 1987231358669155792}
-  player: {fileID: 8759698427550002359, guid: aaae8b6631773b14aae9734ef5211cd8, type: 3}
 --- !u!114 &6511279441557689298
 MonoBehaviour:
   m_ObjectHideFlags: 0

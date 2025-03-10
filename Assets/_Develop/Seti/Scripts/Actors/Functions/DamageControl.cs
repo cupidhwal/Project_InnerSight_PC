@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Noah;
 using Yoon;
+using System;
 
 namespace Seti
 {
@@ -17,6 +18,14 @@ namespace Seti
         [Header("Criteria: Hit")]
         [SerializeField]
         private float KnockbackCoefficient = 4f;
+        [SerializeField]
+        private float destroyDelay = 2f;
+
+        [Header("Dissolve : Enemy")]
+        [SerializeField]
+        private Renderer bodyRenderer;
+        [SerializeField]
+        private Material dissolve;
         #endregion
 
         // 인터페이스
@@ -111,6 +120,16 @@ namespace Seti
                 collider.excludeLayers = LayerMask.GetMask("Player");
                 enemy.Agent.ResetPath();
                 enemy.Agent.enabled = false;
+
+                if (dissolve)
+                {
+                    bodyRenderer.material = new Material(dissolve);
+                    StartCoroutine(DeathComposition(destroyDelay));
+                }
+                else
+                {
+                    Destroy(gameObject, destroyDelay);
+                }
             }
 
             // 플레이어 사망 시 재시작
@@ -174,6 +193,20 @@ namespace Seti
             }
 
             yield break;
+        }
+        IEnumerator DeathComposition(float delay)
+        {
+            float dissolveDegree = 0.6f;
+            bodyRenderer.material.SetFloat("_Degree", dissolveDegree);
+
+            yield return new WaitForSeconds(delay - 1);
+            while (dissolveDegree >= -0.4f)
+            {
+                dissolveDegree -= Time.deltaTime;
+                bodyRenderer.material.SetFloat("_Degree", dissolveDegree);
+                yield return null;
+            }
+            Destroy(gameObject);
         }
     }
 }

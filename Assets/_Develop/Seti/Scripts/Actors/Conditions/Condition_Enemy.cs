@@ -1,13 +1,7 @@
-using UnityEngine;
-
 namespace Seti
 {
     public class Condition_Enemy : Condition_Actor
     {
-        // 필드
-        [SerializeField]
-        private float destroyDelay = 2f;
-
         // 속성
         public bool IsPositioning { get; set; } = false;
 
@@ -40,7 +34,6 @@ namespace Seti
         {
             base.Die();
             Invoke(nameof(DisableIcon), 1);
-            Destroy(gameObject, destroyDelay);
         }
 
         private void DisableIcon() => transform.Find("Icon_Enemy").gameObject.SetActive(false);
