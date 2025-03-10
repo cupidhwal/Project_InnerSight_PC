@@ -51,19 +51,16 @@ namespace Seti
 
             dialogues = new Queue<Dialogue>();
             Initialize();
+
+            condition.DisablePlayer();
         }
 
         private void OnDisable()
         {
             Initialize();
             dialogues = null;
-        }
 
-        private void OnDestroy()
-        {
-            OnDialogueEnter -= condition.DisablePlayer;
-            OnDialogueEnd -= condition.EnablePlayer;
-            OnDialogueEnd -= Seen;
+            condition.EnablePlayer();
         }
 
         //초기화

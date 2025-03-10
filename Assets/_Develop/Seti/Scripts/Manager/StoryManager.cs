@@ -31,6 +31,8 @@ namespace Seti
         private Composition currentComposition;
         [SerializeField]
         private List<CompositionsPerScene> compositionList;
+
+        GameObject miniMap;
         #endregion
 
         // 속성
@@ -88,32 +90,22 @@ namespace Seti
         {
             // 마을 포탈
             GameObject portals = StageManager.Instance.CurrentStage.transform.GetChild(0).gameObject;
-            switch (DataManager.Instance.deathCount)
+            if (SaveLoadManager.Instance.scenarioSaveData.deathCount > 0)
             {
-                case 1:
-                    DisableComposition("Stage000", 1, portals);
-                    break;
+                DisableComposition("Stage000", 1, portals);
 
-                case 2:
-                    if (DataManager.Instance.sinEvent[0])
-                        DisableComposition("Stage000", 2, portals);
-                    break;
+                if (DataManager.Instance.sinEvent[0])
+                    DisableComposition("Stage000", 2, portals);
 
-                case 3:
+                if (DataManager.Instance.sinEvent[1])
+                {
                     DisableComposition("Stage000", 3, portals);
-                    break;
-
-                case 4:
                     DisableComposition("Stage000", 4, portals);
-                    break;
-
-                case 5:
                     DisableComposition("Stage000", 5, portals);
-                    break;
+                }
             }
 
             // 미니맵
-            GameObject miniMap = FindAnyObjectByType<Mini_Map>().gameObject;
             DisableComposition("Stage001", 0, miniMap);
         }
         private void DisableComposition(string stageName, int dialogueIndex, GameObject target)
@@ -122,7 +114,7 @@ namespace Seti
             if (data == null) return;
 
             ScenarioProgress progress = data.dialogueDatas.FirstOrDefault(d => d.ScenarioName == stageName);
-            if (!data.dialogueDatas.Contains(progress) || !progress.CheckSeens[dialogueIndex])
+            if (progress != null && !progress.CheckSeens[dialogueIndex])
             {
                 target.SetActive(false);
             }
@@ -156,10 +148,6 @@ namespace Seti
                         case 5:
                             if (townData != null && !townData.CheckSeens[5])
                                 OpenDialogue(5);
-                            break;
-
-                        default:
-                            condition_Player.PlayerSetActive(true);
                             break;
                     }
                     break;
@@ -201,8 +189,10 @@ namespace Seti
             }
             condition_Player = Player.GetComponent<Condition_Player>();
             Cinemachine = FindAnyObjectByType<CinemachineCamera>();
+            miniMap = FindAnyObjectByType<Mini_Map>().gameObject;
 
             StageManager.Instance.stageEndEvent += InvokeStage;
+            StageManager.Instance.stageEndEvent += ReadyComposition;
 
             // 대화 이벤트 관리
             uiManager = DataManager.Instance.UIManager;

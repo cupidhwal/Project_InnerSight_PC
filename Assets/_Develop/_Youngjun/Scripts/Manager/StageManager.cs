@@ -71,8 +71,6 @@ namespace Noah
             yield return new WaitForSeconds(0.1f);
 
             GetCurrentStage();
-
-            StoryManager.Instance.ReadyComposition();
         }
 
         void SetCurrentStage(int _stage = 0)
