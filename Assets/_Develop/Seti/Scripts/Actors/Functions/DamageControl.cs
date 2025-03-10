@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using Noah;
 using Yoon;
-using System;
 
 namespace Seti
 {
@@ -27,6 +26,9 @@ namespace Seti
         [SerializeField]
         private Material dissolve;
         #endregion
+
+        public Renderer BodyRenderer => bodyRenderer;
+        public Material Dissolve => dissolve;
 
         // 인터페이스
         #region Interface

@@ -1,4 +1,4 @@
-using UnityEngine;
+using Noah;
 
 namespace Seti
 {
@@ -7,5 +7,11 @@ namespace Seti
     /// </summary>
     public class Flynne : Storyteller_NPC
     {
+        public override void StoryEnter()
+        {
+            if (StageManager.Instance.Enemies.Count > 0) return;
+
+            base.StoryEnter();
+        }
     }
 }

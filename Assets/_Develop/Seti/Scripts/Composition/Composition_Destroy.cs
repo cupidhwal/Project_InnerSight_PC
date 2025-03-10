@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Seti
@@ -12,7 +13,27 @@ namespace Seti
 
         public override void Execute(GameObject obj)
         {
-            Destroy(obj, delayExcute);
+            StoryManager.Instance.CorExcutor(DeathComposition(obj, delayExcute));
+        }
+
+        IEnumerator DeathComposition(GameObject obj, float delay)
+        {
+            DamageControl damage = obj.GetComponent<DamageControl>();
+            Renderer renderer = damage.BodyRenderer;
+            Material dissolve = damage.Dissolve;
+
+            float dissolveDegree = 0.6f;
+            renderer.material = new(dissolve);
+            renderer.material.SetFloat("_Degree", dissolveDegree);
+
+            yield return new WaitForSeconds(delay - 1);
+            while (dissolveDegree >= -0.4f)
+            {
+                dissolveDegree -= Time.deltaTime;
+                renderer.material.SetFloat("_Degree", dissolveDegree);
+                yield return null;
+            }
+            Destroy(obj);
         }
     }
 }

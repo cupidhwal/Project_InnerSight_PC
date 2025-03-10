@@ -7,8 +7,6 @@ namespace Seti
     /// </summary>
     public class Look_Watch : Look_Base
     {
-        // 오버라이드
-        #region Override
         public override void Look(Vector2 _)
         {
             //if (!actor.Condition.IsAttack) return;
@@ -19,7 +17,8 @@ namespace Seti
                 if (!enemyCondition.IsChase &&
                     !enemyCondition.IsAttack &&
                     !enemyCondition.IsPositioning &&
-                    !enemyCondition.IsDead)
+                    !enemyCondition.IsDead ||
+                    enemyCondition.IsMagic)
                 {
                     enemy.transform.LookAt(enemy.Player.transform.position);
                 }
@@ -39,6 +38,5 @@ namespace Seti
                 }
             }
         }
-        #endregion
     }
 }

@@ -1,4 +1,5 @@
 using Noah;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Seti
@@ -27,7 +28,8 @@ namespace Seti
         // Tutotial 끝 / 대화 시작
         private void ClearTutorial()
         {
-            award.SetActive(true);
+            //award.SetActive(true);
+            //award.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }

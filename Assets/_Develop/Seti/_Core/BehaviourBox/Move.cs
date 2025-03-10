@@ -114,7 +114,7 @@ namespace Seti
                     break;
 
                 case Enemy_State_Chase:
-                    ChangeStrategy(typeof(Move_Run));
+                    ChangeStrategy(typeof(Move_Nav));
                     break;
 
                 case Enemy_State_Encounter:
@@ -137,7 +137,13 @@ namespace Seti
         public void Update()
         {
             if (!actor.Condition.InAction) return;
-            if (actor is Player && condition_Player.IsDash) return;
+            if (actor is Player)
+            {
+                if (condition_Player.IsDash) return;
+                if (moveInput != Vector2.zero)
+                    actor.Condition.IsMove = true;
+                else actor.Condition.IsMove = false;
+            }
             currentStrategy?.Move(moveInput);
         }
         #endregion
