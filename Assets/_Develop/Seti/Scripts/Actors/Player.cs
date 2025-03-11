@@ -44,7 +44,32 @@ namespace Seti
         [SerializeField]
         private NPC currentNPC;
         public NPC CurrentNPC => currentNPC;
-        public void SetNPC(NPC npc) => currentNPC = npc;
+        public void SetNPC(NPC npc)
+        {
+            currentNPC = npc;
+
+            string info = default;
+            if (currentNPC)
+            {
+                info = currentNPC.Type switch
+                {
+                    NPC_Type.Enhance => "스탯 강화",
+                    NPC_Type.Trinkets => "유물 교체",
+                    _ => "대화"
+                };
+            }
+            else
+            {
+                DataManager.Instance.UIManager.CloseActionUI();
+                return;
+            }
+
+            if (info == "대화" && currentNPC.GetComponent<NPC_Life>().IsDead)
+            {
+                return;
+            }
+            DataManager.Instance.UIManager.ToggleActionUI(info);
+        }
         [SerializeField]
         private Storyteller_NPC storyteller;
         public Storyteller_NPC CurrentTeller => storyteller;

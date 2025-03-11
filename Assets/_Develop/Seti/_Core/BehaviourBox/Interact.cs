@@ -45,13 +45,18 @@ namespace Seti
 
             if (player.CurrentTeller != null && player.CurrentTeller.CanDialogue)
             {
-                player.CurrentTeller.StoryEnter();
-                return;
+                if (!player.CurrentTeller.GetComponent<NPC_Life>().IsDead)
+                {
+                    player.CurrentTeller.StoryEnter();
+                    DataManager.Instance.UIManager.ToggleActionUI();
+                    return;
+                }
             }
 
-            if (player.CurrentNPC != null)
+            if (player.CurrentNPC != null && player.CurrentNPC.Type != NPC_Type.Storyteller)
             {
                 player.CurrentNPC.Switch_TradeUI();
+                DataManager.Instance.UIManager.ToggleActionUI();
                 return;
             }
         }

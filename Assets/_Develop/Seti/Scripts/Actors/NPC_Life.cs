@@ -10,12 +10,18 @@ namespace Seti
     {
         // 필드
         #region Variables
+        [Header("Life")]
+        [SerializeField]
+        private bool isDead;
         [SerializeField]
         private int deathCount;
 
         private GameObject formAlive;
         private GameObject formDead;
         #endregion
+
+        // 속성
+        public bool IsDead => isDead;
 
         // 라이프 사이클
         private void Awake()
@@ -41,11 +47,13 @@ namespace Seti
             {
                 formAlive.SetActive(false);
                 formDead.SetActive(true);
+                isDead = true;
             }
             else
             {
                 formAlive.SetActive(true);
                 formDead.SetActive(false);
+                isDead = false;
             }
         }
     }

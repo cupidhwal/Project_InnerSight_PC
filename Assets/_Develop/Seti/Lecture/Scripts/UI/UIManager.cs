@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 namespace Seti
 {
@@ -75,7 +76,21 @@ namespace Seti
             go.SetActive(!go.activeSelf);
         }
 
-        //public void
+        public void CloseActionUI()
+        {
+            // UI 토글
+            actionUI.SetActive(false);
+        }
+        public void ToggleActionUI(string info = default)
+        {
+            // UI 토글
+            actionUI.SetActive(!actionUI.activeSelf);
+
+            // Description text
+            TextMeshProUGUI text = actionUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            if (info != default)
+                text.text = info;
+        }
 
         public void OpenDialogueUI(int dialogIndex)
         {
