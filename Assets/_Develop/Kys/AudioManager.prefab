@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2589527835044398478
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2580463638804877709}
+  - component: {fileID: 3439332932042995160}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2580463638804877709
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2589527835044398478}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3439332932042995160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2589527835044398478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf094156010b9d449837609ba957dc75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 8ea5b971403e3084f87649d41c785ce5, type: 2}
+  audioMixerGroupBgm: {fileID: -8101169084953861992, guid: 8ea5b971403e3084f87649d41c785ce5, type: 2}
+  audioMixerGroupSfx: {fileID: 3089201788368978836, guid: 8ea5b971403e3084f87649d41c785ce5, type: 2}
+  sounds:
+  - name: MainScene
+    clip: {fileID: 8300000, guid: bc7005e01ba1e06408909b8e0dac7bce, type: 3}
+    volume: 0.01
+    pitch: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: 1~4
+    clip: {fileID: 8300000, guid: f9ab345a6cec233499c8da60a58fb5b7, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
+  - name: Tutorial,0
+    clip: {fileID: 8300000, guid: fea1429f233f447bd8edbf992d82bd32, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
+  - name: 5
+    clip: {fileID: 8300000, guid: 7d939d371689f69408221f095ad85b34, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
+  - name: 6~9
+    clip: {fileID: 8300000, guid: 4d99e73e07d9ef048b52abe18c832cab, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
+  - name: 10
+    clip: {fileID: 8300000, guid: 4d3004ec8f8c42f4a8aa22e1081f772d, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
+  - name: 11~14
+    clip: {fileID: 8300000, guid: f839e71535d0e4231ab20acc4644eb48, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
+  - name: 15
+    clip: {fileID: 8300000, guid: b3602359e9f14704997974e00bbe462d, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
+  - name: Hidden Scene
+    clip: {fileID: 8300000, guid: 6f8ac1fb6c4da43309fc6f2608f82ab6, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
+  - name: Hitting Sound
+    clip: {fileID: 8300000, guid: 3841220abc3ca4a6bbec2c52081e5dee, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
+  - name: Player Hitting Sound
+    clip: {fileID: 8300000, guid: 7a900aa8145f544d78117fd32f90054a, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
+  - name: Dash Sound
+    clip: {fileID: 8300000, guid: d2cf22be789784466bb12f75d69f1f83, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
+  - name: Coin Sound
+    clip: {fileID: 8300000, guid: 23ab272e3ba25450ea31f566494ac12b, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
+  - name: Button Click Sound
+    clip: {fileID: 8300000, guid: bcf352da956759641bdab9daefae14c2, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
+  - name: Game Over
+    clip: {fileID: 8300000, guid: 255e5c2e561ad4aa5b0415e791d9baee, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
+  - name: 6~9
+    clip: {fileID: 8300000, guid: 4d99e73e07d9ef048b52abe18c832cab, type: 3}
+    volume: 0.01
+    pitch: 0.16
+    loop: 1
+    source: {fileID: 0}
