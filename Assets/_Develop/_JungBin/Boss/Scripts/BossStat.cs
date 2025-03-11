@@ -116,9 +116,12 @@ namespace JungBin
             }
 
             // 버서커 모드 전환
-            if (!isBerserk && Health <= maxHealth / 2 && bossType == BossType.FirstBoss)
+            if (!isBerserk && Health <= maxHealth / 2)
             {
-                EnterBerserkMode();
+                if (bossType == BossType.FirstBoss || bossType == BossType.LastBoss)
+                {
+                    EnterBerserkMode();
+                }
             }
         }
 
@@ -147,7 +150,11 @@ namespace JungBin
             }*/
 
             Debug.Log("🔥 버서커 모드로 전환됨: 무적 상태 활성화");
-            berserkEffect.SetActive(true);
+
+            if (bossType == BossType.FirstBoss)
+            {
+                berserkEffect.SetActive(true);
+            }
         }
 
 
@@ -233,7 +240,7 @@ namespace JungBin
             isInvulnerable = false;
             isBerserk = false;
             timeSinceLastHit = 0f;
-            if (bossType == BossType.FirstBoss)
+            if (bossType == BossType.FirstBoss || bossType == BossType.LastBoss)
             {
                 animator.SetBool("IsBerserk", false);
             }

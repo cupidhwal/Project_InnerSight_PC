@@ -33,6 +33,10 @@ namespace JungBin
 
         [SerializeField] private Transform shockSpawnPoint;
         [SerializeField] private GameObject shockAttack;    //보스 공격 이펙트(충격)
+
+        [SerializeField] private Transform fireSpawnPoint;
+        [SerializeField] private GameObject fireAttack;    //보스 공격 이펙트(충격)
+
         #endregion
 
         private void Start()
@@ -85,21 +89,8 @@ namespace JungBin
 
             navMeshAgent = GetComponent<NavMeshAgent>();
 
-            OneHandSword.SetActive(false);
+            OneHandSword.SetActive(true);
             TwoHandSword.SetActive(false);
-        }
-
-        public void StartWeaponSelect()
-        {
-            // 랜덤으로 OneHandSword 또는 TwoHandSword 중 하나만 활성화
-            bool isOneHand = Random.value > 0.5f;
-
-            // Root 애니메이터에도 반영
-            OneHandSword.SetActive(isOneHand);
-            TwoHandSword.SetActive(!isOneHand);
-
-            // 보스 애니메이션도 맞춰서 시작
-            animator.SetTrigger(isOneHand ? "OneHandWeapon" : "TwoHandWeapon");
         }
 
         private void RotateTowardsPlayer(Vector3 direction)
@@ -130,7 +121,7 @@ namespace JungBin
             animator.SetTrigger($"Attack0{attackIndex}");
             animator.SetBool(Idle, false);
         }
-        public void WeaponSelect()
+/*        public void WeaponSelect()
         {
             bool isOneHandActive = OneHandSword.activeSelf;
             bool isTwoHandActive = TwoHandSword.activeSelf;
@@ -149,14 +140,13 @@ namespace JungBin
                 TwoHandSword.SetActive(false);
                 animator.SetTrigger("OneHandWeapon");
             }
-        }
+        }*/
 
         public void ChangeWeapon()
         {
-            if (Random.value < 0.2f) 
-            {
-                animator.SetTrigger("WeaponChange");
-            }
+            OneHandSword.SetActive(false);
+            TwoHandSword.SetActive(true);
+
         }
 
         #endregion
@@ -165,16 +155,26 @@ namespace JungBin
 
         public void ToggleAttack()
         {
-            GameObject slashParticle = Instantiate(slashAttack, slashSpawnPoint.position, Quaternion.identity);
+            GameObject slashParticle = Instantiate(slashAttack, slashSpawnPoint.position, slashSpawnPoint.rotation, slashSpawnPoint);
 
             Destroy(slashParticle, 1.5f);
         }
 
         public void ShockAttack()
         {
-            GameObject shockParticle = Instantiate(shockAttack, shockSpawnPoint.position, Quaternion.identity);
+            Vector3 SpawnPoint = shockSpawnPoint.position;
+            SpawnPoint.y = 0;
 
-            Destroy(shockParticle, 1.5f);
+            GameObject shockParticle = Instantiate(shockAttack, SpawnPoint, shockSpawnPoint.rotation, shockSpawnPoint);
+
+            Destroy(shockParticle, 1f);
+        }
+
+        public void FireAttack()
+        {
+            GameObject fireParticle = Instantiate(fireAttack, fireSpawnPoint.position, fireSpawnPoint.rotation, fireSpawnPoint);
+
+            Destroy(fireParticle, 2f);
         }
 
         #endregion
