@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using System.Diagnostics;
 using InnerSight_Kys;
+using Unity.VisualScripting;
 
 namespace Noah
 {
@@ -51,6 +52,9 @@ namespace Noah
         public GameObject CurrentStage => currentStage;
         public List<GameObject> Enemies => enemys;
 
+        public List<float> reinforceData = new List<float>();
+
+        HiddenEntryObject hiddenEntryObject;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -155,6 +159,7 @@ namespace Noah
                 player.GetComponent<PlayerUseSkill>().enabled = true;
                 player.GetComponent<Rigidbody>().useGravity = true;
             }
+
 
             stageEndEvent?.Invoke();
         }
@@ -360,6 +365,22 @@ namespace Noah
                     skillReinObject.SetActive(true);
                     statsReinObject.GetComponent<Collider>().enabled = true;
                     statsReinObject.transform.GetChild(0).gameObject.SetActive(true);
+                }
+
+
+                if (currentStage.transform.GetChild(0).childCount >= 3)
+                {
+                    hiddenEntryObject = currentStage.transform.GetChild(0).GetChild(2).GetComponent<HiddenEntryObject>();
+
+                    if (hiddenEntryObject != null)
+                    {
+                        for (int i = 0; i < hiddenEntryObject.reinforceData.Count; i++)
+                        {
+                            reinforceData.Add(hiddenEntryObject.reinforceData[i]);
+                        }
+                    }
+
+
                 }
 
 

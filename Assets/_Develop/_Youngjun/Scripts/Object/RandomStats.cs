@@ -9,13 +9,20 @@ namespace Noah
         public List<float> reinforceData = new List<float>();
 
         InGameUI_RandomStats inGameUI_RandomStats;
+        HiddenEntryObject hiddenEntryObject;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             inGameUI_RandomStats = FindAnyObjectByType<InGameUI_RandomStats>();
+            hiddenEntryObject = FindAnyObjectByType<HiddenEntryObject>();
 
             ObjectFadeSystem.Instance.ObjectFadeIn_Particle(transform);
+
+            for (int i = 0; i < StageManager.Instance.reinforceData.Count; i++)
+            {
+                reinforceData.Add(StageManager.Instance.reinforceData[i]); 
+            }
         }
 
         private void OnTriggerEnter(Collider other)
