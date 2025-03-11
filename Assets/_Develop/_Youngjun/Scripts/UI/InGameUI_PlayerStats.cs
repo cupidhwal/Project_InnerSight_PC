@@ -1,3 +1,4 @@
+using InnerSight_Kys;
 using Seti;
 using System.Collections.Generic;
 using TMPro;
@@ -68,6 +69,8 @@ namespace Noah
 
         public void AddButton(int _index)
         {
+            AudioManager.Instance.Play("Button Click Sound");
+
             int cost = upgradeCounts[_index] * PlayerStatsManager.Instance.GetUpgradeCost()[_index];
 
             int totalGold = int.Parse(gold_Text.text) - cost;
@@ -102,15 +105,13 @@ namespace Noah
                 states[_index].GetChild(4).GetComponent<TMP_Text>().text = cost.ToString();
 
                 gold_Text.text = totalGold.ToString();
-
-
             }
-
-
         }
         
         public void RemoveButton(int _index)
         {
+            AudioManager.Instance.Play("Button Click Sound");
+
             // 업그레이드가 0인 경우 더 이상 제거 불가
             if (upgradeCounts[_index] <= 0)
             {
@@ -170,6 +171,8 @@ namespace Noah
             player.GetComponent<Condition_Player>().PlayerSetActive(true);
             player.GetComponent<PlayerUseSkill>().enabled = true;
             PlayerStatsManager.Instance.inGameUI_RandomStats.SetUIData();
+
+            AudioManager.Instance.Play("ReinForcement");
 
             SaveLoadManager.Instance.SaveAll();
         }
