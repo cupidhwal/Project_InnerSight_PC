@@ -34,6 +34,7 @@ namespace Seti
         #endregion
 
         // 속성
+        public List<DialogueVariables> DialogueVariables => dialogueVariables;
         public bool CanDialogue => canDialogue;
 
         // 오버라이드

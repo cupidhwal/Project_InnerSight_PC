@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Seti
@@ -48,7 +49,7 @@ namespace Seti
         {
             currentNPC = npc;
 
-            string info = default;
+            string info;
             if (currentNPC)
             {
                 info = currentNPC.Type switch
@@ -64,9 +65,30 @@ namespace Seti
                 return;
             }
 
-            if (info == "대화" && currentNPC.GetComponent<NPC_Life>().IsDead)
+            if (info == "대화")
             {
-                return;
+                if (currentNPC.GetComponent<NPC_Life>().IsDead)
+                    return;
+
+                bool check = false;
+                foreach (var dialogue in currentNPC.GetComponent<Storyteller_NPC>().DialogueVariables)
+                {
+                    if (DataManager.Instance.deathCount < dialogue.criteria_Death)
+                        continue;
+
+                    if (DataManager.Instance.sinEvent.Count(value => value) < dialogue.criteria_SinEvent)
+                        continue;
+
+                    if (DataManager.Instance.DialogueData.CheckSeens[dialogue.dialogueNumber])
+                        continue;
+
+                    else
+                    {
+                        check = true;
+                        break;
+                    }
+                }
+                if (!check) return;
             }
             DataManager.Instance.UIManager.ToggleActionUI(info);
         }
