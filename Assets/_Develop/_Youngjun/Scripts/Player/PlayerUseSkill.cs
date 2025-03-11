@@ -1,3 +1,4 @@
+using InnerSight_Kys;
 using Seti;
 using System;
 using UnityEngine;
@@ -300,6 +301,8 @@ namespace Noah
                     if (skill.rangeType == SkillRangeType.Circle)
                     {
                         skillef = Instantiate(skill.skillPrefab, skillPos, skill.skillPrefab.transform.rotation);
+
+                        AudioManager.Instance.Play("PlayerSkillSound");
                     }
                     else if (skill.rangeType == SkillRangeType.Cube)
                     {
@@ -310,6 +313,8 @@ namespace Noah
                         //skillPos = new Vector3(transform.position.x + skill.skillPos.x, RayManager.Instance.RayToScreen().y + skill.skillPos.y, yRot);
 
                         skillef = Instantiate(skill.skillPrefab, skillPos, yOnlyRotation);
+
+                        AudioManager.Instance.Play("PlayerSkillSound");
                     }
                     else if(skill.rangeType == SkillRangeType.Nomal || skill.rangeType == SkillRangeType.Proximity)
                     {
@@ -319,7 +324,8 @@ namespace Noah
                                    + transform.up * skill.skillPos.y;
 
                         skillef = Instantiate(skill.skillPrefab, skillPos, Quaternion.identity);
-            
+
+                        AudioManager.Instance.Play("PlayerAtackSound");
                     }
 
                     if (skillef.transform.GetChild(0).GetComponent<SkillAttack>() != null)

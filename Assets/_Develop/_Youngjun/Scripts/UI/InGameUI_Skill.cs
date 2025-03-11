@@ -1,3 +1,4 @@
+using InnerSight_Kys;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -134,6 +135,8 @@ namespace Noah
 
         void AssignSkillToKey(int skillIndex)
         {
+            AudioManager.Instance.Play("ReinForcement");
+
             int maxSkillSlots = skillUIList.Count; // UI 슬롯 개수에 따라 최대 슬롯 개수 결정
             
             // 이미 슬롯에 스킬이 있는 경우 업그레이드 처리
@@ -244,6 +247,8 @@ namespace Noah
 
         void ChangeSkill(ref SkillBase skill, int _index)
         {
+            AudioManager.Instance.Play("ReinForcement");
+
             skill.damage = skill.upgradeDamage;
 
             skill = randomSkills[selectSkillNum];
