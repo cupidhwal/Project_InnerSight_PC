@@ -194,6 +194,8 @@ namespace Noah
 
         public void ReStartGame()
         {
+            AudioManager.Instance.Play("Game Over");
+
             Invoke("SetActiveDelay", 1f);
 
             SceneFade.instance.FadeOut(SceneManager.GetActiveScene().name, 5f);
