@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -47,11 +48,27 @@ namespace Seti
             {
                 if (!player.CurrentTeller.GetComponent<NPC_Life>().IsDead)
                 {
-                    if (player.CurrentTeller.StoryEnter())
+                    bool check = false;
+                    foreach (var dialogue in player.CurrentTeller.DialogueVariables)
                     {
-                        DataManager.Instance.UIManager.ToggleActionUI();
-                        return;
+                        if (DataManager.Instance.deathCount < dialogue.criteria_Death)
+                            continue;
+
+                        if (DataManager.Instance.sinEvent.Count(value => value) < dialogue.criteria_SinEvent)
+                            continue;
+
+                        if (DataManager.Instance.DialogueData.CheckSeens[dialogue.dialogueNumber])
+                            continue;
+
+                        else
+                        {
+                            check = true;
+                            break;
+                        }
                     }
+                    if (!check) return;
+                    player.CurrentTeller.StoryEnter();
+                    DataManager.Instance.UIManager.ToggleActionUI();
                 }
             }
 

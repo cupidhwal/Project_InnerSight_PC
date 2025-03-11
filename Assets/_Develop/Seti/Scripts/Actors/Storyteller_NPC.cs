@@ -38,12 +38,12 @@ namespace Seti
         public bool CanDialogue => canDialogue;
 
         // 오버라이드
-        public override bool StoryEnter()
+        public override void StoryEnter()
         {
             if (StoryManager.Instance.IsDialogue)
             {
                 StoryManager.Instance.NextDialogue();
-                return true;
+                return;
             }
             else
             {
@@ -55,10 +55,10 @@ namespace Seti
                     if (DataManager.Instance.sinEvent.Count(value => value) < dialogue.criteria_SinEvent)
                         continue;
 
-                    return StoryManager.Instance.OpenDialogue(dialogue.dialogueNumber);
+                    if (StoryManager.Instance.OpenDialogue(dialogue.dialogueNumber))
+                        return;
                 }
             }
-            return false;
         }
 
         // 라이프 사이클
