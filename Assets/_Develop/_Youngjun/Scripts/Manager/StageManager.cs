@@ -7,6 +7,7 @@ using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using System.Diagnostics;
+using InnerSight_Kys;
 
 namespace Noah
 {
@@ -63,6 +64,8 @@ namespace Noah
             player = FindAnyObjectByType<RayManager>().transform;
 
             StartCoroutine(ResetStage());
+
+            SetBGMSound();
         }
 
         IEnumerator ResetStage()
@@ -368,27 +371,34 @@ namespace Noah
             switch (curStage)
             {
                 case 0:
+                    AudioManager.Instance.PlayBgm("Tutorial,0");
                     break;
                 case 1:
                 case 2:
                 case 3:
                 case 4:
+                    AudioManager.Instance.PlayBgm("1~4");
                     break;
                 case 5:
+                    AudioManager.Instance.PlayBgm("5");
                     break;
                 case 6:
                 case 7:
                 case 8:
                 case 9:
+                    AudioManager.Instance.PlayBgm("6~9");
                     break;
                 case 10:
+                    AudioManager.Instance.PlayBgm("10");
                     break;
                 case 11:
                 case 12:
                 case 13:
                 case 14:
+                    AudioManager.Instance.PlayBgm("11~14");
                     break;
                 case 15:
+                    AudioManager.Instance.PlayBgm("15");
                     break;
                 default:
                     return;
@@ -396,8 +406,8 @@ namespace Noah
         }
 
         void SetHiddenStageBGM()
-        { 
-            
+        {
+            AudioManager.Instance.PlayBgm("Hidden Scene");
         }
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Noah;
+using InnerSight_Kys;
 
 namespace Yoon
 {
@@ -32,6 +33,8 @@ namespace Yoon
             fader = SceneFade.instance;
             saveLoadManager = SaveLoadManager.Instance;
             saveLoadManager.EmptyData(contiune);
+
+            AudioManager.Instance.PlayBgm("MainScene");
         }
 
         public void NewGame()
