@@ -96,6 +96,7 @@ namespace Seti
             //dialogs 체크
             if (dialogues == null || dialogues.Count == 0)
             {
+                StopAllCoroutines();
                 EndDialogue();
                 return;
             }
@@ -135,6 +136,7 @@ namespace Seti
 
             foreach (char latter in typingText)
             {
+                condition.DisablePlayer();
                 sentenceText.text += latter;
                 yield return new WaitForSeconds(0.01f);
             }
@@ -144,6 +146,8 @@ namespace Seti
                 yield return null;
             }
             nextButton.gameObject.SetActive(true);
+
+            condition.DisablePlayer();
 
             yield break;
         }
