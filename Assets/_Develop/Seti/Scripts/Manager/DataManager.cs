@@ -8,7 +8,7 @@ namespace Seti
     /// <summary>
     /// 게임에서 사용하는 데이터들을 관리하는 클래스
     /// </summary>
-    public class DataManager : PersistentSingleton<DataManager>
+    public class DataManager : Singleton<DataManager>
     {
         // 필드
         #region Variables

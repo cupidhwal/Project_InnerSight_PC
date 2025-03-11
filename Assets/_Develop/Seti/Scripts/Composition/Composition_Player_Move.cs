@@ -8,10 +8,12 @@ namespace Seti
         // 필드
         [SerializeField]
         private Vector3 targetPos;
+        [SerializeField]
+        private Vector3 targetRot;
 
         public override void Execute(GameObject _)
         {
-            InitializeManager.Instance.Player.transform.position = targetPos;
+            InitializeManager.Instance.Player.transform.SetPositionAndRotation(targetPos, Quaternion.Euler(targetRot));
         }
     }
 }

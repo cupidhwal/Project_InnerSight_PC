@@ -52,7 +52,6 @@ namespace Seti
         public void Revive()
         {
             IsDead = false;
-            inAction = true;
 
             Actor.Controller_Animator.Animator.Rebind();
         }
@@ -77,8 +76,6 @@ namespace Seti
         public void DisablePlayer() => PlayerSetActive(false);
         public void PlayerSetActive(bool inAction)
         {
-            Debug.Log($"inAction : {inAction}");
-
             this.inAction = inAction;
             CanMove = inAction;
             StopRigidBody();
@@ -93,9 +90,6 @@ namespace Seti
                 IsMove = false;
                 IsDash = false;
                 CanDash = true;
-
-                //move.OnMove(Vector2.zero, false);
-                //Actor.CoroutineStopper();
             }
         }
 

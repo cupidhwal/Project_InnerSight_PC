@@ -31,7 +31,7 @@ namespace Seti
         protected Weapon currentWeapon;
 
         [SerializeField]
-        protected bool inAction = false;
+        protected bool inAction = true;
         #endregion
 
         // 속성
@@ -80,7 +80,6 @@ namespace Seti
             }
 
             IsGrounded = true;
-            inAction = true;
         }
         #endregion
 

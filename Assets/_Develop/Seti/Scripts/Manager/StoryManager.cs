@@ -88,20 +88,24 @@ namespace Seti
         }
         public void ReadyComposition()
         {
+            StageName = StageManager.Instance.CurrentStage.name.Replace("(Clone)", "").Trim();
+
             // 마을 포탈
-            GameObject portals = StageManager.Instance.CurrentStage.transform.GetChild(0).gameObject;
-            if (SaveLoadManager.Instance.scenarioSaveData.deathCount > 0)
+            if (StageName == "Stage000")
             {
-                DisableComposition("Stage000", 1, portals);
-
-                if (DataManager.Instance.sinEvent[0])
-                    DisableComposition("Stage000", 2, portals);
-
-                if (DataManager.Instance.sinEvent[1])
+                GameObject portals = StageManager.Instance.CurrentStage.transform.GetChild(0).gameObject;
+                if (SaveLoadManager.Instance.scenarioSaveData.deathCount > 0)
                 {
-                    DisableComposition("Stage000", 3, portals);
-                    DisableComposition("Stage000", 4, portals);
-                    DisableComposition("Stage000", 5, portals);
+                    DisableComposition("Stage000", 1, portals);
+
+                    if (SaveLoadManager.Instance.scenarioSaveData.sinEvent[0] ||
+                        SaveLoadManager.Instance.scenarioSaveData.sinEvent[1])
+                    {
+                        DisableComposition("Stage000", 2, portals);
+                        DisableComposition("Stage000", 3, portals);
+                        DisableComposition("Stage000", 4, portals);
+                        DisableComposition("Stage000", 5, portals);
+                    }
                 }
             }
 
@@ -122,12 +126,11 @@ namespace Seti
 
         // 기타 메서드
         #region Methods
-        private void InvokeStage() => Invoke(nameof(SwitchCurrentStage), 1.5f);
+        private void InvokeStage() => Invoke(nameof(SwitchCurrentStage), 0);
         private void SwitchCurrentStage()
         {
             if (IsDialogue) return;
 
-            StageName = StageManager.Instance.CurrentStage.name.Replace("(Clone)", "").Trim();
             switch (StageName)
             {
                 case "Stage_T":

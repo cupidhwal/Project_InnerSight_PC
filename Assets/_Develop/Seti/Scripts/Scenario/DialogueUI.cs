@@ -49,16 +49,12 @@ namespace Seti
 
             dialogues = new Queue<Dialogue>();
             Initialize();
-
-            condition.DisablePlayer();
         }
 
         private void OnDisable()
         {
             Initialize();
             dialogues = null;
-
-            condition.EnablePlayer();
         }
 
         //초기화
@@ -136,7 +132,6 @@ namespace Seti
 
             foreach (char latter in typingText)
             {
-                condition.DisablePlayer();
                 sentenceText.text += latter;
                 yield return new WaitForSeconds(0.01f);
             }

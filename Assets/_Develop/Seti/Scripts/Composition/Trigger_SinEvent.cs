@@ -26,13 +26,11 @@ namespace Seti
         {
             if (other.CompareTag("Player"))
             {
-                if (eventObject)
+                if (eventObject/* && !DataManager.Instance.DialogueData.CheckSeens[dialogueNumber]*/)
                 {
                     Instantiate(eventObject, transform.position, Quaternion.identity, transform);
                 }
                 StoryManager.Instance.OpenDialogue(dialogueNumber);
-
-                gameObject.SetActive(false);
             }
         }
     }
