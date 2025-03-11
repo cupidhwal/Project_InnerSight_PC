@@ -1,3 +1,4 @@
+using Noah;
 using UnityEngine;
 
 namespace JungBin
@@ -40,9 +41,9 @@ namespace JungBin
         {
             if (other.gameObject.GetComponent<Player>())
             {
-                foreach (var relic in RelicManager.Instance.GetRelics())
+                foreach (var relic in SaveLoadManager.Instance.relicSaveData.relics)
                 {
-                    if (relic.RelicID == RelicID) return; // 중복 획득 방지
+                    if (relic.relicName == RelicName) return; // 중복 획득 방지
                 }
 
                 // 🔹 유물 등록 및 효과 적용

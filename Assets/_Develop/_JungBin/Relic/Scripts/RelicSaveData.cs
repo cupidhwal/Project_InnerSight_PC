@@ -47,6 +47,16 @@ namespace JungBin
                 for (int i = 0; i < loadedRelic.relics.Count; i++)
                 {
                     relics.Add(new RelicDataEntry(loadedRelic.relics[i].relicID, loadedRelic.relics[i].relicName));
+
+                    // 🔹 RelicManager에 유물을 추가할 때 `Instance`가 존재하는지 확인
+                    if (RelicManager.Instance != null)
+                    {
+                        IRelic relic = RelicFactory.CreateRelic(loadedRelic.relics[i].relicID);
+                        if (relic != null)
+                        {
+                            RelicManager.Instance.AddRelic(relic, GameManager.Instance.Player);
+                        }
+                    }
                 }
             }
         }
