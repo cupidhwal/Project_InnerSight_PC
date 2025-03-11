@@ -1,3 +1,4 @@
+using InnerSight_Kys;
 using UnityEngine;
 
 namespace Noah
@@ -16,6 +17,8 @@ namespace Noah
         {
             if (other.CompareTag("Player"))
             {
+                AudioManager.Instance.Play("Telleport");
+
                 transform.GetComponent<Collider>().enabled = false;
 
                 if (isHidden)
