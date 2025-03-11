@@ -63,6 +63,11 @@ namespace Seti
 
         protected virtual void Update()
         {
+            if (behaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
+            {
+                (lookBehaviour as Look)?.Update();
+            }
+
             // Move 행동이 있으면 Update 호출
             if (behaviourMap.TryGetValue(typeof(Move), out var moveBehaviour))
             {

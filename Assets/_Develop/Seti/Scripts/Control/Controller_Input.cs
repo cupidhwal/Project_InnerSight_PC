@@ -20,17 +20,6 @@ namespace Seti
 
         // 라이프 사이클
         #region Life Cycle
-        protected override void Update()
-        {
-            base.Update();
-
-            if (behaviourMap.TryGetValue(typeof(Look), out var lookBehaviour))
-            {
-                Look look = lookBehaviour as Look;
-                look?.Update();
-            }
-        }
-
         protected override void Awake()
         {
             // 초기화

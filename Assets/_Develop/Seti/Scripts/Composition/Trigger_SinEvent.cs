@@ -26,7 +26,7 @@ namespace Seti
         {
             if (other.CompareTag("Player"))
             {
-                if (eventObject/* && !DataManager.Instance.DialogueData.CheckSeens[dialogueNumber]*/)
+                if (eventObject && !DataManager.Instance.DialogueData.CheckSeens[dialogueNumber])
                 {
                     Instantiate(eventObject, transform.position, Quaternion.identity, transform);
                 }

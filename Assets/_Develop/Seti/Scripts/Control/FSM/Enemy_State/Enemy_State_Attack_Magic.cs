@@ -49,7 +49,7 @@ namespace Seti
             if (enemy.Detected && enemy.Condition.CanMove)
                 return typeof(Enemy_State_Chase);
 
-            if (!isPlayer || !enemy.IsObstacle)
+            if (enemy.Condition.CanMove && (!isPlayer || !enemy.IsObstacle))
                 return typeof(Enemy_State_Positioning);
 
             if (!enemy.Condition.IsMagic && !enemy.CanMagic)
@@ -61,9 +61,6 @@ namespace Seti
         // 상태 실행 중
         public override void Update(float deltaTime)
         {
-            // Move 행동 AI Input
-            move?.FSM_MoveInput(Vector2.zero, false);
-
             // Look 행동 AI Input
             look?.FSM_LookInput();
 
