@@ -12,6 +12,9 @@ namespace JungBin
         private static Dictionary<string, string> relicData = new Dictionary<string, string>()
         {
             { "ResurrectionRing", "생명의 고리" },
+            { "Healing Stone", "회복의 돌" },
+            { "MapofProphecyRelic", "마경의 예지도" },
+            { "Secret Key", "비밀 열쇠" }
         };
 
         /// <summary>
@@ -19,9 +22,14 @@ namespace JungBin
         /// </summary>
         public static IRelic CreateRelic(string relicID)
         {
+            Debug.Log($"유물 생성 시도: {relicID}");
+
             switch (relicID)
             {
                 case "ResurrectionRing": return new ResurrectionRelic();
+                case "Healing Stone": return new HealingStoneRelic();
+                case "MapofProphecyRelic": return new MapofProphecyRelic();
+                case "Secret Key": return new SecretKeyRelic();
                 default:
                     Debug.LogWarning($"알 수 없는 유물 ID: {relicID}");
                     return null;

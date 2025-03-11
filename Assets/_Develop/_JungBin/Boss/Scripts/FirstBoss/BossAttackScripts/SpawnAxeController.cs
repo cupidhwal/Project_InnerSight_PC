@@ -12,7 +12,7 @@ namespace JungBin
 
         private void Start()
         {
-            GameObject bossObject = GameObject.Find("FirstBoss");
+            GameObject bossObject = GameObject.Find("Taurus");
             Transform targetPosition = null; // TargetPosition을 저장할 변수
 
             if (bossObject != null)
