@@ -9,6 +9,6 @@ namespace Seti
     public abstract class Storyteller : MonoBehaviour
     {
         // 추상화
-        public abstract void StoryEnter();
+        public abstract bool StoryEnter();
     }
 }

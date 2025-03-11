@@ -47,9 +47,11 @@ namespace Seti
             {
                 if (!player.CurrentTeller.GetComponent<NPC_Life>().IsDead)
                 {
-                    player.CurrentTeller.StoryEnter();
-                    DataManager.Instance.UIManager.ToggleActionUI();
-                    return;
+                    if (player.CurrentTeller.StoryEnter())
+                    {
+                        DataManager.Instance.UIManager.ToggleActionUI();
+                        return;
+                    }
                 }
             }
 

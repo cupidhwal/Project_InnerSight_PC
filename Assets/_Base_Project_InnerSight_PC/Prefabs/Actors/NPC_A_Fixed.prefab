@@ -2487,6 +2487,7 @@ GameObject:
   - component: {fileID: 4426285132630832037}
   - component: {fileID: 3137153973983207957}
   - component: {fileID: 7553160726999756634}
+  - component: {fileID: 3725611871622639069}
   m_Layer: 6
   m_Name: NPC_A_Fixed
   m_TagString: Untagged
@@ -2578,7 +2579,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -2617,8 +2618,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceToPlayer: 0
-  dialogueNumber: 1
   canDialogue: 0
+  dialogueVariables:
+  - criteria_Death: 0
+    criteria_SinEvent: 0
+    dialogueNumber: 1
 --- !u!114 &4426285132630832037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2674,6 +2678,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654620e29c2ffbb44ad8b6c8e8916d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3725611871622639069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4891930711745136675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183d2ccdba84b4142937fd144ad996f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  deathCount: 99
 --- !u!1 &5006500332977023171
 GameObject:
   m_ObjectHideFlags: 0

@@ -110,7 +110,7 @@ namespace Seti
         #region Life Cycle
         public void Update()
         {
-            if (!actor.Condition.InAction) return;
+            //if (!actor.Condition.InAction) return;
             currentStrategy?.Look();
         }
         #endregion

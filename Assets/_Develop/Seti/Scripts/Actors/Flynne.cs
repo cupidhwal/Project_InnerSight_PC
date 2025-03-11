@@ -7,11 +7,12 @@ namespace Seti
     /// </summary>
     public class Flynne : Storyteller_NPC
     {
-        public override void StoryEnter()
+        public override bool StoryEnter()
         {
-            if (StageManager.Instance.Enemies.Count > 0) return;
+            if (StageManager.Instance.Enemies.Count > 0) return false;
 
             base.StoryEnter();
+            return true;
         }
     }
 }

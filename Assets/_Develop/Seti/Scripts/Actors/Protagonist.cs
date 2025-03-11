@@ -6,9 +6,9 @@ namespace Seti
         [SerializeField]
         private List<Dialogue> dialogues = new();*/
 
-        public override void StoryEnter()
+        public override bool StoryEnter()
         {
-            
+            return true;
         }
     }
 }
