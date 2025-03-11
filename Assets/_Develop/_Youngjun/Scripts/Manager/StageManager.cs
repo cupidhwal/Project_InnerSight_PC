@@ -6,6 +6,7 @@ using Unity.AI.Navigation;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using System.Diagnostics;
 
 namespace Noah
 {
@@ -236,12 +237,17 @@ namespace Noah
                 Destroy(currentStage);
 
                 Instantiate(stageObject[curStage], currentStagePar);
+
+                SetBGMSound();
             }
             else
             {
                 currentStage.SetActive(false);
 
                 Instantiate(hiddenStage, currentStagePar);
+
+                // 히든 스테이지 BGM 재생
+                SetHiddenStageBGM();
             }
 
             yield return new WaitForSeconds(0.5f);
@@ -271,6 +277,8 @@ namespace Noah
             player.GetComponent<NavMeshAgent>().enabled = true;
 
             SceneFade.instance.FadeIn(null);
+
+
         }
 
         // 히든 던전 빠져나가는 코루틴
@@ -315,6 +323,8 @@ namespace Noah
             player.GetComponent<NavMeshAgent>().enabled = true;
 
             SceneFade.instance.FadeIn(null);
+
+            SetBGMSound();
         }
 
         public void EnemyCount(GameObject _enemy)
@@ -352,5 +362,42 @@ namespace Noah
         }
 
         public void AddEnemy(GameObject enemy) => enemys.Add(enemy);
+
+        public void SetBGMSound()
+        {
+            switch (curStage)
+            {
+                case 0:
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                    break;
+                case 10:
+                    break;
+                case 11:
+                case 12:
+                case 13:
+                case 14:
+                    break;
+                case 15:
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        void SetHiddenStageBGM()
+        { 
+            
+        }
     }
 }
