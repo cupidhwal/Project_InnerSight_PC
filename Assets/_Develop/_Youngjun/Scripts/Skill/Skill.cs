@@ -51,15 +51,17 @@ namespace Noah
             }
         }
 
-        public virtual void     PlayerAnimation(Transform _player, int _typeNum)
+        public virtual void PlayerAnimation(Transform _player, int _typeNum)
         {
             if (_player.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
             {
                 if (attackBehaviour is Attack attack)
                 {
-                    attack.OnSlash(_typeNum);
-
                     _player.GetComponent<Actor>().Condition.AttackPoint = RayManager.Instance.RayToScreen();
+
+                    _player.GetComponent<Condition_Player>().PlayerSetActive(false);
+
+                    attack.OnSlash(_typeNum);
                 }
             }
         }
