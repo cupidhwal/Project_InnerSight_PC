@@ -40,8 +40,6 @@ namespace Seti
 
         private void Start()
         {
-            OnDialogueEnter += condition.DisablePlayer;
-            OnDialogueEnd += condition.EnablePlayer;
             OnDialogueEnd += Seen;
         }
 
@@ -133,6 +131,8 @@ namespace Seti
         {
             sentenceText.text = "";
 
+            condition.DisablePlayer();
+
             foreach (char latter in typingText)
             {
                 sentenceText.text += latter;
@@ -151,6 +151,8 @@ namespace Seti
         //대화 종료
         private void EndDialogue()
         {
+            condition.EnablePlayer();
+
             //대화 종료시 이벤트 처리
             OnDialogueEnd?.Invoke();
 

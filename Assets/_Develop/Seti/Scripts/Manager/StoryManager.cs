@@ -114,7 +114,7 @@ namespace Seti
             if (data == null) return;
 
             ScenarioProgress progress = data.dialogueDatas.FirstOrDefault(d => d.ScenarioName == stageName);
-            if (progress != null && !progress.CheckSeens[dialogueIndex])
+            if (progress == null || !progress.CheckSeens[dialogueIndex])
             {
                 target.SetActive(false);
             }
@@ -191,8 +191,8 @@ namespace Seti
             Cinemachine = FindAnyObjectByType<CinemachineCamera>();
             miniMap = FindAnyObjectByType<Mini_Map>().gameObject;
 
-            StageManager.Instance.stageEndEvent += InvokeStage;
             StageManager.Instance.stageEndEvent += ReadyComposition;
+            StageManager.Instance.stageEndEvent += InvokeStage;
 
             // 대화 이벤트 관리
             uiManager = DataManager.Instance.UIManager;
