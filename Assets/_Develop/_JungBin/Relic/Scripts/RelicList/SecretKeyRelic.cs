@@ -20,8 +20,6 @@ namespace JungBin
         /// </summary>
         protected override void Awake()
         {
-            base.Awake(); // 부모의 Awake() 실행 (기본 등록 유지)
-
             // 🔹 새로운 유물만의 특별한 효과 등록 가능!
             RelicEffectManager.RegisterEffect(RelicID,
                 () => Debug.Log("히든 스테이지 탐지 가능"),

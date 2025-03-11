@@ -1,4 +1,5 @@
 using InnerSight_Kys;
+using JungBin;
 using UnityEngine;
 
 namespace Noah
@@ -20,6 +21,8 @@ namespace Noah
                 AudioManager.Instance.Play("Telleport");
 
                 transform.GetComponent<Collider>().enabled = false;
+
+                GameManager.Instance.ChangeStage();
 
                 if (isHidden)
                 {
