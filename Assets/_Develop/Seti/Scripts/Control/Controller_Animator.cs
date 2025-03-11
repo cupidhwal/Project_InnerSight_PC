@@ -1,5 +1,7 @@
 using UnityEngine;
 using Noah;
+using InnerSight_Kys;
+using Unity.VisualScripting;
 
 namespace Seti
 {
@@ -132,7 +134,6 @@ namespace Seti
         #endregion
 
         // 유틸리티
-        #region Utilities
         //bool switchMove = false;
         public void MeleeAttackStart(int throwing = 0)
         {
@@ -143,29 +144,28 @@ namespace Seti
             if (Actor.Controller.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
                 if (attackBehaviour is Attack attack)
                     attack.OnAttackEnter();
-
-            /*if (Actor.Condition.IsMove)
-            {
-                switchMove = true;
-                Actor.Condition.IsMove = false;
-            }*/
         }
         public void MeleeAttackEnd()
         {
             Actor.Condition.CurrentWeapon.EndAttack();
             Actor.Condition.IsAttack = false;
-
-            /*if (switchMove)
-            {
-                switchMove = false;
-                Actor.Condition.IsMove = true;
-            }*/
         }
         public void MagicAttackEnd() => Actor.Condition.IsMagic = false;
         public void Slash_Double_End() => Actor.Condition.IsSlash_Double = false;
         public void Slash_Multiple_End() => Actor.Condition.IsSlash_Multiple = false;
-        public void CantMoveDurAtk() => Actor.Condition.CanMove = false;
-        public void CanMoveAfterAtk() => Actor.Condition.CanMove = true;
+        public void CantMoveDurAtk()
+        {
+            Actor.Condition.CanMove = false;
+
+            if (Actor is Player)
+            {
+                AudioManager.Instance.Play("Hitting Sound");
+            }
+        }
+        public void CanMoveAfterAtk()
+        {
+            Actor.Condition.CanMove = true;
+        }
 
         [SerializeField]
         protected float forwardSpeed;
@@ -183,7 +183,6 @@ namespace Seti
             }
             return 0f;
         }
-        #endregion
 
         // 스킬 애니메이션 실행
         public void UseSkill()

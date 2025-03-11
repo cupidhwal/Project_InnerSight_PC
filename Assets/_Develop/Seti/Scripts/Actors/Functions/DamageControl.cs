@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Noah;
 using Yoon;
+using InnerSight_Kys;
 
 namespace Seti
 {
@@ -99,6 +100,15 @@ namespace Seti
             {
                 // 넉백 기능
                 Knockback(Knockback(damageMessage));
+
+                if (actor is Player)
+                {
+                    AudioManager.Instance.Play("Player Hitting Sound");
+                }
+                else
+                {
+                    AudioManager.Instance.Play("PlayerAtackSound");
+                }
             }
 
             if (TryGetComponent<DamageText>(out var damageText))
@@ -119,6 +129,9 @@ namespace Seti
             // 더 이상 플레이어와 충돌하지 않도록 처리
             if (actor is Enemy enemy)
             {
+                AudioManager.Instance.Play("PlayerAtackSound");
+                AudioManager.Instance.Play("EnemyDeath");
+
                 Collider collider = GetComponent<Collider>();
                 collider.excludeLayers = LayerMask.GetMask("Player");
                 enemy.Agent.ResetPath();

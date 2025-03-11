@@ -1,3 +1,4 @@
+using InnerSight_Kys;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -56,7 +57,10 @@ namespace Seti
             Condition_Player condition_Player = player.Condition as Condition_Player;
 
             if (condition_Player.InAction && condition_Player.IsGrounded && condition_Player.CanDash)
+            {
+                AudioManager.Instance.Play("Dash Sound");
                 player.CoroutineExecutor(Dash_Cor());
+            }
         }
         #endregion
 

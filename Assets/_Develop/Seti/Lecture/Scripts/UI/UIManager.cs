@@ -15,6 +15,7 @@ namespace Seti
         public PlayerEquipmentUI playerEquipmentUI;
         public PlayerInventoryUI playerInventoryUI;
         public DialogueUI dialogueUI;
+        public GameObject actionUI;
         
         public int itemID = 0;
         #endregion
@@ -73,6 +74,8 @@ namespace Seti
         {
             go.SetActive(!go.activeSelf);
         }
+
+        //public void
 
         public void OpenDialogueUI(int dialogIndex)
         {
