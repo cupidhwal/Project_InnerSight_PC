@@ -11,6 +11,7 @@ namespace Yoon
         SceneFade fader;
         [SerializeField] private string loadToScene = "PlayScene";        //playScene 불러오기
         [SerializeField] private GameObject contiune;
+        //[SerializeField] private string buttonClickSound = "ButtonClick"; // 버튼 클릭 사운드 이름
 
         public GameObject mainMenuUI;
         public GameObject creditUI;
@@ -36,11 +37,15 @@ namespace Yoon
 
             AudioManager.Instance.PlayBgm("MainScene");
         }
+        private void PlayButtonClickSound()
+        {
+            AudioManager.Instance.Play("ButtonClick");
+        }
 
         public void NewGame()
         {
+            PlayButtonClickSound();
             Debug.Log("NewGame");
-
 
             //게임 데이터 초기화
             saveLoadManager.DeleteAllSaveFiles();
@@ -51,6 +56,7 @@ namespace Yoon
 
         public void LoadGame()
         {
+            PlayButtonClickSound();
             Debug.Log("LoadGame");
 
             fader.FadeOut(loadToScene);
@@ -59,6 +65,7 @@ namespace Yoon
 
         public void Credits()
         {
+            PlayButtonClickSound();
             ShowCredit();
         }
 
@@ -83,6 +90,7 @@ namespace Yoon
 
         public void QuitGame()
         {
+            PlayButtonClickSound();
             Debug.Log("Quit Game");
             Application.Quit();
         }
