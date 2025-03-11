@@ -1,10 +1,13 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Noah
 { 
     public class HiddenEntryObject : MonoBehaviour
     {
+        public List<float> reinforceData = new List<float>();
+
         public float riseSpeed = 2f; // 상승 속도 설정
         public float maxUp;
         public GameObject hiddenParitcle;
