@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Seti
@@ -20,17 +21,23 @@ namespace Seti
         {
             DamageControl damage = obj.GetComponent<DamageControl>();
             Renderer renderer = damage.BodyRenderer;
-            Material dissolve = damage.Dissolve;
+            Material[] dissolve = damage.Dissolve;
+            Material[] newMaterials = new Material[dissolve.Length];
 
             float dissolveDegree = 0.6f;
-            renderer.material = new(dissolve);
-            renderer.material.SetFloat("_Degree", dissolveDegree);
+            for (int i = 0; i < dissolve.Length; i++)
+            {
+                newMaterials[i] = new(dissolve[i]);
+                newMaterials[i].SetFloat("_Degree", dissolveDegree);
+            }
+            renderer.SetMaterials(new List<Material>(newMaterials));
 
             yield return new WaitForSeconds(delay - 1);
             while (dissolveDegree >= -0.4f)
             {
                 dissolveDegree -= Time.deltaTime;
-                renderer.material.SetFloat("_Degree", dissolveDegree);
+                for (int i = 0; i < dissolve.Length; i++)
+                    renderer.materials[i].SetFloat("_Degree", dissolveDegree);
                 yield return null;
             }
             Destroy(obj);

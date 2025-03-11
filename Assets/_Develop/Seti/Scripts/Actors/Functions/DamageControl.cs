@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Noah;
 using Yoon;
@@ -24,11 +25,11 @@ namespace Seti
         [SerializeField]
         private Renderer bodyRenderer;
         [SerializeField]
-        private Material dissolve;
+        private Material[] dissolve;
         #endregion
 
         public Renderer BodyRenderer => bodyRenderer;
-        public Material Dissolve => dissolve;
+        public Material[] Dissolve => dissolve;
 
         // 인터페이스
         #region Interface
@@ -123,9 +124,14 @@ namespace Seti
                 enemy.Agent.ResetPath();
                 enemy.Agent.enabled = false;
 
-                if (dissolve)
+                if (dissolve.Length > 0)
                 {
-                    bodyRenderer.material = new Material(dissolve);
+                    Material[] newMaterials = new Material[dissolve.Length];
+                    for (int i = 0; i < dissolve.Length; i++)
+                    {
+                        newMaterials[i] = new Material(dissolve[i]);
+                    }
+                    bodyRenderer.SetMaterials(new List<Material>(newMaterials));
                     StartCoroutine(DeathComposition(destroyDelay));
                 }
                 else
@@ -199,15 +205,31 @@ namespace Seti
         IEnumerator DeathComposition(float delay)
         {
             float dissolveDegree = 0.6f;
-            bodyRenderer.material.SetFloat("_Degree", dissolveDegree);
+
+            // 모든 머티리얼 가져오기
+            Material[] materials = bodyRenderer.materials;
+
+            // 처음 `_Degree` 값 설정
+            foreach (var mat in materials)
+            {
+                mat.SetFloat("_Degree", dissolveDegree);
+            }
 
             yield return new WaitForSeconds(delay - 1);
+
             while (dissolveDegree >= -0.4f)
             {
                 dissolveDegree -= Time.deltaTime;
-                bodyRenderer.material.SetFloat("_Degree", dissolveDegree);
+
+                // 모든 머티리얼에 `_Degree` 값 적용
+                foreach (var mat in materials)
+                {
+                    mat.SetFloat("_Degree", dissolveDegree);
+                }
+
                 yield return null;
             }
+
             Destroy(gameObject);
         }
     }
