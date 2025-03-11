@@ -109,7 +109,7 @@ namespace Seti
         }
         private void IsPositioning()
         {
-            if (enemy.Agent.remainingDistance < 0.1f)
+            if (enemy.Agent.remainingDistance < 0.1f || enemy.Detected)
             {
                 condition.IsPositioning = false;
                 positioningCompleted = true;
