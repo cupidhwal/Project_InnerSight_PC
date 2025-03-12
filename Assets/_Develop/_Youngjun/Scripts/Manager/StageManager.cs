@@ -160,7 +160,7 @@ namespace Noah
                 player.GetComponent<Rigidbody>().useGravity = true;
             }
             
-            stageEndEvent?.Invoke();
+            //stageEndEvent?.Invoke();
         }
 
         void EscapeHiddenStage()
@@ -265,7 +265,7 @@ namespace Noah
 
             yield return new WaitForSeconds(0.5f);
 
-            stageEndEvent?.Invoke();
+            //stageEndEvent?.Invoke();
             player.GetComponent<PlayerUseSkill>().enabled = true;
 
 

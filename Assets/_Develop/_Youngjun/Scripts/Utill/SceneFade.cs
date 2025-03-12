@@ -109,6 +109,9 @@ namespace Noah
 
             if (condition_Player != null)
                 condition_Player.PlayerSetActive(true);
+
+            if (StageManager.Instance != null)
+                StageManager.Instance.stageEndEvent?.Invoke();
         }
 
         IEnumerator FadeOut_Co(string name, float delay)
