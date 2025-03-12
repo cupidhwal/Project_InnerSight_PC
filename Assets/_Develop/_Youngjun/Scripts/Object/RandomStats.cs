@@ -8,14 +8,15 @@ namespace Noah
         // 강화 수치 데이터 리스트
         public List<float> reinforceData = new List<float>();
 
+        private string actionUI_Text = "";
+        private bool isContact = false;
+
         InGameUI_RandomStats inGameUI_RandomStats;
-        HiddenEntryObject hiddenEntryObject;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             inGameUI_RandomStats = FindAnyObjectByType<InGameUI_RandomStats>();
-            hiddenEntryObject = FindAnyObjectByType<HiddenEntryObject>();
 
             ObjectFadeSystem.Instance.ObjectFadeIn_Particle(transform);
 
@@ -25,27 +26,58 @@ namespace Noah
             }
         }
 
+        private void Update()
+        {
+            if (isContact)
+            {
+                actionUI_Text = "육신강화";
+
+                ActionUIManager.Instance.EnableActionUI(actionUI_Text);
+
+                if (Input.GetKeyDown(KeyCode.G))
+                {
+                    GetStatsReinforce();
+                }
+            }
+            else
+            {
+                ActionUIManager.Instance.DisableActionUI();
+            }
+        }
+
+        void GetStatsReinforce()
+        {
+            PlayerStatsManager.Instance.SetReinforceData();
+
+            transform.GetComponent<Collider>().enabled = false;
+
+            UIManager.Instance.statsReinforce.SetActive(true);
+            inGameUI_RandomStats.RandomStatsReinforce();
+            Time.timeScale = 0f;
+
+            if (HiddenStageManager.Instance != null)
+            {
+                HiddenStageManager.Instance.SelectReinforce();
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
-                PlayerStatsManager.Instance.SetReinforceData();
+                isContact = true;
+            }
+        }
 
-                transform.GetComponent<Collider>().enabled = false;
-
-                UIManager.Instance.statsReinforce.SetActive(true);
-                inGameUI_RandomStats.RandomStatsReinforce();
-                Time.timeScale = 0f;
-
-                if (HiddenStageManager.Instance != null)
-                {
-                    HiddenStageManager.Instance.SelectReinforce();
-                }
-                else
-                {
-                    Destroy(gameObject);
-                }
-
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                isContact = false;
             }
         }
     }

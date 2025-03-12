@@ -217,7 +217,9 @@ namespace Seti
             yield break;
         }
 
-        public void MagicAttack()
+        public void MagicAttack() => StartCoroutine(MagicCor());
+
+        IEnumerator MagicCor()
         {
             if (player && magicObject && ComponentUtility.TryGetComponentInChildren<Hand_Magic_Attack>(transform, out var hand))
             {
@@ -226,9 +228,12 @@ namespace Seti
                 Quaternion rot = Quaternion.LookRotation(dir) * Quaternion.Euler(0f, -2f, 0f);
 
                 // 마법 시전
-                GameObject go = Instantiate(magicObject, hand.transform.position, rot);
+                GameObject go = Instantiate(magicObject, hand.transform.position, rot, transform);
                 go.GetComponent<MagicAttack_Particle>().SetAttacker(this);
                 Destroy(go, 1f);
+
+                yield return new WaitForSeconds(0.5f);
+                go.transform.SetParent(null);
             }
         }
         #endregion
