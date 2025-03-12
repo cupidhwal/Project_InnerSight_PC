@@ -16,18 +16,12 @@ namespace Noah
         {
             if (isContact)
             {
-                actionUI_Text = "마기강화";
-
-                ActionUIManager.Instance.EnableActionUI(actionUI_Text);
-
                 if (Input.GetKeyDown(KeyCode.G))
                 {
+                    ActionUIManager.Instance.DisableActionUI();
+
                     GetSkillReinforce();
                 }
-            }
-            else
-            {
-                ActionUIManager.Instance.DisableActionUI();
             }
         }
 
@@ -56,6 +50,10 @@ namespace Noah
             if (other.CompareTag("Player"))
             {
                 isContact = true;
+
+                actionUI_Text = "마기강화";
+
+                ActionUIManager.Instance.EnableActionUI(actionUI_Text);
             }
         }
 
@@ -64,6 +62,8 @@ namespace Noah
             if (other.CompareTag("Player"))
             {
                 isContact = false;
+
+                ActionUIManager.Instance.DisableActionUI();
             }
         }
     }
