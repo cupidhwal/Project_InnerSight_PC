@@ -18,12 +18,16 @@ namespace Seti
         [SerializeField]
         ActiveFlag activeFlag;
         [SerializeField]
+        bool allStopCor;
+        [SerializeField]
         float excuteDuration = 1f;
         [SerializeField]
         float excuteSharpness = 10f;
 
         public override void Execute(GameObject _)
         {
+            if (allStopCor)
+                StoryManager.Instance.CorStopper();
             StoryManager.Instance.CorExcutor(Fade());
         }
 

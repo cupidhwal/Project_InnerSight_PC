@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Noah;
 
 namespace Seti
 {
@@ -10,8 +11,6 @@ namespace Seti
         [Header("Variables")]
         [SerializeField]
         GameObject targetPrefab;
-        [SerializeField]
-        Transform targetTransform;
         [SerializeField]
         float delayExcute = 1f;
 
@@ -24,8 +23,10 @@ namespace Seti
         IEnumerator InstantiateCor(float delayExcute)
         {
             yield return new WaitForSeconds(delayExcute);
-            Vector3 targetPos = targetTransform.position + targetTransform.forward * 2f;
-            Instantiate(targetPrefab, targetPos, Quaternion.Euler(new(0f, 90f, 0f)));
+            Transform targetTransform = FindAnyObjectByType<Player>().transform;
+
+            Vector3 targetPos = targetTransform.position + new Vector3(1f, 0f, 2f);
+            Instantiate(targetPrefab, targetPos, Quaternion.Euler(new(0f, 90f, 0f)), StageManager.Instance.CurrentStage.transform);
         }
     }
 }

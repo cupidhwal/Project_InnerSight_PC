@@ -11,7 +11,7 @@ namespace Seti
     {
         public override void OpenDialogue()
         {
-            if (SaveLoadManager.Instance.scenarioSaveData.flynneEvent[5])
+            if (!SaveLoadManager.Instance.scenarioSaveData.flynneEvent[5])
                 triggers.Remove(triggers[0]);
             else triggers.Remove(triggers[1]);
 
