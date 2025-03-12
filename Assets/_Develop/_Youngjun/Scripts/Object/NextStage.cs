@@ -11,7 +11,7 @@ namespace Noah
 
         private string actionUI_Text = "";
         private bool isContact = false;
-        Transform lastPos;
+        Vector3 lastPos;
 
         private void Start()
         {
@@ -22,29 +22,12 @@ namespace Noah
         {
             if (isContact)
             {
-                if (isHidden)
-                {
-                    actionUI_Text = "히든 스테이지";
-                }
-                else if (escapeHidden)
-                {
-                    actionUI_Text = "스테이지 복귀";
-                }
-                else
-                {
-                    actionUI_Text = "스테이지 이동";
-                }
-
-                ActionUIManager.Instance.EnableActionUI(actionUI_Text);
-
                 if (Input.GetKeyDown(KeyCode.G))
                 {
+                    ActionUIManager.Instance.DisableActionUI();
+
                     ChangeStage();
                 }
-            }
-            else
-            {
-                ActionUIManager.Instance.DisableActionUI();
             }
         }
 
@@ -60,7 +43,7 @@ namespace Noah
             {
                 StageManager.Instance.IsHidden = true;
 
-                StageManager.Instance.playerPos = lastPos.position;
+                StageManager.Instance.playerPos = lastPos;
 
                 Destroy(gameObject);
             }
@@ -85,15 +68,23 @@ namespace Noah
         {
             if (other.CompareTag("Player"))
             {
+                isContact = true;
+
                 if (isHidden)
                 {
-                    lastPos.position = other.transform.position;
+                    lastPos = other.transform.position;
+                    actionUI_Text = "히든 스테이지";
+                }        
+                else if (escapeHidden)
+                {
+                    actionUI_Text = "스테이지 복귀";
+                }
+                else
+                {
+                    actionUI_Text = "스테이지 이동";
                 }
 
-                Debug.Log("1");
-
-                isContact = true;
-                Debug.Log("2");
+                ActionUIManager.Instance.EnableActionUI(actionUI_Text);           
             }
         }
 
@@ -102,6 +93,8 @@ namespace Noah
             if (other.CompareTag("Player"))
             {
                 isContact = false;
+
+                ActionUIManager.Instance.DisableActionUI();
             }
         }
     }
