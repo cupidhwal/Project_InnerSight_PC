@@ -1,4 +1,5 @@
 using UnityEngine;
+using Noah;
 
 namespace Seti
 {
@@ -12,6 +13,7 @@ namespace Seti
         public override void Execute(GameObject obj)
         {
             DataManager.Instance.flynneEvent[eventIndex] = true;
+            SaveLoadManager.Instance.SaveScenario(DataManager.Instance.DialogueData);
         }
     }
 }

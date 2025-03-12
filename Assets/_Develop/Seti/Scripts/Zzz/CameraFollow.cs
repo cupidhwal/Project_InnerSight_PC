@@ -8,8 +8,8 @@ namespace Seti
         // 필드
         #region Variables
         private CinemachineCamera cinemachineCamera;
-        [SerializeField]
-        private float nearClipPlane = 0.3f;
+        //[SerializeField]
+        //private float nearClipPlane = 0.3f;
         #endregion
 
         // 라이프 사이클

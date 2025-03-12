@@ -60,8 +60,9 @@ namespace Seti
         protected float magicInterval = 5f;
 
         [Header("Function : AI Behaviour")]
+        public GameObject magicCurrent;
         [SerializeField]
-        protected GameObject magicObject;
+        protected GameObject magicPrefab;
         [SerializeField]
         protected float magicDamage = 0f;
         #endregion
@@ -107,7 +108,7 @@ namespace Seti
         }
         public bool LockOn => player && (distancePlayer <= range_Attack * 2f);
         public bool Detected => player && (distancePlayer <= range_Detect);
-        public bool CanMagic => player && magicObject && (distancePlayer <= range_Magic);
+        public bool CanMagic => player && magicPrefab && (distancePlayer <= range_Magic);
         public bool CanAttack => player && (distancePlayer <= range_Attack);
         public bool GoBackHome => distancePlace >= range_BackOff;
         public bool TooFarFromHome => distancePlace >= range_BackOff * 2f;
@@ -221,19 +222,19 @@ namespace Seti
 
         IEnumerator MagicCor()
         {
-            if (player && magicObject && ComponentUtility.TryGetComponentInChildren<Hand_Magic_Attack>(transform, out var hand))
+            if (player && magicPrefab && ComponentUtility.TryGetComponentInChildren<Hand_Magic_Attack>(transform, out var hand))
             {
                 // 공격 방향
                 Vector3 dir = player.transform.position - transform.position;
                 Quaternion rot = Quaternion.LookRotation(dir) * Quaternion.Euler(0f, -2f, 0f);
 
                 // 마법 시전
-                GameObject go = Instantiate(magicObject, hand.transform.position, rot, transform);
-                go.GetComponent<MagicAttack_Particle>().SetAttacker(this);
-                Destroy(go, 1f);
+                magicCurrent = Instantiate(magicPrefab, hand.transform.position, rot, transform);
+                magicCurrent.GetComponent<MagicAttack_Particle>().SetAttacker(this);
+                Destroy(magicCurrent, 1f);
 
                 yield return new WaitForSeconds(0.5f);
-                go.transform.SetParent(null);
+                magicCurrent.transform.SetParent(null);
             }
         }
         #endregion

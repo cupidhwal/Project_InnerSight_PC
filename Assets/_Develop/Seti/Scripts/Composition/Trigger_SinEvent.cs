@@ -13,8 +13,6 @@ namespace Seti
         [Header("Variables")]
         [SerializeField]
         private int dialogueNumber;
-        [SerializeField]
-        private float dialogueDelay = 1f;
 
         [Header("Composition")]
         [SerializeField]

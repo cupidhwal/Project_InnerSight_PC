@@ -8,9 +8,9 @@ namespace Seti
     /// </summary>
     public class Trigger_HomeTown : MonoBehaviour
     {
-        [Header("Variables")]
-        [SerializeField]
-        private float dialogueDelay = 1f;
+        //[Header("Variables")]
+        //[SerializeField]
+        //private float dialogueDelay = 1f;
 
         public void OpenDialogue(int deathCount)
         {

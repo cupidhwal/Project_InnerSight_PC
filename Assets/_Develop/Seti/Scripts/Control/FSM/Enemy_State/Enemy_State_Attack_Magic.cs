@@ -43,7 +43,7 @@ namespace Seti
             if (damagable.CurrentHitPoints <= 0)
                 return typeof(Enemy_State_Dead);
 
-            if (!condition.InAction)
+            if (condition.InAction)
                 return typeof(Enemy_State_Stagger);
 
             if (enemy.Detected && enemy.Condition.CanMove)

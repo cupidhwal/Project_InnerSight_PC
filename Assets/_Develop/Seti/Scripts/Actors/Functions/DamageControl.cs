@@ -151,6 +151,9 @@ namespace Seti
                 {
                     Destroy(gameObject, destroyDelay);
                 }
+
+                if (enemy.magicCurrent)
+                    Destroy(enemy.magicCurrent);
             }
 
             // 플레이어 사망 시 재시작
@@ -158,6 +161,13 @@ namespace Seti
             {
                 // 죽음 횟수 +1 / 저장
                 DataManager.Instance.deathCount++;
+
+                // 원흉 이벤트를 안 본 경우 카운트 제한
+                if (!SaveLoadManager.Instance.scenarioSaveData.sinEvent[0])
+                    DataManager.Instance.deathCount = Mathf.Clamp(DataManager.Instance.deathCount, 0, 1);
+                if (!SaveLoadManager.Instance.scenarioSaveData.sinEvent[1])
+                    DataManager.Instance.deathCount = Mathf.Clamp(DataManager.Instance.deathCount, 0, 2);
+
                 SaveLoadManager.Instance.SaveScenario(DataManager.Instance.DialogueData);
 
                 // 재시작
