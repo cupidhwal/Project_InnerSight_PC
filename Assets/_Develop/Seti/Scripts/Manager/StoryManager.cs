@@ -94,17 +94,21 @@ namespace Seti
             if (StageName == "Stage000")
             {
                 GameObject portals = StageManager.Instance.CurrentStage.transform.GetChild(0).gameObject;
-                if (SaveLoadManager.Instance.scenarioSaveData.deathCount > 0)
+                if (SaveLoadManager.Instance.scenarioSaveData.deathCount >= 1)
                 {
                     DisableComposition("Stage000", 1, portals);
 
                     if (SaveLoadManager.Instance.scenarioSaveData.sinEvent[0] ||
                         SaveLoadManager.Instance.scenarioSaveData.sinEvent[1])
                     {
-                        DisableComposition("Stage000", 2, portals);
-                        DisableComposition("Stage000", 3, portals);
-                        DisableComposition("Stage000", 4, portals);
-                        DisableComposition("Stage000", 5, portals);
+                        if (SaveLoadManager.Instance.scenarioSaveData.deathCount >= 2)
+                            DisableComposition("Stage000", 2, portals);
+                        if (SaveLoadManager.Instance.scenarioSaveData.deathCount >= 3)
+                            DisableComposition("Stage000", 3, portals);
+                        if (SaveLoadManager.Instance.scenarioSaveData.deathCount >= 4)
+                            DisableComposition("Stage000", 4, portals);
+                        if (SaveLoadManager.Instance.scenarioSaveData.deathCount >= 5)
+                            DisableComposition("Stage000", 5, portals);
                     }
                 }
             }
