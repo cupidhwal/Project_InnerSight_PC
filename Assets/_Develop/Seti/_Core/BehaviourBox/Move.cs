@@ -128,6 +128,10 @@ namespace Seti
                 case Enemy_State_BackOff:
                     ChangeStrategy(typeof(Move_Nav));
                     break;
+
+                default:
+                    currentStrategy = null;
+                    break;
             }
         }
         #endregion
