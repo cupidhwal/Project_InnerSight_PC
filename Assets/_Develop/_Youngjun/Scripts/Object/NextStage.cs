@@ -27,6 +27,8 @@ namespace Noah
                     ActionUIManager.Instance.DisableActionUI();
 
                     ChangeStage();
+
+                    isContact = false;
                 }
             }
         }

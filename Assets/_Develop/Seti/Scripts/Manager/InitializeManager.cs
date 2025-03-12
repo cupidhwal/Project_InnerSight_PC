@@ -41,6 +41,8 @@ namespace Seti
             // 플레이어
             if (!player)
                 player = FindAnyObjectByType<Player>();
+
+            player.GetComponent<Condition_Player>().PlayerSetActive(false);
         }
     }
 }

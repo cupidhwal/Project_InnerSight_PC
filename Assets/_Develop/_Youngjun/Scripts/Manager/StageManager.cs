@@ -159,8 +159,6 @@ namespace Noah
                 player.GetComponent<PlayerUseSkill>().enabled = true;
                 player.GetComponent<Rigidbody>().useGravity = true;
             }
-
-
             stageEndEvent?.Invoke();
         }
 
