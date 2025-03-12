@@ -76,6 +76,8 @@ namespace Seti
         public void DisablePlayer() => PlayerSetActive(false);
         public void PlayerSetActive(bool inAction)
         {
+            Debug.Log($"inAction: {inAction}");
+
             this.inAction = inAction;
             CanMove = inAction;
             StopRigidBody();
