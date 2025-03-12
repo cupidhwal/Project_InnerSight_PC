@@ -21,9 +21,9 @@ namespace Seti
     {
         [Header("Variables : Dialogue")]
         [SerializeField]
-        private List<TriggerVariables> triggers;
+        protected List<TriggerVariables> triggers;
 
-        public void OpenDialogue()
+        public virtual void OpenDialogue()
         {
             int index = -1;
             float delay = 0;
