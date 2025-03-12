@@ -19,21 +19,6 @@ namespace Seti
             if (TryGetComponent<Damagable>(out var damagable))
                 damagable.OnDeath += ReviveInvoke;
         }
-
-        private void OnEnable()
-        {
-            StageManager.Instance.stageStartEvent += DisablePlayer;
-            StageManager.Instance.stageEndEvent += EnablePlayer;
-        }
-
-        private void OnDisable()
-        {
-            //if (StageManager.Instance.stageStartEvent != null)
-            //    StageManager.Instance.stageStartEvent -= DisablePlayer;
-
-            //if (StageManager.Instance.stageEndEvent != null)
-            //    StageManager.Instance.stageEndEvent -= EnablePlayer;
-        }
         #endregion
 
         // 메서드
