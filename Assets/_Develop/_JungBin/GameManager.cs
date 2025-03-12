@@ -1,4 +1,5 @@
 using Seti;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ namespace JungBin
         [SerializeField] private Player player;
 
         public Player Player => player; // 외부에서 접근 가능한 프로퍼티
+
+        public static event Action OnStageChanged; // 🔹 스테이지 변경 이벤트
 
         private void Awake()
         {
@@ -36,6 +39,15 @@ namespace JungBin
             {
                 Debug.LogWarning("유물 등록 실패: null 값이 전달됨.");
             }
+        }
+
+        /// <summary>
+        /// 스테이지 변경 시 호출됨
+        /// </summary>
+        public void ChangeStage()
+        {
+            Debug.Log("🔹 새로운 스테이지로 이동!");
+            OnStageChanged?.Invoke(); // 🔹 이벤트 호출 → 유물 효과 적용됨!
         }
     }
 }

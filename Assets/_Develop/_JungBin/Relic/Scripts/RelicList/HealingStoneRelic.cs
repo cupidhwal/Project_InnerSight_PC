@@ -10,6 +10,8 @@ namespace JungBin
         [TextArea(5, 5)]
         [SerializeField] private string relicDescription = "다음 스테이지로 이동 시 일정 체력을 회복합니다.";
 
+        [SerializeField] private float healAmount;
+
        // private Player player;
 
         public override string RelicName => relicName;
@@ -21,12 +23,10 @@ namespace JungBin
                 /// </summary>
         protected override void Awake()
         {
-            base.Awake(); // 부모의 Awake() 실행 (기본 등록 유지)
-
                         // 🔹 새로운 유물만의 특별한 효과 등록 가능!
             RelicEffectManager.RegisterEffect(RelicID,
-                () => Debug.Log("회복의 돌 유물 효과 추가!"),
-                () => Debug.Log("회복의 돌 유물 효과 제거!")
+                () => GameManager.OnStageChanged += HealPlayer,
+                () => GameManager.OnStageChanged -= HealPlayer
             );
         }
 
@@ -38,6 +38,25 @@ namespace JungBin
         public override void RemoveEffect()
         {
             RelicEffectManager.RemoveEffect(RelicID);
+        }
+
+        /// <summary>
+        /// 스테이지 이동 시 체력 회복 (기존 함수 활용)
+        /// </summary>
+        private void HealPlayer()
+        {
+            if (GameManager.Instance.Player == null)
+            {
+                return;
+            }
+
+            Damagable damagable = GameManager.Instance.Player.GetComponent<Damagable>();
+            if (damagable == null)
+            {
+                return;
+            }
+                damagable.HealCurrentHitPoint(healAmount); // ✅ 기존 체력 회복 함수 호출
+            Debug.Log($"🔹 체력 강화 효과 적용됨! +{healAmount} HP 증가");
         }
     }
 }
