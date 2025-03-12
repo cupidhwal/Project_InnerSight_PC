@@ -13,7 +13,8 @@ namespace JungBin
     public class RelicManager : MonoBehaviour
     {
         private List<IRelic> relics = new List<IRelic>(); // 🔹 현재 보유 중인 유물 리스트
-        private IRelic selectedRelic; // 🔹 마지막으로 선택한 유물 저장
+        private IRelic selectedRelic; // 🔹 마지막으로 결정한 유물 저장
+        private IRelic clickRelic; // 🔹 마지막으로 선택한 유물 저장
 
         [SerializeField] private TextMeshProUGUI relicName; // 🔹 UI에서 유물 이름을 표시하는 텍스트
         [SerializeField] private TextMeshProUGUI relicDescription; // 🔹 UI에서 유물 설명을 표시하는 텍스트
@@ -54,12 +55,12 @@ namespace JungBin
             foreach (var relicEntry in SaveLoadManager.Instance.relicSaveData.relics)
             {
                 IRelic relic = RelicFactory.CreateRelic(relicEntry.relicID);
+                Debug.Log($"Relic 데이터 : {relic.RelicID}");
                 if (relic != null)
                 {
                     Debug.Log("RelicManager 저장된 유물 데이터 적용");
                     relics.Add(relic);
                     RelicEffectManager.RegisterEffect(relic.RelicID, relic.ApplyEffect, relic.RemoveEffect);
-                    RelicEffectManager.ApplyEffect(relic.RelicID);
                 }
             }
 
@@ -75,7 +76,6 @@ namespace JungBin
         {
             relics.Add(relic);
             RelicEffectManager.RegisterEffect(relic.RelicID, relic.ApplyEffect, relic.RemoveEffect);
-            RelicEffectManager.ApplyEffect(relic.RelicID);
 
             // 🔹 중복 저장 방지
             if (!SaveLoadManager.Instance.relicSaveData.relics.Exists(r => r.relicID == relic.RelicID))
@@ -84,7 +84,7 @@ namespace JungBin
                 SaveLoadManager.Instance.SaveRelics();
             }
 
-            ActivateTrinketButton(relic.RelicName); // 🔹 UI 버튼 활성화
+            ActivateTrinketButton(relic.RelicID); // 🔹 UI 버튼 활성화
         }
 
         /// <summary>
@@ -114,6 +114,7 @@ namespace JungBin
         /// <summary>
         /// 유물의 설명을 UI에 표시하는 메서드
         /// </summary>
+        /// 
         /// <param name="name">유물 이름</param>
         /// <returns>찾은 유물 객체</returns>
         public IRelic ShowRelicDescription(string name)
@@ -129,7 +130,7 @@ namespace JungBin
                         relicName.text = relic.RelicName;
                         relicDescription.text = relic.Description;
 
-                        selectedRelic = relic; // 🔹 선택된 유물 저장
+                        clickRelic = relic; // 🔹 선택된 유물 저장
                         return relic;
                     }
                 }
@@ -143,7 +144,7 @@ namespace JungBin
         /// </summary>
         public void SelectRelicButton()
         {
-            ApplyRelicEffect(selectedRelic, GameManager.Instance.Player);
+            ApplyRelicEffect(clickRelic, GameManager.Instance.Player);
         }
 
         /// <summary>
@@ -159,7 +160,8 @@ namespace JungBin
 
             selectedRelic = newRelic;
             RelicEffectManager.ApplyEffect(newRelic.RelicID);
-            applyImage.sprite = sourceImage;
+            Debug.Log(newRelic.RelicID);
+            //applyImage.sprite = sourceImage;
             relicSelectUI.SetActive(false);
         }
 
@@ -168,11 +170,11 @@ namespace JungBin
         /// </summary>
         private void LoadRelicUI()
         {
-            foreach (var relicEntry in SaveLoadManager.Instance.relicSaveData.relics)
+            foreach (var relic in GetRelics())
             {
                 foreach (Transform child in trinketUIParent.transform)
                 {
-                    if (child.name == relicEntry.relicName) // 🔹 유물의 이름과 UI 오브젝트 이름이 같다면
+                    if (child.name == relic.RelicID) // 🔹 유물의 이름과 UI 오브젝트 이름이 같다면
                     {
                         child.gameObject.SetActive(true); // 🔹 해당 버튼을 활성화
                         break; // 🔹 일치하는 버튼을 찾았으므로 더 이상 반복할 필요 없음
@@ -186,10 +188,17 @@ namespace JungBin
         /// 특정 유물의 UI 버튼을 활성화하는 메서드
         /// </summary>
         /// <param name="relicID">활성화할 유물의 ID</param>
-        public void ActivateTrinketButton(string relicName)
+        public void ActivateTrinketButton(string RelicID)
         {
-            if (trinketButtons.ContainsKey(relicName))
-                trinketButtons[relicName].SetActive(true);
+            foreach (Transform child in trinketUIParent.transform)
+            {
+                if (child.name == RelicID) // 🔹 유물의 이름과 UI 오브젝트 이름이 같다면
+                {
+                    child.gameObject.SetActive(true); // 🔹 해당 버튼을 활성화
+                    break; // 🔹 일치하는 버튼을 찾았으므로 더 이상 반복할 필요 없음
+                }
+            }
+
         }
 
         /// <summary>

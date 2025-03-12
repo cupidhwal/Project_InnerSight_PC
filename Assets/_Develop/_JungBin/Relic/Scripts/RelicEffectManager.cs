@@ -29,6 +29,8 @@ public static class RelicEffectManager
     {
         if (applyEffects.ContainsKey(relicID))
         {
+            Debug.Log($"🔹 유물 효과 적용: {relicID}");
+
             applyEffects[relicID]?.Invoke();
         }
         else

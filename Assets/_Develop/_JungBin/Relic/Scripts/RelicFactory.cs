@@ -13,7 +13,7 @@ namespace JungBin
         {
             { "ResurrectionRing", "생명의 고리" },
             { "Healing Stone", "회복의 돌" },
-            { "MapofProphecyRelic", "마경의 예지도" },
+            { "Map of Prophecy", "마경의 예지도" },
             { "Secret Key", "비밀 열쇠" }
         };
 
@@ -28,7 +28,7 @@ namespace JungBin
             {
                 case "ResurrectionRing": return new ResurrectionRelic();
                 case "Healing Stone": return new HealingStoneRelic();
-                case "MapofProphecyRelic": return new MapofProphecyRelic();
+                case "Map of Prophecy": return new MapofProphecyRelic();
                 case "Secret Key": return new SecretKeyRelic();
                 default:
                     Debug.LogWarning($"알 수 없는 유물 ID: {relicID}");

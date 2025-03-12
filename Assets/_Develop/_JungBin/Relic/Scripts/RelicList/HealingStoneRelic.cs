@@ -32,12 +32,12 @@ namespace JungBin
 
         public override void ApplyEffect()
         {
-            RelicEffectManager.ApplyEffect(RelicID);
+            //RelicEffectManager.ApplyEffect(RelicID);
         }
 
         public override void RemoveEffect()
         {
-            RelicEffectManager.RemoveEffect(RelicID);
+            //RelicEffectManager.RemoveEffect(RelicID);
         }
 
         /// <summary>
@@ -47,12 +47,14 @@ namespace JungBin
         {
             if (GameManager.Instance.Player == null)
             {
+                Debug.Log("GameManager.Instance.Player == null");
                 return;
             }
 
             Damagable damagable = GameManager.Instance.Player.GetComponent<Damagable>();
             if (damagable == null)
             {
+                Debug.Log("damagable == null");
                 return;
             }
                 damagable.HealCurrentHitPoint(healAmount); // ✅ 기존 체력 회복 함수 호출
