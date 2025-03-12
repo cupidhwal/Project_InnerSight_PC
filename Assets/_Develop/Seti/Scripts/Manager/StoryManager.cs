@@ -130,7 +130,7 @@ namespace Seti
 
         // 기타 메서드
         #region Methods
-        private void InvokeStage() => Invoke(nameof(SwitchCurrentStage), 0);
+        private void InvokeStage() => Invoke(nameof(SwitchCurrentStage), 1);
         private void SwitchCurrentStage()
         {
             if (IsDialogue) return;

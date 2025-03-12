@@ -42,9 +42,22 @@ namespace Seti
 
                     if (!DataManager.Instance.sinEvent[data.targetSinEvent])
                     {
-                        index = data.dialogueNumber;
-                        delay = data.dialogueDelay;
-                        break;
+                        bool check = false;
+                        for (int i = 0; i < data.targetSinEvent; i++)
+                        {
+                            if (!DataManager.Instance.sinEvent[i])
+                            {
+                                check = true;
+                                break;
+                            }
+                        }
+
+                        if (!check)
+                        {
+                            index = data.dialogueNumber;
+                            delay = data.dialogueDelay;
+                            break;
+                        }
                     }
                 }
                 else
