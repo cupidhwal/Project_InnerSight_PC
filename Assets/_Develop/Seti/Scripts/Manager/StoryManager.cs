@@ -171,6 +171,11 @@ namespace Seti
                 case "Stage004":
                     SetDialogue(4);
                     break;
+
+                case "Stage015":
+                    SetDialogue(5);
+                    OpenDialogue(0);
+                    break;
             }
         }
         #endregion
