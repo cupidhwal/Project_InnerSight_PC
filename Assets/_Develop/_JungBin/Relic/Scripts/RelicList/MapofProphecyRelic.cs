@@ -5,7 +5,7 @@ namespace JungBin
     public class MapofProphecyRelic : ResurrectionRelic
     {
         [SerializeField] private string relicName = "마경의 예지도";
-        [SerializeField] private string relicID = "MapofProphecyRelic";
+        [SerializeField] private string relicID = "Map of Prophecy";
         [TextArea(5, 5)]
         [SerializeField] private string relicDescription = "다음 스테이지에서 등장할 몬스터의 숫자를 미리 확인할 수 있습니다.";
 
@@ -29,12 +29,12 @@ namespace JungBin
 
         public override void ApplyEffect()
         {
-            RelicEffectManager.ApplyEffect(RelicID);
+            //RelicEffectManager.ApplyEffect(RelicID);
         }
 
         public override void RemoveEffect()
         {
-            RelicEffectManager.RemoveEffect(RelicID);
+            //RelicEffectManager.RemoveEffect(RelicID);
         }
     }
 }

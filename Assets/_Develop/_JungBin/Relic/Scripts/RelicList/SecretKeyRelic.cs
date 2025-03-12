@@ -29,12 +29,12 @@ namespace JungBin
 
         public override void ApplyEffect()
         {
-            RelicEffectManager.ApplyEffect(RelicID);
+            //RelicEffectManager.ApplyEffect(RelicID);
         }
 
         public override void RemoveEffect()
         {
-            RelicEffectManager.RemoveEffect(RelicID);
+           // RelicEffectManager.RemoveEffect(RelicID);
         }
     }
 }

@@ -26,12 +26,12 @@ namespace JungBin
 
         public virtual void ApplyEffect()
         {
-            RelicEffectManager.ApplyEffect(RelicID);
+            //RelicEffectManager.ApplyEffect(RelicID);
         }
 
         public virtual void RemoveEffect()
         {
-            RelicEffectManager.RemoveEffect(RelicID);
+            //RelicEffectManager.RemoveEffect(RelicID);
         }
 
         /// <summary>

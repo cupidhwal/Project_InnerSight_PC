@@ -41,18 +41,21 @@ namespace JungBin
             {
                 // 저장된 데이터를 불러옴
                 RelicSaveData loadedRelic = SaveLoadManager.Instance.relicSaveData;
-                relics.Clear(); // 🔹 기존 데이터를 초기화하여 중복 저장 방지
+                //relics.Clear(); // 🔹 기존 데이터를 초기화하여 중복 저장 방지
 
-                // 🔹 오류 방지를 위해 Add()를 사용하여 리스트에 새 데이터 추가
-                for (int i = 0; i < loadedRelic.relics.Count; i++)
+                // 🔹 오류 방지를 위해 중복 체크 후 추가
+                foreach (var relicEntry in loadedRelic.relics)
                 {
-                    relics.Add(new RelicDataEntry(loadedRelic.relics[i].relicID, loadedRelic.relics[i].relicName));
+                    if (!relics.Exists(r => r.relicID == relicEntry.relicID)) // 중복 확인
+                    {
+                        relics.Add(new RelicDataEntry(relicEntry.relicID, relicEntry.relicName));
+                    }
 
                     // 🔹 RelicManager에 유물을 추가할 때 `Instance`가 존재하는지 확인
                     if (RelicManager.Instance != null)
                     {
-                        IRelic relic = RelicFactory.CreateRelic(loadedRelic.relics[i].relicID);
-                        if (relic != null)
+                        IRelic relic = RelicFactory.CreateRelic(relicEntry.relicID);
+                        if (relic != null && !RelicManager.Instance.GetRelics().Exists(r => r.RelicID == relic.RelicID)) // 중복 확인
                         {
                             RelicManager.Instance.AddRelic(relic, GameManager.Instance.Player);
                         }

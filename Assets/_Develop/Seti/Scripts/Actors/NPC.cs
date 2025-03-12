@@ -57,7 +57,7 @@ namespace Seti
             switch (type)
             {
                 case NPC_Type.Trinkets:
-                    if (SaveLoadManager.Instance.relicSaveData.relics.Count > 0)
+                    if (RelicManager.Instance.GetRelics().Count > 0)
                     {
                         targetUI.SetActive(isOpenUI = !isOpenUI);
                     }
