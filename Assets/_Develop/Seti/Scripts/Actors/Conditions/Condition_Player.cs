@@ -7,6 +7,8 @@ namespace Seti
     {
         // 필드
         private Move move;
+        [SerializeField]
+        private int life = 0;
         public bool CanDash { get; set; } = true;
         public bool IsDash { get; set; } = false;
 
@@ -29,6 +31,12 @@ namespace Seti
             //Destroy(gameObject, 2);
         }
 
+        public void SetLife(int amount)
+        {
+            life += amount;
+            actor.Controller_Animator.Animator.SetInteger("Life", life);
+        }
+
         private void ReviveInvoke()
         {
             Invoke("Revive", 7);
@@ -38,7 +46,7 @@ namespace Seti
         {
             IsDead = false;
 
-            Actor.Controller_Animator.Animator.Rebind();
+            //Actor.Controller_Animator.Animator.Rebind();
         }
 
         public override void Initialize()

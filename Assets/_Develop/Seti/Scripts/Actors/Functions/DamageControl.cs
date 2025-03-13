@@ -133,7 +133,7 @@ namespace Seti
                 AudioManager.Instance.Play("EnemyDeath");
 
                 Collider collider = GetComponent<Collider>();
-                collider.excludeLayers = LayerMask.GetMask("Player");
+                collider.excludeLayers = LayerMask.GetMask("Player", "Actor");
                 try
                 {
                     enemy.Agent.ResetPath();
@@ -164,19 +164,22 @@ namespace Seti
             // 플레이어 사망 시 재시작
             if (actor is Player)
             {
-                // 죽음 횟수 +1 / 저장
-                DataManager.Instance.deathCount++;
+                if (actor.Controller_Animator.Animator.GetInteger("Life") == 0)
+                {
+                    // 죽음 횟수 +1 / 저장
+                    DataManager.Instance.deathCount++;
 
-                // 원흉 이벤트를 안 본 경우 카운트 제한
-                if (!SaveLoadManager.Instance.scenarioSaveData.sinEvent[0])
-                    DataManager.Instance.deathCount = Mathf.Clamp(DataManager.Instance.deathCount, 0, 1);
-                if (!SaveLoadManager.Instance.scenarioSaveData.sinEvent[1])
-                    DataManager.Instance.deathCount = Mathf.Clamp(DataManager.Instance.deathCount, 0, 2);
+                    // 원흉 이벤트를 안 본 경우 카운트 제한
+                    if (!SaveLoadManager.Instance.scenarioSaveData.sinEvent[0])
+                        DataManager.Instance.deathCount = Mathf.Clamp(DataManager.Instance.deathCount, 0, 1);
+                    if (!SaveLoadManager.Instance.scenarioSaveData.sinEvent[1])
+                        DataManager.Instance.deathCount = Mathf.Clamp(DataManager.Instance.deathCount, 0, 2);
 
-                SaveLoadManager.Instance.SaveScenario(DataManager.Instance.DialogueData);
+                    SaveLoadManager.Instance.SaveScenario(DataManager.Instance.DialogueData);
 
-                // 재시작
-                StageManager.Instance.ReStartGame();
+                    // 재시작
+                    StageManager.Instance.ReStartGame();
+                }
             }
         }
 
