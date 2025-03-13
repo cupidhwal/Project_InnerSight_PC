@@ -1,4 +1,5 @@
 using InnerSight_Seti;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -38,6 +39,14 @@ namespace InnerSight_Kys
             {
                 return;
             }
+            //if (sound.name == "Hitting Sound")
+            //{
+            //    PlayInstance(sound);
+            //}
+            //else
+            //{
+            //    sound.source.Play();
+            //}
             sound.source.Play();
         }
 
@@ -74,6 +83,15 @@ namespace InnerSight_Kys
         public void StopBgm()
         {
             Stop(bgmSound);
+        }
+
+        void PlayInstance(Sounds sound)
+        {
+            var outputGroup = sound.loop ? audioMixerGroupBgm : audioMixerGroupSfx;
+            sound.Initialize(this.gameObject, outputGroup);
+            sound.source.Play();
+
+            Destroy(sound.source, 1);
         }
     }
 }
