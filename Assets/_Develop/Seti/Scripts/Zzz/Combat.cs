@@ -1,3 +1,4 @@
+using Noah;
 using UnityEngine;
 
 namespace Seti
@@ -51,7 +52,8 @@ namespace Seti
         {
             if (other.CompareTag("Player"))
             {
-                GenEnemy();
+                if (!SaveLoadManager.Instance.scenarioSaveData.flynneEvent[0])
+                    GenEnemy();
             }
         }
         #endregion
