@@ -10,6 +10,7 @@ namespace Noah
         private void Start()
         {
             ObjectFadeSystem.Instance.ObjectFadeIn_Particle(transform);
+            Invoke("ActiveCollider", 2f);
         }
 
         private void Update()
@@ -23,6 +24,11 @@ namespace Noah
                     GetSkillReinforce();
                 }
             }
+        }
+
+        void ActiveCollider()
+        {
+            transform.GetComponent<Collider>().enabled = true;
         }
 
         void GetSkillReinforce()
