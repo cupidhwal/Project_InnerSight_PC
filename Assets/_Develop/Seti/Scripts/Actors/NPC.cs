@@ -60,8 +60,6 @@ namespace Seti
                     if (RelicManager.Instance.GetRelics().Count > 0)
                     {
                         targetUI.SetActive(isOpenUI = !isOpenUI);
-                        Condition_Player condition = InitializeManager.Instance.Player.Condition as Condition_Player;
-                        condition.PlayerSetActive(isOpenUI = !isOpenUI);
                     }
                     break;
 

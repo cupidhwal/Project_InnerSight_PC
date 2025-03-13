@@ -64,8 +64,8 @@ namespace Seti
                 enemy.Agent.ResetPath();
             }
 
-            //Input_BackHome();
-            //move?.FSM_MoveInput(moveInput, true);
+            Input_BackHome();
+            move?.FSM_MoveInput(moveInput, true);
         }
 
         // 메서드
