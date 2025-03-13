@@ -94,7 +94,8 @@ namespace Seti
                 }
                 if (!check) return;
             }
-            DataManager.Instance.UIManager.ToggleActionUI(info);
+
+            DataManager.Instance.UIManager.SwitchActionUI(true, info);
         }
         [SerializeField]
         private Storyteller_NPC storyteller;

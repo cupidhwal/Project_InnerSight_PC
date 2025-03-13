@@ -19,6 +19,7 @@ namespace Seti
         private void OnDisable()
         {
             condition.PlayerSetActive(true);
+            DataManager.Instance.UIManager.SwitchActionUI(true);
         }
     }
 }
