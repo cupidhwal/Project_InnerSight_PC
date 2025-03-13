@@ -20,6 +20,8 @@ namespace JungBin
         [SerializeField] private TextMeshProUGUI relicDescription; // 🔹 UI에서 유물 설명을 표시하는 텍스트
         [SerializeField] private GameObject relicSelectUI; // 🔹 유물 선택 UI 패널
         [SerializeField] private Image applyImage; // 🔹 유물 선택 시 표시되는 아이콘 이미지
+        [SerializeField] private Image equippedRelicImage; // 🔹 현재 장착된 유물의 이미지 표시용
+        [SerializeField] private GameObject closeButton; // 🔹 유물 UI 닫기 버튼
 
         public GameObject trinketUIParent; // 🔹 유물 버튼들이 포함된 UI 부모 객체
         private Dictionary<string, GameObject> trinketButtons = new Dictionary<string, GameObject>(); // 🔹 유물 버튼 딕셔너리
@@ -64,6 +66,7 @@ namespace JungBin
                 }
             }
 
+            closeButton.SetActive(false);
             LoadRelicUI(); // 🔹 UI 업데이트
         }
 
@@ -129,6 +132,7 @@ namespace JungBin
                         relicDescription.gameObject.SetActive(true);
                         relicName.text = relic.RelicName;
                         relicDescription.text = relic.Description;
+                        closeButton.SetActive(true);
 
                         clickRelic = relic; // 🔹 선택된 유물 저장
                         return relic;
@@ -145,6 +149,9 @@ namespace JungBin
         public void SelectRelicButton()
         {
             ApplyRelicEffect(clickRelic, GameManager.Instance.Player);
+
+            // 🔹 장착한 유물의 이미지를 업데이트
+            UpdateEquippedRelicImage(clickRelic);
         }
 
         /// <summary>
@@ -154,16 +161,61 @@ namespace JungBin
         /// <param name="player">플레이어 객체</param>
         public void ApplyRelicEffect(IRelic newRelic, Player player)
         {
-            // 🔹 기존 선택된 유물 효과 제거
-            if (selectedRelic != null)
+            // 🔹 기존 유물이 있을 경우 효과 제거
+            if (selectedRelic != null && RelicEffectManager.HasEffect(selectedRelic.RelicID))
+            {
+                Debug.Log($"🔹 기존 유물 효과 제거: {selectedRelic.RelicID}");
                 RelicEffectManager.RemoveEffect(selectedRelic.RelicID);
+            }
 
+            // 🔹 새로운 유물 설정
             selectedRelic = newRelic;
-            RelicEffectManager.ApplyEffect(newRelic.RelicID);
-            Debug.Log(newRelic.RelicID);
-            //applyImage.sprite = sourceImage;
+
+            // 🔹 유물 효과 적용 (효과가 등록된 경우만 실행)
+            if (RelicEffectManager.HasEffect(newRelic.RelicID))
+            {
+                Debug.Log($"✅ 유물 효과 적용: {newRelic.RelicID}");
+                RelicEffectManager.ApplyEffect(newRelic.RelicID);
+            }
+            else
+            {
+                Debug.LogWarning($"⚠️ [ApplyRelicEffect] {newRelic.RelicID} 효과가 등록되지 않음.");
+            }
+
+            closeButton.SetActive (false);
             relicSelectUI.SetActive(false);
         }
+
+
+        /// <summary>
+        /// 현재 장착된 유물의 이미지를 변경하는 메서드
+        /// </summary>
+        /// <param name="selectedRelic">선택한 유물</param>
+        private void UpdateEquippedRelicImage(IRelic selectedRelic)
+        {
+            if (selectedRelic == null) return;
+
+            // 🔹 선택한 유물의 UI 버튼에서 첫 번째 자식 오브젝트의 Image 컴포넌트를 가져오기
+            foreach (Transform child in trinketUIParent.transform)
+            {
+                if (child.name == selectedRelic.RelicID) // 🔹 선택한 유물과 같은 이름의 버튼 찾기
+                {
+                    Image relicButtonImage = child.GetChild(0).GetComponent<Image>(); // 첫 번째 자식의 Image 가져오기
+                    if (relicButtonImage != null)
+                    {
+                        // 🔹 인스펙터에서 받아온 `equippedRelicImage`를 선택한 유물 이미지로 변경
+                        equippedRelicImage.sprite = relicButtonImage.sprite;
+                        Debug.Log($"🔹 장착한 유물 이미지 변경됨: {selectedRelic.RelicName}");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("❌ 선택한 유물 버튼에 Image가 없음.");
+                    }
+                    break; // 🔹 유물 찾았으므로 루프 종료
+                }
+            }
+        }
+
 
         /// <summary>
         /// 저장된 유물 데이터를 기반으로 UI 버튼을 활성화하는 메서드
@@ -206,6 +258,7 @@ namespace JungBin
         /// </summary>
         public void CloseRelicUI()
         {
+            closeButton.SetActive(false);
             relicSelectUI.SetActive(false);
         }
     }

@@ -19,6 +19,7 @@ namespace JungBin
         [SerializeField] private Transform player;
         [SerializeField] private Animator animator;
         private NavMeshAgent navMeshAgent;
+        
 
         private string Idle = "Idle";
         private string isRun = "IsRun";
@@ -35,7 +36,10 @@ namespace JungBin
         [SerializeField] private GameObject shockAttack;    //보스 공격 이펙트(충격)
 
         [SerializeField] private Transform fireSpawnPoint;
-        [SerializeField] private GameObject fireAttack;    //보스 공격 이펙트(충격)
+        [SerializeField] private ParticleSystem fireAttack;    //보스 공격 이펙트(충격)
+
+        [SerializeField] private BoxCollider smashAttackBox;
+        [SerializeField] private FlameAttack flameAttack;
 
         #endregion
 
@@ -68,6 +72,11 @@ namespace JungBin
                 navMeshAgent.enabled = false;
             }
 
+            if(distance <= 15)
+            {
+                animator.SetTrigger("Start");
+            }
+
 
         }
 
@@ -91,6 +100,8 @@ namespace JungBin
 
             OneHandSword.SetActive(true);
             TwoHandSword.SetActive(false);
+            smashAttackBox.enabled = false;
+
         }
 
         private void RotateTowardsPlayer(Vector3 direction)
@@ -153,7 +164,15 @@ namespace JungBin
 
         #region 공격 상태
 
-        public void ToggleAttack()
+        public void ToggleAttack(bool isActive)
+        {
+            smashAttackBox.enabled = isActive;
+        }
+
+        public void OnAttackBox() => ToggleAttack(true);
+        public void OffAttackBox() => ToggleAttack(false);
+
+        public void SlashAttack()
         {
             GameObject slashParticle = Instantiate(slashAttack, slashSpawnPoint.position, slashSpawnPoint.rotation, slashSpawnPoint);
 
@@ -172,9 +191,14 @@ namespace JungBin
 
         public void FireAttack()
         {
-            GameObject fireParticle = Instantiate(fireAttack, fireSpawnPoint.position, fireSpawnPoint.rotation, fireSpawnPoint);
+            fireAttack.Play();
+            flameAttack.StartFlamethrower();
+        }
 
-            Destroy(fireParticle, 2f);
+        public void FireOffAttack()
+        {
+            fireAttack.Stop();
+            flameAttack.StopFlamethrower();
         }
 
         #endregion

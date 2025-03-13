@@ -33,6 +33,7 @@ namespace Seti
 
         public void SetLife(int amount)
         {
+            Debug.Log($"생명이 {amount}값 만큼 증가");
             life += amount;
             actor.Controller_Animator.Animator.SetInteger("Life", life);
         }
