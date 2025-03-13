@@ -16,6 +16,8 @@ namespace Noah
         private void Start()
         {
             ObjectFadeSystem.Instance.ObjectFadeIn_Particle(transform);
+
+            Invoke("ActiveCollider", 2f);
         }
 
         private void Update()
@@ -31,6 +33,11 @@ namespace Noah
                     isContact = false;
                 }
             }
+        }
+
+        void ActiveCollider()
+        {
+            transform.GetComponent<Collider>().enabled = true;
         }
 
         void ChangeStage()
