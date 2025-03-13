@@ -144,6 +144,11 @@ namespace Seti
             if (Actor.Controller.BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
                 if (attackBehaviour is Attack attack)
                     attack.OnAttackEnter();
+
+            if (Actor is Player)
+            {
+                AudioManager.Instance.Play("Hitting Sound");
+            }
         }
         public void MeleeAttackEnd()
         {
@@ -156,11 +161,6 @@ namespace Seti
         public void CantMoveDurAtk()
         {
             Actor.Condition.CanMove = false;
-
-            if (Actor is Player)
-            {
-                AudioManager.Instance.Play("Hitting Sound");
-            }
         }
         public void CanMoveAfterAtk()
         {

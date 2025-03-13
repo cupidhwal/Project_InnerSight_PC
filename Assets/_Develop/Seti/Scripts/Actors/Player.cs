@@ -1,3 +1,4 @@
+using JungBin;
 using System.Linq;
 using UnityEngine;
 
@@ -64,6 +65,9 @@ namespace Seti
                 DataManager.Instance.UIManager.CloseActionUI();
                 return;
             }
+
+            if (info == "유물 교체" && RelicManager.Instance.GetRelics().Count == 0)
+                return;
 
             if (info == "대화")
             {

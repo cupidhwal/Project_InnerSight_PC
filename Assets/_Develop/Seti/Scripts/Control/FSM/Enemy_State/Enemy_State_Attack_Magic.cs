@@ -43,7 +43,7 @@ namespace Seti
             if (damagable.CurrentHitPoints <= 0)
                 return typeof(Enemy_State_Dead);
 
-            if (condition.InAction)
+            if (!condition.InAction)
                 return typeof(Enemy_State_Stagger);
 
             if (enemy.Detected && enemy.Condition.CanMove)
@@ -96,8 +96,7 @@ namespace Seti
             isPlayer = false;
 
             // 마법 공격 경로에 플레이어가 있는지 확인
-            Vector3 offset = new(0f, 1.5f, 0f);
-            isPlayer = Physics.SphereCast(enemy.transform.position + offset,
+            isPlayer = Physics.SphereCast(enemy.transform.GetChild(0).position,
                                           0.5f,
                                           enemy.Player.transform.position - enemy.transform.position,
                                           out var hit,
