@@ -60,6 +60,26 @@ namespace Noah
 
                     }
                     break;
+
+                case SkillType.Dot:
+                    if (other.CompareTag("Enemy"))
+                    {
+                        Damagable ec = other.GetComponent<Damagable>();
+
+                        if (ec != null)
+                        {
+                            Transform enemyTransform = other.transform;
+
+                            // 적이 처음 감지되면 즉시 한 번 데미지를 가하고 타이머 초기화
+                            Damagable.DamageMessage data = new();
+                            data.amount = damage;
+                            ec.TakeDamage(data);
+
+                            enemyTimers[enemyTransform] = 0f; // 타이머 초기화
+                        }
+
+                    }
+                    break;
             }
         }
 
@@ -97,6 +117,19 @@ namespace Noah
                         }
                     }
                     break;
+            }
+        }
+
+        // 적이 범위를 벗어나면 Dictionary에서 제거
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Enemy"))
+            {
+                Transform enemyTransform = other.transform;
+                if (enemyTimers.ContainsKey(enemyTransform))
+                {
+                    enemyTimers.Remove(enemyTransform);
+                }
             }
         }
     }
