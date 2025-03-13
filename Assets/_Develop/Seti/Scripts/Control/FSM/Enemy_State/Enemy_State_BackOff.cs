@@ -6,7 +6,6 @@ namespace Seti
     public class Enemy_State_BackOff : Enemy_State
     {
         // 오버라이드
-        #region Override
         // 초기화 메서드 - 생성 후 1회 실행
         public override void OnInitialized() => base.OnInitialized();
 
@@ -65,13 +64,11 @@ namespace Seti
                 enemy.Agent.ResetPath();
             }
 
-            Input_BackHome();
-            move?.FSM_MoveInput(moveInput, true);
+            //Input_BackHome();
+            //move?.FSM_MoveInput(moveInput, true);
         }
-        #endregion
 
         // 메서드
-        #region Methods
         private void Input_BackHome()
         {
             Vector2 enemyPos = Camera.main.WorldToScreenPoint(enemy.transform.position);
@@ -84,6 +81,5 @@ namespace Seti
             enemy.Agent.SetDestination(enemy.transform.position);
             context.StateMachine.ChangeState<Enemy_State_Chase>();
         }
-        #endregion
     }
 }
