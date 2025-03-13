@@ -1,3 +1,4 @@
+using Noah;
 using UnityEngine;
 
 namespace Seti
@@ -6,14 +7,16 @@ namespace Seti
     public class Composition_Player_Move : CompositionObject
     {
         // 필드
-        [SerializeField]
-        private Vector3 targetPos;
-        [SerializeField]
-        private Vector3 targetRot;
+        //[SerializeField]
+        //private Vector3 targetPos;
+        //[SerializeField]
+        //private Vector3 targetRot;
 
         public override void Execute(GameObject _)
         {
-            InitializeManager.Instance.Player.transform.SetPositionAndRotation(targetPos, Quaternion.Euler(targetRot));
+            Vector3 targetPos = StageManager.Instance.CurrentStage.transform.GetChild(4).GetChild(2).position + new Vector3(0f, 0f, -2f);
+
+            InitializeManager.Instance.Player.transform.SetPositionAndRotation(targetPos, Quaternion.identity);
         }
     }
 }

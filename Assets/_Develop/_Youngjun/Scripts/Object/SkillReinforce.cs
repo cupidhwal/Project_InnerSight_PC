@@ -9,7 +9,7 @@ namespace Noah
 
         private void Start()
         {
-            ObjectFadeSystem.Instance.ObjectFadeIn_Particle(transform);
+            //ObjectFadeSystem.Instance.ObjectFadeIn_Particle(transform);
             Invoke("ActiveCollider", 2f);
         }
 

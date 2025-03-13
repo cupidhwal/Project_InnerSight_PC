@@ -13,15 +13,30 @@ namespace Seti
 
             if (actor is Enemy enemy && enemy.Player)
             {
+                Controller_FSM enemyController = enemy.Controller as Controller_FSM;
                 Condition_Enemy enemyCondition = enemy.Condition as Condition_Enemy;
-                if (!enemyCondition.IsChase &&
-                    !enemyCondition.IsAttack &&
-                    !enemyCondition.IsPositioning &&
-                    !enemyCondition.IsDead ||
-                    enemyCondition.IsMagic)
+                
+                if (!enemyCondition.IsDead)
                 {
-                    enemy.transform.LookAt(enemy.Player.transform.position);
+                    if (enemyController.CurrentState == Controller_FSM.EnemyState.Encounter ||
+                    enemyController.CurrentState == Controller_FSM.EnemyState.Attack_Normal ||
+                    enemyCondition.IsMagic)
+                    {
+                        enemy.transform.LookAt(enemy.Player.transform.position);
+                        Debug.Log($"Enemy Watch : To Player");
+                    }
                 }
+
+                //if (!enemyCondition.IsMove &&
+                //    !enemyCondition.IsChase &&
+                //    !enemyCondition.IsAttack &&
+                //    !enemyCondition.IsPositioning &&
+                //    !enemyCondition.IsDead ||
+                //    enemyCondition.IsMagic)
+                //{
+                //    enemy.transform.LookAt(enemy.Player.transform.position);
+                //    Debug.Log($"Enemy Watch : To Player");
+                //}
             }
 
             if (actor is Player player)

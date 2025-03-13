@@ -68,14 +68,13 @@ namespace Seti
                     }
                     if (!check) return;
                     player.CurrentTeller.StoryEnter();
-                    DataManager.Instance.UIManager.ToggleActionUI();
+                    DataManager.Instance.UIManager.SwitchActionUI(false);
                 }
             }
 
             if (player.CurrentNPC != null && player.CurrentNPC.Type != NPC_Type.Storyteller)
             {
                 player.CurrentNPC.Switch_TradeUI();
-                DataManager.Instance.UIManager.ToggleActionUI();
                 return;
             }
         }

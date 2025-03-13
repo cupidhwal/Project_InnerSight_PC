@@ -1,3 +1,4 @@
+using Seti;
 using TMPro;
 using UnityEngine;
 
@@ -33,6 +34,7 @@ namespace Noah
 
         public void ActivePlayerStateUI()
         {
+            DataManager.Instance.UIManager.SwitchActionUI(playerStateUI.activeSelf);
             if (!playerStateUI.activeSelf)
             {
                 playerStateUI.SetActive(true);

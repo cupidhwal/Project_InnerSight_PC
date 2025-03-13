@@ -6,7 +6,6 @@ namespace Seti
     public class Enemy_State_Patrol : Enemy_State
     {
         // 오버라이드
-        #region Override
         // 초기화 메서드 - 생성 후 1회 실행
         public override void OnInitialized() => base.OnInitialized();
 
@@ -51,10 +50,8 @@ namespace Seti
             Input_Patrol(deltaTime);
             move?.FSM_MoveInput(moveInput, true);
         }
-        #endregion
 
         // 메서드
-        #region Methods
         private void Input_Patrol(float deltaTime)
         {
             // 카운트다운 진행
@@ -74,6 +71,5 @@ namespace Seti
             float y = UnityEngine.Random.Range(-1f, 1f);
             return new Vector2(x, y);
         }
-        #endregion
     }
 }

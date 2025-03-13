@@ -81,10 +81,9 @@ namespace Seti
             // UI 토글
             actionUI.SetActive(false);
         }
-        public void ToggleActionUI(string info = default)
+        public void SwitchActionUI(bool isOpen, string info = default)
         {
-            // UI 토글
-            actionUI.SetActive(!actionUI.activeSelf);
+            actionUI.SetActive(isOpen);
 
             // Description text
             TextMeshProUGUI text = actionUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>();

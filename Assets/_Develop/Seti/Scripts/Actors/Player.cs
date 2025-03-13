@@ -1,3 +1,4 @@
+using JungBin;
 using System.Linq;
 using UnityEngine;
 
@@ -65,6 +66,9 @@ namespace Seti
                 return;
             }
 
+            if (info == "유물 교체" && RelicManager.Instance.GetRelics().Count == 0)
+                return;
+
             if (info == "대화")
             {
                 if (currentNPC.GetComponent<NPC_Life>().IsDead)
@@ -90,7 +94,8 @@ namespace Seti
                 }
                 if (!check) return;
             }
-            DataManager.Instance.UIManager.ToggleActionUI(info);
+
+            DataManager.Instance.UIManager.SwitchActionUI(true, info);
         }
         [SerializeField]
         private Storyteller_NPC storyteller;

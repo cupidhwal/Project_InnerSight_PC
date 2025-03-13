@@ -18,7 +18,6 @@ namespace Seti
         [SerializeField]
         private NPC_Type type;
         private GameObject targetUI;
-        private bool isOpenUI = false;
         #endregion
 
         // 속성
@@ -59,7 +58,8 @@ namespace Seti
                 case NPC_Type.Trinkets:
                     if (RelicManager.Instance.GetRelics().Count > 0)
                     {
-                        targetUI.SetActive(isOpenUI = !isOpenUI);
+                        DataManager.Instance.UIManager.SwitchActionUI(targetUI.activeSelf);
+                        targetUI.SetActive(!targetUI.activeSelf);
                     }
                     break;
 

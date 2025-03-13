@@ -6,7 +6,6 @@ namespace Seti
     public class Enemy_State_Idle : Enemy_State
     {
         // 오버라이드
-        #region Override
         // 초기화 메서드 - 생성 후 1회 실행
         public override void OnInitialized()
         {
@@ -52,6 +51,5 @@ namespace Seti
             // Move 행동 AI Input
             move?.FSM_MoveInput(Vector2.zero, false);
         }
-        #endregion
     }
 }

@@ -88,15 +88,20 @@ namespace Noah
                 //LimitState(_index, ref upPoint);
 
                 // upPoint가 maxData_Speed으로 수정되었을 경우 return하여 실행 중단
-                if ((_index == 3 || _index == 4) && upPoint >= maxData_Speed)
+                if (_index == 3 && upPoint >= maxData_Speed)
                 {
                     states[_index].GetChild(0).GetComponent<TMP_Text>().text = "MAX";
                     //return;
+                }
+                else if (_index == 4 && upPoint >= maxData_Atkspeed)
+                {
+                    states[_index].GetChild(0).GetComponent<TMP_Text>().text = "MAX";
                 }
                 else
                 {
                     states[_index].GetChild(0).GetComponent<TMP_Text>().text = upPoint.ToString();
                 }
+
 
                 upgradeCounts[_index]++;
 
@@ -122,16 +127,20 @@ namespace Noah
             // 현재 상태값과 초기 상태값 가져오기
             curData = PlayerStatsManager.Instance.GetPlayerData(_index);
 
-            if (states[_index].GetChild(0).GetComponent<TMP_Text>().text == "MAX")
+            if (_index == 3  && states[_index].GetChild(0).GetComponent<TMP_Text>().text == "MAX")
             {
                 currentPoint = maxData_Speed;
+            }   
+            else if (_index == 4 && states[_index].GetChild(0).GetComponent<TMP_Text>().text == "MAX")
+            {
+                currentPoint = maxData_Atkspeed;
             }
             else
             {
                 currentPoint = float.Parse(states[_index].GetChild(0).GetComponent<TMP_Text>().text);
             }
 
-         
+
 
             // 상태값 감소 계산
             float downPoint = Mathf.Round((currentPoint - PlayerStatsManager.Instance.UpdatePlayerData()[_index]) * 10f) / 10f;
@@ -175,6 +184,8 @@ namespace Noah
             AudioManager.Instance.Play("ReinForcement");
 
             SaveLoadManager.Instance.SaveAll();
+
+            InitializeManager.Instance.Player.SetNPC(InitializeManager.Instance.Player.CurrentNPC);
         }
         
         public void ActiveUI()
@@ -184,7 +195,7 @@ namespace Noah
 
             UIManager.Instance.Toggle(transform.GetChild(0).gameObject);
 
-
+            InitializeManager.Instance.Player.SetNPC(InitializeManager.Instance.Player.CurrentNPC);
         }
     }
 }

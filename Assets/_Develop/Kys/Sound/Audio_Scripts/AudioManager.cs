@@ -26,6 +26,9 @@ namespace InnerSight_Kys
 
             foreach (var sound in sounds)
             {
+                if (sound.name == "Hitting Sound")
+                    continue;
+
                 // Initialize the AudioSource for each sound
                 var outputGroup = sound.loop ? audioMixerGroupBgm : audioMixerGroupSfx;
                 sound.Initialize(this.gameObject, outputGroup);
@@ -39,15 +42,15 @@ namespace InnerSight_Kys
             {
                 return;
             }
-            //if (sound.name == "Hitting Sound")
-            //{
-            //    PlayInstance(sound);
-            //}
-            //else
-            //{
-            //    sound.source.Play();
-            //}
-            sound.source.Play();
+            if (sound.name == "Hitting Sound")
+            {
+                PlayInstance(sound);
+            }
+            else
+            {
+                sound.source.Play();
+            }
+            //sound.source.Play();
         }
 
         public void Stop(string name)
@@ -88,7 +91,7 @@ namespace InnerSight_Kys
         void PlayInstance(Sounds sound)
         {
             var outputGroup = sound.loop ? audioMixerGroupBgm : audioMixerGroupSfx;
-            sound.Initialize(this.gameObject, outputGroup);
+            sound.Initialize(Seti.InitializeManager.Instance.Player.gameObject, outputGroup);
             sound.source.Play();
 
             Destroy(sound.source, 1);
