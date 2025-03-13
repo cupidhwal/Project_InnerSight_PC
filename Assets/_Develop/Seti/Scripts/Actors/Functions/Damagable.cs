@@ -120,7 +120,7 @@ namespace Seti
             }
 
             // 무적 타이머
-            if (IsInvulnerable)
+            if (IsInvulnerable && !actor.Condition.IsDead)
             {
                 m_timeSinceLastHit += Time.deltaTime;
                 if (m_timeSinceLastHit > invulnerablityTime)
