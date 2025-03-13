@@ -174,7 +174,7 @@ namespace JungBin
 
         public void SlashAttack()
         {
-            GameObject slashParticle = Instantiate(slashAttack, slashSpawnPoint.position, slashSpawnPoint.rotation, slashSpawnPoint);
+            GameObject slashParticle = Instantiate(slashAttack, slashSpawnPoint.position, slashSpawnPoint.rotation);
 
             Destroy(slashParticle, 1.5f);
         }
@@ -184,7 +184,7 @@ namespace JungBin
             Vector3 SpawnPoint = shockSpawnPoint.position;
             SpawnPoint.y = 0;
 
-            GameObject shockParticle = Instantiate(shockAttack, SpawnPoint, shockSpawnPoint.rotation, shockSpawnPoint);
+            GameObject shockParticle = Instantiate(shockAttack, SpawnPoint, shockSpawnPoint.rotation);
 
             Destroy(shockParticle, 1f);
         }

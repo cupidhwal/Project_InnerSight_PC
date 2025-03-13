@@ -16,19 +16,24 @@ namespace JungBin
         private void Start()
         {
             flameCollider = GetComponent<CapsuleCollider>();
+            flameCollider.enabled = false;
+            isCanDamage = true;
         }
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.gameObject.layer != targetLayer) return; // 대상이 타겟 레이어인지 확인
-
-            if (isCanDamage) // 일정 간격으로 피해 적용
+            if (other.CompareTag("Player"))
             {
-                ApplyDamage(other);
-                isCanDamage = false;
+                Debug.Log(other);
+                if (isCanDamage) // 일정 간격으로 피해 적용
+                {
+                    ApplyDamage(other);
+                    Debug.Log("데미지 주기");
+                    isCanDamage = false;
+                    Debug.Log("데미지 입히기 불가");
+                    StartCoroutine(DamageTimer());
 
-                StartCoroutine(DamageTimer());
-
+                }
             }
         }
 
@@ -55,6 +60,7 @@ namespace JungBin
         {
             yield return new WaitForSeconds( damageInterval );
             isCanDamage = true;
+            Debug.Log("데미지 입히기 가능");
         }
 
         public void StartFlamethrower()

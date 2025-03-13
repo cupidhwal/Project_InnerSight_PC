@@ -387,7 +387,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -2260525888179194137}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 8753438191315722650}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -396,7 +397,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 2107d22ff2783994780c7dbf06ed010b, type: 2}
+  m_Motion: {fileID: 7400000, guid: b0188cea308da8547a47cd80b594e6de, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -2666,6 +2667,34 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &8753438191315722650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e6b5212e5855664e9846a5376f30062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enterParameter: 
+  exitParameter: 
+  enterParameterBool: 0
+  exitParameterBool: 0
+  enterStateFir: 0
+  exitStateFir: 0
+  enterBoolFir: 0
+  exitBoolFir: 0
+  enterStateSec: 0
+  exitStateSec: 0
+  enterBoolSec: 0
+  exitBoolSec: 0
+  enterStateLast: 1
+  exitStateLast: 1
+  enterBoolLast: 1
+  exitBoolLast: 0
 --- !u!1102 &9039076637213941260
 AnimatorState:
   serializedVersion: 6

@@ -36,6 +36,7 @@ namespace JungBin
         [SerializeField] private GameObject smokeParticlePrefab;
         [SerializeField] private Material smokeMaterial;
         [SerializeField] private BossStageManager bossStageManager;
+        private LastBossManager lastBossManager;
 
         [SerializeField] private Animator animator; // 보스 애니메이션
         private bool isBerserk = false; // 버서커 모드 여부
@@ -61,7 +62,9 @@ namespace JungBin
                        // 초기화
             animator = GetComponent<Animator>();
             damagable = GetComponent<Damagable>();
-            
+            lastBossManager = GetComponent<LastBossManager>();
+
+
 
             if (damagable != null)
             {
@@ -135,7 +138,10 @@ namespace JungBin
             capsuleCollider.enabled = false;
             isInvulnerable = true;
             bossAttack *= 2f;
-
+            if (bossType == BossType.LastBoss)
+            {
+                lastBossManager.FireOffAttack();
+            }
             if (HasAnimatorParameter("IsBerserk"))
             {
                 animator.SetBool("IsBerserk", true);

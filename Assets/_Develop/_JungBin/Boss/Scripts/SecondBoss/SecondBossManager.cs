@@ -48,6 +48,7 @@ namespace JungBin
         [SerializeField] private float spikeAngle;
 
         [SerializeField] private LaserParticleSystem laserParticleSystem;
+        [SerializeField] private BoxCollider laserCollider;
 
 
         private int lastAttack = -1;
@@ -95,6 +96,11 @@ namespace JungBin
             }
             animator = GetComponent<Animator>();
             navMeshAgent = GetComponent<NavMeshAgent>();
+
+            if (laserCollider != null)
+            {
+                laserCollider.enabled = false;
+            }
         }
 
         // Update is called once per frame
@@ -405,7 +411,13 @@ namespace JungBin
             if(laserParticleSystem != null)
             {
                 laserParticleSystem.FireLaser();
+                laserCollider.enabled = true;
             }
+        }
+
+        public void Phase2StopLaser()
+        {
+            laserCollider.enabled = false;
         }
 
 
