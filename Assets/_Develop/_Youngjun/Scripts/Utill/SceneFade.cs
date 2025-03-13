@@ -65,7 +65,6 @@ namespace Noah
         public void FadeOut(string name, float delay = 0f)
         {
             StartCoroutine(FadeOut_Co(name, delay));
-            StartCoroutine(UpdateLoadingText());
         }
 
         public void FadeOut(int name, float delay = 0f)
@@ -119,8 +118,6 @@ namespace Noah
             float time = fadeOutTime;
             float ctime = 0f;
 
-            fadeImage.gameObject.SetActive(true);
-
             if(condition_Player != null)
                 condition_Player.PlayerSetActive(false);
 
@@ -128,6 +125,10 @@ namespace Noah
             {
                 yield return new WaitForSeconds(delay);
             }
+
+            fadeImage.gameObject.SetActive(true);
+
+            StartCoroutine(UpdateLoadingText());
 
             while (ctime < time)
             {
