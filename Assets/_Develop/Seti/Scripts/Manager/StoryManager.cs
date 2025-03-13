@@ -91,9 +91,15 @@ namespace Seti
             StageName = StageManager.Instance.CurrentStage.name.Replace("(Clone)", "").Trim();
 
             // 마을 포탈
+            GameObject portals = StageManager.Instance.CurrentStage.transform.GetChild(0).gameObject;
+            if (StageName == "Stage_T")
+            {
+                DisableComposition("Stage_T", 3, portals);
+            }
+
             if (StageName == "Stage000")
             {
-                GameObject portals = StageManager.Instance.CurrentStage.transform.GetChild(0).gameObject;
+                
                 if (SaveLoadManager.Instance.scenarioSaveData.deathCount >= 1)
                 {
                     DisableComposition("Stage000", 1, portals);
