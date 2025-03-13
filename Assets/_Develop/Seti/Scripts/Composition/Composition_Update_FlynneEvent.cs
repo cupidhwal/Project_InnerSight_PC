@@ -12,7 +12,9 @@ namespace Seti
 
         public override void Execute(GameObject obj)
         {
-            DataManager.Instance.flynneEvent[eventIndex] = true;
+            for (int i = 0; i <= eventIndex; i++)
+                DataManager.Instance.flynneEvent[i] = true;
+
             SaveLoadManager.Instance.SaveScenario(DataManager.Instance.DialogueData);
         }
     }
