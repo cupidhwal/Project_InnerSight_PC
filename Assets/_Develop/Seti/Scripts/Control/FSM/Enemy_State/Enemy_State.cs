@@ -51,7 +51,13 @@ namespace Seti
             elapsedDuration = UnityEngine.Random.Range(elapsedCriteria * 0.7f, elapsedCriteria * 1.3f);
 
             if (enemy && enemy.Agent && enemy.Agent.enabled)
-                enemy.Agent.ResetPath();
+            {
+                try
+                {
+                    enemy.Agent.ResetPath();
+                }
+                catch { }
+            }
         }
 
         // 상태 전환 시 State Exit에 1회 실행

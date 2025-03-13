@@ -31,7 +31,11 @@ namespace Seti
         {
             base.OnExit();
 
-            enemy.Agent.ResetPath();
+            try
+            {
+                enemy.Agent.ResetPath();
+            }
+            catch { }
             enemy.Agent.speed = enemy.Rate_Movement * enemy.Magnification_WalkToRun;
             enemy.OnTargetMove -= PathFindToPositioning;
         }
@@ -113,7 +117,11 @@ namespace Seti
             {
                 condition.IsPositioning = false;
                 positioningCompleted = true;
-                enemy.Agent.ResetPath();
+                try
+                {
+                    enemy.Agent.ResetPath();
+                }
+                catch { }
 
                 context.Actor.Condition.IsMove = false;
             }

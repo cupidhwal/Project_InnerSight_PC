@@ -61,7 +61,11 @@ namespace Seti
             // Move 행동 AI Input
             if (enemy.Agent.remainingDistance < enemy.Agent.stoppingDistance)
             {
-                enemy.Agent.ResetPath();
+                try
+                {
+                    enemy.Agent.ResetPath();
+                }
+                catch { }
             }
 
             Input_BackHome();

@@ -134,7 +134,12 @@ namespace Seti
 
                 Collider collider = GetComponent<Collider>();
                 collider.excludeLayers = LayerMask.GetMask("Player");
-                enemy.Agent.ResetPath();
+                try
+                {
+                    enemy.Agent.ResetPath();
+                }
+                catch { }
+                
                 enemy.Agent.enabled = false;
 
                 if (dissolve.Length > 0)
