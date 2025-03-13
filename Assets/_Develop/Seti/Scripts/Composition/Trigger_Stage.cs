@@ -37,7 +37,7 @@ namespace Seti
                 // 원흉 이벤트 체크
                 if (data.targetSinEvent >= 0)
                 {
-                    if (DataManager.Instance.deathCount <= data.deathCount)
+                    if (DataManager.Instance.deathCount < data.deathCount)
                         continue;
 
                     if (!DataManager.Instance.sinEvent[data.targetSinEvent])

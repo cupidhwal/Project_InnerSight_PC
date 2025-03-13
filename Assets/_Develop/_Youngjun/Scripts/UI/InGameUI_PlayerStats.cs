@@ -184,6 +184,8 @@ namespace Noah
             AudioManager.Instance.Play("ReinForcement");
 
             SaveLoadManager.Instance.SaveAll();
+
+            InitializeManager.Instance.Player.SetNPC(InitializeManager.Instance.Player.CurrentNPC);
         }
         
         public void ActiveUI()
@@ -193,7 +195,7 @@ namespace Noah
 
             UIManager.Instance.Toggle(transform.GetChild(0).gameObject);
 
-
+            InitializeManager.Instance.Player.SetNPC(InitializeManager.Instance.Player.CurrentNPC);
         }
     }
 }
