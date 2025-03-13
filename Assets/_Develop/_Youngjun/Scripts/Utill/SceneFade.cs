@@ -20,7 +20,7 @@ namespace Noah
         public TMP_Text loadingText;  // UI Text 연결
         private string baseText = "Loading"; // 기본 텍스트
         private int dotCount = 0;
-        private float fadeDuration = 3f; // 서서히 사라지는 시간
+        private float fadeDuration = 0.5f; // 서서히 사라지는 시간
 
         private float fadeInDelay = 3f;
         private float fadeOutTime = 2f;
@@ -196,7 +196,7 @@ namespace Noah
             float startAlpha = loadingText.color.a;
             float elapsedTime = 0f;
 
-            while (elapsedTime < (fadeInDelay + fadeOutTime + 1f))
+            while (elapsedTime < (fadeInDelay + fadeOutTime))
             {
                 elapsedTime += Time.deltaTime;
                 float alpha = Mathf.Lerp(startAlpha, 0f, elapsedTime / fadeDuration);
