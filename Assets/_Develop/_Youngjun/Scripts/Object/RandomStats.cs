@@ -18,7 +18,7 @@ namespace Noah
         {
             inGameUI_RandomStats = FindAnyObjectByType<InGameUI_RandomStats>();
 
-            ObjectFadeSystem.Instance.ObjectFadeIn_Particle(transform);
+            //ObjectFadeSystem.Instance.ObjectFadeIn_Particle(transform);
 
             for (int i = 0; i < StageManager.Instance.reinforceData.Count; i++)
             {
