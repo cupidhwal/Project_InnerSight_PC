@@ -9844,7 +9844,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 2
     collidesWith:
       serializedVersion: 2
       m_Bits: 2048
@@ -11579,6 +11579,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KnockbackCoefficient: 4
+  destroyDelay: 2
+  bodyRenderer: {fileID: 0}
+  dissolve: []
 --- !u!114 &5483340040966057649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11625,6 +11628,7 @@ MonoBehaviour:
   smokeParticlePrefab: {fileID: 0}
   smokeMaterial: {fileID: 0}
   bossStageManager: {fileID: 0}
+  animator: {fileID: 0}
   secondBossConnect: {fileID: 0}
   smokeFadeDuration: 2
   slashSpawnPoint: {fileID: 0}

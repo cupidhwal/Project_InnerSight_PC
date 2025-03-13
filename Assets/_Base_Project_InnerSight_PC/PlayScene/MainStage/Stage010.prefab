@@ -22614,8 +22614,8 @@ Transform:
   - {fileID: 8850076229094073064}
   - {fileID: 7970187528039439800}
   - {fileID: 2615023169308680723}
-  - {fileID: 8604513428502020329}
   - {fileID: 5902401936659018910}
+  - {fileID: 8604513428502020329}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6589602860123093705
@@ -29284,6 +29284,8 @@ MonoBehaviour:
   bossStageManager: {fileID: 4896591536618175259}
   Phase1: {fileID: 1640171404201475043}
   Phase2: {fileID: 5857353966002434402}
+  healthSlider: {fileID: 3991442245825110363}
+  lerpSpeed: 2
 --- !u!1 &8182556243103820116
 GameObject:
   m_ObjectHideFlags: 0
@@ -34473,6 +34475,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7893218987487754691, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
+      propertyPath: fadeDuration
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893218987487754691, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
       propertyPath: bossHealthBarUI
       value: 
       objectReference: {fileID: 0}
@@ -38384,6 +38390,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8859499553883403635, guid: 982c3c2883f31314d942b0a89487bf9d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6590427459823447728}
+    - targetCorrespondingSourceObject: {fileID: 8859499553883403635, guid: 982c3c2883f31314d942b0a89487bf9d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8665783108289893917}
   m_SourcePrefab: {fileID: 100100000, guid: 982c3c2883f31314d942b0a89487bf9d, type: 3}
 --- !u!114 &3991442245825110363 stripped
 MonoBehaviour:
@@ -38415,6 +38424,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossNameText: {fileID: 7587241158850769629}
   healthSlider: {fileID: 3991442245825110363}
+--- !u!95 &8665783108289893917
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6612148478404637612}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f2e793e0d5b832241bb62613499dcd6b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &7587241158850769629 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5222797085900076034, guid: 982c3c2883f31314d942b0a89487bf9d, type: 3}
@@ -42564,6 +42595,42 @@ PrefabInstance:
       propertyPath: BossHealthBarSlider
       value: 
       objectReference: {fileID: 3991442245825110363}
+    - target: {fileID: 275846393664972998, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: bossType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 275846393664972998, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: fadeDuration
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 275846393664972998, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: bossMaterials.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 275846393664972998, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: 'bossMaterials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3a734f18d6de5cd4d8ea7190c40ddb52, type: 2}
+    - target: {fileID: 275846393664972998, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: 'bossMaterials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c3cc80067cff55b49b35274999a5caf5, type: 2}
+    - target: {fileID: 275846393664972998, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: 'bossMaterials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ce8c19f2d069027468577a15f4af440f, type: 2}
+    - target: {fileID: 275846393664972998, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: 'bossMaterials.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e2d54d48a9de6f34abd8a7dadc144d17, type: 2}
+    - target: {fileID: 275846393664972998, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: 'bossMaterials.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1842c7ac2b9ff2a4998c8b2f00b504db, type: 2}
+    - target: {fileID: 275846393664972998, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: 'bossMaterials.Array.data[5]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9c3461197edc1fa499a9e2bbf233679f, type: 2}
     - target: {fileID: 6351667812318926093, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
       propertyPath: turnSpeed
       value: 60
@@ -42615,6 +42682,10 @@ PrefabInstance:
     - target: {fileID: 8628149810256165013, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8766506335083947029, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
+      propertyPath: bossNumber
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8766506335083947029, guid: 467f7f04b0a9a6b428f12ab4fc3c93b5, type: 3}
       propertyPath: damageCooldown

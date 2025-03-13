@@ -24,6 +24,7 @@ namespace JungBin
             else if (Instance != this)
             {
                 Destroy(gameObject);
+                Debug.Log("삭제");
                 return;
             }
 

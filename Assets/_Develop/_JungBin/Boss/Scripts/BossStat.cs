@@ -1,3 +1,4 @@
+using Noah;
 using Seti;
 using System.Collections;
 using System.Linq;
@@ -10,7 +11,9 @@ namespace JungBin
     {
         FirstBoss,
         SecondBoss,
+        SecondBoss2,
         LastBoss
+        
     }
 
     public class BossStat : MonoBehaviour
@@ -165,6 +168,10 @@ namespace JungBin
 
             animator.SetBool("IsDeath", true);
             animator.SetTrigger("Death");
+            if (bossType == BossType.FirstBoss)
+            {
+                berserkEffect.SetActive(false);
+            }
             OnDeath?.Invoke(); // 죽음 이벤트 호출
             capsuleCollider.enabled = false;
             Debug.Log("보스가 사망했습니다.");
@@ -200,11 +207,26 @@ namespace JungBin
 
                 foreach (var material in bossMaterials)
                 {
-                    if (material != null && material != bossMaterials[7])
+                    if (material != null)
                     {
-                        Color newColor = material.color;
-                        newColor.a = alpha;
-                        material.color = newColor;
+                        if (bossType == BossType.SecondBoss)
+                        {
+                            if (material != bossMaterials[7])
+                            {
+                                //Debug.Log("보스 Material 삭제");
+                                Color newColor = material.color;
+                                newColor.a = alpha;
+                                material.color = newColor;
+                            }
+                        }
+                        else
+                        {
+                           // Debug.Log("보스 Material 삭제");
+                            Color newColor = material.color;
+                            newColor.a = alpha;
+                            material.color = newColor;
+                        }
+                        
                     }
                 }
 
@@ -212,7 +234,7 @@ namespace JungBin
             }
 
             Destroy(bossHealthBarUI);
-            if (bossType == BossType.FirstBoss)
+            if (bossType == BossType.FirstBoss || bossType == BossType.SecondBoss2)
             {
                 Destroy(gameObject);
             }
@@ -224,6 +246,13 @@ namespace JungBin
         private void SpawnRelic()
         {
             if (relicPrefab == null) return;
+
+            IRelic relicname = relicPrefab.GetComponent<IRelic>();
+
+            foreach (var relic in SaveLoadManager.Instance.relicSaveData.relics)
+            {
+                if (relic.relicName == relicname.RelicName) return; // 중복 획득 방지
+            }
 
             capsuleCollider.enabled = false;
             Instantiate(relicPrefab, transform.position, Quaternion.identity, this.transform.parent);
@@ -279,21 +308,22 @@ namespace JungBin
 
         private IEnumerator PhaseChange()
         {
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(2f);
 
 
-            GameObject smokeObj = Instantiate(smokeParticlePrefab, slashSpawnPoint.position, Quaternion.Euler(-90, 0, 0));
+            GameObject smokeObj = Instantiate(smokeParticlePrefab, slashSpawnPoint.position, Quaternion.Euler(-90, 0, 0), transform);
             Debug.Log("☁️ 안개 소환");
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
 
             smokeObj.transform.GetChild(0).gameObject.SetActive(true);
             Debug.Log("☁️ 안개 자식 활성화");
 
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
 
             if (secondBossConnect == null)
             {
+                Debug.Log("🔥 SecondBossConnect 비활성화됨!");
                 yield break;
             }
 
@@ -311,7 +341,7 @@ namespace JungBin
             //ParticleSystem smokeParticle = smokeObj.GetComponent<ParticleSystem>();
             //smokeParticle.Stop();
 
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
 
             Destroy(smokeObj);
             Destroy(gameObject);

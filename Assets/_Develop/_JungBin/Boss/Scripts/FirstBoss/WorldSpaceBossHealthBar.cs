@@ -45,7 +45,7 @@ namespace JungBin
             {
                 elapsedTime += Time.deltaTime;
                 BossHealthBarSlider.value = Mathf.Lerp(startHealth, endHealth, elapsedTime / lerpSpeed);
-                Debug.Log(BossHealthBarSlider.value);
+                //Debug.Log(BossHealthBarSlider.value);
                 yield return null;
             }
 

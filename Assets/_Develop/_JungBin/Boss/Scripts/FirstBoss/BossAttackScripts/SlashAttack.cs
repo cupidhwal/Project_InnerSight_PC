@@ -5,7 +5,7 @@ namespace JungBin
 {
     public class SlashAttack : MonoBehaviour
     {
-        [SerializeField] private Vector3 attackDirection;  // 공격 방향 (옵션)
+        private Vector3 attackDirection;  // 공격 방향 (옵션)
 
         private void OnTriggerEnter(Collider other)
         {

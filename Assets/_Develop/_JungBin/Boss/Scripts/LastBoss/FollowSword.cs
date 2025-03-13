@@ -18,7 +18,7 @@ namespace JungBin
             transform.position = toFollow.position;
             transform.rotation = toFollow.rotation;
 
-            Debug.Log(toFollow.transform.position);
+            //Debug.Log(toFollow.transform.position);
 
         }
     }

@@ -426,12 +426,12 @@ namespace JungBin
 
                 transform.position = Vector3.Lerp(startPosition, targetPosition, t);
 
-                Debug.Log(Vector3.Distance(transform.position, targetPosition));
+                //Debug.Log(Vector3.Distance(transform.position, targetPosition));
 
                 // 💡 도착 직전이면 애니메이션을 미리 전환
                 if (Vector3.Distance(transform.position, targetPosition) < 1f) // 1f 이하일 때
                 {
-                    Debug.Log("거의 도착 → 패턴 즉시 실행");
+                    //Debug.Log("거의 도착 → 패턴 즉시 실행");
                     animator.SetBool(isArrived, true); // 즉시 공격 패턴 실행
                     yield break;
                 }

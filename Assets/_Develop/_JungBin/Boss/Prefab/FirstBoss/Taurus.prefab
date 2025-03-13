@@ -1153,7 +1153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       propertyPath: m_Name
-      value: FirstBoss
+      value: Taurus
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e93c5659e68727f428296bb07c0f449d, type: 3}
       propertyPath: m_Layer
@@ -2573,6 +2573,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSpeed: 3000
+  player: {fileID: 0}
+  animator: {fileID: 2346786875644716508}
   detectedObj: {fileID: 6818936129997462429}
   rushAttackBox: {fileID: 913765566904639677}
   throwAttackBox: {fileID: 6284033761021959893}
@@ -2585,8 +2587,6 @@ MonoBehaviour:
   warningLength: 15
   detectionRange: 4
   detectionAngle: 30
-  player: {fileID: 0}
-  animator: {fileID: 2346786875644716508}
 --- !u!114 &1518835647791892740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2623,13 +2623,15 @@ MonoBehaviour:
   bossAttack: 20
   relicPrefab: {fileID: 3199772393577486388, guid: 8a67d03c67dab424380aa5e4d5738792, type: 3}
   capsuleCollider: {fileID: 689229898053702461}
-  fadeDuration: 5
+  fadeDuration: 4
   bossHealthBarUI: {fileID: 0}
-  bossMaterials: []
+  bossMaterials:
+  - {fileID: 2100000, guid: f776bef17a7d4744e811092cb8cd4e4f, type: 2}
   berserkEffect: {fileID: 277228310458481314}
   smokeParticlePrefab: {fileID: 0}
   smokeMaterial: {fileID: 0}
   bossStageManager: {fileID: 0}
+  animator: {fileID: 0}
   secondBossConnect: {fileID: 0}
   smokeFadeDuration: 2
   slashSpawnPoint: {fileID: 0}
@@ -2661,6 +2663,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KnockbackCoefficient: 4
+  destroyDelay: 2
+  bodyRenderer: {fileID: 0}
+  dissolve: []
 --- !u!114 &4026966746025827601
 MonoBehaviour:
   m_ObjectHideFlags: 0
