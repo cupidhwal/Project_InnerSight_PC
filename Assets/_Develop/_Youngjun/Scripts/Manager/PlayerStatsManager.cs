@@ -118,10 +118,13 @@ namespace Noah
         {
             for (int i = 0; i < dataList.Count; i++)
             {
-                if (dataTexts[i].GetChild(0).GetComponent<TMP_Text>().text == "MAX" &&
-                    (i == 3 || i == 4))
+                if (dataTexts[i].GetChild(0).GetComponent<TMP_Text>().text == "MAX" && i == 3)
                 {
                     dataList[i] = inGameUI_PlayerState.maxData_Speed;
+                }
+                else if (dataTexts[i].GetChild(0).GetComponent<TMP_Text>().text == "MAX" && i == 4)
+                {
+                    dataList[i] = inGameUI_PlayerState.maxData_Atkspeed;
                 }
                 else
                 {

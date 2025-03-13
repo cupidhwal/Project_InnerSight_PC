@@ -390,33 +390,34 @@ namespace Noah
             switch (curStage)
             {
                 case 0:
+                case 1:
                     AudioManager.Instance.PlayBgm("Tutorial,0");
                     break;
-                case 1:
                 case 2:
                 case 3:
                 case 4:
+                case 5:
                     AudioManager.Instance.PlayBgm("1~4");
                     break;
-                case 5:
+                case 6:
                     AudioManager.Instance.PlayBgm("5");
                     break;
-                case 6:
                 case 7:
                 case 8:
                 case 9:
+                case 10:
                     AudioManager.Instance.PlayBgm("6~9");
                     break;
-                case 10:
+                case 11:
                     AudioManager.Instance.PlayBgm("10");
                     break;
-                case 11:
                 case 12:
                 case 13:
                 case 14:
+                case 15:
                     AudioManager.Instance.PlayBgm("11~14");
                     break;
-                case 15:
+                case 16:
                     AudioManager.Instance.PlayBgm("15");
                     break;
                 default:
