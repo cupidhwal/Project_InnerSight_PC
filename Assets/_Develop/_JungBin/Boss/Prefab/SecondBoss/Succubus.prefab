@@ -1750,6 +1750,7 @@ MonoBehaviour:
   spikeWallDuration: 5
   spikeAngle: 0
   laserParticleSystem: {fileID: 0}
+  laserCollider: {fileID: 0}
   player: {fileID: 0}
   animator: {fileID: 7339618178782629336}
   stopDistance: 3
@@ -1770,7 +1771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossName: "\uC11C\uD050\uBC84\uC2A4"
   bossType: 1
-  maxHealth: 750
+  maxHealth: 1000
   invulnerabilityTime: 3.5
   bossAttack: 40
   relicPrefab: {fileID: 3199772393577486388, guid: 8a67d03c67dab424380aa5e4d5738792, type: 3}
@@ -1791,6 +1792,7 @@ MonoBehaviour:
   smokeMaterial: {fileID: 2100000, guid: d9da2902cd0c2714f887351c5fd8e712, type: 2}
   bossStageManager: {fileID: 0}
   animator: {fileID: 0}
+  isInvulnerable: 0
   secondBossConnect: {fileID: 0}
   smokeFadeDuration: 2
   slashSpawnPoint: {fileID: 9209994852008326044}
@@ -1823,10 +1825,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDashInvulnerable: 0
-  maxHitPoints: 750
+  maxHitPoints: 1000
   currentHitPoints: 0
-  invulnerablityTime: 0
-  staggerDuration: 0
+  invulnerablityTime: 0.1
+  staggerDuration: 0.5
   hitAngle: 360
   hitForwardRotation: 360
   OnDamageMessageReceivers: []

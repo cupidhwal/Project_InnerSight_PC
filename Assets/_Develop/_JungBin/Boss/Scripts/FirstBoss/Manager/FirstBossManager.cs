@@ -218,7 +218,7 @@ namespace JungBin
         private IEnumerator ShowRushWarning()
         {
             Vector3 startPosition = transform.position + Vector3.up * 0.1f; // 보스의 현재 위치
-            Vector3 rushDirection = transform.forward; // 돌진 방향 (현재 보스의 정면 방향)
+            Vector3 rushDirection = player.transform.position - transform.position; // 돌진 방향 (현재 보스의 정면 방향)
 
             // 경고 이펙트를 돌진 방향으로 길게 생성
             Vector3 warningPosition = startPosition + rushDirection * (warningLength / 2f);
@@ -251,10 +251,10 @@ namespace JungBin
 
             yield return new WaitForSeconds(Duration);
 
-            startPosition = transform.position; // 보스의 현재 위치
-            rushDirection = transform.forward; // 돌진 방향 (현재 보스의 정면 방향)
+            startPosition = transform.position + Vector3.up * 0.1f; // 보스의 현재 위치
+            rushDirection = player.transform.position - transform.position; // 돌진 방향 (현재 보스의 정면 방향)
 
-            warningRotation = Quaternion.LookRotation(rushDirection);
+            warningRotation = Quaternion.LookRotation(rushDirection, Vector3.up);
             
             GameObject secondWarningEffect = Instantiate(warningEffectPrefab, startPosition, warningRotation, this.transform);
             //secondWarningEffect.transform.GetChild(0).localScale = new Vector3(1, 0.1f, warningLength); // 길이 조정

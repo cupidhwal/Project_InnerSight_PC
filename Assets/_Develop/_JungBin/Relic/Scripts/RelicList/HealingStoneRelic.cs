@@ -70,12 +70,12 @@ namespace JungBin
             }
             else if (maxHp - currentHp < healAmount)
             {
-                damagable.HealCurrentHitPoint(maxHp - currentHp);
+                damagable.HealReviveHitPoint(maxHp - currentHp);
                 Debug.Log("남은 체력 다 회복");
             }
             else if (maxHp - damagable.CurrentHitPoints >= healAmount)
             {
-                damagable.HealCurrentHitPoint(healAmount); // ✅ 기존 체력 회복 함수 호출
+                damagable.HealReviveHitPoint(healAmount); // ✅ 기존 체력 회복 함수 호출
                 Debug.Log("5퍼센트 회복");
             }
 

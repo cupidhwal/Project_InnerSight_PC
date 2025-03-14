@@ -40,7 +40,7 @@ namespace JungBin
 
         [SerializeField] private Animator animator; // 보스 애니메이션
         private bool isBerserk = false; // 버서커 모드 여부
-        private bool isInvulnerable = false; // 무적 여부
+        [SerializeField] private bool isInvulnerable = false; // 무적 여부
         private float timeSinceLastHit = 0f; // 무적 시간 관리
 
         private Damagable damagable; // Damagable 참조
@@ -85,6 +85,7 @@ namespace JungBin
 
             OnDeath += SpawnRelic;
             OnDeath += OnBossDeath;
+
         }
 
                   // 🎯 특정 애니메이션 파라미터가 존재하는지 확인하는 함수
@@ -281,6 +282,12 @@ namespace JungBin
             }
             animator.SetBool("IsDeath", false);
 
+            if(bossType == BossType.SecondBoss2)
+            {
+                isInvulnerable = true;
+                capsuleCollider.enabled = false;
+            }
+
                         // 머티리얼 색상 초기화
             for (int i = 0; i < bossMaterials.Length; i++)
             {
@@ -339,6 +346,7 @@ namespace JungBin
                 secondBossConnect.gameObject.SetActive(true);
             }
             secondBossConnect.PhaseChange();
+            
             Debug.Log("🔥 SecondBossConnect 활성화됨!");
 
             yield return new WaitForSeconds(1f);
@@ -375,6 +383,13 @@ namespace JungBin
                 yield return null;
             }
             Debug.Log("안개 페이드 아웃");
+        }
+        
+
+        public void BossIsInvulnerable()
+        {
+            isInvulnerable = true;
+            capsuleCollider.enabled = false;
         }
 
 
