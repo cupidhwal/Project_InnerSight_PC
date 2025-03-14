@@ -35,6 +35,7 @@ namespace Seti
         {
             Debug.Log($"생명이 {amount}값 만큼 증가");
             life += amount;
+            life = Mathf.Clamp(life, 0, 1);
             actor.Controller_Animator.Animator.SetInteger("Life", life);
         }
 
