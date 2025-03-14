@@ -95,7 +95,7 @@ namespace Seti
             {
                 if (!animator)
                 {
-                    animator = GetComponent<Controller_Animator>();
+                    animator = GetComponentInChildren<Controller_Animator>();
                     animator.Initialize();
                 }
                 return animator;

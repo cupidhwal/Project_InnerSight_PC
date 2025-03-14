@@ -40,12 +40,19 @@ namespace Seti
 
         private void ReviveInvoke()
         {
-            Invoke("Revive", 7);
+            Invoke(nameof(Revive), 5);
+            Invoke(nameof(ReviveHealth), 3);
         }
-
+        private void ReviveHealth()
+        {
+            float targetHealth = actor.Health / 2f;
+            if (TryGetComponent<Damagable>(out var damagable))
+                damagable.HealReviveHitPoint(targetHealth);
+        }
         public void Revive()
         {
             IsDead = false;
+            EnablePlayer();
 
             //Actor.Controller_Animator.Animator.Rebind();
         }

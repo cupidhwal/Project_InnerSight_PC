@@ -199,6 +199,8 @@ namespace Seti
             StopAllCoroutines();
             StartCoroutine(knockbackCor);
         }
+
+        // 코루틴 - 넉백
         IEnumerator Knockback(Damagable.DamageMessage damageMessage)
         {
             // 애니메이션의 Root Motion을 쓰지 않을 경우에만 실행
@@ -233,6 +235,8 @@ namespace Seti
 
             yield break;
         }
+
+        // 코루틴 - 디졸브
         IEnumerator DeathComposition(float delay)
         {
             float dissolveDegree = 0.6f;

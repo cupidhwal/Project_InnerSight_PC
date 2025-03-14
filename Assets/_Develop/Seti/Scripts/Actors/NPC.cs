@@ -56,8 +56,8 @@ namespace Seti
             switch (type)
             {
                 case NPC_Type.Trinkets:
-                        DataManager.Instance.UIManager.SwitchActionUI(targetUI.activeSelf);
-                        targetUI.SetActive(!targetUI.activeSelf);
+                    DataManager.Instance.UIManager.SwitchActionUI(targetUI.activeSelf);
+                    targetUI.SetActive(!targetUI.activeSelf);
                     break;
 
                 case NPC_Type.Enhance:

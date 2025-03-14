@@ -30,7 +30,7 @@ namespace Seti
                     ScenarioProgress progress = SaveLoadManager.Instance.scenarioSaveData.dialogueDatas.FirstOrDefault(data => data.ScenarioName == StoryManager.Instance.StageName);
                     if (progress != null)
                     {
-                        if (progress.CheckSeens[dialogueNumber])
+                        if (!progress.CheckSeens[dialogueNumber])
                         {
                             Instantiate(eventObject, transform.position, Quaternion.identity, transform);
                         }

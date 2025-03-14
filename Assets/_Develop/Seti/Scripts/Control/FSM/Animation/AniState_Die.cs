@@ -27,8 +27,8 @@ namespace Seti
         // 상태 전환 조건 메서드
         public override Type CheckTransitions()
         {
-            /*if (!context.Actor.Condition.IsDead)
-                return typeof(AniState_Idle);*/
+            if (!context.Actor.Condition.IsDead)
+                return typeof(AniState_Idle);
 
             return null;
         }

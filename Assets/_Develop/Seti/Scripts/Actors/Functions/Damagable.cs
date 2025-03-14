@@ -246,6 +246,12 @@ namespace Seti
             currentHitPoints += _healAmount;
             OnResetDamage?.Invoke();
         }
+
+        public void HealReviveHitPoint(float _healAmount)
+        {
+            currentHitPoints += _healAmount;
+            OnResetDamage?.Invoke();
+        }
         #endregion
 
         // 유틸리티
