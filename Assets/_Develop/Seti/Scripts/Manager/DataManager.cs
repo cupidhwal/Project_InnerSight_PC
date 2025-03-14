@@ -73,6 +73,7 @@ namespace Seti
                 }
                 deathCount = data.deathCount;
                 sinEvent = data.sinEvent;
+                flynneEvent = data.flynneEvent;
     }
             dialogueDatas.Add(dialogueData);
 

@@ -136,7 +136,8 @@ namespace Seti
                 collider.excludeLayers = LayerMask.GetMask("Player", "Actor");
                 try
                 {
-                    enemy.Agent.ResetPath();
+                    if (enemy.Agent.enabled)
+                        enemy.Agent.ResetPath();
                 }
                 catch { }
                 

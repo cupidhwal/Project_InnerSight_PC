@@ -53,7 +53,6 @@ namespace Seti
         public void Revive()
         {
             IsDead = false;
-            EnablePlayer();
 
             //Actor.Controller_Animator.Animator.Rebind();
         }

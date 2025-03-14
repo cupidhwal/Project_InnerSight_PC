@@ -33,7 +33,8 @@ namespace Seti
 
             try
             {
-                enemy.Agent.ResetPath();
+                if (enemy.Agent.enabled)
+                    enemy.Agent.ResetPath();
             }
             catch { }
             enemy.Agent.speed = enemy.Rate_Movement * enemy.Magnification_WalkToRun;
@@ -119,7 +120,8 @@ namespace Seti
                 positioningCompleted = true;
                 try
                 {
-                    enemy.Agent.ResetPath();
+                    if (enemy.Agent.enabled)
+                        enemy.Agent.ResetPath();
                 }
                 catch { }
 

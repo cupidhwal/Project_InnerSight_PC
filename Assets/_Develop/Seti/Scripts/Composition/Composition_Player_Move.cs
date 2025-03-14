@@ -1,5 +1,6 @@
-using Noah;
 using UnityEngine;
+using UnityEngine.AI;
+using Noah;
 
 namespace Seti
 {
@@ -14,9 +15,14 @@ namespace Seti
 
         public override void Execute(GameObject _)
         {
+            Player player = InitializeManager.Instance.Player;
+            NavMeshAgent agent = player.GetComponent<NavMeshAgent>();
+
             Vector3 targetPos = StageManager.Instance.CurrentStage.transform.GetChild(4).GetChild(2).position + new Vector3(0f, 0f, -2f);
 
-            InitializeManager.Instance.Player.transform.SetPositionAndRotation(targetPos, Quaternion.identity);
+            agent.enabled = false;
+            player.transform.SetPositionAndRotation(targetPos, Quaternion.identity);
+            agent.enabled = true;
         }
     }
 }

@@ -54,7 +54,8 @@ namespace Seti
             {
                 try
                 {
-                    enemy.Agent.ResetPath();
+                    if (enemy.Agent.enabled)
+                        enemy.Agent.ResetPath();
                 }
                 catch { }
             }

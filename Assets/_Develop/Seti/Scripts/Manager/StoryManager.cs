@@ -159,7 +159,7 @@ namespace Seti
                             break;
 
                         case 5:
-                            if (townData != null && !townData.CheckSeens[5])
+                            if (townData != null && !townData.CheckSeens[5] && DataManager.Instance.flynneEvent[4])
                                 OpenDialogue(5);
                             break;
                     }
@@ -181,6 +181,10 @@ namespace Seti
                 case "Stage015":
                     SetDialogue(5);
                     OpenDialogue(0);
+                    break;
+
+                default:
+                    SetDialogue(1);
                     break;
             }
         }
