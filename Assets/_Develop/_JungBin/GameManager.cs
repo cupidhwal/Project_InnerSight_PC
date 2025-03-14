@@ -18,6 +18,7 @@ namespace JungBin
         public Player Player => player; // 외부에서 접근 가능한 프로퍼티
 
         public static event Action OnStageChanged; // 🔹 스테이지 변경 이벤트
+        public static event Action OnAnyStageChanged; // 🔹 스테이지 변경 이벤트
 
         private void Awake()
         {
@@ -49,5 +50,11 @@ namespace JungBin
             Debug.Log("🔹 새로운 스테이지로 이동!");
             OnStageChanged?.Invoke(); // 🔹 이벤트 호출 → 유물 효과 적용됨!
         }
+
+        public void AnyChangeStage()
+        {
+            OnAnyStageChanged?.Invoke(); // 🔹 이벤트 호출 → 유물 효과 적용됨!
+        }
     }
+    
 }
