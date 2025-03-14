@@ -1,5 +1,6 @@
 using UnityEngine;
 using Noah;
+using System.Linq;
 
 namespace Seti
 {
@@ -24,9 +25,16 @@ namespace Seti
         {
             if (other.CompareTag("Player"))
             {
-                if (eventObject && !DataManager.Instance.DialogueData.CheckSeens[dialogueNumber])
+                if (eventObject)
                 {
-                    Instantiate(eventObject, transform.position, Quaternion.identity, transform);
+                    ScenarioProgress progress = SaveLoadManager.Instance.scenarioSaveData.dialogueDatas.FirstOrDefault(data => data.ScenarioName == StoryManager.Instance.StageName);
+                    if (progress != null)
+                    {
+                        if (progress.CheckSeens[dialogueNumber])
+                        {
+                            Instantiate(eventObject, transform.position, Quaternion.identity, transform);
+                        }
+                    }
                 }
                 StoryManager.Instance.OpenDialogue(dialogueNumber);
             }
