@@ -41,8 +41,8 @@ namespace JungBin
 
             // 🔹 유물 효과를 중앙 관리 시스템에 등록
             RelicEffectManager.RegisterEffect(RelicID,
-                () => playerCondition.SetLife(1),  // ApplyEffect()
-                () => playerCondition.SetLife(-1)  // RemoveEffect()
+                () => ApplyEffect(),  // ApplyEffect()
+                () => RemoveEffect()  // RemoveEffect()
             );
         }
 

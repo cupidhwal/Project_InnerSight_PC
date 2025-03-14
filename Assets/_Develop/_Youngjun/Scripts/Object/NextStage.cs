@@ -50,8 +50,6 @@ namespace Noah
 
             transform.GetComponent<Collider>().enabled = false;
 
-            GameManager.Instance.ChangeStage();
-
             if (isHidden)
             {
                 StageManager.Instance.IsHidden = true;
@@ -71,6 +69,7 @@ namespace Noah
             else
             {
                 StageManager.Instance.IsHidden = false;
+                GameManager.Instance.ChangeStage();
             }
 
             StageManager.Instance.NextStage();

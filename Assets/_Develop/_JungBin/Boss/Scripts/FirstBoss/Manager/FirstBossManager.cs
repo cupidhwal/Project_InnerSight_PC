@@ -258,7 +258,7 @@ namespace JungBin
             
             GameObject secondWarningEffect = Instantiate(warningEffectPrefab, startPosition, warningRotation, this.transform);
             //secondWarningEffect.transform.GetChild(0).localScale = new Vector3(1, 0.1f, warningLength); // 길이 조정
-
+            Debug.Log("333");
             StartCoroutine(ResetDamageCooldown());
 
             elapsedTime = 0f;
@@ -266,6 +266,7 @@ namespace JungBin
             {
                 if (animator.GetBool("IsWall") || animator.GetBool("IsBerserk"))
                 {
+                    Debug.Log("444");
                     Destroy(secondWarningEffect); // 두 번째 경고 이펙트 제거
                     yield break; // 즉시 종료
                 }

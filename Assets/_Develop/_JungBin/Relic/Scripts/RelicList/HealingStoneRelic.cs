@@ -10,7 +10,7 @@ namespace JungBin
         [TextArea(5, 5)]
         [SerializeField] private string relicDescription = "다음 스테이지로 이동 시 일정 체력을 회복합니다.";
 
-        [SerializeField] private float healAmount;
+        //[SerializeField] private float healAmount;
 
        // private Player player;
 
@@ -57,7 +57,23 @@ namespace JungBin
                 Debug.Log("damagable == null");
                 return;
             }
+            float healAmount = damagable.MaxHitPoint / 20;
+            if (damagable.MaxHitPoint == damagable.CurrentHitPoints)
+            {
+                Debug.Log("생명력 회복 없음");
+                return;
+            }
+            else if(damagable.MaxHitPoint - damagable.CurrentHitPoints < healAmount)
+            {
+                damagable.HealCurrentHitPoint(damagable.MaxHitPoint - damagable.CurrentHitPoints);
+                Debug.Log("남은 체력 다 회복");
+            }
+            else if (damagable.MaxHitPoint - damagable.CurrentHitPoints >= healAmount)
+            {
                 damagable.HealCurrentHitPoint(healAmount); // ✅ 기존 체력 회복 함수 호출
+                Debug.Log("5퍼센트 회복");
+            }
+
             Debug.Log($"🔹 체력 강화 효과 적용됨! +{healAmount} HP 증가");
         }
     }
