@@ -64,6 +64,8 @@ namespace Seti
                 this,
                 new AniState_Idle()
             );
+            Animator.speed = 0;
+            Invoke(nameof(AnimationStart), 3);
 
             // 상태 추가
             AddStates();
@@ -133,8 +135,7 @@ namespace Seti
         }
         #endregion
 
-        // 유틸리티
-        //bool switchMove = false;
+        public void AnimationStart() => Animator.speed = 1;
         public void MeleeAttackStart(int throwing = 0)
         {
             Actor.Condition.CurrentWeapon.BeginAttack(throwing != 0);

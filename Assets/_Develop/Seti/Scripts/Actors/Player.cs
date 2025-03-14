@@ -66,9 +66,6 @@ namespace Seti
                 return;
             }
 
-            if (info == "유물 교체" && RelicManager.Instance.GetRelics().Count == 0)
-                return;
-
             if (info == "대화")
             {
                 if (currentNPC.GetComponent<NPC_Life>().IsDead)
