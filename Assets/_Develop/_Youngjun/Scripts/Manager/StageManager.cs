@@ -240,7 +240,13 @@ namespace Noah
             }
             else 
             {
-                enemys.Clear();    
+                for (int i = 0; i < enemys.Count; i++)
+                {
+                    Destroy(enemys[i].gameObject); 
+                }
+
+                enemys.Clear();
+                
             }
 
             yield return new WaitForSeconds(0.5f);
