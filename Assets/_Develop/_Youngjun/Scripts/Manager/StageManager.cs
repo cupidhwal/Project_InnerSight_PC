@@ -236,7 +236,11 @@ namespace Noah
                         curStage += 1;
                     }
                 }
-            
+
+            }
+            else 
+            {
+                enemys.Clear();    
             }
 
             yield return new WaitForSeconds(0.5f);
