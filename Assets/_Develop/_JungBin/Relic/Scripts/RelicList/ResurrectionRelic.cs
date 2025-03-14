@@ -93,7 +93,7 @@ namespace JungBin
             {
                 isContact = true;
 
-                ActionUIManager.Instance.EnableActionUI(actionUI_Text);
+                ActionUIManager.Instance.EnableActionUI(RelicName);
 
             }
         }

@@ -55,6 +55,8 @@ namespace JungBin
         {
             if (animator.GetBool("IsDeath") || player == null) return;
 
+            if (animator.GetBool("Start") == false) return;
+
             Vector3 direction = player.position - transform.position;
             float distance = direction.magnitude;
 

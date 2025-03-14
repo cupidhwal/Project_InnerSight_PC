@@ -217,12 +217,12 @@ namespace JungBin
 
         private IEnumerator ShowRushWarning()
         {
-            Vector3 startPosition = transform.position; // 보스의 현재 위치
+            Vector3 startPosition = transform.position + Vector3.up * 0.1f; // 보스의 현재 위치
             Vector3 rushDirection = transform.forward; // 돌진 방향 (현재 보스의 정면 방향)
 
             // 경고 이펙트를 돌진 방향으로 길게 생성
             Vector3 warningPosition = startPosition + rushDirection * (warningLength / 2f);
-            Quaternion warningRotation = Quaternion.LookRotation(rushDirection);
+            Quaternion warningRotation = Quaternion.LookRotation(rushDirection, Vector3.up);
 
             // 경고 이펙트 생성
             GameObject warningEffect = Instantiate(warningEffectPrefab, startPosition, warningRotation, this.transform);
