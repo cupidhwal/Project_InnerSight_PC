@@ -17,7 +17,11 @@ namespace Noah
         {
             ObjectFadeSystem.Instance.ObjectFadeIn_Particle(transform);
 
-            Invoke("ActiveCollider", 2f);
+            if (!isHidden)
+            {
+                Invoke("ActiveCollider", 2f);
+            }
+            
         }
 
         private void Update()
