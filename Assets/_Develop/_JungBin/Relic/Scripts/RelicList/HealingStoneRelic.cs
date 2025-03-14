@@ -10,7 +10,7 @@ namespace JungBin
         [TextArea(5, 5)]
         [SerializeField] private string relicDescription = "다음 스테이지로 이동 시 일정 체력을 회복합니다.";
 
-        [SerializeField] private float healAmount;
+        //[SerializeField] private float healAmount;
 
        // private Player player;
 
@@ -25,19 +25,21 @@ namespace JungBin
         {
                         // 🔹 새로운 유물만의 특별한 효과 등록 가능!
             RelicEffectManager.RegisterEffect(RelicID,
-                () => GameManager.OnStageChanged += HealPlayer,
-                () => GameManager.OnStageChanged -= HealPlayer
+                () => ApplyEffect(),
+                () => RemoveEffect()
             );
         }
 
         public override void ApplyEffect()
         {
             //RelicEffectManager.ApplyEffect(RelicID);
+            GameManager.OnStageChanged += HealPlayer;
         }
 
         public override void RemoveEffect()
         {
             //RelicEffectManager.RemoveEffect(RelicID);
+            GameManager.OnStageChanged -= HealPlayer;
         }
 
         /// <summary>
@@ -58,7 +60,7 @@ namespace JungBin
                 return;
             }
 
-            /*float currentHp = damagable.CurrentHitPoints;
+            float currentHp = damagable.CurrentHitPoints;
             float maxHp = damagable.MaxHitPoint;
             float healAmount = Mathf.Floor(maxHp / 20);  // 내림
             if (maxHp == currentHp)
@@ -66,7 +68,7 @@ namespace JungBin
                 Debug.Log("생명력 회복 없음");
                 return;
             }
-            else if(maxHp - currentHp < healAmount)
+            else if (maxHp - currentHp < healAmount)
             {
                 damagable.HealCurrentHitPoint(maxHp - currentHp);
                 Debug.Log("남은 체력 다 회복");
@@ -75,9 +77,9 @@ namespace JungBin
             {
                 damagable.HealCurrentHitPoint(healAmount); // ✅ 기존 체력 회복 함수 호출
                 Debug.Log("5퍼센트 회복");
-            }*/
+            }
 
-            damagable.HealCurrentHitPoint(healAmount); // ✅ 기존 체력 회복 함수 호출
+            //damagable.HealCurrentHitPoint(healAmount); // ✅ 기존 체력 회복 함수 호출
 
             Debug.Log($"🔹 체력 강화 효과 적용됨! +{healAmount} HP 증가");
         }
