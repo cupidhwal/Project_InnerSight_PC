@@ -8,7 +8,7 @@ public class LaserDamage : MonoBehaviour
     private Vector3 attackDirection;  // 공격 방향 (옵션)
     [SerializeField] private int bossNumber;
     [SerializeField] private float damageInterval = 1f; // 피해 간격 (0.5초마다 피해)
-    private bool isCanDamage = false;
+    private bool isCanDamage = true;
 
     private void OnTriggerStay(Collider other)
     {
@@ -17,7 +17,7 @@ public class LaserDamage : MonoBehaviour
             // 플레이어의 Damagable 컴포넌트 확인
             Damagable playerDamagable = other.GetComponent<Damagable>();
             Actor actor = other.GetComponent<Actor>();
-            if (playerDamagable != null)
+            if (playerDamagable != null && isCanDamage == true)
             {
                 // DamageMessage 생성
                 Damagable.DamageMessage damageMessage = new Damagable.DamageMessage
