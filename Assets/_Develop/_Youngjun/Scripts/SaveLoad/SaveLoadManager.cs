@@ -209,10 +209,22 @@ namespace Noah
                 scenarioSaveData.dialogueDatas.Add(data);
             }
             data.SetData(dialogueData);
+
+            // 첫 번째 원흉 이벤트 체크
+            if (!scenarioSaveData.sinEvent[0] && data.ScenarioName == "Stage001" && data.CheckSeens[2])
+            {
+                data.CheckSeens[2] = false;
+            }
+
+            // 두 번째 원흉 이벤트 체크
+            if (!scenarioSaveData.sinEvent[1] && data.ScenarioName == "Stage004" && data.CheckSeens[0])
+            {
+                data.CheckSeens[0] = false;
+            }
+
             Save(scenarioSaveDataPath, scenarioSaveData);
         }
         public void CheckTutorial(bool flag) => isTutorial = flag;
-
     }
 }
 
