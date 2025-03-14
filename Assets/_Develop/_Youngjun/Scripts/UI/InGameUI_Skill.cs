@@ -129,7 +129,8 @@ namespace Noah
                 // 랜덤 스킬 이미지 할당
                 btns[i].transform.GetChild(0).GetComponent<Image>().sprite = randomSkills[index].skillImage;
                 btns[i].transform.GetChild(1).GetComponent<TMP_Text>().text = randomSkills[index].skillName;
-                btns[i].transform.GetChild(2).GetComponent<TMP_Text>().text = randomSkills[index].skillDescription;
+                btns[i].transform.GetChild(2).GetComponent<TMP_Text>().text
+                    = $"{randomSkills[index].skillDescription}\n데미지 : {randomSkills[index].damage}\n쿨타임 : {randomSkills[index].cooldown}";
             }
         }
 
