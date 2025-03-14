@@ -339,6 +339,7 @@ namespace JungBin
                 secondBossConnect.gameObject.SetActive(true);
             }
             secondBossConnect.PhaseChange();
+            isInvulnerable = true;
             Debug.Log("🔥 SecondBossConnect 활성화됨!");
 
             yield return new WaitForSeconds(1f);
