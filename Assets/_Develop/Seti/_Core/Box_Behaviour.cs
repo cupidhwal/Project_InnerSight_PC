@@ -13,6 +13,7 @@ namespace Seti
         [SerializeReference]
         public List<IBehaviour> behaviours;
 
+#if UNITY_EDITOR
         private void OnValidate()
         {
             // 삭제된 행동 클래스를 자동으로 정리
@@ -25,5 +26,6 @@ namespace Seti
                 UnityEditor.AssetDatabase.SaveAssets(); // 강제 저장
             }
         }
+#endif
     }
 }
