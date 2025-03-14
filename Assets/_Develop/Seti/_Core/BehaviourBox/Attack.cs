@@ -196,6 +196,13 @@ namespace Seti
 
             if (isSkillAttack)
                 isSkillAttack = false;
+
+            actor.CoroutineExecutor(OnAttackEnd());
+        }
+        IEnumerator OnAttackEnd()
+        {
+            yield return new WaitForSeconds(0.05f);
+            actor.Condition.IsAttack = false;
         }
         public void OnAttackEnter() => currentStrategy?.Attack();
 

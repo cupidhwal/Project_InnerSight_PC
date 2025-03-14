@@ -66,7 +66,7 @@ namespace Seti
         void AttackState()
         {
             context.Animator.ResetTrigger(Hash_MeleeAttack);
-            context.Actor.Condition.IsAttack = false;
+            //context.Actor.Condition.IsAttack = false;
 
             context.Animator.SetFloat(Hash_StateTime,
                                       Mathf.Repeat(context.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f));
