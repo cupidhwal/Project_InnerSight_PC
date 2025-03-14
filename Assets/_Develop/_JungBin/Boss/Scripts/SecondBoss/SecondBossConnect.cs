@@ -22,6 +22,8 @@ public class SecondBossConnect : MonoBehaviour
     {
         Phase2.transform.position = Phase1.transform.position;
         Phase2.SetActive(true);
+        BossStat bossStat = Phase2.GetComponent<BossStat>();
+        bossStat.BossIsInvulnerable();
         
         Debug.Log("Phase2 보스 등장");
         Invoke("PhaseChangeVoid", 2f);
