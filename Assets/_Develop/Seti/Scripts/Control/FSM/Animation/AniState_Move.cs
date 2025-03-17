@@ -13,19 +13,18 @@ namespace Seti
         // 상태 전환 시 State Enter에 1회 실행
         public override void OnEnter()
         {
-            //context.Animator.SetBool(isMove, true);
-            context.Animator.SetBool(Hash_InputDetected, true);
             base.OnEnter();
 
             context.currentState = AniState.Move;
+            context.Animator.SetBool(Hash_InputDetected, true);
         }
 
         // 상태 전환 시 State Exit에 1회 실행
         public override void OnExit()
         {
-            //context.Animator.SetBool(isMove, false);
-            context.Animator.SetBool(Hash_InputDetected, false);
             base.OnExit();
+
+            context.Animator.SetBool(Hash_InputDetected, false);
         }
 
         // 상태 전환 조건 메서드

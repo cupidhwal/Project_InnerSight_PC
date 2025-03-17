@@ -5,8 +5,6 @@ namespace Seti
 {
     public class Enemy_State_Attack_Normal : Enemy_State
     {
-        // 오버라이드
-        #region Override
         // 초기화 메서드 - 생성 후 1회 실행
         public override void OnInitialized()
         {
@@ -65,10 +63,8 @@ namespace Seti
                 attack?.FSM_AttackInput(true);
             else attack?.FSM_AttackInput(false);
         }
-        #endregion
 
         // 메서드
-        #region Methods
         private bool Input_Attack(float deltaTime)
         {
             // 카운트다운 진행
@@ -83,6 +79,5 @@ namespace Seti
             }
             return false;
         }
-        #endregion
     }
 }

@@ -19,8 +19,7 @@ namespace Seti
             enemy.OnTargetMove += PathFindToChase;
             PathFindToChase();
 
-            context.Actor.Condition.IsMove = true;
-            context.Actor.Condition.IsChase = true;
+            enemy.Condition.IsChase = true;
         }
 
         // 상태 전환 시 State Exit에 1회 실행

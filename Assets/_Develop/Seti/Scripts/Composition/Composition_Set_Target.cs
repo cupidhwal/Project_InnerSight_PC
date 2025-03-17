@@ -14,11 +14,11 @@ namespace Seti
         //[SerializeField]
         //Transform targetRoot;
         [SerializeField]
-        private int targetChildIndex;
+        private string targetName;
 
         public override void Execute(GameObject obj)
         {
-            GameObject target = StageManager.Instance.CurrentStage.transform.GetChild(targetChildIndex).gameObject;
+            GameObject target = StageManager.Instance.CurrentStage.transform.Find(targetName).gameObject;
             StoryManager.Instance.CurrentComp.target = target;
         }
     }

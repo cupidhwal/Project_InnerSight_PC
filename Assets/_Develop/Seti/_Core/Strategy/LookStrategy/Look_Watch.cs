@@ -23,7 +23,6 @@ namespace Seti
                     enemyCondition.IsMagic)
                     {
                         enemy.transform.LookAt(enemy.Player.transform.position);
-                        Debug.Log($"Enemy Watch : To Player");
                     }
                 }
 

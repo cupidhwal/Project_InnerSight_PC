@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Unity.Cinemachine;
 using Noah;
+using JungBin;
 
 namespace Seti
 {
@@ -151,17 +152,15 @@ namespace Seti
                 case "Stage000":
                     SetDialogue(1);
                     DialogueData townData = DataManager.Instance.GetDialogData();
-                    switch (DataManager.Instance.deathCount)
+                    if (DataManager.Instance.deathCount == 1)
                     {
-                        case 1:
-                            if (townData != null && !townData.CheckSeens[0])
-                                OpenDialogue(0);
-                            break;
-
-                        case 5:
-                            if (townData != null && !townData.CheckSeens[5] && DataManager.Instance.flynneEvent[4])
-                                OpenDialogue(5);
-                            break;
+                        if (townData != null && !townData.CheckSeens[0])
+                            OpenDialogue(0);
+                    }
+                    else
+                    {
+                        if (townData != null && !townData.CheckSeens[5] && SaveLoadManager.Instance.scenarioSaveData.flynneEvent[4])
+                            OpenDialogue(5);
                     }
                     break;
 
@@ -180,11 +179,21 @@ namespace Seti
 
                 case "Stage015":
                     SetDialogue(5);
-                    OpenDialogue(0);
-                    break;
-
-                default:
-                    SetDialogue(1);
+                    Debug.Log("SwitchCurrentStage");
+                    Animator boss = FindAnyObjectByType<LastBossManager>().GetComponent<Animator>();
+                    if (SaveLoadManager.Instance.scenarioSaveData.flynneEvent[5])
+                    {
+                        if (!OpenDialogue(1))
+                            boss.SetBool("Start", true);
+                    }
+                    else
+                    {
+                        if (!OpenDialogue(0))
+                        {
+                            Debug.Log("Boss Start");
+                            boss.SetBool("Start", true);
+                        }
+                    }
                     break;
             }
         }

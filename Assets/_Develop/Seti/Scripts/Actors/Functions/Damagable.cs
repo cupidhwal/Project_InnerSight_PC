@@ -63,15 +63,6 @@ namespace Seti
             }
         }
         public float CurrentHitRate => currentHitPoints / maxHitPoints;     // 현재 체력 (%)
-        /*public float InvulnerablityTime_Dash
-        {
-            get
-            {
-                if (actor is Player player)
-                    return player.Dash_InvulnerablityTime;
-                return invulnerablityTime;
-            }
-        }*/
         #endregion
 
         // 라이프 사이클
@@ -145,15 +136,6 @@ namespace Seti
                 }
             }
         }
-
-        /*private void LateUpdate()
-        {
-            if (schedule != null)
-            {
-                schedule();
-                schedule = null;
-            }
-        }*/
         #endregion
 
         // 메서드

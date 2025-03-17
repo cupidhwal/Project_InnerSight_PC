@@ -34,28 +34,6 @@ namespace Seti
 
         // 인터페이스
         #region Interface
-        /*public bool IsRelevant(DamageControl damageControl)
-        {
-            Actor actor = GetComponent<Actor>();
-            switch (actor)
-            {
-                case Player:
-                    return actor is not NPC && actor != this;
-
-                case Player_Alter:
-                    return actor is Player;
-
-                case NPC:
-                    return actor is not Player && actor != this;
-
-                case Enemy:
-                    return actor is Player || actor is NPC;
-
-                default:
-                    return false;
-            }
-        }*/
-
         public void OnReceiveMessage(GameMessageType type, object sender, object msg)
         {
             Damagable.DamageMessage damageData = (Damagable.DamageMessage)msg;

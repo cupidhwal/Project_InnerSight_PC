@@ -90,7 +90,6 @@ namespace Seti
             /*transform.position = Actor.transform.position;
             transform.rotation = Actor.transform.rotation;*/
         }
-
         private void OnDie() => Actor.Condition.IsDead = true;
 
         private void AddStates()

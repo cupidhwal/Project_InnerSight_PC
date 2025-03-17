@@ -19,7 +19,7 @@ namespace Seti
             base.OnEnter();
 
             elapsedDuration = context.Actor.Stagger;
-            context.Actor.Condition.IsStagger = true;
+            //context.Actor.Condition.IsStagger = true;
         }
 
         // 상태 전환 시 State Exit에 1회 실행

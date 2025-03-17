@@ -21,6 +21,11 @@ namespace Seti
             if (TryGetComponent<Damagable>(out var damagable))
                 damagable.OnDeath += ReviveInvoke;
         }
+
+        private void Update()
+        {
+            Debug.Log($"Life: {actor.Controller_Animator.Animator.GetInteger("Life")}");
+        }
         #endregion
 
         // 메서드
@@ -33,7 +38,7 @@ namespace Seti
 
         public void SetLife(int amount)
         {
-            Debug.Log($"생명이 {amount}값 만큼 증가");
+            //Debug.Log($"생명이 {amount}값 만큼 증가");
             life += amount;
             life = Mathf.Clamp(life, 0, 1);
             actor.Controller_Animator.Animator.SetInteger("Life", life);
@@ -41,7 +46,6 @@ namespace Seti
 
         private void ReviveInvoke()
         {
-            Invoke(nameof(Revive), 5);
             Invoke(nameof(ReviveHealth), 3);
         }
         private void ReviveHealth()
@@ -49,12 +53,6 @@ namespace Seti
             float targetHealth = actor.Health / 2f;
             if (TryGetComponent<Damagable>(out var damagable))
                 damagable.HealReviveHitPoint(targetHealth);
-        }
-        public void Revive()
-        {
-            IsDead = false;
-
-            //Actor.Controller_Animator.Animator.Rebind();
         }
 
         public override void Initialize()

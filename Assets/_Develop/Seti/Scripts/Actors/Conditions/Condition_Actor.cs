@@ -80,6 +80,9 @@ namespace Seti
             }
 
             IsGrounded = true;
+
+            if (actor is Enemy enemy)
+                enemy.Condition.inAction = true;
         }
         #endregion
 
