@@ -18,6 +18,7 @@ namespace JungBin
 
         [SerializeField] private Transform slashSpawnPoint;
         [SerializeField] private GameObject slashAttack;
+        [SerializeField] private BoxCollider smashAttackBox;
         [SerializeField] private GameObject spikeAttackPrefab;
         [SerializeField] private Transform spikeSpawnPoint;
 
@@ -217,7 +218,14 @@ namespace JungBin
         {
             GameObject slashParticle = Instantiate(slashAttack, slashSpawnPoint.position, Quaternion.identity);
 
+            smashAttackBox.enabled = true;
+
             Destroy(slashParticle, 1.5f );
+        }
+
+        public void SmashAttackOff()
+        {
+            smashAttackBox.enabled = false;
         }
 
         public void SpikeSpawn()
