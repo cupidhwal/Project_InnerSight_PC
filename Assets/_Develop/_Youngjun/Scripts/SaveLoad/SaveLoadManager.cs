@@ -47,12 +47,24 @@ namespace Noah
             }
         }
 
+        private void Start()
+        {
+            if (SceneManager.GetActiveScene().name != "MainMenu") // 타이틀 씬이 아닐 때만 Init 호출
+            {
+                DataReset();
+            }
+        }
+
         void Init()
         {
             AddDictionary();
 
             LoadAll();
 
+        }
+
+        void DataReset()
+        {
             playerStats.ResetData();
             playerItem.ResetData();
             relicSaveData.ResetData();
@@ -170,6 +182,7 @@ namespace Noah
         public void DeleteAllSaveFiles()
         {
             string saveDirectory = Application.persistentDataPath;
+            Debug.Log("Save Directory: " + saveDirectory);
 
             if (Directory.Exists(saveDirectory))
             {
@@ -177,8 +190,22 @@ namespace Noah
 
                 foreach (string file in files)
                 {
-                    File.Delete(file);
-                    Debug.Log("Deleted: " + file);
+                    // Player.log 파일은 삭제하지 않도록 예외 처리
+                    if (file.EndsWith("Player.log"))
+                    {
+                        Debug.LogWarning("Skipping Player.log file.");
+                        continue;
+                    }
+
+                    try
+                    {
+                        File.Delete(file);
+                        Debug.Log("Deleted: " + file);
+                    }
+                    catch (IOException e)
+                    {
+                        Debug.LogError("Failed to delete file: " + file + "\nError: " + e.Message);
+                    }
                 }
             }
             else
