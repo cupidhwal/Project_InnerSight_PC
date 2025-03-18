@@ -70,8 +70,6 @@ namespace Noah
                 def = PlayerStatsManager.Instance.startPlayerData.def_Start;
                 moveSpeed = PlayerStatsManager.Instance.startPlayerData.moveSpeed_Start;
                 atkSpeed = PlayerStatsManager.Instance.startPlayerData.atkSpeed_Start;
-
-                Debug.Log("123");
             }
             else
             {

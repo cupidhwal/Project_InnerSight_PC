@@ -52,7 +52,11 @@ namespace Noah
             if (SceneManager.GetActiveScene().name != "MainMenu") // 타이틀 씬이 아닐 때만 Init 호출
             {
                 DataReset();
+
+                PlayerStatsManager.Instance.Init();
             }
+
+      
         }
 
         void Init()
@@ -69,6 +73,8 @@ namespace Noah
             playerItem.ResetData();
             relicSaveData.ResetData();
             scenarioSaveData.ResetData();
+
+            Debug.Log("11");
         }
 
         void AddDictionary()
