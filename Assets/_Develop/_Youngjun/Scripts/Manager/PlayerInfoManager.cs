@@ -16,14 +16,6 @@ namespace Noah
             UIManager.Instance.Init();
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                AddGold(100000);
-            }
-        }
-
         public int GetGold()
         {
             return playerItem.gold;

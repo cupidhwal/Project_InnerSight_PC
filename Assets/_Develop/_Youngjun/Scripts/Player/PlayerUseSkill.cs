@@ -54,7 +54,6 @@ namespace Noah
                 return;
             }
 
-
             // 스킬 사용 및 범위 지정
             if (isReadySkill && setSkill.skillSlots[index] != null)
             {
@@ -84,7 +83,8 @@ namespace Noah
         {
             if (setSkill.skillSlots[_index].isSkillOn)
             {
-                if (Input.GetMouseButton(1) && setSkill.skillSlots[_index].rangeType != SkillRangeType.Nomal)
+                if (Input.GetMouseButton(1) && setSkill.skillSlots[_index].rangeType != SkillRangeType.Nomal
+                    && setSkill.skillSlots[_index].rangeType != SkillRangeType.Proximity)
                 {
                     isReadySkill = false;
                     isChange = false;
@@ -96,14 +96,6 @@ namespace Noah
                     }
 
                     SkillPosition();
-
-                    if (transform.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
-                    {
-                        if (attackBehaviour is Attack attack)
-                        {
-                            attack.isSkillAttack = true;
-                        }
-                    }
                 }
                 else if (setSkill.skillSlots[_index].rangeType == SkillRangeType.Proximity)
                 {
@@ -384,6 +376,14 @@ namespace Noah
 
                         effectGo.transform.rotation = yOnlyRotation;
 
+                    }
+                }
+
+                if (transform.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+                {
+                    if (attackBehaviour is Attack attack)
+                    {
+                        attack.isSkillAttack = true;
                     }
                 }
             }

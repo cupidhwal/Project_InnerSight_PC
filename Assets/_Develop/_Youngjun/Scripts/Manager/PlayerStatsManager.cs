@@ -31,10 +31,10 @@ namespace Noah
 
         private void Start()
         {
-            Init();
+           
         }
 
-        void Init()
+        public void Init()
         {
             playerData = SaveLoadManager.Instance.playerStats;
             upgradeCountData = SaveLoadManager.Instance.upgradeCount;
