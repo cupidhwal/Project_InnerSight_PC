@@ -1,6 +1,3 @@
-using Noah;
-using UnityEngine;
-
 namespace Noah
 {
     public class PlayerInfoManager : Singleton<PlayerInfoManager>
@@ -13,6 +10,13 @@ namespace Noah
         {
             playerItem = SaveLoadManager.Instance.playerItem;
 
+            UIManager.Instance.Init();
+
+            Invoke("Test", 3f);
+        }
+
+        void Test()
+        {
             UIManager.Instance.Init();
         }
 
