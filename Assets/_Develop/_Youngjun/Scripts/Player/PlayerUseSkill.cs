@@ -100,6 +100,7 @@ namespace Noah
                 else if (setSkill.skillSlots[_index].rangeType == SkillRangeType.Proximity)
                 {
                     isStartAttack = true;
+
                     isReadySkill = false;
                     isChange = false;
 
