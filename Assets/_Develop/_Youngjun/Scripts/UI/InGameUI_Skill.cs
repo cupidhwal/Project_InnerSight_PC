@@ -167,8 +167,6 @@ namespace Noah
                 // 슬롯이 가득 찬 경우, 선택 UI 표시
                 selectSkillNum = skillIndex;
                 SetSelectUI(randomSkills[skillIndex]);
-
-                Debug.Log("1");
             }
         }
 
@@ -228,8 +226,6 @@ namespace Noah
         {
             selectUI.SetActive(true);
 
-            Debug.Log("2");
-
             for (int i = 0; i < changeBtns.Count; i++)
             {
                 int index = i;
@@ -246,19 +242,19 @@ namespace Noah
             changeNewSkill_Text.text = _skill.skillName;
         }
 
-        void ChangeSkill(ref SkillBase skill, int _index)
+        void ChangeSkill(ref SkillBase _skill, int _index)
         {
             AudioManager.Instance.Play("ReinForcement");
 
-            skill.damage = skill.upgradeDamage;
+            _skill.damage = _skill.upgradeDamage;
 
-            skill = randomSkills[selectSkillNum];
+            _skill = randomSkills[selectSkillNum];
 
-            SetSkillUI(skillUIList[_index], skill);
+            SetSkillUI(skillUIList[_index], _skill);
 
-            skillSlots[_index] = skill;
+            skillSlots[_index] = _skill;
 
-            Debug.Log(skill);
+            skillUIList[_index].transform.GetChild(3).GetComponent<TMP_Text>().text = _skill.skillUpgardeCount.ToString();
 
             selectUI.SetActive(false);
             UIBack();
