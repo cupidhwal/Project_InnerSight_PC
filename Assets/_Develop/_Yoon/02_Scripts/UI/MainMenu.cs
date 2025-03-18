@@ -44,11 +44,9 @@ namespace Yoon
         public void NewGame()
         {
             PlayButtonClickSound();
-            Debug.Log("NewGame");
 
             //게임 데이터 초기화
             saveLoadManager.DeleteAllSaveFiles();
-            //PlayerStats.Instance.PlayerStatInit(null);
 
             fader.FadeOut(loadToScene);
         }
