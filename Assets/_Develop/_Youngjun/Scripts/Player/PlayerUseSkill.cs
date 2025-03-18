@@ -99,6 +99,7 @@ namespace Noah
                 }
                 else if (setSkill.skillSlots[_index].rangeType == SkillRangeType.Proximity)
                 {
+                    isStartAttack = true;
                     isReadySkill = false;
                     isChange = false;
 
@@ -108,6 +109,8 @@ namespace Noah
                 }
                 else if (setSkill.skillSlots[_index].rangeType == SkillRangeType.Nomal)
                 {
+                    isStartAttack = true;
+
                     isReadySkill = false;
                     isChange = false;
 
@@ -124,74 +127,78 @@ namespace Noah
 
         void ActiveSkill()
         {
-            if (Input.GetKeyDown("1"))
+            if (!isStartAttack)
             {
-                if (!isReadySkill)
+                if (Input.GetKeyDown("1"))
                 {
-                    SetSkill(0);
-                }
-                else 
-                {
-                    ChangeSkill(0);
-                }
-
-            }
-            else if (Input.GetKeyDown("2"))
-            {
-                if (!isReadySkill)
-                {
-                    SetSkill(1);
-                }
-                else
-                {
-                    ChangeSkill(1);
-                }
-            }
-            else if (Input.GetKeyDown("3"))
-            {
-                if (!isReadySkill)
-                {
-                    SetSkill(2);
-                }
-                else
-                {
-                    ChangeSkill(2);
-                }
-            }
-            else if (Input.GetKeyDown("4"))
-            {
-                if (!isReadySkill)
-                {
-                    SetSkill(3);
-                }
-                else
-                {
-                    ChangeSkill(3);
-                }
-            }
-
-            if (Input.GetMouseButton(0))
-            {
-                isReadySkill = false;
-                isChange = false;
-
-                if (effectGo != null)
-                {
-                    effectGo.SetActive(false);
-                    effectGo = null;
-                }
-
-                if (transform.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
-                {
-                    if (attackBehaviour is Attack attack)
+                    if (!isReadySkill)
                     {
-                        attack.isSkillAttack = false;
+                        SetSkill(0);
+                    }
+                    else
+                    {
+                        ChangeSkill(0);
+                    }
+
+                }
+                else if (Input.GetKeyDown("2"))
+                {
+                    if (!isReadySkill)
+                    {
+                        SetSkill(1);
+                    }
+                    else
+                    {
+                        ChangeSkill(1);
+                    }
+                }
+                else if (Input.GetKeyDown("3"))
+                {
+                    if (!isReadySkill)
+                    {
+                        SetSkill(2);
+                    }
+                    else
+                    {
+                        ChangeSkill(2);
+                    }
+                }
+                else if (Input.GetKeyDown("4"))
+                {
+                    if (!isReadySkill)
+                    {
+                        SetSkill(3);
+                    }
+                    else
+                    {
+                        ChangeSkill(3);
                     }
                 }
 
-                return;
+                if (Input.GetMouseButton(0))
+                {
+                    isReadySkill = false;
+                    isChange = false;
 
+                    if (effectGo != null)
+                    {
+                        effectGo.SetActive(false);
+                        effectGo = null;
+                    }
+
+                    if (transform.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+                    {
+                        if (attackBehaviour is Attack attack)
+                        {
+                            attack.isSkillAttack = false;
+                        }
+                    }
+
+                    return;
+
+                }
             }
+
         }
 
         void SetSkill(int _index)
@@ -286,8 +293,6 @@ namespace Noah
             {
                 if (skill.isSkillOn)
                 {                                               
-                    isStartAttack = true;
-
                     skill.Activate();
 
                     if (skill.rangeType == SkillRangeType.Circle)
@@ -328,7 +333,7 @@ namespace Noah
                     StartCoroutine(skill.SkillCoolTime());
                     Destroy(skillef, skill.skillAtkTime);
 
-
+                    isStartAttack = false;
                 }
 
             }
