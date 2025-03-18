@@ -17740,7 +17740,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5841524704843911832}
-  - component: {fileID: 2609289735208956161}
+  - component: {fileID: 6447834402541274747}
   m_Layer: 0
   m_Name: BoxCollider (1)
   m_TagString: Wall
@@ -17757,33 +17757,28 @@ Transform:
   m_GameObject: {fileID: 4972642717902374123}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.96, y: -0.13329887, z: 17}
+  m_LocalPosition: {x: 32.47, y: 0, z: 17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2014422712264792733}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2609289735208956161
-BoxCollider:
+--- !u!208 &6447834402541274747
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4972642717902374123}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 4, z: 37}
-  m_Center: {x: -1, y: 2, z: 0}
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 1.44, z: 18.505}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.4, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &5002201174739013478
 GameObject:
   m_ObjectHideFlags: 0
@@ -34466,6 +34461,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Succubus
       objectReference: {fileID: 0}
+    - target: {fileID: 4182894444613286148, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
+      propertyPath: slashAttackBox
+      value: 
+      objectReference: {fileID: 6261236350480904696}
     - target: {fileID: 4836657849115817858, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
       propertyPath: BossHealthBarSlider
       value: 
@@ -34503,6 +34502,11 @@ Transform:
 --- !u!1 &1640171404201475043 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1955641338251336672, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
+  m_PrefabInstance: {fileID: 1000039206831316995}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &6261236350480904696 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 6558572659339792891, guid: ec74e92264aa1414e9625d550ff81eae, type: 3}
   m_PrefabInstance: {fileID: 1000039206831316995}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &6947508884780587456 stripped
