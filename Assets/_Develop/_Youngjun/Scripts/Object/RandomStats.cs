@@ -24,8 +24,6 @@ namespace Noah
             {
                 reinforceData.Add(StageManager.Instance.reinforceData[i]); 
             }
-
-            Invoke("ActiveCollider", 1f);
         }
 
         private void Update()

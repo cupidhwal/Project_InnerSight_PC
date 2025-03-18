@@ -6,9 +6,7 @@ using Unity.AI.Navigation;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
-using System.Diagnostics;
 using InnerSight_Kys;
-using Unity.VisualScripting;
 
 namespace Noah
 {
@@ -240,9 +238,9 @@ namespace Noah
             }
             else 
             {
-                for (int i = 0; i < enemys.Count; i++)
+                for (int i = 0; i < enemyPar.childCount; i++)
                 {
-                    Destroy(enemys[i].gameObject); 
+                    Destroy(enemyPar.GetChild(i).gameObject);
                 }
 
                 enemys.Clear();
@@ -369,8 +367,7 @@ namespace Noah
                 else
                 {
                     skillReinObject.SetActive(true);
-                    statsReinObject.GetComponent<Collider>().enabled = true;
-                    statsReinObject.transform.GetChild(0).gameObject.SetActive(true);
+                    Invoke("StatsActive", 1f);
                 }
 
 
@@ -391,6 +388,12 @@ namespace Noah
 
 
             }
+        }
+
+        void StatsActive()
+        {
+            statsReinObject.GetComponent<Collider>().enabled = true;
+            statsReinObject.transform.GetChild(0).gameObject.SetActive(true);
         }
 
         public void AddEnemy(GameObject enemy) => enemys.Add(enemy);

@@ -21,11 +21,6 @@ namespace Seti
             if (TryGetComponent<Damagable>(out var damagable))
                 damagable.OnDeath += ReviveInvoke;
         }
-
-        private void Update()
-        {
-            Debug.Log($"Life: {actor.Controller_Animator.Animator.GetInteger("Life")}");
-        }
         #endregion
 
         // 메서드

@@ -66,12 +66,15 @@ namespace Noah
 
                 StageManager.Instance.ReturnCurrentStage();
 
+                StageManager.Instance.reinforceData.Clear();
+
                 return;
             }
             else
             {
                 StageManager.Instance.IsHidden = false;
                 GameManager.Instance.ChangeStage();
+                StageManager.Instance.reinforceData.Clear();
             }
 
             StageManager.Instance.NextStage();

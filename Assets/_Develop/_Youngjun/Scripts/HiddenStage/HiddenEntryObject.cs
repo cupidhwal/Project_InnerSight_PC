@@ -16,7 +16,11 @@ namespace Noah
 
         void Start()
         {
-            StartCoroutine(RiseToZero());        
+            if (hiddenParitcle != null)
+            {
+                StartCoroutine(RiseToZero());
+            }
+            
         }
 
         IEnumerator RiseToZero()

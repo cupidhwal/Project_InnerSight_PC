@@ -82,40 +82,51 @@ namespace Noah
 
         void UsePlayerSkill(int _index)
         {
-            if (Input.GetMouseButton(1) && setSkill.skillSlots[_index].rangeType != SkillRangeType.Nomal
-                && setSkill.skillSlots[_index].rangeType != SkillRangeType.Proximity)
+            if (setSkill.skillSlots[_index].isSkillOn)
             {
-                isReadySkill = false;
-                isChange = false;
-
-                if (effectGo != null)
+                if (Input.GetMouseButton(1) && setSkill.skillSlots[_index].rangeType != SkillRangeType.Nomal)
                 {
-                    effectGo.SetActive(false);
-                    effectGo = null;
+                    isReadySkill = false;
+                    isChange = false;
+
+                    if (effectGo != null)
+                    {
+                        effectGo.SetActive(false);
+                        effectGo = null;
+                    }
+
+                    SkillPosition();
+
+                    if (transform.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+                    {
+                        if (attackBehaviour is Attack attack)
+                        {
+                            attack.isSkillAttack = true;
+                        }
+                    }
                 }
-
-                SkillPosition();
-            }
-            else if (setSkill.skillSlots[_index].rangeType == SkillRangeType.Proximity)
-            {
-                isReadySkill = false;
-                isChange = false;
-
-                SkillPosition();
-
-                setSkill.skillSlots[_index].PlayerAnimation(transform, setSkill.skillSlots[_index].animationNum);
-            }
-            else if (setSkill.skillSlots[_index].rangeType == SkillRangeType.Nomal)
-            {
-                isReadySkill = false;
-                isChange = false;
-
-                if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
+                else if (setSkill.skillSlots[_index].rangeType == SkillRangeType.Proximity)
                 {
-                    UseSkill(() => setSkill.skillSlots[_index]);
-                    StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[_index], setSkill.skillUIList[_index]));
+                    isReadySkill = false;
+                    isChange = false;
+
+                    SkillPosition();
+
+                    setSkill.skillSlots[_index].PlayerAnimation(transform, setSkill.skillSlots[_index].animationNum);
+                }
+                else if (setSkill.skillSlots[_index].rangeType == SkillRangeType.Nomal)
+                {
+                    isReadySkill = false;
+                    isChange = false;
+
+                    if (setSkill.skillSlots[_index] != null && setSkill.skillSlots[_index].isSkillOn)
+                    {
+                        UseSkill(() => setSkill.skillSlots[_index]);
+                        StartCoroutine(setSkill.SkillCoolTime(setSkill.skillSlots[_index], setSkill.skillUIList[_index]));
+                    }
                 }
             }
+
 
         }
 
@@ -205,17 +216,6 @@ namespace Noah
                 isReadySkill = true;
 
                 index = _index;
-
-                if (setSkill.skillSlots[_index].rangeType != SkillRangeType.Nomal)
-                {
-                    if (transform.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
-                    {
-                        if (attackBehaviour is Attack attack)
-                        {
-                            attack.isSkillAttack = true;
-                        }
-                    }
-                }
             }
         }
 
