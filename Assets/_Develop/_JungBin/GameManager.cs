@@ -14,6 +14,8 @@ namespace JungBin
 
         [SerializeField] private RelicManager relicManager;
         [SerializeField] private Player player;
+        [SerializeField] private Material[] bossMaterials; // 여러 개의 머티리얼 관리
+        private Color[] originalColors; // 머티리얼 초기 색상 저장
 
         public Player Player => player; // 외부에서 접근 가능한 프로퍼티
 
@@ -25,6 +27,12 @@ namespace JungBin
             // 싱글톤 인스턴스 설정
             if (Instance == null) Instance = this;
             else Destroy(gameObject);
+
+            originalColors = new Color[bossMaterials.Length];
+            for (int i = 0; i < bossMaterials.Length; i++)
+            {
+                originalColors[i] = bossMaterials[i].color;
+            }
         }
 
         /// <summary>
@@ -49,11 +57,22 @@ namespace JungBin
         {
             Debug.Log("🔹 새로운 스테이지로 이동!");
             OnStageChanged?.Invoke(); // 🔹 이벤트 호출 → 유물 효과 적용됨!
+            MaterialReset();
         }
 
         public void AnyChangeStage()
         {
             OnAnyStageChanged?.Invoke(); // 🔹 이벤트 호출 → 유물 효과 적용됨!
+        }
+
+        private void MaterialReset()
+        {
+            for (int i = 0; i < bossMaterials.Length; i++)
+            {
+                Color newColor = originalColors[i];
+                newColor.a = 1f;
+                bossMaterials[i].color = newColor;
+            }
         }
     }
     
