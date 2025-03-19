@@ -65,6 +65,7 @@ namespace Noah
 
             LoadAll();
 
+            scenarioSaveData.ResetData();
         }
 
         void DataReset()
@@ -72,9 +73,6 @@ namespace Noah
             playerStats.ResetData();
             playerItem.ResetData();
             relicSaveData.ResetData();
-            scenarioSaveData.ResetData();
-
-            Debug.Log("11");
         }
 
         void AddDictionary()
