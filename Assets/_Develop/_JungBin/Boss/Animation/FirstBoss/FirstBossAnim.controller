@@ -1,5 +1,33 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9056744709450622052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e6b5212e5855664e9846a5376f30062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enterParameter: 
+  exitParameter: 
+  enterParameterBool: 0
+  exitParameterBool: 0
+  enterStateFir: 1
+  exitStateFir: 1
+  enterBoolFir: 0
+  exitBoolFir: 0
+  enterStateSec: 0
+  exitStateSec: 0
+  enterBoolSec: 0
+  exitBoolSec: 0
+  enterStateLast: 0
+  exitStateLast: 0
+  enterBoolLast: 0
+  exitBoolLast: 0
 --- !u!1102 &-9042922715712121318
 AnimatorState:
   serializedVersion: 6
@@ -487,7 +515,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5425126808412187345}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -9056744709450622052}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -2322,7 +2351,7 @@ AnimatorStateMachine:
     m_Position: {x: 688.3022, y: 394.45334, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7445279223962630545}
-    m_Position: {x: 570, y: 630, z: 0}
+    m_Position: {x: 570, y: 640, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5071326047358052803}
     m_Position: {x: -190, y: 610, z: 0}
@@ -2365,23 +2394,23 @@ AnimatorStateMachine:
   - {fileID: -5760517795711878768}
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -6968577933659032221}
-    second: []
-  - first: {fileID: -2447105141570356680}
-    second:
-    - {fileID: 4412146111982908624}
-  - first: {fileID: -544530085030071249}
-    second:
-    - {fileID: 7853382141709872980}
-  - first: {fileID: 1683056714178708511}
-    second:
-    - {fileID: 2385449027087155584}
-  - first: {fileID: 6301003206391358967}
-    second:
-    - {fileID: -2219112535257765060}
   - first: {fileID: 8534004427145761454}
     second:
     - {fileID: -4540253927910730945}
+  - first: {fileID: -544530085030071249}
+    second:
+    - {fileID: 7853382141709872980}
+  - first: {fileID: -2447105141570356680}
+    second:
+    - {fileID: 4412146111982908624}
+  - first: {fileID: 6301003206391358967}
+    second:
+    - {fileID: -2219112535257765060}
+  - first: {fileID: 1683056714178708511}
+    second:
+    - {fileID: 2385449027087155584}
+  - first: {fileID: -6968577933659032221}
+    second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 520, y: 560, z: 0}
   m_EntryPosition: {x: 50, y: 120, z: 0}
