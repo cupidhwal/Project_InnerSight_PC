@@ -3437,7 +3437,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4341546569168017033}
   m_Father: {fileID: 8628149810256165013}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3344089131817488280
@@ -11748,6 +11749,7 @@ MonoBehaviour:
   slashAttackBox: {fileID: 5708582730220877410}
   spikeAttackPrefab: {fileID: 1503798714935338112, guid: a1381d81eaa32564b8bb64a750152aa0, type: 3}
   spikeSpawnPoint: {fileID: 8878561521962965813}
+  SpikeAttackWarning: {fileID: 4181505643322216108}
   projectilePrefab: {fileID: 2323780714777990268, guid: ed4791f4fb16bfd4fafdf74c100d9a0e, type: 3}
   leftHandSpawnPoint: {fileID: 1544847067626329041}
   rightHandSpawnPoint: {fileID: 4596859847076129503}
@@ -14682,6 +14684,77 @@ Transform:
   - {fileID: 7037228826307247917}
   m_Father: {fileID: 4103068020139701662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5666767735059956429
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8878561521962965813}
+    m_Modifications:
+    - target: {fileID: 8278780090300994628, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8278780090300994628, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8278780090300994628, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8278780090300994628, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8278780090300994628, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8278780090300994628, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8278780090300994628, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8278780090300994628, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8278780090300994628, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8278780090300994628, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8404796630735768673, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+      propertyPath: m_Name
+      value: SpikeEffect_Phase2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8404796630735768673, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+--- !u!1 &4181505643322216108 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8404796630735768673, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+  m_PrefabInstance: {fileID: 5666767735059956429}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4341546569168017033 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8278780090300994628, guid: 0737c3d7c039b6c4e8dba036e73446f0, type: 3}
+  m_PrefabInstance: {fileID: 5666767735059956429}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6604456857092149132
 PrefabInstance:
   m_ObjectHideFlags: 0
