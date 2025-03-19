@@ -22,6 +22,7 @@ namespace JungBin
         [SerializeField] private GameObject spikeAttackPrefab;
         [SerializeField] private Transform spikeSpawnPoint;
         [SerializeField] private GameObject SpikeAttackWarning;
+        [SerializeField] private GameObject LaserAttackWarning;
 
         [Header("투사체 설정")]
         [SerializeField] private GameObject projectilePrefab; // 투사체 프리팹
@@ -105,6 +106,7 @@ namespace JungBin
             }
 
             SpikeAttackWarning.SetActive(false);
+            LaserAttackWarning.SetActive(false);
 
         }
 
@@ -243,6 +245,7 @@ namespace JungBin
             // 4초 후 오브젝트 삭제
             Destroy(spikePrefab, 4f);
         }
+        
 
         public void SpikeWarningOn()
         {
@@ -254,7 +257,15 @@ namespace JungBin
             SpikeAttackWarning.SetActive(false);
         }
 
-        
+        public void LaserWarningOn()
+        {
+            LaserAttackWarning.SetActive(true);
+        }
+
+        public void LaserWarningOff()
+        {
+            LaserAttackWarning.SetActive(false);
+        }
 
         // 🔥 왼손에서 투사체 발사 (애니메이션 이벤트에서 호출)
         public void FireLeftHandProjectile()

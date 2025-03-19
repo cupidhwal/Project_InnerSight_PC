@@ -12,14 +12,18 @@ namespace JungBin
         [SerializeField] private GameObject brokenProjectile;
         [SerializeField] private GameObject unBrokenProjectile;
 
+        private bool isHit = false;
+
         public void Initialize(Vector3 spawnDirection)
         {
             direction = spawnDirection.normalized;
             Destroy(gameObject, lifeTime);
+            isHit = false;
         }
 
         private void Update()
         {
+            if (isHit) return;
             transform.position += direction * speed * Time.deltaTime;
         }
 
@@ -58,6 +62,7 @@ namespace JungBin
 
         public void ShowBrokenProjectile()
         {
+            isHit = true;
             brokenProjectile.SetActive(true);
             unBrokenProjectile.SetActive(false);
 
