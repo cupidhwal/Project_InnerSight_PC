@@ -64,8 +64,11 @@ namespace Seti
                 this,
                 new AniState_Idle()
             );
-            Animator.speed = 0;
-            Invoke(nameof(AnimationStart), 3);
+            if (actor is Player)
+            {
+                Animator.speed = 0;
+                Invoke(nameof(AnimationStart), 3);
+            }
 
             // 상태 추가
             AddStates();
