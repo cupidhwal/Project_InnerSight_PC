@@ -50,8 +50,7 @@ namespace Seti
                     dialogueDatas[i].SeenCompleted = scenarioData.dialogueDatas[i].SeenCompleted;
                 }
 
-                if (deathCount > 0)
-                    save.CheckTutorial(save.scenarioSaveData.dialogueDatas[0].SeenCompleted);
+                save.CheckTutorial(save.scenarioSaveData.dialogueDatas[0].SeenCompleted);
             }
         }
     }
