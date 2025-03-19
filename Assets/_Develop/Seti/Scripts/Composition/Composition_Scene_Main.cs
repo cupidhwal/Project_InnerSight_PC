@@ -16,14 +16,14 @@ namespace Seti
 
         public override void Execute(GameObject _)
         {
-            
+            StoryManager.Instance.CorExcutor(DelayExecute(delay));
         }
 
         IEnumerator DelayExecute(float delay)
         {
             SceneFade sceneFade = FindAnyObjectByType<SceneFade>();
 
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(delay);
 
             if (InitializeManager.Instance.Player.Controller.BehaviourMap.TryGetValue(typeof(Interact), out var behaviour))
                 if (behaviour is Interact interact)
