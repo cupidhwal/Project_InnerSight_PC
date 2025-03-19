@@ -10,9 +10,11 @@ namespace Yoon
         #region Variables
         SceneFade fader;
         [SerializeField] private string loadToScene = "PlayScene";        //playScene 불러오기
+        [SerializeField] private string loadToTestScene = "";             //TestScene 불러오기
         [SerializeField] private GameObject contiune;
 
         public GameObject mainMenuUI;
+        public GameObject newGameWarning;
         public GameObject creditUI;
 
         public Animator creditAnim;
@@ -43,12 +45,21 @@ namespace Yoon
 
         public void NewGame()
         {
+            newGameWarning.SetActive(true);
+        }
+
+        public void NewGameStart()
+        {
             PlayButtonClickSound();
 
             //게임 데이터 초기화
             saveLoadManager.DeleteAllSaveFiles();
 
             fader.FadeOut(loadToScene);
+        }
+        public void NewGamePopUpClose()
+        {
+            newGameWarning.SetActive(false);
         }
 
         public void LoadGame()
@@ -84,6 +95,15 @@ namespace Yoon
             mainMenuUI.SetActive(true);
         }
 
+        public void TestPlay()
+        {
+            PlayButtonClickSound();
+
+            //게임 데이터 초기화
+            saveLoadManager.DeleteAllSaveFiles();
+
+            fader.FadeOut(loadToTestScene);
+        }
 
         public void QuitGame()
         {
