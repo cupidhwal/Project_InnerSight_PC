@@ -157,7 +157,7 @@ namespace Seti
                         if (townData != null && !townData.CheckSeens[0])
                             OpenDialogue(0);
                     }
-                    else
+                    else if (DataManager.Instance.deathCount >= 5)
                     {
                         if (townData != null && !townData.CheckSeens[5] && SaveLoadManager.Instance.scenarioSaveData.flynneEvent[4])
                             OpenDialogue(5);

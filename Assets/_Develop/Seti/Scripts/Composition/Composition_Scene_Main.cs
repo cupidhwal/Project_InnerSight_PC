@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Noah;
 
@@ -15,9 +16,24 @@ namespace Seti
 
         public override void Execute(GameObject _)
         {
+            
+        }
+
+        IEnumerator DelayExecute(float delay)
+        {
             SceneFade sceneFade = FindAnyObjectByType<SceneFade>();
 
             sceneFade.FadeIn(sceneName, delay);
+
+            yield return new WaitForSeconds(5);
+
+            StoryManager.Instance.transform.GetChild(0).GetComponent<Canvas>().sortingOrder = 9;
+
+            if (InitializeManager.Instance.Player.Controller.BehaviourMap.TryGetValue(typeof(Interact), out var behaviour))
+                if (behaviour is Interact interact)
+                    interact.OnInteraction();
+
+            yield break;
         }
     }
 }

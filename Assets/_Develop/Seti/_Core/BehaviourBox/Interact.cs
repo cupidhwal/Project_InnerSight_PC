@@ -36,7 +36,7 @@ namespace Seti
 
         // 메서드
         #region Methods
-        void OnInteraction()
+        public void OnInteraction()
         {
             if (StoryManager.Instance.IsDialogue)
             {
