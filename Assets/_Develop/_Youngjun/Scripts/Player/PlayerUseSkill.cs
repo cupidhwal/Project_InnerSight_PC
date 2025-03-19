@@ -296,6 +296,15 @@ namespace Noah
                 {                                               
                     skill.Activate();
 
+                    if (transform.GetComponent<Controller_Input>().BehaviourMap.TryGetValue(typeof(Attack), out var attackBehaviour))
+                    {
+                        if (attackBehaviour is Attack attack)
+                        {
+                            attack.isSkillAttack = false;
+                        }
+                    }
+
+
                     if (skill.rangeType == SkillRangeType.Circle)
                     {
                         skillef = Instantiate(skill.skillPrefab, skillPos, skill.skillPrefab.transform.rotation);
